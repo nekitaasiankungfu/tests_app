@@ -1,0 +1,16 @@
+# MCP сервер для поиска на APA.org
+# Python 3.10+
+
+# MCP SDK
+mcp>=0.9.0
+
+# HTTP клиент
+httpx>=0.27.0
+
+# Парсинг HTML
+beautifulsoup4>=4.12.0
+lxml>=5.1.0
+
+# Дополнительные зависимости
+python-dotenv>=1.0.0
+

@@ -1,0 +1,1068 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/test_model.dart';
+import '../providers/test_provider.dart';
+import '../providers/locale_provider.dart';
+import '../providers/user_preferences_provider.dart';
+import '../data/ipip_big_five_data.dart';
+import '../data/love_profile_data.dart';
+import '../utils/theme_utils.dart';
+import '../constants/color_constants.dart';
+import '../config/summary_config.dart';
+
+class TestResultScreen extends StatefulWidget {
+  final TestResult result;
+
+  const TestResultScreen({super.key, required this.result});
+
+  @override
+  State<TestResultScreen> createState() => _TestResultScreenState();
+}
+
+class _TestResultScreenState extends State<TestResultScreen> {
+  bool _showRecommendations = false;
+  bool _showAllScales = false; // Показывать все шкалы или только примеры
+
+  @override
+  Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    final prefsProvider = Provider.of<UserPreferencesProvider>(context);
+    final languageCode = localeProvider.locale.languageCode;
+    final themeColor = prefsProvider.themeColor;
+    final testProvider = Provider.of<TestProvider>(context, listen: false);
+    final test = testProvider.getTestById(widget.result.testId);
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+
+    if (test == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(languageCode == 'ru' ? 'Ошибка' : 'Error'),
+          backgroundColor: themeColor,
+          foregroundColor: ThemeUtils.getAppBarForegroundColor(themeColor, brightness),
+        ),
+        body: Center(
+          child: Text(languageCode == 'ru' ? 'Тест не найден' : 'Test not found'),
+        ),
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          '${languageCode == 'ru' ? 'Результат' : 'Result'}: ${test.getTitle(languageCode)}',
+        ),
+        backgroundColor: themeColor,
+        foregroundColor: ThemeUtils.getAppBarForegroundColor(themeColor, brightness),
+        elevation: 0,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: ThemeUtils.getScreenGradient(themeColor, brightness),
+            stops: const [0.0, 0.5, 1.0],
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.darkBackground : AppColors.lightBackground,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      // Для Love Profile показываем специальную карточку с индексом любви
+                      if (widget.result.testId == 'love_profile') ...[
+                        _buildLoveIndexCard(widget.result, languageCode, themeColor, isDark),
+                        const SizedBox(height: 30),
+                        _buildDisclaimerCard(languageCode, isDark),
+                      ] else
+                        _buildResultCard(widget.result, languageCode, themeColor, isDark),
+                      const SizedBox(height: 30),
+                      // Если это многофакторный тест, показываем шкалы
+                      if (widget.result.factorScores != null) ...[
+                        _buildFactorScoresSection(widget.result, languageCode, themeColor, isDark),
+                        // Персональные рекомендации для Love Profile
+                        if (widget.result.testId == 'love_profile') ...[
+                          const SizedBox(height: 30),
+                          _buildRecommendationsSection(widget.result, languageCode, themeColor, isDark),
+                        ],
+                      ] else
+                        ...[
+                          _buildScoreCard(widget.result, languageCode, themeColor, isDark),
+                          const SizedBox(height: 30),
+                          _buildInterpretationCard(widget.result, languageCode, isDark),
+                        ],
+                      const SizedBox(height: 30),
+                      // Показываем информацию о шкалах
+                      _buildAffectedScalesSection(widget.result.testId, languageCode, themeColor, isDark),
+                      const SizedBox(height: 30),
+                      _buildActionButtons(context, languageCode, test, isDark),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResultCard(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    final brightness = isDark ? Brightness.dark : Brightness.light;
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            AppColors.darkCard,
+            AppColors.darkSurfaceHigh,
+          ] : [
+            themeColor.withOpacity(0.1),
+            themeColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : themeColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.analytics,
+            size: 60,
+            color: isDark ? Colors.white : themeColor,
+          ),
+          const SizedBox(height: 15),
+          Text(
+            languageCode == 'ru' ? 'Тест завершен!' : 'Test completed!',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : themeColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '${languageCode == 'ru' ? 'Завершено' : 'Completed'}: ${_formatDate(result.completedAt, languageCode)}',
+            style: TextStyle(
+              fontSize: 14,
+              color: ThemeUtils.getSecondaryTextColor(brightness),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoveIndexCard(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Расчет Итогового индекса любви (ИИЛ) - среднее всех шкал
+    double loveIndex = 0;
+    if (result.factorScores != null) {
+      double totalPercentage = 0;
+      result.factorScores!.forEach((key, value) {
+        totalPercentage += value.percentage;
+      });
+      loveIndex = totalPercentage / result.factorScores!.length;
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            themeColor.withOpacity(0.8),
+            themeColor,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: themeColor.withOpacity(0.3),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          const Icon(
+            Icons.favorite,
+            size: 50,
+            color: Colors.white,
+          ),
+          const SizedBox(height: 15),
+          Text(
+            languageCode == 'ru' ? 'Итоговый индекс любви' : 'Overall Love Index',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            '${loveIndex.round()}%',
+            style: const TextStyle(
+              fontSize: 48,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            LoveProfileData.calculateLoveIndex(result.factorScores!, languageCode),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 15),
+          // Дата и время прохождения теста
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              _formatDate(result.completedAt, languageCode),
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDisclaimerCard(String languageCode, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.amber.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: isDark ? Colors.amber.withOpacity(0.3) : Colors.amber.withOpacity(0.5),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.info_outline,
+            color: isDark ? Colors.amber[300] : Colors.amber,
+            size: 24,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              languageCode == 'ru'
+                  ? 'Результаты теста - это ориентиры для саморазвития. Для клинической оценки обращайтесь к специалисту.'
+                  : 'Test results are guidelines for self-development. For clinical evaluation, consult a specialist.',
+              style: TextStyle(
+                fontSize: 14,
+                color: isDark ? Colors.amber[300] : Colors.amber[800],
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFactorScoresSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          languageCode == 'ru' ? 'Ваши результаты по факторам' : 'Your Factor Scores',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: isDark ? Colors.white : Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 20),
+        ...result.factorScores!.entries.map((entry) {
+          return _buildFactorCard(entry.value, languageCode, isDark);
+        }).toList(),
+      ],
+    );
+  }
+
+  Widget _buildFactorCard(FactorScore factorScore, String languageCode, bool isDark) {
+    return _FactorCard(
+      factorScore: factorScore,
+      languageCode: languageCode,
+      isDark: isDark,
+      testId: widget.result.testId,
+      getFactorScoreColor: _getFactorScoreColor,
+    );
+  }
+
+  Widget _buildScoreCard(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    final brightness = isDark ? Brightness.dark : Brightness.light;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: ThemeUtils.getCardColor(brightness),
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: ThemeUtils.getCardShadow(brightness),
+      ),
+      child: Column(
+        children: [
+          Text(
+            languageCode == 'ru' ? 'Ваш результат' : 'Your Result',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildScoreItem(
+                languageCode == 'ru' ? 'Баллы' : 'Score',
+                '${result.totalScore}',
+                '${languageCode == 'ru' ? 'из' : 'of'} ${result.maxScore}',
+                themeColor,
+                isDark,
+              ),
+              Container(
+                width: 1,
+                height: 60,
+                color: isDark ? Colors.grey[600] : Colors.grey.withOpacity(0.3),
+              ),
+              _buildScoreItem(
+                languageCode == 'ru' ? 'Процент' : 'Percent',
+                '${result.percentage.round()}%',
+                languageCode == 'ru' ? 'выполнения' : 'completion',
+                Colors.green,
+                isDark,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          LinearProgressIndicator(
+            value: result.percentage / 100,
+            backgroundColor: isDark ? Colors.grey[700] : Colors.grey.withOpacity(0.3),
+            valueColor: AlwaysStoppedAnimation<Color>(
+              _getScoreColor(result.percentage),
+            ),
+            minHeight: 8,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScoreItem(String title, String value, String subtitle, Color color, bool isDark) {
+    final brightness = isDark ? Brightness.dark : Brightness.light;
+    return Column(
+      children: [
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+        Text(
+          subtitle,
+          style: TextStyle(
+            fontSize: 12,
+            color: ThemeUtils.getSecondaryTextColor(brightness),
+          ),
+        ),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: isDark ? Colors.white : Colors.black87,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInterpretationCard(TestResult result, String languageCode, bool isDark) {
+    final brightness = isDark ? Brightness.dark : Brightness.light;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.blue.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : Colors.blue.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.psychology,
+                color: isDark ? Colors.blue[300] : Colors.blue,
+                size: 24,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                languageCode == 'ru' ? 'Интерпретация' : 'Interpretation',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.blue[300] : Colors.blue,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          Text(
+            result.interpretation,
+            style: TextStyle(
+              fontSize: 16,
+              color: isDark ? Colors.white : Colors.black87,
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context, String languageCode, TestModel test, bool isDark) {
+    final themeColor = Provider.of<UserPreferencesProvider>(context).themeColor;
+    final backgroundColor = isDark ? AppColors.darkCard : themeColor;
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.refresh),
+            label: Text(languageCode == 'ru' ? 'Пройти тест заново' : 'Take test again'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor,
+              foregroundColor: isDark ? Colors.white : ThemeUtils.getButtonTextColor(themeColor),
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 15),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.popUntil(context, (route) => route.isFirst);
+            },
+            icon: const Icon(Icons.home),
+            label: Text(languageCode == 'ru' ? 'На главную' : 'Home'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: isDark ? Colors.grey[700] : Colors.grey[600],
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRecommendationsSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          languageCode == 'ru' ? 'Персональные рекомендации' : 'Personal Recommendations',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: isDark ? Colors.white : Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 15),
+        Center(
+          child: ElevatedButton.icon(
+            onPressed: () {
+              setState(() {
+                _showRecommendations = !_showRecommendations;
+              });
+            },
+            icon: Icon(_showRecommendations ? Icons.visibility_off : Icons.visibility),
+            label: Text(
+              _showRecommendations
+                  ? (languageCode == 'ru' ? 'Скрыть рекомендации' : 'Hide recommendations')
+                  : (languageCode == 'ru' ? 'Показать рекомендации' : 'Show recommendations'),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: themeColor,
+              foregroundColor: ThemeUtils.getButtonTextColor(themeColor),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+            ),
+          ),
+        ),
+        if (_showRecommendations) ...[
+          const SizedBox(height: 20),
+          ...result.factorScores!.entries.map((entry) {
+            return _buildRecommendationCard(entry.value, languageCode, themeColor, isDark);
+          }).toList(),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildRecommendationCard(FactorScore factorScore, String languageCode, Color themeColor, bool isDark) {
+    final recommendation = LoveProfileData.getRecommendations(factorScore.factorId, factorScore.percentage);
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkSurfaceHigh : themeColor.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: isDark ? Colors.grey[600]! : themeColor.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.lightbulb_outline,
+                color: themeColor,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                factorScore.getFactorName(languageCode),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: themeColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            recommendation[languageCode] ?? '',
+            style: TextStyle(
+              fontSize: 14,
+              color: isDark ? Colors.white : Colors.black87,
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Color _getScoreColor(double percentage) {
+    if (percentage >= 80) return Colors.green;
+    if (percentage >= 60) return Colors.orange;
+    if (percentage >= 40) return Colors.amber;
+    return Colors.red;
+  }
+
+  Color _getFactorScoreColor(double percentage) {
+    if (percentage >= 70) return Colors.green;
+    if (percentage >= 50) return Colors.blue;
+    if (percentage >= 30) return Colors.orange;
+    return Colors.red;
+  }
+
+  String _formatDate(DateTime date, String languageCode) {
+    if (languageCode == 'ru') {
+      return '${date.day}.${date.month}.${date.year} в ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
+    } else {
+      return '${date.month}/${date.day}/${date.year} at ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
+    }
+  }
+
+  /// Build affected scales section showing which psychological scales this test influences
+  Widget _buildAffectedScalesSection(String testId, String languageCode, Color themeColor, bool isDark) {
+    final scaleCount = QuestionWeightsConfig.getScaleCount(testId);
+
+    // Если тест не влияет на шкалы (или нет весов), не показываем секцию
+    if (scaleCount == 0) {
+      return const SizedBox.shrink();
+    }
+
+    final affectedScales = QuestionWeightsConfig.getAffectedScales(testId);
+    final sortedScales = affectedScales.toList()..sort();
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : themeColor.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.psychology_outlined,
+                color: themeColor,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  languageCode == 'ru'
+                      ? 'Влияние на психологические шкалы'
+                      : 'Impact on Psychological Scales',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : Colors.black87,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            languageCode == 'ru'
+                ? 'Этот тест влияет на $scaleCount психологических шкал из 195 доступных. Результаты учитываются при расчёте общего профиля личности.'
+                : 'This test affects $scaleCount psychological scales out of 195 available. Results are used to calculate your overall personality profile.',
+            style: TextStyle(
+              fontSize: 14,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkSurfaceHigh : themeColor.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  languageCode == 'ru' ? 'Примеры шкал:' : 'Example scales:',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: (_showAllScales ? sortedScales : sortedScales.take(10)).map((scaleId) {
+                    final scaleName = _getScaleDisplayName(scaleId, languageCode);
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: isDark ? Colors.grey[800] : Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: isDark ? Colors.grey[700]! : themeColor.withOpacity(0.3),
+                          width: 1,
+                        ),
+                      ),
+                      child: Text(
+                        scaleName,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isDark ? Colors.white : Colors.black87,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                if (sortedScales.length > 10) ...[
+                  const SizedBox(height: 12),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _showAllScales = !_showAllScales;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: isDark ? Colors.grey[800] : themeColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: themeColor.withOpacity(0.5),
+                          width: 1,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            _showAllScales
+                                ? (languageCode == 'ru' ? 'Скрыть' : 'Hide')
+                                : (languageCode == 'ru'
+                                    ? 'Показать все ${sortedScales.length} шкал'
+                                    : 'Show all ${sortedScales.length} scales'),
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: themeColor,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            _showAllScales ? Icons.expand_less : Icons.expand_more,
+                            color: themeColor,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Get display name for a scale (simplified translation)
+  String _getScaleDisplayName(String scaleId, String languageCode) {
+    // Простые переводы основных шкал
+    final translations = {
+      // Эмоциональные шкалы
+      'anxiety': {'ru': 'Тревожность', 'en': 'Anxiety'},
+      'stress_tolerance': {'ru': 'Стрессоустойчивость', 'en': 'Stress Tolerance'},
+      'depression': {'ru': 'Депрессия', 'en': 'Depression'},
+      'vitality': {'ru': 'Жизненная энергия', 'en': 'Vitality'},
+      'emotional_resilience': {'ru': 'Эмоц. устойчивость', 'en': 'Emotional Resilience'},
+      'mood_stability': {'ru': 'Стабильность настр.', 'en': 'Mood Stability'},
+      'positive_emotions': {'ru': 'Позитивные эмоции', 'en': 'Positive Emotions'},
+      'calmness': {'ru': 'Спокойствие', 'en': 'Calmness'},
+
+      // Мотивационные шкалы
+      'motivation': {'ru': 'Мотивация', 'en': 'Motivation'},
+      'work_satisfaction': {'ru': 'Удовл. работой', 'en': 'Work Satisfaction'},
+      'self_efficacy': {'ru': 'Самоэффективность', 'en': 'Self-Efficacy'},
+      'competence': {'ru': 'Компетентность', 'en': 'Competence'},
+
+      // Социальные шкалы
+      'empathy': {'ru': 'Эмпатия', 'en': 'Empathy'},
+      'warmth': {'ru': 'Теплота', 'en': 'Warmth'},
+      'activity': {'ru': 'Активность', 'en': 'Activity'},
+      'values': {'ru': 'Ценности', 'en': 'Values'},
+
+      // MBTI шкалы (8 униполярных)
+      'extraversion': {'ru': 'Экстраверсия', 'en': 'Extraversion'},
+      'introversion': {'ru': 'Интроверсия', 'en': 'Introversion'},
+      'sensing': {'ru': 'Сенсорика', 'en': 'Sensing'},
+      'intuition': {'ru': 'Интуиция', 'en': 'Intuition'},
+      'thinking': {'ru': 'Мышление', 'en': 'Thinking'},
+      'feeling': {'ru': 'Чувства', 'en': 'Feeling'},
+      'judging': {'ru': 'Суждение', 'en': 'Judging'},
+      'perceiving': {'ru': 'Восприятие', 'en': 'Perceiving'},
+    };
+
+    if (translations.containsKey(scaleId)) {
+      return translations[scaleId]![languageCode] ?? scaleId;
+    }
+
+    // Если перевода нет, форматируем snake_case в читаемый вид
+    return scaleId
+        .split('_')
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(' ');
+  }
+}
+
+// Статeful виджет для карточки фактора с раскрывающимся описанием
+class _FactorCard extends StatefulWidget {
+  final FactorScore factorScore;
+  final String languageCode;
+  final bool isDark;
+  final String testId;
+  final Color Function(double) getFactorScoreColor;
+
+  const _FactorCard({
+    required this.factorScore,
+    required this.languageCode,
+    required this.isDark,
+    required this.testId,
+    required this.getFactorScoreColor,
+  });
+
+  @override
+  State<_FactorCard> createState() => _FactorCardState();
+}
+
+class _FactorCardState extends State<_FactorCard> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final themeColor = Provider.of<UserPreferencesProvider>(context).themeColor;
+    final brightness = widget.isDark ? Brightness.dark : Brightness.light;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: ThemeUtils.getCardColor(brightness),
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: ThemeUtils.getCardShadow(brightness),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child:                   Text(
+                    widget.factorScore.getFactorName(widget.languageCode),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: widget.isDark ? Colors.white : themeColor,
+                    ),
+                  ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: widget.getFactorScoreColor(widget.factorScore.percentage),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  '${widget.factorScore.score}/${widget.factorScore.maxScore}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          // Прогресс-бар
+          Stack(
+            children: [
+              Container(
+                height: 20,
+                decoration: BoxDecoration(
+                  color: widget.isDark ? Colors.grey[700] : Colors.grey.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              FractionallySizedBox(
+                widthFactor: widget.factorScore.percentage / 100,
+                child: Container(
+                  height: 20,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        widget.getFactorScoreColor(widget.factorScore.percentage),
+                        widget.getFactorScoreColor(widget.factorScore.percentage).withOpacity(0.7),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${widget.factorScore.percentage.round()}%',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          // Интерпретация результата
+          Container(
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: widget.isDark ? AppColors.darkSurfaceHigh : Colors.blue.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: widget.isDark ? Colors.grey[600]! : Colors.blue.withOpacity(0.2),
+                width: 1,
+              ),
+            ),
+            child: _buildFormattedText(
+              widget.factorScore.getInterpretation(widget.languageCode),
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Кнопка для раскрытия подробного описания
+          InkWell(
+            onTap: () {
+              setState(() {
+                _isExpanded = !_isExpanded;
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    _isExpanded ? Icons.expand_less : Icons.expand_more,
+                    color: themeColor,
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    _isExpanded
+                        ? (widget.languageCode == 'ru' ? 'Скрыть подробное описание' : 'Hide detailed description')
+                        : (widget.languageCode == 'ru' ? 'Подробное описание фактора' : 'Detailed factor description'),
+                    style: TextStyle(
+                      color: themeColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Подробное описание (раскрывающееся)
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: Container(
+              margin: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: widget.isDark ? AppColors.darkSurfaceHigh : themeColor.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: widget.isDark ? Colors.grey[600]! : themeColor.withOpacity(0.2),
+                width: 1,
+              ),
+            ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: themeColor,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        widget.languageCode == 'ru' ? 'О факторе' : 'About this factor',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: themeColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  _buildFormattedText(
+                    widget.testId == 'love_profile'
+                        ? LoveProfileData.getFactorDescription(widget.factorScore.factorId, widget.languageCode)
+                        : (IPIPBigFiveData.getFactorDetailedDescription(widget.factorScore.factorId)[widget.languageCode] ?? ''),
+                  ),
+                ],
+              ),
+            ),
+            crossFadeState: _isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 300),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFormattedText(String text) {
+    final parts = text.split('**');
+    final List<TextSpan> spans = [];
+
+    for (int i = 0; i < parts.length; i++) {
+      if (i % 2 == 0) {
+        // Обычный текст
+        spans.add(TextSpan(
+          text: parts[i],
+          style: TextStyle(
+            fontSize: 14,
+            height: 1.5,
+            color: widget.isDark ? Colors.white : Colors.black87,
+          ),
+        ));
+      } else {
+        // Жирный текст (между **)
+        spans.add(TextSpan(
+          text: parts[i],
+          style: TextStyle(
+            fontSize: 14,
+            height: 1.5,
+            fontWeight: FontWeight.bold,
+            color: widget.isDark ? Colors.white : Colors.black87,
+          ),
+        ));
+      }
+    }
+
+    return RichText(
+      text: TextSpan(children: spans),
+    );
+  }
+}

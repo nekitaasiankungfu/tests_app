@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "apa-search": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\bigslainy\\psycho\\0.0\\mcp_apa_server\\server.py"
+      ],
+      "env": {},
+      "disabled": false,
+      "alwaysAllow": []
+    }
+  }
+}
+

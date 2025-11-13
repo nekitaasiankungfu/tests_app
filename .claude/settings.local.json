@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(flutter clean:*)",
+      "Bash(dart analyze:*)",
+      "Bash(paste:*)",
+      "Bash(cat:*)",
+      "Bash(flutter test:*)",
+      "Bash(for factor in emotional_exhaustion depersonalization reduced_efficacy physical_symptoms cognitive_impairment motivation_loss work_environment)",
+      "Bash(do echo -n \"$factor: \")",
+      "Bash(done)",
+      "Bash(comm -13:*)",
+      "Bash(for scale in extraversion introversion sensing intuition thinking feeling judging perceiving)",
+      "Bash(do echo -n \"$scale: \")",
+      "Bash(grep:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

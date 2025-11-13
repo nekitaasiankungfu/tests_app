@@ -1,0 +1,53 @@
+# .gitignore для MCP сервера
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Виртуальное окружение
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Логи
+*.log
+
+# Временные файлы
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Переменные окружения
+.env
+.env.local
+
+# Тестовые данные
+test_output/
+*.test
+

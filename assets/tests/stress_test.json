@@ -1,0 +1,298 @@
+{
+  "id": "stress_test",
+  "version": "1.0.0",
+  "type": "simple",
+  "questions": [
+    {
+      "id": "q1",
+      "text": {
+        "ru": "Как часто вы чувствуете напряжение в течение дня?",
+        "en": "How often do you feel tension during the day?"
+      },
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Никогда",
+            "en": "Never"
+          },
+          "score": 0
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Редко",
+            "en": "Rarely"
+          },
+          "score": 1
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Иногда",
+            "en": "Sometimes"
+          },
+          "score": 2
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Часто",
+            "en": "Often"
+          },
+          "score": 3
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Постоянно",
+            "en": "Constantly"
+          },
+          "score": 4
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": {
+        "ru": "Насколько хорошо вы спите?",
+        "en": "How well do you sleep?"
+      },
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Отлично",
+            "en": "Excellent"
+          },
+          "score": 0
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Хорошо",
+            "en": "Good"
+          },
+          "score": 1
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Нормально",
+            "en": "Normal"
+          },
+          "score": 2
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Плохо",
+            "en": "Bad"
+          },
+          "score": 3
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Очень плохо",
+            "en": "Very bad"
+          },
+          "score": 4
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": {
+        "ru": "Как часто вы испытываете раздражительность?",
+        "en": "How often do you experience irritability?"
+      },
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Никогда",
+            "en": "Never"
+          },
+          "score": 0
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Редко",
+            "en": "Rarely"
+          },
+          "score": 1
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Иногда",
+            "en": "Sometimes"
+          },
+          "score": 2
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Часто",
+            "en": "Often"
+          },
+          "score": 3
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Постоянно",
+            "en": "Constantly"
+          },
+          "score": 4
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": {
+        "ru": "Насколько легко вам сосредоточиться на задачах?",
+        "en": "How easy is it for you to focus on tasks?"
+      },
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Очень легко",
+            "en": "Very easy"
+          },
+          "score": 0
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Легко",
+            "en": "Easy"
+          },
+          "score": 1
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Нормально",
+            "en": "Normal"
+          },
+          "score": 2
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Сложно",
+            "en": "Difficult"
+          },
+          "score": 3
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Очень сложно",
+            "en": "Very difficult"
+          },
+          "score": 4
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": {
+        "ru": "Как часто вы чувствуете усталость?",
+        "en": "How often do you feel tired?"
+      },
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Никогда",
+            "en": "Never"
+          },
+          "score": 0
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Редко",
+            "en": "Rarely"
+          },
+          "score": 1
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Иногда",
+            "en": "Sometimes"
+          },
+          "score": 2
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Часто",
+            "en": "Often"
+          },
+          "score": 3
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Постоянно",
+            "en": "Constantly"
+          },
+          "score": 4
+        }
+      ]
+    }
+  ],
+  "interpretations": {
+    "ru": {
+      "0-5": {
+        "level": "low",
+        "title": "Низкий уровень стресса",
+        "description": "Вы хорошо справляетесь со стрессовыми ситуациями."
+      },
+      "6-10": {
+        "level": "moderate",
+        "title": "Умеренный уровень стресса",
+        "description": "Рекомендуется больше отдыхать и расслабляться."
+      },
+      "11-15": {
+        "level": "high",
+        "title": "Высокий уровень стресса",
+        "description": "Стоит обратиться к специалисту или изменить образ жизни."
+      },
+      "16-20": {
+        "level": "very_high",
+        "title": "Очень высокий уровень стресса",
+        "description": "Настоятельно рекомендуется обратиться к психологу."
+      }
+    },
+    "en": {
+      "0-5": {
+        "level": "low",
+        "title": "Low stress level",
+        "description": "You handle stressful situations well."
+      },
+      "6-10": {
+        "level": "moderate",
+        "title": "Moderate stress level",
+        "description": "It is recommended to rest and relax more."
+      },
+      "11-15": {
+        "level": "high",
+        "title": "High stress level",
+        "description": "Consider consulting a specialist or changing your lifestyle."
+      },
+      "16-20": {
+        "level": "very_high",
+        "title": "Very high stress level",
+        "description": "It is strongly recommended to consult a psychologist."
+      }
+    }
+  }
+}

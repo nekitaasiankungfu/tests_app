@@ -1,0 +1,1528 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
+import '../providers/summary_provider.dart';
+import '../providers/locale_provider.dart';
+import '../providers/test_provider.dart';
+import '../providers/user_preferences_provider.dart';
+import '../widgets/summary_charts.dart';
+import '../config/summary_config.dart';
+import '../config/bipolar_scales.dart';
+import '../models/summary_model.dart';
+import '../models/test_model.dart';
+import '../utils/theme_utils.dart';
+import '../constants/color_constants.dart';
+import '../data/sixteen_types_data.dart';
+import 'test_screen.dart';
+
+class SummaryScreen extends StatefulWidget {
+  const SummaryScreen({super.key});
+
+  @override
+  State<SummaryScreen> createState() => _SummaryScreenState();
+}
+
+class _SummaryScreenState extends State<SummaryScreen> {
+  bool _showDetails = false;
+  bool _showAllScales = false; // Show all 196 scales including unmeasured ones
+
+  @override
+  void initState() {
+    super.initState();
+    // Загрузить саммари при инициализации экрана
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadSummary();
+      
+      // Добавить слушатель изменения языка
+      final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
+      localeProvider.addListener(_loadSummary);
+    });
+  }
+
+  void _loadSummary() {
+    final summaryProvider = Provider.of<SummaryProvider>(context, listen: false);
+    final testProvider = Provider.of<TestProvider>(context, listen: false);
+    final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
+
+    // Всегда пересчитываем саммари с текущим языком
+    summaryProvider.refreshSummary(testProvider.completedTests, localeProvider.languageCode);
+  }
+
+  @override
+  void dispose() {
+    // Удалить слушатель при уничтожении виджета
+    try {
+      final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
+      localeProvider.removeListener(_loadSummary);
+    } catch (e) {
+      // Игнорируем ошибки при очистке
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<LocaleProvider>(
+      builder: (context, localeProvider, child) {
+        final languageCode = localeProvider.languageCode;
+        final brightness = Theme.of(context).brightness;
+        final isDark = brightness == Brightness.dark;
+        final themeColor = Theme.of(context).primaryColor;
+
+        // Слушаем изменения языка только один раз в initState
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(languageCode == 'ru' ? 'Общее саммари' : 'Overall Summary'),
+            backgroundColor: themeColor,
+            foregroundColor: ThemeUtils.getAppBarForegroundColor(themeColor, brightness),
+            elevation: 0,
+            actions: [
+              IconButton(
+                icon: Icon(_showDetails ? Icons.visibility_off : Icons.visibility),
+                onPressed: () {
+                  setState(() {
+                    _showDetails = !_showDetails;
+                  });
+                },
+                tooltip: languageCode == 'ru' ? 'Подробности' : 'Details',
+              ),
+              IconButton(
+                icon: const Icon(Icons.code),
+                onPressed: () => _showDebugData(context),
+                tooltip: 'Debug: Export JSON',
+              ),
+            ],
+          ),
+          body: Consumer<SummaryProvider>(
+        builder: (context, summaryProvider, child) {
+          if (summaryProvider.isLoading || summaryProvider.isCalculating) {
+            return _buildLoadingState(languageCode, isDark);
+          }
+
+          if (!summaryProvider.hasSummary) {
+            return _buildNoSummaryState(languageCode, isDark);
+          }
+
+          return _buildSummaryContent(summaryProvider, languageCode, isDark);
+        },
+      ),
+    );
+      },
+    );
+  }
+
+  Widget _buildLoadingState(String languageCode, bool isDark) {
+    final themeColor = Theme.of(context).primaryColor;
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: isDark
+              ? [themeColor.withOpacity(0.8), themeColor.withOpacity(0.4), AppColors.darkBackground]
+              : [AppColors.getLighterShade(themeColor, 0.4), Colors.white.withOpacity(0.95), Colors.white],
+          stops: const [0.0, 0.5, 1.0],
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(height: 20),
+            Text(
+              languageCode == 'ru' ? 'Рассчитываем саммари...' : 'Calculating summary...',
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNoSummaryState(String languageCode, bool isDark) {
+    final themeColor = Theme.of(context).primaryColor;
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: isDark
+              ? [themeColor.withOpacity(0.8), themeColor.withOpacity(0.4), AppColors.darkBackground]
+              : [AppColors.getLighterShade(themeColor, 0.4), Colors.white.withOpacity(0.95), Colors.white],
+          stops: const [0.0, 0.5, 1.0],
+        ),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.analytics_outlined,
+                size: 80,
+                color: isDark ? Colors.grey[400] : Colors.grey,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                languageCode == 'ru' ? 'Недостаточно данных' : 'Insufficient data',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                languageCode == 'ru'
+                    ? 'Пройдите хотя бы 2 теста, чтобы получить персональное саммари'
+                    : 'Take at least 2 tests to get a personal summary',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: isDark ? Colors.grey[300] : Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 40),
+              Builder(
+                builder: (context) {
+                  final themeColor = Theme.of(context).primaryColor;
+                  return ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: themeColor,
+                      foregroundColor: ThemeUtils.getButtonTextColor(themeColor),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 15,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                    child: Text(
+                      languageCode == 'ru' ? 'Пройти тесты' : 'Take tests',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSummaryContent(SummaryProvider summaryProvider, String languageCode, bool isDark) {
+    final themeColor = Theme.of(context).primaryColor;
+    final summary = summaryProvider.currentSummary!;
+    final axisScores = summaryProvider.getAllAxisScores();
+    final statistics = summaryProvider.getTestStatistics();
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: isDark
+              ? [themeColor.withOpacity(0.8), themeColor.withOpacity(0.4), AppColors.darkBackground]
+              : [AppColors.getLighterShade(themeColor, 0.4), Colors.white.withOpacity(0.95), Colors.white],
+          stops: const [0.0, 0.5, 1.0],
+        ),
+      ),
+      child: Consumer<TestProvider>(
+        builder: (context, testProvider, child) {
+          return ListView(
+            padding: const EdgeInsets.all(20),
+            children: [
+              // Заголовок с уверенностью
+              _buildHeader(summary, statistics, languageCode, isDark),
+              const SizedBox(height: 20),
+
+              // НОВОЕ: Секция типа личности 16 типов
+              _buildPersonalityTypeSection(testProvider, languageCode, isDark),
+              const SizedBox(height: 20),
+
+              // NEW v2: Hierarchical categories (if available)
+              _buildHierarchicalScales(summaryProvider, languageCode, isDark),
+              const SizedBox(height: 20),
+
+          // OLD v1: Визуализация (радар + мини-шкалы) - показываем только если нет v2 данных
+          if (summaryProvider.getHierarchicalCategories().isEmpty)
+            ...[
+              SummaryVisualization(
+                axisScores: axisScores,
+                languageCode: languageCode,
+                radarSize: 220,
+              ),
+              const SizedBox(height: 20),
+            ],
+
+          // Текстовое саммари
+          _buildSummaryText(summary, languageCode, isDark),
+          const SizedBox(height: 20),
+
+          // Советы
+          _buildAdviceSection(summary, languageCode, isDark),
+          const SizedBox(height: 20),
+
+          // Сильные стороны и зоны развития
+          _buildStrengthsAndAreas(summary, languageCode, isDark),
+          const SizedBox(height: 20),
+
+          // Подробности (если включены)
+          if (_showDetails) ...[
+            _buildDetailsSection(summary, languageCode, isDark),
+            const SizedBox(height: 20),
+          ],
+
+          // Кнопка обновления
+          _buildRefreshButton(languageCode, isDark),
+          const SizedBox(height: 40),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildHeader(SummaryData summary, TestStatistics statistics, String languageCode, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.insights,
+                  color: Theme.of(context).primaryColor,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 15),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      languageCode == 'ru' ? 'Личностный профиль' : 'Personality Profile',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      statistics.getDescription(languageCode),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: _getConfidenceColor(summary.confidence).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: _getConfidenceColor(summary.confidence),
+                    width: 1,
+                  ),
+                ),
+                child: Text(
+                  summary.confidence.getLocalizedName(languageCode),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: _getConfidenceColor(summary.confidence),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (summary.confidence == ConfidenceLevel.low) ...[
+            const SizedBox(height: 15),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.amber.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.amber, width: 1),
+              ),
+              child: Text(
+                summary.confidence.getDescription(languageCode),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.amber,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSummaryText(SummaryData summary, String languageCode, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.description,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                languageCode == 'ru' ? 'О вас' : 'About you',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          Text(
+            summary.summaryText,
+            style: TextStyle(
+              fontSize: 16,
+              height: 1.6,
+              color: Theme.of(context).textTheme.bodyLarge?.color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAdviceSection(SummaryData summary, String languageCode, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.lightbulb,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                languageCode == 'ru' ? 'Рекомендации' : 'Recommendations',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          ...summary.advice.map((advice) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  margin: const EdgeInsets.only(top: 8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    advice,
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.5,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStrengthsAndAreas(SummaryData summary, String languageCode, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            languageCode == 'ru' ? 'Ключевые аспекты' : 'Key aspects',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          const SizedBox(height: 15),
+          Row(
+            children: [
+              // Сильные стороны
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.green,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            languageCode == 'ru' ? 'Сильные стороны' : 'Strengths',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    ...summary.strengths.map((strength) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        '• $strength',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                        ),
+                      ),
+                    )),
+                  ],
+                ),
+              ),
+              Container(
+                width: 1,
+                height: 100,
+                color: Colors.grey.withOpacity(0.3),
+              ),
+              const SizedBox(width: 20),
+              // Зоны развития
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.trending_up,
+                          color: Colors.orange,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            languageCode == 'ru' ? 'Зоны развития' : 'Development areas',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    ...summary.developmentAreas.map((area) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        '• $area',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                        ),
+                      ),
+                    )),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailsSection(SummaryData summary, String languageCode, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.info,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                languageCode == 'ru' ? 'На основе тестов' : 'Based on tests',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          ...summary.testInfluences.map((influence) => Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  influence.testName,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  languageCode == 'ru'
+                      ? 'Влияние: ${(influence.totalInfluence * 100).round()}% • Затронуто шкал: ${influence.influencedAxes.length}'
+                      : 'Influence: ${(influence.totalInfluence * 100).round()}% • Axes affected: ${influence.influencedAxes.length}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          )),
+        ],
+      ),
+    );
+  }
+
+  /// NEW v2: Build hierarchical categories with expandable subscales
+  Widget _buildHierarchicalScales(SummaryProvider summaryProvider, String languageCode, bool isDark) {
+    final categories = summaryProvider.getHierarchicalCategories(includeEmpty: _showAllScales);
+
+    if (categories.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Calculate total measured vs unmeasured scales
+    final totalMeasured = categories.fold<int>(0, (sum, cat) => sum + cat.measuredCount);
+    final totalScales = categories.fold<int>(0, (sum, cat) => sum + cat.totalCount);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.psychology,
+                      color: Theme.of(context).primaryColor,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        languageCode == 'ru' ? 'Психологический профиль' : 'Psychological Profile',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text(
+                      languageCode == 'ru'
+                          ? 'Измерено: $totalMeasured из $totalScales шкал'
+                          : 'Measured: $totalMeasured of $totalScales scales',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    const Spacer(),
+                    // Toggle button for showing all scales
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          _showAllScales = !_showAllScales;
+                        });
+                      },
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: _showAllScales
+                              ? Theme.of(context).primaryColor.withOpacity(0.1)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Theme.of(context).primaryColor.withOpacity(0.3),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              _showAllScales ? Icons.visibility_off : Icons.visibility,
+                              size: 16,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              languageCode == 'ru'
+                                  ? (_showAllScales ? 'Скрыть пустые' : 'Показать все')
+                                  : (_showAllScales ? 'Hide empty' : 'Show all'),
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+
+          // Categories list
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: categories.length,
+            separatorBuilder: (context, index) => const Divider(height: 1, indent: 16),
+            itemBuilder: (context, index) {
+              final categoryData = categories[index];
+              return _buildCategoryTile(categoryData, languageCode, isDark);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryTile(CategoryScoreData categoryData, String languageCode, bool isDark) {
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        leading: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: categoryData.category.color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            categoryData.category.icon,
+            color: categoryData.category.color,
+            size: 20,
+          ),
+        ),
+        title: Text(
+          categoryData.category.getName(languageCode),
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        subtitle: Text(
+          _showAllScales
+              ? '${categoryData.measuredCount}/${categoryData.totalCount} ${languageCode == 'ru' ? 'измерено' : 'measured'}'
+              : '${categoryData.subscales.length} ${languageCode == 'ru' ? 'шкал' : 'scales'}',
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey[600],
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: categoryData.getScoreColor().withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: categoryData.getScoreColor().withOpacity(0.3),
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                categoryData.getScoreText(),
+                style: TextStyle(
+                  color: categoryData.getScoreColor(),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Icon(
+              Icons.expand_more,
+              color: Colors.grey[600],
+            ),
+          ],
+        ),
+        // OPTIMIZATION: Build subscales lazily using ListView.builder
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: categoryData.subscales.length,
+            itemBuilder: (context, index) {
+              return _buildSubscaleTile(
+                categoryData.subscales[index],
+                languageCode,
+                isDark,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubscaleTile(ScaleScoreData subscaleData, String languageCode, bool isDark) {
+    // If no data for this scale
+    if (!subscaleData.hasData) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 72, vertical: 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                subscaleData.getName(languageCode),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[500],
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              languageCode == 'ru' ? 'Нет данных' : 'No data',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[500],
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 45,
+              child: Text(
+                '—',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[400],
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // OPTIMIZATION: Build subscale tile without fetching question contributions upfront
+    // Only fetch them when the ExpansionTile is expanded
+    return _SubscaleExpansionTile(
+      subscaleData: subscaleData,
+      languageCode: languageCode,
+      isDark: isDark,
+    );
+  }
+
+  Widget _buildScoreBar(ScaleScoreData subscaleData) {
+    // Calculate width factor safely
+    final widthFactor = (subscaleData.hasData && subscaleData.score != null)
+        ? subscaleData.score!.score / 100
+        : 0.0;
+
+    return SizedBox(
+      width: 80,
+      child: Stack(
+        children: [
+          Container(
+            height: 8,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          if (widthFactor > 0)
+            FractionallySizedBox(
+              widthFactor: widthFactor,
+              child: Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: subscaleData.getScoreColor(),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScoreText(ScaleScoreData subscaleData) {
+    return SizedBox(
+      width: 45,
+      child: Text(
+        subscaleData.getScoreText(),
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: subscaleData.getScoreColor(),
+        ),
+        textAlign: TextAlign.right,
+      ),
+    );
+  }
+
+  Widget _buildTestContributions(
+    String testId,
+    List<QuestionContribution> contributions,
+    String languageCode,
+    bool isDark,
+  ) {
+    // Get test name
+    final testNames = {
+      'ipip_big_five': {'ru': 'Большая пятерка IPIP', 'en': 'IPIP Big Five'},
+      'fisher_temperament': {'ru': 'Темперамент Фишера', 'en': 'Fisher Temperament'},
+      'love_profile': {'ru': 'Профиль любви', 'en': 'Love Profile'},
+      'stress_test': {'ru': 'Тест на стресс', 'en': 'Stress Test'},
+      'self_esteem_test': {'ru': 'Самооценка', 'en': 'Self-Esteem'},
+    };
+    final testName = testNames[testId]?[languageCode] ?? testId;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8, top: 4),
+          child: Text(
+            testName,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[700],
+            ),
+          ),
+        ),
+        ...contributions.map((contribution) {
+          return _buildQuestionContribution(contribution, languageCode, isDark);
+        }).toList(),
+        const SizedBox(height: 8),
+      ],
+    );
+  }
+
+  Widget _buildQuestionContribution(
+    QuestionContribution contribution,
+    String languageCode,
+    bool isDark,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.grey[800] : Colors.grey[50],
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            contribution.getQuestionText(languageCode),
+            style: TextStyle(
+              fontSize: 11,
+              color: isDark ? Colors.grey[300] : Colors.grey[800],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Text(
+                languageCode == 'ru' ? 'Ответ:' : 'Answer:',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                '${contribution.answerScore}/${contribution.maxAnswerScore}',
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                languageCode == 'ru' ? 'Вес:' : 'Weight:',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                contribution.weight.toStringAsFixed(1),
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '${contribution.answerPercentage.round()}%',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: contribution.answerPercentage >= 70
+                      ? Colors.green
+                      : contribution.answerPercentage >= 50
+                          ? Colors.orange
+                          : Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRefreshButton(String languageCode, bool isDark) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton.icon(
+        onPressed: () async {
+          final summaryProvider = Provider.of<SummaryProvider>(context, listen: false);
+          final testProvider = Provider.of<TestProvider>(context, listen: false);
+          final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
+
+          await summaryProvider.refreshSummary(testProvider.completedTests, localeProvider.languageCode);
+
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  languageCode == 'ru' ? 'Саммари обновлено' : 'Summary updated',
+                ),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        },
+        icon: const Icon(Icons.refresh),
+        label: Text(languageCode == 'ru' ? 'Обновить саммари' : 'Update summary'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Color _getConfidenceColor(ConfidenceLevel confidence) {
+    switch (confidence) {
+      case ConfidenceLevel.high:
+        return Colors.green;
+      case ConfidenceLevel.medium:
+        return Colors.orange;
+      case ConfidenceLevel.low:
+        return Colors.amber;
+    }
+  }
+
+  void _showDebugData(BuildContext context) {
+    final summaryProvider = Provider.of<SummaryProvider>(context, listen: false);
+    final testProvider = Provider.of<TestProvider>(context, listen: false);
+    final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
+
+    // Собираем данные для экспорта
+    final debugData = {
+      'language': localeProvider.languageCode,
+      'timestamp': DateTime.now().toIso8601String(),
+      'completedTests': testProvider.completedTests.map((test) {
+        return {
+          'testId': test.testId,
+          'totalScore': test.totalScore,
+          'maxScore': test.maxScore,
+          'percentage': test.percentage,
+          'completedAt': test.completedAt.toIso8601String(),
+          'factorScores': test.factorScores?.map((key, value) => MapEntry(key, {
+            'factorId': value.factorId,
+            'score': value.score,
+            'maxScore': value.maxScore,
+            'percentage': value.percentage,
+          })),
+        };
+      }).toList(),
+      'summary': summaryProvider.currentSummary != null ? {
+        'axisScores': summaryProvider.currentSummary!.axisScores.map((key, value) => MapEntry(key, {
+          'axisId': value.axisId,
+          'score': value.score,
+          'rawScore': value.rawScore,
+          'confidence': value.confidence,
+          'contributions': value.contributions.map((c) => {
+            'testId': c.testId,
+            'testName': c.testName,
+            'scale': c.scale,
+            'score': c.score,
+            'weight': c.weight,
+            'direction': c.direction,
+            'contribution': c.contribution,
+          }).toList(),
+        })),
+        'confidence': summaryProvider.currentSummary!.confidence.name,
+        'strengths': summaryProvider.currentSummary!.strengths,
+        'developmentAreas': summaryProvider.currentSummary!.developmentAreas,
+      } : null,
+      'config': {
+        'testMappings': SummaryConfig.testMappings.map((testId, mappings) => MapEntry(testId, mappings.map((m) => {
+          'scale': m.scale,
+          'targetAxis': m.targetAxis,
+          'weight': m.weight,
+          'direction': m.direction,
+        }).toList())),
+      },
+    };
+
+    final jsonString = const JsonEncoder.withIndent('  ').convert(debugData);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.bug_report, color: Colors.orange),
+            SizedBox(width: 8),
+            Text('Debug Data Export'),
+          ],
+        ),
+        content: Container(
+          width: double.maxFinite,
+          constraints: const BoxConstraints(maxHeight: 500),
+          child: SingleChildScrollView(
+            child: SelectableText(
+              jsonString,
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: jsonString));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('JSON copied to clipboard!'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
+            icon: const Icon(Icons.copy),
+            label: const Text('Copy JSON'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Optimized subscale tile that loads question contributions only when expanded
+class _SubscaleExpansionTile extends StatefulWidget {
+  final ScaleScoreData subscaleData;
+  final String languageCode;
+  final bool isDark;
+
+  const _SubscaleExpansionTile({
+    required this.subscaleData,
+    required this.languageCode,
+    required this.isDark,
+  });
+
+  @override
+  State<_SubscaleExpansionTile> createState() => _SubscaleExpansionTileState();
+}
+
+class _SubscaleExpansionTileState extends State<_SubscaleExpansionTile> {
+  Map<String, List<QuestionContribution>>? _questionContributions;
+  bool _hasLoadedContributions = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 4),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          childrenPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+          onExpansionChanged: (expanded) {
+            // Load question contributions when expanded (lazy loading)
+            if (expanded && !_hasLoadedContributions) {
+              setState(() {
+                final summaryProvider = Provider.of<SummaryProvider>(context, listen: false);
+                _questionContributions = summaryProvider.getQuestionContributions(widget.subscaleData.scaleId);
+                _hasLoadedContributions = true;
+              });
+            }
+          },
+          title: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  widget.subscaleData.getName(widget.languageCode),
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              const SizedBox(width: 12),
+              _buildScoreBar(widget.subscaleData),
+              const SizedBox(width: 8),
+              _buildScoreText(widget.subscaleData),
+            ],
+          ),
+          children: [
+            if (_hasLoadedContributions && _questionContributions != null && _questionContributions!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _questionContributions!.entries.map((entry) {
+                    return _buildTestContributions(
+                      entry.key,
+                      entry.value,
+                      widget.languageCode,
+                      widget.isDark,
+                    );
+                  }).toList(),
+                ),
+              )
+            else if (_hasLoadedContributions && (_questionContributions == null || _questionContributions!.isEmpty))
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  widget.languageCode == 'ru'
+                    ? 'Нет данных о вопросах'
+                    : 'No question data available',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildScoreBar(ScaleScoreData subscaleData) {
+    final widthFactor = (subscaleData.hasData && subscaleData.score != null)
+        ? subscaleData.score!.score / 100
+        : 0.0;
+
+    return SizedBox(
+      width: 80,
+      child: Stack(
+        children: [
+          Container(
+            height: 8,
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          if (widthFactor > 0)
+            FractionallySizedBox(
+              widthFactor: widthFactor,
+              child: Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: subscaleData.getScoreColor(),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScoreText(ScaleScoreData subscaleData) {
+    return SizedBox(
+      width: 45,
+      child: Text(
+        subscaleData.getScoreText(),
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: subscaleData.getScoreColor(),
+        ),
+        textAlign: TextAlign.right,
+      ),
+    );
+  }
+
+  Widget _buildTestContributions(
+    String testId,
+    List<QuestionContribution> contributions,
+    String languageCode,
+    bool isDark,
+  ) {
+    final testNames = {
+      'ipip_big_five': {'ru': 'Большая пятерка IPIP', 'en': 'IPIP Big Five'},
+      'fisher_temperament': {'ru': 'Темперамент Фишера', 'en': 'Fisher Temperament'},
+      'love_profile': {'ru': 'Профиль любви', 'en': 'Love Profile'},
+      'stress_test': {'ru': 'Тест на стресс', 'en': 'Stress Test'},
+      'self_esteem_test': {'ru': 'Самооценка', 'en': 'Self-Esteem'},
+    };
+    final testName = testNames[testId]?[languageCode] ?? testId;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8, top: 4),
+          child: Text(
+            testName,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[700],
+            ),
+          ),
+        ),
+        ...contributions.map((contribution) {
+          return _buildQuestionContribution(contribution, languageCode, isDark);
+        }).toList(),
+        const SizedBox(height: 8),
+      ],
+    );
+  }
+
+  Widget _buildQuestionContribution(
+    QuestionContribution contribution,
+    String languageCode,
+    bool isDark,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.grey[800] : Colors.grey[50],
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            contribution.getQuestionText(languageCode),
+            style: TextStyle(
+              fontSize: 11,
+              color: isDark ? Colors.grey[300] : Colors.grey[800],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Text(
+                languageCode == 'ru' ? 'Ответ:' : 'Answer:',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                '${contribution.answerScore}/${contribution.maxAnswerScore}',
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                languageCode == 'ru' ? 'Вес:' : 'Weight:',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                contribution.weight.toStringAsFixed(1),
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '${contribution.answerPercentage.round()}%',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                  color: contribution.answerPercentage >= 70
+                      ? Colors.green
+                      : contribution.answerPercentage >= 50
+                          ? Colors.orange
+                          : Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

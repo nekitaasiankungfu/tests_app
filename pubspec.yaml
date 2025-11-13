@@ -1,0 +1,31 @@
+name: psycho_app
+description: Приложение с психологическими тестами для iOS и Android
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  logger: ^2.0.2
+  share_plus: ^7.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Test JSON files (only for legacy tests that still use JSON)
+  assets:
+    - assets/tests/stress_test.json
+    - assets/tests/self_esteem_test.json
