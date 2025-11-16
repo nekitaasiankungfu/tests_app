@@ -12,6 +12,8 @@ import '../config/summary/question_weights/temperament_profile_test_weights.dart
 import '../config/summary/question_weights/digital_detox_weights.dart';
 import '../config/summary/question_weights/burnout_diagnostic_weights.dart';
 import '../config/summary/question_weights/social_battery_weights.dart';
+import '../config/summary/question_weights/disc_personality_weights.dart';
+import '../config/summary/question_weights/holland_code_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -121,6 +123,8 @@ class SummaryService {
       ...SimpleTestsWeights.weights,
       ...SixteenTypesWeights.weights,
       ...TemperamentProfileTestWeights.weights,
+      ...DISCPersonalityWeights.weights,
+      ...HollandCodeWeights.weights,
     };
 
     // 8 personality type scales
@@ -495,6 +499,8 @@ class SummaryService {
       ...DigitalDetoxWeights.weights,
       ...BurnoutDiagnosticWeights.weights,
       ...SocialBatteryWeights.weights,
+      ...DISCPersonalityWeights.weights,
+      ...HollandCodeWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

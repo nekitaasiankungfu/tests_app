@@ -9,6 +9,8 @@ import 'tests/temperament_profile_test.dart';
 import 'tests/digital_detox_test.dart';
 import 'tests/burnout_diagnostic_test.dart';
 import 'tests/social_battery_test.dart';
+import 'tests/disc_personality_test.dart';
+import 'tests/holland_code_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -44,9 +46,13 @@ class TestRegistry {
     LoveProfileTest(),
 
     // Temperament/Personality
+    DISCPersonalityTest(),
     FisherTemperamentTest(),
     TemperamentProfileTest(),
     SocialBatteryTest(),
+
+    // Career/Vocational
+    HollandCodeTest(),
 
     // Emotional/Wellbeing
     DigitalDetoxTest(),

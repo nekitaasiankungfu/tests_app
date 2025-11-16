@@ -13,6 +13,8 @@ import '../data/temperament_profile_test_data.dart';
 import '../data/digital_detox_data.dart' as digital_detox;
 import '../data/burnout_diagnostic_data.dart' as burnout;
 import '../data/social_battery_data.dart';
+import '../data/disc_personality_data.dart';
+import '../data/holland_code_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -118,6 +120,12 @@ class TestLoaderService {
         break;
       case 'social_battery_v1':
         test = SocialBatteryData.getSocialBatteryTest();
+        break;
+      case 'disc_personality_v1':
+        test = DISCPersonalityData.getDISCPersonalityTest();
+        break;
+      case 'holland_code_v1':
+        test = HollandCodeData.getHollandCodeTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

@@ -24,6 +24,8 @@ import '../data/temperament_profile_test_data.dart';
 import '../data/digital_detox_data.dart' as digital_detox;
 import '../data/burnout_diagnostic_data.dart' as burnout;
 import '../data/social_battery_data.dart';
+import '../data/disc_personality_data.dart';
+import '../data/holland_code_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -64,6 +66,12 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
         break;
       case 'social_battery_v1':
         testModel = SocialBatteryData.getSocialBatteryTest();
+        break;
+      case 'disc_personality_v1':
+        testModel = DISCPersonalityData.getDISCPersonalityTest();
+        break;
+      case 'holland_code_v1':
+        testModel = HollandCodeData.getHollandCodeTest();
         break;
       default:
         appLogger.w('Unknown testId: $testId');
@@ -2561,6 +2569,12 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
           break;
         case 'social_battery_v1':
           testModel = SocialBatteryData.getSocialBatteryTest();
+          break;
+        case 'disc_personality_v1':
+          testModel = DISCPersonalityData.getDISCPersonalityTest();
+          break;
+        case 'holland_code_v1':
+          testModel = HollandCodeData.getHollandCodeTest();
           break;
         default:
           appLogger.w('Unknown testId: $testId');

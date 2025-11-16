@@ -81,9 +81,23 @@ class TestCategories {
     order: 4,
   );
 
+  static const career = TestCategory(
+    id: 'career',
+    name: {
+      'ru': 'Карьера и профориентация',
+      'en': 'Career and Vocational Guidance',
+    },
+    description: {
+      'ru': 'Тесты для выбора карьеры и профессиональной ориентации',
+      'en': 'Tests for career choice and professional orientation',
+    },
+    icon: '💼',
+    order: 5,
+  );
+
   /// Get all categories in order
   static List<TestCategory> getAll() {
-    final categories = [personality, temperament, relationships, emotional];
+    final categories = [personality, temperament, relationships, emotional, career];
     categories.sort((a, b) => a.order.compareTo(b.order));
     return categories;
   }
@@ -99,6 +113,8 @@ class TestCategories {
         return relationships;
       case 'emotional':
         return emotional;
+      case 'career':
+        return career;
       default:
         return null;
     }

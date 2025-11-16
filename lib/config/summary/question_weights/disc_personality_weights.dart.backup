@@ -1,0 +1,760 @@
+import 'question_weight_models.dart';
+
+/// DISC Personality Test Question Weights
+///
+/// Maps 56 DISC questions to psychological scales
+/// Based on William Marston's DISC Theory (1928)
+///
+/// Test structure:
+/// - 56 questions total
+/// - 14 questions per factor (D, I, S, C)
+/// - Alternating question order (D-I-S-C cycle)
+///
+/// IMPORTANT NOTES:
+/// 1. All scores are 0-4 (NOT 1-5) per RULE #1
+/// 2. No negative weights for Personality Type scales per RULE #2
+/// 3. Direction auto-detected from weight sign per RULE #3
+/// 4. Only existing scales from hierarchical_scales.dart per RULE #6
+class DISCPersonalityWeights {
+  static final Map<String, QuestionWeight> weights = {
+    // === DOMINANCE QUESTIONS (14) ===
+    // Q1, Q5, Q9, Q13, Q17, Q21, Q25, Q29, Q33, Q37, Q41, Q45, Q49, Q53
+
+    // Q1: "Я прямо говорю людям, что думаю, даже если это может их обидеть"
+    'disc_personality_v1:q1': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q1',
+      axisWeights: {
+        'dominance': 1.2, // Прямолинейность
+        'assertiveness': 1.0, // Ассертивность
+        'agreeableness': -0.7, // Низкая приятность
+        'diplomacy': -0.6, // Низкая дипломатичность
+        'extraversion': 0.4, // Экстраверсия
+      },
+    ),
+
+    // Q5: "Я люблю конкуренцию и стремлюсь побеждать"
+    'disc_personality_v1:q5': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q5',
+      axisWeights: {
+        'dominance': 1.3, // Доминантность
+        'achievement_striving': 1.2, // Стремление к достижениям (конкурентность)
+        'achievement_striving': 0.9, // Стремление к достижениям
+        'ambition': 1.0, // Амбициозность
+        'aggression': 0.5, // Агрессивность
+      },
+    ),
+
+    // Q9: "Я быстро принимаю решения и действую решительно"
+    'disc_personality_v1:q9': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q9',
+      axisWeights: {
+        'dominance': 1.1,
+        'decisiveness': 1.3, // Решительность
+        'impulsiveness': 0.6, // Импульсивность (средняя связь)
+        'deliberation': -0.7, // Низкая обдуманность
+        'self_confidence': 0.8, // Уверенность в себе
+      },
+    ),
+
+    // Q13: "Я предпочитаю брать на себя ответственность и контроль"
+    'disc_personality_v1:q13': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q13',
+      axisWeights: {
+        'dominance': 1.3,
+        'leadership': 1.2, // Лидерство
+        'responsibility': 1.0, // Ответственность
+        'control_need': 0.9, // Потребность в контроле
+        'independence': 0.7, // Независимость
+      },
+    ),
+
+    // Q17: "Я фокусируюсь на результатах, а не на процессе"
+    'disc_personality_v1:q17': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q17',
+      axisWeights: {
+        'dominance': 1.0,
+        'goal_orientation': 1.2, // Ориентация на цели
+        'achievement_striving': 1.0,
+        'patience': -0.6, // Низкое терпение к процессу
+        'thinking': 0.5, // Мыслящий тип (результаты > процесс)
+      },
+    ),
+
+    // Q21: "Я предпочитаю действовать, а не обсуждать"
+    'disc_personality_v1:q21': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q21',
+      axisWeights: {
+        'dominance': 1.1,
+        'action_orientation': 1.2, // Ориентация на действие
+        'impulsiveness': 0.5,
+        'deliberation': -0.8, // Низкая обдуманность
+        'introversion': 0.4, // Может быть интровертированным действием
+      },
+    ),
+
+    // Q25: "Я не боюсь вызовов и люблю сложные задачи"
+    'disc_personality_v1:q25': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q25',
+      axisWeights: {
+        'dominance': 1.2,
+        'risk_taking': 1.0, // Принятие рисков
+        'courage': 1.1, // Смелость
+        'challenge_seeking': 1.2, // Поиск вызовов
+        'fear': -0.7, // Низкий страх
+      },
+    ),
+
+    // Q29: "Я предпочитаю быстрый темп работы и люблю многозадачность"
+    'disc_personality_v1:q29': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q29',
+      axisWeights: {
+        'dominance': 1.0,
+        'activity': 1.2, // Активность
+        'energy': 1.0, // Энергия
+        'multitasking': 1.1, // Многозадачность
+        'patience': -0.6, // Низкое терпение
+      },
+    ),
+
+    // Q33: "Я не против идти против течения и оспаривать статус-кво"
+    'disc_personality_v1:q33': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q33',
+      axisWeights: {
+        'dominance': 1.2,
+        'independence': 1.1, // Независимость
+        'rebelliousness': 0.9, // Бунтарство
+        'conformity': -1.0, // Низкий конформизм
+        'openness': 0.6, // Открытость новому
+      },
+    ),
+
+    // Q37: "Я напорист(а) и настойчив(а) в достижении целей"
+    'disc_personality_v1:q37': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q37',
+      axisWeights: {
+        'dominance': 1.2,
+        'persistence': 1.3, // Настойчивость
+        'assertiveness': 1.1,
+        'determination': 1.2, // Целеустремленность
+        'self_discipline': 0.7, // Самодисциплина
+      },
+    ),
+
+    // Q41: "Я независим(а) и предпочитаю работать автономно"
+    'disc_personality_v1:q41': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q41',
+      axisWeights: {
+        'dominance': 1.0,
+        'independence': 1.3, // Независимость
+        'autonomy': 1.2, // Автономия
+        'introversion': 0.6, // Интроверсия
+        'gregariousness': -0.7, // Низкая общительность
+      },
+    ),
+
+    // Q45: "Я уверен(а) в себе и решителен(льна)"
+    'disc_personality_v1:q45': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q45',
+      axisWeights: {
+        'dominance': 1.3,
+        'self_confidence': 1.3, // Уверенность в себе
+        'decisiveness': 1.2,
+        'self_efficacy': 1.1, // Самоэффективность
+        'anxiety': -0.6, // Низкая тревожность
+      },
+    ),
+
+    // Q49: "Я люблю власть и влияние на решения"
+    'disc_personality_v1:q49': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q49',
+      axisWeights: {
+        'dominance': 1.4, // Очень высокая доминантность
+        'power_motivation': 1.3, // Мотивация власти
+        'control_need': 1.2,
+        'leadership': 1.0,
+        'influence_motivation': 1.1, // Мотивация влияния
+      },
+    ),
+
+    // Q53: "Я конфронтационен(на) и не боюсь споров"
+    'disc_personality_v1:q53': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q53',
+      axisWeights: {
+        'dominance': 1.3,
+        'assertiveness': 1.2,
+        'conflict_orientation': 1.1, // Ориентация на конфликт
+        'agreeableness': -0.9, // Низкая приятность
+        'aggression': 0.7,
+      },
+    ),
+
+    // === INFLUENCE QUESTIONS (14) ===
+    // Q2, Q6, Q10, Q14, Q18, Q22, Q26, Q30, Q34, Q38, Q42, Q46, Q50, Q54
+
+    // Q2: "Я легко завожу новые знакомства и люблю быть в центре внимания"
+    'disc_personality_v1:q2': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q2',
+      axisWeights: {
+        'gregariousness': 1.3, // Общительность
+        'warmth': 1.1, // Теплота
+        'attention_seeking': 1.2, // Поиск внимания
+        'extraversion': 1.3, // Экстраверсия
+        'social_confidence': 1.0,
+      },
+    ),
+
+    // Q6: "Я энтузиаст и легко вдохновляю других людей"
+    'disc_personality_v1:q6': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q6',
+      axisWeights: {
+        'positive_emotions': 1.3, // Позитивные эмоции
+        'enthusiasm': 1.4, // Энтузиазм
+        'charisma': 1.2, // Харизма
+        'inspiration': 1.1, // Вдохновение
+        'extraversion': 1.0,
+      },
+    ),
+
+    // Q10: "Я оптимист и вижу лучшее в людях и ситуациях"
+    'disc_personality_v1:q10': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q10',
+      axisWeights: {
+        'optimism': 1.4, // Оптимизм
+        'positive_emotions': 1.2,
+        'trust': 1.0, // Доверие
+        'depression': -0.8, // Низкая депрессивность
+        'anxiety': -0.5, // Низкая тревожность
+      },
+    ),
+
+    // Q14: "Я общительный(ая) и легко налаживаю контакт с незнакомцами"
+    'disc_personality_v1:q14': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q14',
+      axisWeights: {
+        'gregariousness': 1.3,
+        'social_boldness': 1.2, // Социальная смелость
+        'warmth': 1.0,
+        'extraversion': 1.2,
+        'social_anxiety': -0.8, // Низкая социальная тревожность
+      },
+    ),
+
+    // Q18: "Я люблю работать с людьми и в команде"
+    'disc_personality_v1:q18': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q18',
+      axisWeights: {
+        'cooperation': 1.2, // Кооперация
+        'team_orientation': 1.3, // Ориентация на команду
+        'warmth': 1.0,
+        'extraversion': 0.9,
+        'independence': -0.5, // Низкая независимость
+      },
+    ),
+
+    // Q22: "Я убедителен(льна) и легко продаю свои идеи"
+    'disc_personality_v1:q22': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q22',
+      axisWeights: {
+        'persuasiveness': 1.3, // Убедительность
+        'charisma': 1.2,
+        'expressiveness': 1.1,
+        'assertiveness': 0.9,
+        'social_confidence': 1.0,
+      },
+    ),
+
+    // Q26: "Я выразителен(льна) и эмоционален(льна) в общении"
+    'disc_personality_v1:q26': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q26',
+      axisWeights: {
+        'expressiveness': 1.4, // Выразительность
+        'emotional_expressiveness': 1.3, // Эмоциональная выразительность
+        'extraversion': 1.0,
+        'feeling': 0.8, // Чувствующий тип
+        'emotional_awareness': 0.6, // Эмоциональная осведомленность
+      },
+    ),
+
+    // Q30: "Я дружелюбен(на) и легко создаю позитивную атмосферу"
+    'disc_personality_v1:q30': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q30',
+      axisWeights: {
+        'warmth': 1.3,
+        'positive_emotions': 1.2,
+        'agreeableness': 1.1, // Приятность
+        'empathy': 0.8,
+        'social_skills': 1.0, // Социальные навыки
+      },
+    ),
+
+    // Q34: "Я спонтанный(ая) и люблю импровизацию"
+    'disc_personality_v1:q34': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q34',
+      axisWeights: {
+        'spontaneity': 1.3, // Спонтанность
+        'impulsiveness': 0.8,
+        'flexibility': 1.0, // Гибкость
+        'perceiving': 1.0, // Воспринимающий тип
+        'orderliness': -0.7, // Низкая упорядоченность
+      },
+    ),
+
+    // Q38: "Я вдохновляю других и создаю энтузиазм"
+    'disc_personality_v1:q38': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q38',
+      axisWeights: {
+        'inspiration': 1.3,
+        'enthusiasm': 1.2,
+        'charisma': 1.2,
+        'positive_emotions': 1.1,
+        'leadership': 0.7, // Лидерство через вдохновение
+      },
+    ),
+
+    // Q42: "Я разговорчив(а) и люблю общаться"
+    'disc_personality_v1:q42': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q42',
+      axisWeights: {
+        'talkativeness': 1.3, // Разговорчивость
+        'gregariousness': 1.2,
+        'extraversion': 1.3,
+        'introversion': -1.0, // Очень низкая интроверсия
+        'expressiveness': 1.0,
+      },
+    ),
+
+    // Q46: "Я люблю веселиться и не принимаю всё слишком серьёзно"
+    'disc_personality_v1:q46': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q46',
+      axisWeights: {
+        'playfulness': 1.3, // Игривость
+        'humor': 1.2, // Чувство юмора
+        'positive_emotions': 1.1,
+        'seriousness': -0.9, // Низкая серьезность
+        'excitement_seeking': 1.0, // Поиск впечатлений
+      },
+    ),
+
+    // Q50: "Я доверяю людям и ожидаю лучшего от них"
+    'disc_personality_v1:q50': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q50',
+      axisWeights: {
+        'trust': 1.3,
+        'optimism': 1.1,
+        'agreeableness': 1.0,
+        'cynicism': -1.0, // Низкий цинизм
+        'suspiciousness': -0.8, // Низкая подозрительность
+      },
+    ),
+
+    // Q54: "Я эмоционально выразителен(льна) и показываю свои чувства"
+    'disc_personality_v1:q54': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q54',
+      axisWeights: {
+        'emotional_expressiveness': 1.4,
+        'expressiveness': 1.2,
+        'openness_to_emotions': 1.0, // Открытость эмоциям
+        'feeling': 0.9,
+        'emotional_awareness': 0.7,
+      },
+    ),
+
+    // === STEADINESS QUESTIONS (14) ===
+    // Q3, Q7, Q11, Q15, Q19, Q23, Q27, Q31, Q35, Q39, Q43, Q47, Q51, Q55
+
+    // Q3: "Я предпочитаю работать в стабильной, предсказуемой среде"
+    'disc_personality_v1:q3': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q3',
+      axisWeights: {
+        'need_for_stability': 1.3, // Потребность в стабильности
+        'routine_preference': 1.2, // Предпочтение рутины
+        'change_resistance': 0.9, // Сопротивление изменениям
+        'sensing': 0.7, // Сенсорный тип
+        'anxiety': 0.5, // Связь с тревожностью
+      },
+    ),
+
+    // Q7: "Я терпеливый(ая) слушатель и готов(а) помогать другим"
+    'disc_personality_v1:q7': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q7',
+      axisWeights: {
+        'patience': 1.3,
+        'empathy': 1.2,
+        'listening_skills': 1.2, // Навыки слушания
+        'altruism': 1.0, // Альтруизм
+        'agreeableness': 1.0,
+      },
+    ),
+
+    // Q11: "Я не люблю конфликты и стремлюсь к гармонии"
+    'disc_personality_v1:q11': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q11',
+      axisWeights: {
+        'conflict_avoidance': 1.3, // Избегание конфликтов
+        'harmony_seeking': 1.3, // Стремление к гармонии
+        'agreeableness': 1.1,
+        'peacefulness': 1.0, // Миролюбие
+        'assertiveness': -0.7, // Низкая ассертивность
+      },
+    ),
+
+    // Q15: "Я лоялен(льна) и ценю долгосрочные отношения"
+    'disc_personality_v1:q15': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q15',
+      axisWeights: {
+        'loyalty': 1.3, // Лояльность
+        'commitment': 1.2, // Обязательность
+        'stability_in_relationships': 1.1, // Стабильность в отношениях
+        'dutifulness': 1.0,
+        'trust': 0.8,
+      },
+    ),
+
+    // Q19: "Мне нужно время, чтобы привыкнуть к изменениям"
+    'disc_personality_v1:q19': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q19',
+      axisWeights: {
+        'change_resistance': 1.2,
+        'adaptability': -0.9, // Низкая адаптивность
+        'flexibility': -0.8, // Низкая гибкость
+        'cautiousness': 0.7, // Осторожность
+        'anxiety': 0.5,
+      },
+    ),
+
+    // Q23: "Я предпочитаю работать в размеренном темпе, без спешки"
+    'disc_personality_v1:q23': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q23',
+      axisWeights: {
+        'patience': 1.2,
+        'deliberation': 1.1,
+        'calmness': 1.0,
+        'activity': -0.8, // Низкая активность
+        'impulsiveness': -0.7, // Низкая импульсивность
+      },
+    ),
+
+    // Q27: "Я ценю безопасность и стабильность выше риска и новизны"
+    'disc_personality_v1:q27': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q27',
+      axisWeights: {
+        'need_for_security': 1.3, // Потребность в безопасности
+        'need_for_stability': 1.2,
+        'risk_taking': -1.0, // Низкое принятие рисков
+        'cautiousness': 1.0,
+        'conservatism': 0.8, // Консерватизм
+      },
+    ),
+
+    // Q31: "Я надёжный(ая) и люди могут на меня положиться"
+    'disc_personality_v1:q31': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q31',
+      axisWeights: {
+        'reliability': 1.3, // Надёжность
+        'dutifulness': 1.2,
+        'responsibility': 1.1,
+        'conscientiousness': 0.9,
+        'trust_inspiring': 1.0, // Вызывание доверия
+      },
+    ),
+
+    // Q35: "Я предсказуем(а) и последователен(льна) в своём поведении"
+    'disc_personality_v1:q35': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q35',
+      axisWeights: {
+        'consistency': 1.3, // Последовательность
+        'predictability': 1.2, // Предсказуемость
+        'routine_preference': 1.0,
+        'spontaneity': -0.8, // Низкая спонтанность
+        'flexibility': -0.6, // Низкая гибкость
+      },
+    ),
+
+    // Q39: "Я поддерживаю(ю) других и создаю комфортную среду"
+    'disc_personality_v1:q39': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q39',
+      axisWeights: {
+        'supportiveness': 1.3, // Поддержка
+        'empathy': 1.2,
+        'nurturance': 1.1, // Забота
+        'warmth': 1.0,
+        'agreeableness': 1.0,
+      },
+    ),
+
+    // Q43: "Я хороший(ая) командный(ая) игрок(ша) и кооперативен(на)"
+    'disc_personality_v1:q43': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q43',
+      axisWeights: {
+        'cooperation': 1.3,
+        'team_orientation': 1.2,
+        'agreeableness': 1.1,
+        'independence': -0.7, // Низкая независимость
+        'dominance': -0.5, // Низкая доминантность
+      },
+    ),
+
+    // Q47: "Я спокоен(йна) и эмоционально стабилен(льна)"
+    'disc_personality_v1:q47': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q47',
+      axisWeights: {
+        'calmness': 1.3,
+        'emotional_stability': 1.2, // Эмоциональная стабильность
+        'composure': 1.1,
+        'anxiety': -0.9, // Низкая тревожность
+        'emotional_reactivity': -0.7, // Низкая реактивность
+      },
+    ),
+
+    // Q51: "Я приспосабливаюсь к нуждам других и ставлю их выше своих"
+    'disc_personality_v1:q51': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q51',
+      axisWeights: {
+        'accommodation': 1.2, // Приспособление
+        'altruism': 1.3,
+        'selflessness': 1.1, // Бескорыстие
+        'assertiveness': -0.8, // Низкая ассертивность
+        'agreeableness': 1.2,
+      },
+    ),
+
+    // Q55: "Я консервативен(на) и осторожен(жна) с изменениями"
+    'disc_personality_v1:q55': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q55',
+      axisWeights: {
+        'conservatism': 1.3,
+        'change_resistance': 1.2,
+        'cautiousness': 1.1,
+        'openness': -0.8, // Низкая открытость
+        'tradition': 0.9, // Традиционализм
+      },
+    ),
+
+    // === CONSCIENTIOUSNESS QUESTIONS (14) ===
+    // Q4, Q8, Q12, Q16, Q20, Q24, Q28, Q32, Q36, Q40, Q44, Q48, Q52, Q56
+
+    // Q4: "Я обращаю большое внимание на детали и точность в работе"
+    'disc_personality_v1:q4': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q4',
+      axisWeights: {
+        'attention_to_detail': 1.3, // Внимание к деталям
+        'precision': 1.2, // Точность
+        'conscientiousness': 1.1,
+        'perfectionism': 0.8,
+        'carefulness': 1.0, // Тщательность
+      },
+    ),
+
+    // Q8: "Я следую правилам и процедурам очень тщательно"
+    'disc_personality_v1:q8': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q8',
+      axisWeights: {
+        'rule_following': 1.3, // Следование правилам
+        'dutifulness': 1.2,
+        'orderliness': 1.1,
+        'judging': 0.9, // Решающий тип
+        'rebelliousness': -0.9, // Низкое бунтарство
+      },
+    ),
+
+    // Q12: "Я аналитичен(на) и опираюсь на факты и данные"
+    'disc_personality_v1:q12': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q12',
+      axisWeights: {
+        'analytical_thinking': 1.3,
+        'thinking': 1.2, // Мыслящий тип
+        'objectivity': 1.1, // Объективность
+        'logical_reasoning': 1.0, // Логическое мышление
+        'feeling': -0.7, // Низкий чувствующий тип
+      },
+    ),
+
+    // Q16: "Я систематичен(на) и предпочитаю всё планировать заранее"
+    'disc_personality_v1:q16': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q16',
+      axisWeights: {
+        'orderliness': 1.3,
+        'planning': 1.2, // Планирование
+        'organization': 1.2, // Организованность
+        'judging': 1.0,
+        'spontaneity': -0.8, // Низкая спонтанность
+      },
+    ),
+
+    // Q20: "Я перфекционист и стремлюсь к высокому качеству"
+    'disc_personality_v1:q20': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q20',
+      axisWeights: {
+        'perfectionism': 1.4,
+        'achievement_striving': 1.2,
+        'quality_focus': 1.1, // Фокус на качестве
+        'self_discipline': 1.0,
+        'vulnerability': 0.5, // Перфекционизм → уязвимость
+      },
+    ),
+
+    // Q24: "Я осторожен(жна) и избегаю рисков"
+    'disc_personality_v1:q24': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q24',
+      axisWeights: {
+        'cautiousness': 1.3,
+        'risk_taking': -1.1, // Низкое принятие рисков
+        'deliberation': 1.2,
+        'anxiety': 0.6,
+        'need_for_security': 0.8,
+      },
+    ),
+
+    // Q28: "Я задаю много вопросов и проверяю информацию"
+    'disc_personality_v1:q28': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q28',
+      axisWeights: {
+        'skepticism': 1.2, // Скептицизм
+        'critical_thinking': 1.2, // Критическое мышление
+        'analytical_thinking': 1.1,
+        'curiosity': 0.9, // Любопытство
+        'trust': -0.6, // Низкое доверие
+      },
+    ),
+
+    // Q32: "Я дипломатичен(на) и тактичен(на) в общении"
+    'disc_personality_v1:q32': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q32',
+      axisWeights: {
+        'diplomacy': 1.3,
+        'tact': 1.2, // Тактичность
+        'agreeableness': 1.0,
+        'social_awareness': 1.0,
+        'assertiveness': -0.5, // Умеренно низкая ассертивность
+      },
+    ),
+
+    // Q36: "Я объективен(на) и отделяю эмоции от фактов"
+    'disc_personality_v1:q36': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q36',
+      axisWeights: {
+        'objectivity': 1.3,
+        'thinking': 1.2,
+        'emotional_detachment': 1.0, // Эмоциональная отстранённость
+        'logical_reasoning': 1.1,
+        'feeling': -0.9, // Низкий чувствующий тип
+      },
+    ),
+
+    // Q40: "Я скептичен(на) и критически оцениваю информацию"
+    'disc_personality_v1:q40': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q40',
+      axisWeights: {
+        'skepticism': 1.3,
+        'critical_thinking': 1.3,
+        'cynicism': 0.7,
+        'trust': -0.8, // Низкое доверие
+        'optimism': -0.6, // Низкий оптимизм
+      },
+    ),
+
+    // Q44: "Я организован(на) и структурирован(на)"
+    'disc_personality_v1:q44': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q44',
+      axisWeights: {
+        'organization': 1.3,
+        'orderliness': 1.3,
+        'structure_preference': 1.1, // Предпочтение структуры
+        'self_discipline': 1.0,
+        'judging': 0.9,
+      },
+    ),
+
+    // Q48: "Я предпочитаю работать с проверенными методами, а не экспериментировать"
+    'disc_personality_v1:q48': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q48',
+      axisWeights: {
+        'conservatism': 1.2,
+        'tradition': 1.1,
+        'openness': -0.9, // Низкая открытость
+        'cautiousness': 1.0,
+        'creativity': -0.7, // Низкая креативность
+      },
+    ),
+
+    // Q52: "Я ориентирован(а) на качество и стандарты"
+    'disc_personality_v1:q52': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q52',
+      axisWeights: {
+        'quality_focus': 1.3,
+        'achievement_striving': 1.1,
+        'conscientiousness': 1.2,
+        'perfectionism': 0.9,
+        'self_discipline': 1.0,
+      },
+    ),
+
+    // Q56: "Я методичен(на) и люблю следовать процессам"
+    'disc_personality_v1:q56': QuestionWeight(
+      testId: 'disc_personality_v1',
+      questionId: 'q56',
+      axisWeights: {
+        'methodicalness': 1.3, // Методичность
+        'orderliness': 1.2,
+        'process_orientation': 1.1, // Ориентация на процесс
+        'self_discipline': 1.0,
+        'spontaneity': -0.8, // Низкая спонтанность
+      },
+    ),
+  };
+}

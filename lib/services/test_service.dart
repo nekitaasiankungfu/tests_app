@@ -9,6 +9,8 @@ import '../data/temperament_profile_test_data.dart';
 import '../data/digital_detox_data.dart' as digital_detox;
 import '../data/burnout_diagnostic_data.dart' as burnout;
 import '../data/social_battery_data.dart';
+import '../data/disc_personality_data.dart';
+import '../data/holland_code_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -88,7 +90,13 @@ class TestService {
     int maxScore = 0;
 
     // Determine max question score depending on test
-    final int maxQuestionScore = test.id == 'fisher_temperament' ? 3 : 5;
+    final int maxQuestionScore = test.id == 'fisher_temperament'
+        ? 3
+        : test.id == 'disc_personality_v1'
+            ? 4  // DISC uses 0-4 scoring
+            : test.id == 'holland_code_v1'
+                ? 4  // Holland Code uses 0-4 scoring
+                : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -218,6 +226,12 @@ class TestService {
     } else if (test.id == 'social_battery_v1') {
       factorNames = SocialBatteryData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'disc_personality_v1') {
+      factorNames = DISCPersonalityData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'holland_code_v1') {
+      factorNames = HollandCodeData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
@@ -259,6 +273,16 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             SocialBatteryData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'disc_personality_v1') {
+        // For DISC Personality test use percentage-based interpretation
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            DISCPersonalityData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'holland_code_v1') {
+        // For Holland Code test use percentage-based interpretation
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            HollandCodeData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }
