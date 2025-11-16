@@ -19,7 +19,7 @@ class IPIPBigFiveWeights {
         'social_boldness': 0.6,          // Secondary: Assertive social behavior
         'expressiveness': 0.5,           // Secondary: Outward emotional display
         'intrinsic_motivation': 0.4,     // Moderate: Social energy drive
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.2,
       },
@@ -38,7 +38,7 @@ class IPIPBigFiveWeights {
         'trust': 0.5,                    // Secondary: Cynical disconnection
         'altruism': 0.5,                 // Secondary: Selfishness
         'callousness': 0.4,              // Moderate: Dark triad overlap
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
         'thinking': 0.3,
@@ -58,7 +58,7 @@ class IPIPBigFiveWeights {
         'deliberation': 0.6,             // Secondary: Thoughtful anticipation
         'competence': 0.5,               // Secondary: Task readiness
         'achievement_motivation': 0.4,   // Moderate: Motivational drive
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'judging': 0.4,
       },
@@ -70,14 +70,14 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q4': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q4',
-      axisWeights: {'stress_tolerance': 1.0,         // Primary: Direct stress vulnerability (reversed)
+      axisWeights: {'stress_tolerance': -1.0,         // Primary: Direct stress vulnerability (reversed)
         'anxiety': 0.9,                  // Primary: High anxiety tendency
-        'emotional_resilience': 0.8,     // High: Low resilience (reversed)
-        'calmness': 0.8,                 // High: Opposite of calm (reversed)
+        'emotional_resilience': -0.8,     // High: Low resilience (reversed)
+        'calmness': -0.8,                 // High: Opposite of calm (reversed)
         'emotional_reactivity': 0.7,     // Secondary: High reactivity
         'vulnerability': 0.6,            // Secondary: Stress susceptibility
         'composure': 0.5,                // Secondary: Loss of composure
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: stress vulnerability + anxiety + low resilience + reactivity',
@@ -94,7 +94,7 @@ class IPIPBigFiveWeights {
         'ideas': 0.5,                    // Secondary: Intellectual exploration (Openness facet)
         'verbal_communication': 0.4,     // Moderate: Communication skill
         'self_discipline': 0.3,          // Tertiary: Learning effort required
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
       },
       note: 'Intellect: verbal capacity + curiosity + learning + discipline',
@@ -105,13 +105,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q6': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q6',
-      axisWeights: {'gregariousness': 0.9,           // Primary: Low social verbality (reversed)
+      axisWeights: {'gregariousness': -0.9,           // Primary: Low social verbality (reversed)
         'expressiveness': 0.8,           // High: Reduced outward expression
         'social_confidence': 0.6,        // Secondary: Possible social caution
         'warmth': 0.5,                   // Secondary: Reserved warmth
         'liveliness': 0.4,               // Moderate: Lower energy expression
         'self_consciousness': 0.3,       // Tertiary: Possible shyness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'introversion': 0.4,
       },
@@ -129,7 +129,7 @@ class IPIPBigFiveWeights {
         'curiosity': 0.6,                // Secondary: Intellectual interest in people
         'warmth': 0.5,                   // Secondary: Positive orientation
         'trust': 0.4,                    // Moderate: Openness to people
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -141,11 +141,11 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q8': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q8',
-      axisWeights: {'order': 1.0,                    // Primary: Physical disorganization (reversed)
+      axisWeights: {'order': -1.0,                    // Primary: Physical disorganization (reversed)
         'organization': 0.9,             // Primary: General organizational deficit
         'self_discipline': 0.6,          // Secondary: Lack of tidying discipline
         'responsibility': 0.4,           // Moderate: Carelessness with property
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'perceiving': 0.3,
       },
@@ -161,9 +161,9 @@ class IPIPBigFiveWeights {
         'stress_tolerance': 0.9,         // Primary: Resilience to stress
         'emotional_resilience': 0.8,     // High: Emotional stability
         'composure': 0.7,                // Secondary: Maintained equilibrium
-        'anxiety': 0.6,                  // Secondary: Low anxiety (reversed)
+        'anxiety': -0.6,                  // Secondary: Low anxiety (reversed)
         'mood_stability': 0.5,           // Secondary: Stable baseline mood
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Emotional stability: calmness + stress tolerance + resilience + composure',
@@ -174,12 +174,12 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q10': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q10',
-      axisWeights: {'abstract_reasoning': 1.0,       // Primary: Abstract thinking deficit (reversed)
-        'intellectual_curiosity': 0.7,   // Secondary: Low intellectual exploration (reversed)
+      axisWeights: {'abstract_reasoning': -1.0,       // Primary: Abstract thinking deficit (reversed)
+        'intellectual_curiosity': -0.7,   // Secondary: Low intellectual exploration (reversed)
         'cognitive_flexibility': 0.6,    // Secondary: Rigid thinking style
-        'ideas': 0.5,                    // Secondary: Low Openness facet (reversed)
+        'ideas': -0.5,                    // Secondary: Low Openness facet (reversed)
         'learning_ability': 0.4,         // Moderate: Difficulty with complex concepts
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.4,
         'sensing': 0.4,
       },
@@ -195,9 +195,9 @@ class IPIPBigFiveWeights {
         'warmth': 0.8,                   // High: Approachability/ease with others
         'social_boldness': 0.7,          // Secondary: Lack of social inhibition
         'gregariousness': 0.6,           // Secondary: Enjoy being with people
-        'self_consciousness': 0.5,       // Secondary: Low social anxiety (reversed)
+        'self_consciousness': -0.5,       // Secondary: Low social anxiety (reversed)
         'positive_emotions': 0.4,        // Moderate: Positive social affect
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.2,
       },
@@ -209,14 +209,14 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q12': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q12',
-      axisWeights: {'politeness': 1.0,               // Primary: Rude/offensive behavior (reversed)
-        'empathy': 0.9,                  // Primary: Lack of empathy (reversed)
-        'compassion': 0.8,               // High: Lack of caring (reversed)
+      axisWeights: {'politeness': -1.0,               // Primary: Rude/offensive behavior (reversed)
+        'empathy': -0.9,                  // Primary: Lack of empathy (reversed)
+        'compassion': -0.8,               // High: Lack of caring (reversed)
         'callousness': 0.7,              // Secondary: Dark triad trait
         'straightforwardness': 0.5,      // Secondary: Brutal honesty/aggression
         'anger': 0.4,                    // Moderate: Aggressive tendency
         'impulsiveness': 0.3,            // Tertiary: Lack of restraint
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
         'thinking': 0.3,
@@ -235,7 +235,7 @@ class IPIPBigFiveWeights {
         'attention_control': 0.7,        // Secondary: Focused attention
         'dutifulness': 0.5,              // Secondary: Responsible completion
         'critical_thinking': 0.4,        // Moderate: Analytical scrutiny
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.4,
       },
       note: 'Conscientiousness: competence + perfectionism + diligence + attention control',
@@ -249,10 +249,10 @@ class IPIPBigFiveWeights {
       axisWeights: {'worry_tendency': 1.0,           // Primary: Chronic worry
         'anxiety': 0.9,                  // Primary: Anxious temperament
         'rumination': 0.8,               // High: Mental preoccupation
-        'calmness': 0.7,                 // Secondary: Lack of calmness (reversed)
-        'stress_tolerance': 0.6,         // Secondary: Low stress resilience (reversed)
+        'calmness': -0.7,                 // Secondary: Lack of calmness (reversed)
+        'stress_tolerance': -0.6,         // Secondary: Low stress resilience (reversed)
         'catastrophizing': 0.5,          // Secondary: Negative thinking pattern
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: worry + anxiety + rumination + low calmness',
@@ -266,13 +266,13 @@ class IPIPBigFiveWeights {
       axisWeights: {'fantasy': 1.0,                  // Primary: Imaginative capacity (Openness facet)
         'originality': 0.8,              // High: Creative novelty
         'divergent_thinking': 0.7,       // Secondary: Generative ideation
-        'creativity': 0.7,               // Secondary: Creative personality
+        'flexibility_creative': 0.7,     // Secondary: Creative flexibility
         'feelings': 0.5,                 // Secondary: Rich inner emotional life (Openness facet)
         'artistic_appreciation': 0.4,    // Moderate: Aesthetic sensitivity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.4,
       },
-      note: 'Openness: fantasy + originality + divergent thinking + creativity',
+      note: 'Openness: fantasy + originality + divergent thinking + creative flexibility',
     ),
 
     // Q16: "I keep in the background" (Extraversion, reversed)
@@ -280,13 +280,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q16': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q16',
-      axisWeights: {'dominance': 1.0,                // Primary: Low social dominance (reversed)
-        'assertiveness': 0.9,            // Primary: Low assertiveness (reversed)
-        'social_boldness': 0.8,          // High: Social inhibition (reversed)
-        'gregariousness': 0.6,           // Secondary: Avoidance of groups (reversed)
-        'liveliness': 0.5,               // Secondary: Low social energy (reversed)
+      axisWeights: {'dominance': -1.0,                // Primary: Low social dominance (reversed)
+        'assertiveness': -0.9,            // Primary: Low assertiveness (reversed)
+        'social_boldness': -0.8,          // High: Social inhibition (reversed)
+        'gregariousness': -0.6,           // Secondary: Avoidance of groups (reversed)
+        'liveliness': -0.5,               // Secondary: Low social energy (reversed)
         'self_consciousness': 0.4,       // Moderate: Possible shyness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Introversion: low dominance + low assertiveness + social withdrawal',
@@ -303,7 +303,7 @@ class IPIPBigFiveWeights {
         'emotional_intelligence': 0.7,   // Secondary: Emotional awareness
         'social_perception': 0.6,        // Secondary: Reading others' states
         'warmth': 0.5,                   // Secondary: Positive orientation
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Agreeableness: empathy + compassion + tender-mindedness + EI',
@@ -315,11 +315,11 @@ class IPIPBigFiveWeights {
       testId: 'ipip_big_five',
       questionId: 'q18',
       axisWeights: {
-        'organization': 1.0,             // Primary: Disorganization (reversed)
-        'competence': 0.8,               // High: Low task effectiveness (reversed)
-        'order': 0.7,                    // Secondary: Messiness (reversed)
-        'self_discipline': 0.6,          // Secondary: Lack of discipline (reversed)
-        'attention_control': 0.4,        // Moderate: Poor focus (reversed)
+        'organization': -1.0,             // Primary: Disorganization (reversed)
+        'competence': -0.8,               // High: Low task effectiveness (reversed)
+        'order': -0.7,                    // Secondary: Messiness (reversed)
+        'self_discipline': -0.6,          // Secondary: Lack of discipline (reversed)
+        'attention_control': -0.4,        // Moderate: Poor focus (reversed)
       },
       note: 'Conscientiousness deficit: disorganization + low competence + messiness',
     ),
@@ -329,13 +329,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q19': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q19',
-      axisWeights: {'depression': 1.0,               // Primary: Low depressive tendency (reversed)
+      axisWeights: {'depression': -1.0,               // Primary: Low depressive tendency (reversed)
         'mood_stability': 0.9,           // Primary: Stable positive mood
         'positive_emotions': 0.8,        // High: Positive affectivity
         'emotional_resilience': 0.7,     // Secondary: Bounce-back from sadness
         'happiness': 0.6,                // Secondary: Baseline happiness
         'vitality': 0.5,                 // Secondary: Life energy
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Emotional stability: no depression + mood stability + positive emotions',
@@ -346,12 +346,12 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q20': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q20',
-      axisWeights: {'intellectual_curiosity': 1.0,   // Primary: Low intellectual exploration (reversed)
+      axisWeights: {'intellectual_curiosity': -1.0,   // Primary: Low intellectual exploration (reversed)
         'ideas': 0.9,                    // Primary: Closed to ideas (Openness facet, reversed)
-        'abstract_reasoning': 0.7,       // Secondary: Preference for concrete (reversed)
-        'cognitive_flexibility': 0.5,    // Secondary: Intellectual rigidity (reversed)
-        'learning_ability': 0.4,         // Moderate: Low learning motivation (reversed)
-        // MBTI personality type scales
+        'abstract_reasoning': -0.7,       // Secondary: Preference for concrete (reversed)
+        'cognitive_flexibility': -0.5,    // Secondary: Intellectual rigidity (reversed)
+        'learning_ability': -0.4,         // Moderate: Low learning motivation (reversed)
+        // Personality Type personality type scales
         'intuition': 0.4,
         'sensing': 0.4,
       },
@@ -370,7 +370,7 @@ class IPIPBigFiveWeights {
         'social_confidence': 0.6,        // Secondary: Comfort initiating
         'expressiveness': 0.5,           // Secondary: Verbal openness
         'liveliness': 0.4,               // Moderate: Social energy
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.2,
       },
@@ -382,13 +382,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q22': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q22',
-      axisWeights: {'empathy': 1.0,                  // Primary: Lack of empathy (reversed)
-        'compassion': 0.9,               // Primary: No compassion (reversed)
-        'altruism': 0.8,                 // High: Selfishness (reversed)
-        'social_perception': 0.6,        // Secondary: Low other-awareness (reversed)
+      axisWeights: {'empathy': -1.0,                  // Primary: Lack of empathy (reversed)
+        'compassion': -0.9,               // Primary: No compassion (reversed)
+        'altruism': -0.8,                 // High: Selfishness (reversed)
+        'social_perception': -0.6,        // Secondary: Low other-awareness (reversed)
         'callousness': 0.5,              // Secondary: Emotional coldness
-        'support_giving': 0.4,           // Moderate: No helping (reversed)
-        // MBTI personality type scales
+        'support_giving': -0.4,           // Moderate: No helping (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -417,11 +417,11 @@ class IPIPBigFiveWeights {
       questionId: 'q24',
       axisWeights: {'emotional_reactivity': 1.0,     // Primary: High reactivity
         'vulnerability': 0.9,            // Primary: Sensitivity to disturbance
-        'stress_tolerance': 0.8,         // High: Low tolerance (reversed)
-        'composure': 0.7,                // Secondary: Loss of composure (reversed)
-        'emotional_resilience': 0.6,     // Secondary: Low resilience (reversed)
-        'frustration_tolerance': 0.5,    // Secondary: Low frustration tolerance (reversed)
-        // MBTI personality type scales
+        'stress_tolerance': -0.8,         // High: Low tolerance (reversed)
+        'composure': -0.7,                // Secondary: Loss of composure (reversed)
+        'emotional_resilience': -0.6,     // Secondary: Low resilience (reversed)
+        'frustration_tolerance': -0.5,    // Secondary: Low frustration tolerance (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: emotional reactivity + vulnerability + low stress tolerance',
@@ -437,11 +437,11 @@ class IPIPBigFiveWeights {
         'ideas': 0.8,                    // High: Openness facet - intellectual exploration
         'self_efficacy': 0.6,            // Secondary: Intellectual confidence
         'intellectual_curiosity': 0.5,   // Secondary: Active exploration
-        'creativity': 0.5,               // Secondary: Creative personality
-        // MBTI personality type scales
+        'flexibility_creative': 0.5,     // Secondary: Creative flexibility
+        // Personality Type personality type scales
         'intuition': 0.3,
       },
-      note: 'Openness: originality + divergent thinking + intellectual confidence + ideas',
+      note: 'Openness: originality + divergent thinking + intellectual confidence + creative flexibility',
     ),
 
     // Q26: "I have little to say" (Extraversion, reversed)
@@ -449,12 +449,12 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q26': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q26',
-      axisWeights: {'expressiveness': 1.0,           // Primary: Low verbal expression (reversed)
-        'gregariousness': 0.7,           // Secondary: Low social verbality (reversed)
-        'warmth': 0.6,                   // Secondary: Reserved demeanor (reversed)
-        'liveliness': 0.5,               // Secondary: Low social energy (reversed)
+      axisWeights: {'expressiveness': -1.0,           // Primary: Low verbal expression (reversed)
+        'gregariousness': -0.7,           // Secondary: Low social verbality (reversed)
+        'warmth': -0.6,                   // Secondary: Reserved demeanor (reversed)
+        'liveliness': -0.5,               // Secondary: Low social energy (reversed)
         'self_consciousness': 0.4,       // Moderate: Possible shyness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'introversion': 0.4,
       },
@@ -472,7 +472,7 @@ class IPIPBigFiveWeights {
         'emotional_intelligence': 0.6,   // Secondary: Emotional sensitivity
         'feelings': 0.5,                 // Secondary: Emotional depth (Openness facet)
         'altruism': 0.4,                 // Moderate: Helping tendency
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Agreeableness: tender-mindedness + compassion + empathy + EI',
@@ -483,12 +483,12 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q28': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q28',
-      axisWeights: {'order': 1.0,                    // Primary: Lack of order (reversed)
-        'organization': 0.9,             // Primary: Disorganization (reversed)
+      axisWeights: {'order': -1.0,                    // Primary: Lack of order (reversed)
+        'organization': -0.9,             // Primary: Disorganization (reversed)
         'working_memory': 0.6,           // Secondary: Absent-mindedness
-        'self_discipline': 0.5,          // Secondary: Low tidying discipline (reversed)
-        'attention_control': 0.4,        // Moderate: Distracted from organization (reversed)
-        // MBTI personality type scales
+        'self_discipline': -0.5,          // Secondary: Low tidying discipline (reversed)
+        'attention_control': -0.4,        // Moderate: Distracted from organization (reversed)
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Conscientiousness deficit: no order + disorganization + absent-mindedness',
@@ -501,12 +501,12 @@ class IPIPBigFiveWeights {
       questionId: 'q29',
       axisWeights: {'emotional_reactivity': 1.0,     // Primary: High reactivity
         'anger': 0.8,                    // High: Quick to upset/anger
-        'composure': 0.8,                // High: Low composure (reversed)
-        'frustration_tolerance': 0.7,    // Secondary: Low frustration tolerance (reversed)
-        'emotional_resilience': 0.6,     // Secondary: Low resilience (reversed)
-        'calmness': 0.6,                 // Secondary: Lack of calmness (reversed)
+        'composure': -0.8,                // High: Low composure (reversed)
+        'frustration_tolerance': -0.7,    // Secondary: Low frustration tolerance (reversed)
+        'emotional_resilience': -0.6,     // Secondary: Low resilience (reversed)
+        'calmness': -0.6,                 // Secondary: Lack of calmness (reversed)
         'impulsiveness': 0.4,            // Moderate: Emotional impulsivity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: emotional reactivity + anger + low composure + frustration',
@@ -517,16 +517,16 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q30': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q30',
-      axisWeights: {'fantasy': 1.0,                  // Primary: Low imaginative capacity (reversed)
-        'creativity': 0.8,               // High: Low creative thinking (reversed)
-        'divergent_thinking': 0.7,       // Secondary: Low idea generation (reversed)
-        'originality': 0.6,              // Secondary: Conventional thinking (reversed)
-        'artistic_appreciation': 0.4,    // Moderate: Low aesthetic imagination (reversed)
-        // MBTI personality type scales
+      axisWeights: {'fantasy': -1.0,                  // Primary: Low imaginative capacity (reversed)
+        'flexibility_creative': -0.8,     // High: Low creative flexibility (reversed)
+        'divergent_thinking': -0.7,       // Secondary: Low idea generation (reversed)
+        'originality': -0.6,              // Secondary: Conventional thinking (reversed)
+        'artistic_appreciation': -0.4,    // Moderate: Low aesthetic imagination (reversed)
+        // Personality Type personality type scales
         'intuition': 0.4,
         'sensing': 0.4,
       },
-      note: 'Openness deficit: low fantasy + low creativity + conventional thinking',
+      note: 'Openness deficit: low fantasy + low creative flexibility + conventional thinking',
     ),
 
     // Q31: "I talk to a lot of different people at parties" (Extraversion)
@@ -540,7 +540,7 @@ class IPIPBigFiveWeights {
         'social_confidence': 0.6,        // Secondary: Comfort with new people
         'curiosity': 0.5,                // Secondary: Interest in different people
         'affiliation_motivation': 0.4,   // Moderate: Social connection drive
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.2,
       },
@@ -552,13 +552,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q32': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q32',
-      axisWeights: {'empathy': 1.0,                  // Primary: Lack of interest in others (reversed)
-        'social_perception': 0.8,        // High: Low other-awareness (reversed)
-        'altruism': 0.7,                 // Secondary: Self-focus (reversed)
-        'compassion': 0.6,               // Secondary: Lack of caring (reversed)
-        'emotional_intelligence': 0.5,   // Secondary: Low EI (reversed)
+      axisWeights: {'empathy': -1.0,                  // Primary: Lack of interest in others (reversed)
+        'social_perception': -0.8,        // High: Low other-awareness (reversed)
+        'altruism': -0.7,                 // Secondary: Self-focus (reversed)
+        'compassion': -0.6,               // Secondary: Lack of caring (reversed)
+        'emotional_intelligence': -0.5,   // Secondary: Low EI (reversed)
         'callousness': 0.4,              // Moderate: Emotional coldness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -575,7 +575,7 @@ class IPIPBigFiveWeights {
         'self_discipline': 0.6,          // Secondary: Discipline for orderliness
         'deliberation': 0.5,             // Secondary: Planned/structured thinking
         'perfectionism': 0.4,            // Moderate: Standards for order
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Conscientiousness: order + organization + discipline + structured thinking',
@@ -586,13 +586,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q34': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q34',
-      axisWeights: {'mood_stability': 1.0,           // Primary: Mood instability (reversed)
+      axisWeights: {'mood_stability': -1.0,           // Primary: Mood instability (reversed)
         'emotional_reactivity': 0.9,     // Primary: High volatility
-        'emotional_resilience': 0.7,     // Secondary: Low resilience (reversed)
-        'composure': 0.6,                // Secondary: Loss of equilibrium (reversed)
+        'emotional_resilience': -0.7,     // Secondary: Low resilience (reversed)
+        'composure': -0.6,                // Secondary: Loss of equilibrium (reversed)
         'impulsiveness': 0.5,            // Secondary: Impulsive mood shifts
         'depression': 0.4,               // Moderate: Mood swings may include sadness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: mood instability + emotional volatility + poor regulation',
@@ -607,11 +607,11 @@ class IPIPBigFiveWeights {
         'processing_speed': 1.0,         // Primary: Fast cognitive processing
         'learning_ability': 0.8,         // High: Quick learning
         'cognitive_flexibility': 0.7,    // Secondary: Mental agility
-        'intelligence': 0.6,             // Secondary: General cognitive ability
+        'verbal_intelligence': 0.6,      // Secondary: General cognitive ability
         'abstract_reasoning': 0.5,       // Secondary: Conceptual grasp
         'self_efficacy': 0.4,            // Moderate: Intellectual confidence
       },
-      note: 'Intellect: processing speed + learning ability + cognitive flexibility + intelligence',
+      note: 'Intellect: processing speed + learning ability + cognitive flexibility + verbal intelligence',
     ),
 
     // Q36: "I don't like to draw attention to myself" (Extraversion, reversed)
@@ -619,12 +619,12 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q36': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q36',
-      axisWeights: {'social_boldness': 1.0,          // Primary: Low attention-seeking (reversed)
-        'dominance': 0.8,                // High: Low desire for prominence (reversed)
+      axisWeights: {'social_boldness': -1.0,          // Primary: Low attention-seeking (reversed)
+        'dominance': -0.8,                // High: Low desire for prominence (reversed)
         'modesty': 0.7,                  // Secondary: Self-effacing (positive for modesty)
         'self_consciousness': 0.6,       // Secondary: Discomfort with visibility
-        'assertiveness': 0.5,            // Secondary: Low self-promotion (reversed)
-        // MBTI personality type scales
+        'assertiveness': -0.5,            // Secondary: Low self-promotion (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'introversion': 0.2,
       },
@@ -642,7 +642,7 @@ class IPIPBigFiveWeights {
         'cooperativeness': 0.6,          // Secondary: Collaborative orientation
         'warmth': 0.5,                   // Secondary: Positive interpersonal orientation
         'self_discipline': 0.4,          // Moderate: Prioritization of others' needs
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Agreeableness: altruism + support giving + compassion + cooperation',
@@ -654,11 +654,11 @@ class IPIPBigFiveWeights {
       testId: 'ipip_big_five',
       questionId: 'q38',
       axisWeights: {
-        'dutifulness': 1.0,              // Primary: Lack of duty (reversed)
-        'responsibility': 0.9,           // Primary: Irresponsibility (reversed)
-        'self_discipline': 0.8,          // High: Lack of discipline (reversed)
-        'achievement_motivation': 0.6,   // Secondary: Low achievement drive (reversed)
-        'achievement_striving': 0.5,     // Secondary: Low striving (reversed)
+        'dutifulness': -1.0,              // Primary: Lack of duty (reversed)
+        'responsibility': -0.9,           // Primary: Irresponsibility (reversed)
+        'self_discipline': -0.8,          // High: Lack of discipline (reversed)
+        'achievement_motivation': -0.6,   // Secondary: Low achievement drive (reversed)
+        'achievement_striving': -0.5,     // Secondary: Low striving (reversed)
       },
       note: 'Conscientiousness deficit: no dutifulness + irresponsibility + low discipline',
     ),
@@ -668,13 +668,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q39': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q39',
-      axisWeights: {'mood_stability': 1.0,           // Primary: High instability (reversed)
+      axisWeights: {'mood_stability': -1.0,           // Primary: High instability (reversed)
         'emotional_reactivity': 0.9,     // Primary: Extreme volatility
-        'emotional_resilience': 0.8,     // High: Low resilience (reversed)
+        'emotional_resilience': -0.8,     // High: Low resilience (reversed)
         'impulsiveness': 0.6,            // Secondary: Impulsive emotional shifts
-        'composure': 0.6,                // Secondary: Loss of equilibrium (reversed)
+        'composure': -0.6,                // Secondary: Loss of equilibrium (reversed)
         'depression': 0.4,               // Moderate: May include depressive swings
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: severe mood instability + emotional volatility + poor resilience',
@@ -690,7 +690,7 @@ class IPIPBigFiveWeights {
         'intellectual_curiosity': 0.5,   // Secondary: Intellectual engagement
         'ideas': 0.5,                    // Secondary: Complex idea expression (Openness facet)
         'self_efficacy': 0.4,            // Moderate: Confidence in language use
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
       },
       note: 'Intellect: verbal intelligence + sophisticated communication + curiosity + ideas',
@@ -704,10 +704,10 @@ class IPIPBigFiveWeights {
       axisWeights: {'social_boldness': 1.0,          // Primary: Comfort with attention
         'social_confidence': 0.9,        // Primary: Self-assurance in spotlight
         'dominance': 0.7,                // Secondary: Comfortable being prominent
-        'self_consciousness': 0.7,       // Secondary: Low social anxiety (reversed)
+        'self_consciousness': -0.7,       // Secondary: Low social anxiety (reversed)
         'assertiveness': 0.6,            // Secondary: Bold social presence
         'positive_emotions': 0.4,        // Moderate: Enjoyment of attention
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Extraversion: social boldness + social confidence + dominance + low anxiety',
@@ -724,7 +724,7 @@ class IPIPBigFiveWeights {
         'compassion': 0.7,               // Secondary: Caring response
         'tender_mindedness': 0.6,        // Secondary: Emotional sensitivity
         'feelings': 0.5,                 // Secondary: Emotional depth (Openness facet)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -742,7 +742,7 @@ class IPIPBigFiveWeights {
         'punctuality': 0.7,              // Secondary: Time management
         'responsibility': 0.5,           // Secondary: Reliable scheduling
         'order': 0.4,                    // Moderate: Structured lifestyle
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Conscientiousness: organization + self-discipline + deliberation + punctuality',
@@ -754,12 +754,12 @@ class IPIPBigFiveWeights {
       testId: 'ipip_big_five',
       questionId: 'q44',
       axisWeights: {'anger': 1.0,                    // Primary: High irritability
-        'frustration_tolerance': 0.9,    // Primary: Low tolerance (reversed)
+        'frustration_tolerance': -0.9,    // Primary: Low tolerance (reversed)
         'emotional_reactivity': 0.8,     // High: High reactivity
-        'composure': 0.7,                // Secondary: Low composure (reversed)
+        'composure': -0.7,                // Secondary: Low composure (reversed)
         'impulsiveness': 0.5,            // Secondary: Impulsive anger
-        'politeness': 0.4,               // Moderate: May affect social courtesy (reversed)
-        // MBTI personality type scales
+        'politeness': -0.4,               // Moderate: May affect social courtesy (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: anger/irritability + low frustration tolerance + reactivity',
@@ -776,7 +776,7 @@ class IPIPBigFiveWeights {
         'feelings': 0.6,                 // Secondary: Inner experience awareness (Openness facet)
         'critical_thinking': 0.5,        // Secondary: Analytical reflection
         'calmness': 0.4,                 // Moderate: Calm needed for reflection
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.3,
       },
       note: 'Openness: self-awareness + cognitive reappraisal + curiosity + feelings',
@@ -787,13 +787,13 @@ class IPIPBigFiveWeights {
     'ipip_big_five:q46': const QuestionWeight(
       testId: 'ipip_big_five',
       questionId: 'q46',
-      axisWeights: {'warmth': 1.0,                   // Primary: Reserved with strangers (reversed)
+      axisWeights: {'warmth': -1.0,                   // Primary: Reserved with strangers (reversed)
         'self_consciousness': 0.9,       // Primary: Social anxiety/caution
-        'social_confidence': 0.8,        // High: Low confidence with unfamiliar (reversed)
-        'gregariousness': 0.6,           // Secondary: Avoidance of strangers (reversed)
-        'expressiveness': 0.5,           // Secondary: Low verbal engagement (reversed)
-        'social_boldness': 0.4,          // Moderate: Social inhibition (reversed)
-        // MBTI personality type scales
+        'social_confidence': -0.8,        // High: Low confidence with unfamiliar (reversed)
+        'gregariousness': -0.6,           // Secondary: Avoidance of strangers (reversed)
+        'expressiveness': -0.5,           // Secondary: Low verbal engagement (reversed)
+        'social_boldness': -0.4,          // Moderate: Social inhibition (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.2,
         'introversion': 0.4,
@@ -812,7 +812,7 @@ class IPIPBigFiveWeights {
         'social_perception': 0.7,        // Secondary: Awareness of others' states
         'compassion': 0.6,               // Secondary: Caring for others' comfort
         'social_confidence': 0.5,        // Secondary: Comfortable putting others at ease
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -841,12 +841,12 @@ class IPIPBigFiveWeights {
       testId: 'ipip_big_five',
       questionId: 'q49',
       axisWeights: {'depression': 1.0,               // Primary: Depressive tendency
-        'mood_stability': 0.9,           // Primary: Low mood stability (reversed)
-        'positive_emotions': 0.8,        // High: Low positive affect (reversed)
-        'vitality': 0.7,                 // Secondary: Low life energy (reversed)
-        'happiness': 0.6,                // Secondary: Low baseline happiness (reversed)
-        'emotional_resilience': 0.5,     // Secondary: Poor mood resilience (reversed)
-        // MBTI personality type scales
+        'mood_stability': -0.9,           // Primary: Low mood stability (reversed)
+        'positive_emotions': -0.8,        // High: Low positive affect (reversed)
+        'vitality': -0.7,                 // Secondary: Low life energy (reversed)
+        'happiness': -0.6,                // Secondary: Low baseline happiness (reversed)
+        'emotional_resilience': -0.5,     // Secondary: Poor mood resilience (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Neuroticism: depression + mood instability + low positive affect + low vitality',
@@ -862,11 +862,11 @@ class IPIPBigFiveWeights {
         'fluency': 0.8,                  // High: Abundant idea production
         'ideas': 0.7,                    // Secondary: Intellectual exploration (Openness facet)
         'intellectual_curiosity': 0.6,   // Secondary: Active intellectual engagement
-        'creativity': 0.6,               // Secondary: Creative personality
-        // MBTI personality type scales
+        'flexibility_creative': 0.6,     // Secondary: Creative flexibility
+        // Personality Type personality type scales
         'intuition': 0.3,
       },
-      note: 'Openness: originality + divergent thinking + fluency + ideas + creativity',
+      note: 'Openness: originality + divergent thinking + fluency + ideas + creative flexibility',
     ),
 
     // ========================================================================

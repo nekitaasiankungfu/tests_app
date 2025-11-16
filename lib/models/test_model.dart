@@ -13,9 +13,9 @@ class TestModel {
   final List<String>? factorIds; // ID факторов для многофакторных тестов
   final Map<String, String>? disclaimer; // Дисклеймер перед тестом
 
-  // NEW: Bipolar test support (for MBTI-style tests)
-  final bool isBipolar; // true для биполярных тестов (MBTI)
-  final List<String>? bipolarDimensions; // ['mbti_ei', 'mbti_sn', 'mbti_tf', 'mbti_jp']
+  // NEW: Bipolar test support (for personality type tests)
+  final bool isBipolar; // true для биполярных тестов (типология личности)
+  final List<String>? bipolarDimensions; // ['personality_type_ei', 'personality_type_sn', 'personality_type_tf', 'personality_type_jp']
 
   TestModel({
     required this.id,
@@ -71,10 +71,10 @@ class QuestionModel {
   final Map<String, double>? axisWeights;
 
   // NEW: Bipolar test support
-  // For MBTI-style questions: which pole does this question measure?
+  // For personality type questions: which pole does this question measure?
   // Example: 'E' (Extraversion), 'I' (Introversion), 'S', 'N', 'T', 'F', 'J', 'P'
   final String? bipolarPole;
-  // Which dimension does this belong to: 'mbti_ei', 'mbti_sn', 'mbti_tf', 'mbti_jp'
+  // Which dimension does this belong to: 'personality_type_ei', 'personality_type_sn', 'personality_type_tf', 'personality_type_jp'
   final String? bipolarDimension;
 
   // NEW: Unipolar personality type scale (for 16 types test v2)
@@ -172,10 +172,10 @@ class TestResult {
   // Shows which specific questions contributed to each scale score
   final Map<String, List<QuestionContribution>>? questionContributions;
 
-  // NEW: Bipolar test results (for MBTI-style tests)
-  // Map format: {'mbti_ei': BipolarDimensionScore(...), ...}
+  // NEW: Bipolar test results (for personality type tests)
+  // Map format: {'personality_type_ei': BipolarDimensionScore(...), ...}
   final Map<String, BipolarDimensionScore>? bipolarScores;
-  // MBTI personality type (e.g., 'ENFP', 'ISTJ')
+  // Personality type (e.g., 'ENFP', 'ISTJ')
   final String? personalityType;
 
   // NEW: Type scales for personality tests (8 unipolar scales)
@@ -410,7 +410,7 @@ class TestResult {
       String? personalityType;
       if (json['personalityType'] != null) {
         personalityType = json['personalityType'].toString();
-        // Basic validation: MBTI types are 4 uppercase letters
+        // Basic validation: Personality types are 4 uppercase letters
         if (personalityType.isNotEmpty && personalityType.length != 4) {
           appLogger.w('TestResult.fromJson: personalityType "$personalityType" has unusual format');
         }
@@ -714,12 +714,9 @@ class QuestionContribution {
       if (parsedWeight == null) {
         throw InvalidTypeException('weight', double, actualType: weightValue.runtimeType, value: weightValue);
       }
-      if (parsedWeight < 0) {
-        appLogger.w('QuestionContribution.fromJson: weight ($parsedWeight) is negative, using absolute value');
-        weight = parsedWeight.abs();
-      } else {
-        weight = parsedWeight;
-      }
+      // Negative weights are ALLOWED for non-personality-type scales (e.g., vitality: -0.9 means reverse correlation)
+      // Only personality type bipolar scales (extraversion, introversion, etc.) must use positive weights
+      weight = parsedWeight;
 
       // Validate normalizedContribution (typically 0-100)
       final contributionValue = json['normalizedContribution'];
@@ -769,10 +766,10 @@ class QuestionContribution {
   }
 }
 
-/// Bipolar dimension score for MBTI-style tests
+/// Bipolar dimension score for personality type tests
 /// Represents the score on one bipolar dimension (e.g., E/I, S/N, T/F, J/P)
 class BipolarDimensionScore {
-  final String dimensionId;          // 'mbti_ei', 'mbti_sn', etc.
+  final String dimensionId;          // 'personality_type_ei', 'personality_type_sn', etc.
   final int positiveScore;          // Raw score for positive pole (E, S, T, J)
   final int negativeScore;          // Raw score for negative pole (I, N, F, P)
   final int positiveMaxScore;       // Max possible score for positive pole

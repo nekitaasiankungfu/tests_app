@@ -283,7 +283,7 @@ class SixteenTypesResultScreen extends StatelessWidget {
 
   Widget _buildBipolarScalesSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
     final bipolarScores = result.bipolarScores!;
-    final orderedDimensions = ['mbti_ei', 'mbti_sn', 'mbti_tf', 'mbti_jp'];
+    final orderedDimensions = ['personality_type_ei', 'personality_type_sn', 'personality_type_tf', 'personality_type_jp'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

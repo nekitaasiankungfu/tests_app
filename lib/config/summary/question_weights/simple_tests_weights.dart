@@ -11,12 +11,13 @@ class SimpleTestsWeights {
     'stress_test:q1': const QuestionWeight(
       testId: 'stress_test',
       questionId: 'q1',
-      axisWeights: {'stress_tolerance': 1.0,         // Primary: Stress response (reversed - high tension = low tolerance)
+      axisWeights: {
+        'stress_tolerance': -1.0,        // Primary: Stress response (reversed - high tension = low tolerance)
         'anxiety': 0.9,                  // Primary: Tension symptom
         'emotional_reactivity': 0.7,     // Secondary: Reactivity to stressors
-        'composure': 0.6,                // Secondary: Maintaining calm (reversed)
-        'calmness': 0.6,                 // Secondary: Inner peace (reversed)
-        // MBTI personality type scales
+        'composure': -0.6,               // Secondary: Maintaining calm (reversed)
+        'calmness': -0.6,                // Secondary: Inner peace (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Stress: low stress tolerance + high anxiety + emotional reactivity + low composure + low calmness',
@@ -27,10 +28,10 @@ class SimpleTestsWeights {
       testId: 'stress_test',
       questionId: 'q2',
       axisWeights: {
-        'stress_tolerance': 1.0,         // Primary: Sleep disruption from stress (reversed)
+        'stress_tolerance': -1.0,        // Primary: Sleep disruption from stress (reversed)
         'anxiety': 0.8,                  // High: Anxiety disrupts sleep
-        'emotional_resilience': 0.7,     // Secondary: Recovery capacity (reversed)
-        'vitality': 0.6,                 // Secondary: Energy affected by sleep (reversed)
+        'emotional_resilience': -0.7,    // Secondary: Recovery capacity (reversed)
+        'vitality': -0.6,                // Secondary: Energy affected by sleep (reversed)
         'worry_tendency': 0.5,           // Secondary: Rumination disrupting sleep
       },
       note: 'Stress: poor sleep + anxiety + low resilience + low vitality + worry tendency',
@@ -40,12 +41,13 @@ class SimpleTestsWeights {
     'stress_test:q3': const QuestionWeight(
       testId: 'stress_test',
       questionId: 'q3',
-      axisWeights: {'anger': 1.0,                    // Primary: Irritability expression
-        'stress_tolerance': 0.9,         // Primary: Low stress tolerance → irritability
+      axisWeights: {
+        'anger': 1.0,                    // Primary: Irritability expression
+        'stress_tolerance': -0.9,        // Primary: Low stress tolerance → irritability (reversed)
         'emotional_reactivity': 0.8,     // High: Reactive emotional response
-        'composure': 0.7,                // Secondary: Loss of composure (reversed)
-        'frustration_tolerance': 0.6,    // Secondary: Low frustration tolerance
-        // MBTI personality type scales
+        'composure': -0.7,               // Secondary: Loss of composure (reversed)
+        'frustration_tolerance': -0.6,   // Secondary: Low frustration tolerance (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Stress: anger + low stress tolerance + emotional reactivity + low composure + low frustration tolerance',
@@ -56,13 +58,13 @@ class SimpleTestsWeights {
       testId: 'stress_test',
       questionId: 'q4',
       axisWeights: {
-        'attention_control': 1.0,        // Primary: Attentional capacity (reversed - hard to focus = low control)
-        'working_memory': 0.8,           // High: Cognitive overload from stress
-        'stress_tolerance': 0.7,         // Secondary: Stress disrupts cognition
+        'attention_control': -1.0,       // Primary: Attentional capacity (reversed - hard to focus = low control)
+        'working_memory': -0.8,          // High: Cognitive overload from stress (reversed)
+        'stress_tolerance': -0.7,        // Secondary: Stress disrupts cognition (reversed)
         'anxiety': 0.6,                  // Secondary: Anxious thoughts disrupt focus
         'rumination': 0.5,               // Secondary: Intrusive thoughts
       },
-      note: 'Stress: low attention control + low working memory + stress + anxiety + rumination',
+      note: 'Stress: low attention control + low working memory + low stress tolerance + anxiety + rumination',
     ),
 
     // Stress Q5: "How often do you feel tired?"
@@ -70,13 +72,13 @@ class SimpleTestsWeights {
       testId: 'stress_test',
       questionId: 'q5',
       axisWeights: {
-        'vitality': 1.0,                 // Primary: Energy depletion (reversed)
-        'emotional_resilience': 0.9,     // Primary: Exhaustion from stress
-        'stress_tolerance': 0.8,         // High: Chronic stress causing fatigue
-        'burnout': 0.7,                  // Secondary: Exhaustion symptom (if scale exists)
+        'vitality': -1.0,                // Primary: Energy depletion (reversed)
+        'emotional_resilience': -0.9,    // Primary: Exhaustion from stress (reversed)
+        'stress_tolerance': -0.8,        // High: Chronic stress causing fatigue (reversed)
+        'anxiety': 0.7,                  // Secondary: Exhaustion from chronic anxiety
         'depression': 0.5,               // Secondary: Fatigue as depressive symptom
       },
-      note: 'Stress: low vitality + low resilience + stress + burnout + depression',
+      note: 'Stress: low vitality + low resilience + low stress tolerance + anxiety + depression',
     ),
 
     // ========================================================================
@@ -108,21 +110,15 @@ class SimpleTestsWeights {
     'self_esteem_test:q2': const QuestionWeight(
       testId: 'self_esteem_test',
       questionId: 'q2',
-      axisWeights: {'social_confidence': 1.0,        // Primary: Social self-assurance
-        'self_consciousness': 0.9,       // Primary: Self-consciousness (reversed)
+      axisWeights: {
+        'social_confidence': 1.0,        // Primary: Social self-assurance
+        'self_consciousness': -0.9,      // Primary: Self-consciousness (reversed)
         'self_esteem': 0.8,              // High: General self-worth
         'assertiveness': 0.6,            // Secondary: Social assertiveness
-        'anxiety': 0.5,                  // Secondary: Social anxiety (reversed)
-        // MBTI personality type scales
+        'anxiety': -0.5,                 // Secondary: Social anxiety (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'introversion': 0.2,
-      },
-      axisDirections: {
-        'social_confidence': 1,          // Direct: high confidence → high score
-        'self_consciousness': -1,        // Inverted: high confidence → LOW self-consciousness
-        'self_esteem': 1,                // Direct: high confidence → high self-esteem
-        'assertiveness': 1,              // Direct: high confidence → high assertiveness
-        'anxiety': -1,                   // Inverted: high confidence → LOW anxiety
       },
       note: 'Self-esteem: social confidence + low self-consciousness + self-esteem + assertiveness + low anxiety',
     ),
@@ -131,12 +127,13 @@ class SimpleTestsWeights {
     'self_esteem_test:q3': const QuestionWeight(
       testId: 'self_esteem_test',
       questionId: 'q3',
-      axisWeights: {'self_compassion': 1.0,          // Primary: Self-compassion (reversed - high criticism = low compassion)
-        'self_esteem': 0.9,              // Primary: Self-worth (reversed)
+      axisWeights: {
+        'self_compassion': -1.0,         // Primary: Self-compassion (reversed - high criticism = low compassion)
+        'self_esteem': -0.9,             // Primary: Self-worth (reversed)
         'perfectionism': 0.7,            // Secondary: Perfectionist self-criticism
         'rumination': 0.6,               // Secondary: Repetitive negative thoughts
-        'self_acceptance': 0.6,          // Secondary: Self-acceptance (reversed)
-        // MBTI personality type scales
+        'self_acceptance': -0.6,         // Secondary: Self-acceptance (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Self-esteem: low self-compassion + low self-esteem + perfectionism + rumination + low self-acceptance',
@@ -146,12 +143,13 @@ class SimpleTestsWeights {
     'self_esteem_test:q4': const QuestionWeight(
       testId: 'self_esteem_test',
       questionId: 'q4',
-      axisWeights: {'body_image': 1.0,               // Primary: Body satisfaction
+      axisWeights: {
+        'body_image': 1.0,               // Primary: Body satisfaction
         'self_esteem': 0.9,              // Primary: Overall self-worth
         'self_acceptance': 0.8,          // High: Accepting physical self
-        'self_consciousness': 0.6,       // Secondary: Appearance consciousness (reversed)
+        'self_consciousness': -0.6,      // Secondary: Appearance consciousness (reversed)
         'social_confidence': 0.5,        // Secondary: Appearance affects confidence
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'introversion': 0.2,
       },
@@ -164,9 +162,9 @@ class SimpleTestsWeights {
       questionId: 'q5',
       axisWeights: {
         'self_monitoring': 1.0,          // Primary: Social comparison tendency
-        'self_esteem': 0.9,              // Primary: Low self-worth → more comparison
-        'secure_attachment': 0.7,        // Secondary: Insecurity drives comparison (reversed)
-        'self_acceptance': 0.6,          // Secondary: Self-acceptance (reversed)
+        'self_esteem': -0.9,             // Primary: Low self-worth → more comparison (reversed)
+        'secure_attachment': -0.7,       // Secondary: Insecurity drives comparison (reversed)
+        'self_acceptance': -0.6,         // Secondary: Self-acceptance (reversed)
         'jealousy': 0.5,                 // Secondary: Envy from comparison
       },
       note: 'Self-esteem: high self-monitoring + low self-esteem + insecurity + low self-acceptance + jealousy',

@@ -9,6 +9,7 @@ import 'summary/question_weights/sixteen_types_weights.dart';
 import 'summary/question_weights/temperament_profile_test_weights.dart';
 import 'summary/question_weights/digital_detox_weights.dart';
 import 'summary/question_weights/burnout_diagnostic_weights.dart';
+import 'summary/question_weights/social_battery_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2297,6 +2298,7 @@ class QuestionWeightsConfig {
     ...TemperamentProfileTestWeights.weights,
     ...DigitalDetoxWeights.weights,
     ...BurnoutDiagnosticWeights.weights,
+    ...SocialBatteryWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

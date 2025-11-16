@@ -1,0 +1,103 @@
+COMPLETE SEMANTIC REPLACEMENT TABLE (82 invalid → 195 valid)
+============================================================================
+
+Invalid Scale                    | Valid Replacement           | Category
+---------------------------------+-----------------------------+------------------
+absorption                       | mindfulness_coping          | Cognitive
+adaptability                     | cognitive_flexibility       | Cognitive
+agreeableness                    | cooperativeness             | Relationship
+alexithymia                      | emotional_intelligence      | Emotional [NEG]
+ambiguity_tolerance              | cognitive_flexibility       | Cognitive
+appreciation                     | aesthetics                  | Values
+attentiveness                    | attention_control           | Cognitive
+autonomy_support                 | autonomy_wellbeing          | Relationship
+avoidance                        | avoidant_coping             | Self
+body_awareness                   | body_image                  | Self
+boredom_proneness                | novelty_seeking             | Cognitive [NEG]
+clarity                          | self_awareness              | Cognitive
+communication_avoidance          | avoidant_coping             | Relationship
+communication_confidence         | social_confidence           | Relationship
+communication_skills             | communication_quality       | Relationship
+compromise                       | cooperativeness             | Relationship
+confidence                       | self_efficacy               | Self
+conscientiousness                | self_discipline             | Self
+control                          | self_direction              | Self
+cooperation                      | cooperativeness             | Relationship
+coping_skills                    | problem_focused_coping      | Other
+courage                          | risk_taking                 | Other
+creativity                       | flexibility_creative        | Cognitive
+directness                       | straightforwardness         | Values
+emotional_avoidance              | avoidant_coping             | Emotional
+emotional_control                | composure                   | Emotional
+emotional_dysregulation          | emotional_reactivity        | Emotional
+emotional_regulation             | cognitive_reappraisal       | Emotional
+emotional_stability              | emotional_resilience        | Emotional
+envy                             | jealousy                    | Emotional
+fairness                         | benevolence                 | Values
+faith                            | meaning_purpose             | Values
+fear_of_commitment               | fear_of_abandonment         | Relationship
+fear_of_failure                  | anxiety                     | Work
+fear_of_intimacy                 | intimacy_comfort            | Relationship [NEG]
+fear_of_rejection                | fear_of_abandonment         | Relationship
+future_orientation               | strategic_thinking          | Other
+gratitude                        | acceptance                  | Emotional
+health_consciousness             | prudence                    | Work
+honesty                          | straightforwardness         | Values
+hope                             | positive_emotions           | Emotional
+hostility                        | anger                       | Emotional
+humility                         | modesty                     | Values
+imagination                      | fantasy                     | Cognitive
+insecurity                       | self_esteem                 | Relationship [NEG]
+integrity                        | authenticity                | Values
+intelligence                     | verbal_intelligence         | Cognitive
+introspection                    | self_awareness              | Cognitive
+morality                         | values                      | Values
+motivation                       | intrinsic_motivation        | Work
+openness                         | intellectual_curiosity      | Other
+openness_to_experience           | intellectual_curiosity      | Other
+optimism                         | positive_emotions           | Emotional
+orderliness                      | order                       | Other
+paranoia                         | anxiety                     | Relationship
+passive_aggression               | anger                       | Relationship
+past_trauma                      | vulnerability               | Relationship
+perseverance                     | persistence                 | Work
+perspective_taking               | empathy                     | Cognitive
+positive_communication           | warmth                      | Relationship
+practical_skills                 | competence                  | Work
+prioritization                   | deliberation                | Work
+purpose                          | meaning_purpose             | Values
+rationality                      | analytical_thinking         | Cognitive
+reality_testing                  | wisdom                      | Cognitive
+relationship_investment          | commitment                  | Relationship
+relationship_quality             | positive_relations          | Relationship
+reliability                      | dependability               | Other
+respect                          | politeness                  | Relationship
+respect_for_tradition            | tradition                   | Values
+restlessness                     | activity                    | Cognitive
+self_care                        | self_compassion             | Self
+self_control                     | self_discipline             | Self
+self_soothing                    | emotion_focused_coping      | Emotional
+sensitivity                      | emotional_openness          | Emotional
+sexual_anxiety                   | self_consciousness          | Relationship
+sexual_confidence                | self_efficacy               | Relationship
+sexual_openness                  | emotional_openness          | Relationship
+sexual_satisfaction              | physical_intimacy           | Relationship
+shame                            | self_consciousness          | Emotional
+time_management                  | organization                | Work
+work_satisfaction                | achievement_motivation      | Work
+
+LEGEND:
+[NEG] = May require negative weight adjustment (original construct was inverse)
+
+CATEGORY BREAKDOWN:
+- Cognitive: 14 scales
+- Emotional: 14 scales
+- Relationship: 22 scales
+- Work: 8 scales
+- Values: 10 scales
+- Self: 7 scales
+- Other: 7 scales
+
+Total: 82 unique invalid scales replaced
+
+============================================================================

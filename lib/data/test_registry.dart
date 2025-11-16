@@ -8,6 +8,7 @@ import 'tests/sixteen_types_test.dart';
 import 'tests/temperament_profile_test.dart';
 import 'tests/digital_detox_test.dart';
 import 'tests/burnout_diagnostic_test.dart';
+import 'tests/social_battery_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -45,6 +46,7 @@ class TestRegistry {
     // Temperament/Personality
     FisherTemperamentTest(),
     TemperamentProfileTest(),
+    SocialBatteryTest(),
 
     // Emotional/Wellbeing
     DigitalDetoxTest(),

@@ -248,12 +248,12 @@ void main() {
 
       expect(result.testId, 'sixteen_types');
       expect(result.bipolarScores, isNotNull);
-      expect(result.bipolarScores!.length, 4); // 4 MBTI dimensions
+      expect(result.bipolarScores!.length, 4); // 4 personality type dimensions
       expect(result.bipolarScores!.keys, containsAll([
-        'mbti_ei',
-        'mbti_sn',
-        'mbti_tf',
-        'mbti_jp',
+        'personality_type_ei',
+        'personality_type_sn',
+        'personality_type_tf',
+        'personality_type_jp',
       ]));
     });
 

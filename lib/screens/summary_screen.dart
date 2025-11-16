@@ -23,9 +23,78 @@ import '../data/self_esteem_test_data.dart';
 import '../data/temperament_profile_test_data.dart';
 import '../data/digital_detox_data.dart' as digital_detox;
 import '../data/burnout_diagnostic_data.dart' as burnout;
+import '../data/social_battery_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
+
+/// Helper function to get answer text from test data
+String _getAnswerText(String testId, String questionId, int answerScore, String languageCode) {
+  try {
+    // Get the test data
+    TestModel? testModel;
+
+    switch (testId) {
+      case 'ipip_big_five':
+        testModel = IPIPBigFiveData.getIPIPBigFiveTest();
+        break;
+      case 'fisher_temperament':
+        testModel = FisherTemperamentData.getFisherTemperamentTest();
+        break;
+      case 'love_profile':
+        testModel = LoveProfileData.getLoveProfileTest();
+        break;
+      case 'sixteen_types':
+        testModel = SixteenTypesData.getSixteenTypesTest();
+        break;
+      case 'stress_test':
+        testModel = StressTestData.getStressTest();
+        break;
+      case 'self_esteem_test':
+        testModel = SelfEsteemTestData.getSelfEsteemTest();
+        break;
+      case 'temperament_profile_test':
+        testModel = TemperamentProfileTestData.getTemperamentProfileTest();
+        break;
+      case 'digital_detox_test':
+        testModel = digital_detox.DigitalDetoxTestData.getDigitalDetoxTest();
+        break;
+      case 'burnout_diagnostic_v1':
+        testModel = burnout.BurnoutDiagnosticData.getBurnoutDiagnosticTest();
+        break;
+      case 'social_battery_v1':
+        testModel = SocialBatteryData.getSocialBatteryTest();
+        break;
+      default:
+        appLogger.w('Unknown testId: $testId');
+        return answerScore.toString();
+    }
+
+    // Find the question by ID
+    if (testModel == null) {
+      return answerScore.toString();
+    }
+
+    final question = testModel.questions.firstWhere(
+      (q) => q.id == questionId,
+      orElse: () => throw Exception('Question not found: $questionId'),
+    );
+
+    // Find the answer by score
+    final answer = question.answers.firstWhere(
+      (a) => a.score == answerScore,
+      orElse: () => throw Exception('Answer not found for score: $answerScore'),
+    );
+
+    // Return the text in the current language
+    return answer.text[languageCode] ??
+           answer.text['ru'] ??
+           answerScore.toString();
+  } catch (e) {
+    appLogger.e('Error loading answer text for $testId:$questionId:$answerScore: $e');
+    return answerScore.toString();
+  }
+}
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});
@@ -1050,7 +1119,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           ),
         ),
         ...contributions.map((contribution) {
-          return _buildQuestionContribution(contribution, languageCode, isDark);
+          return _buildQuestionContribution(testId, contribution, languageCode, isDark);
         }).toList(),
         const SizedBox(height: 8),
       ],
@@ -1058,6 +1127,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
   }
 
   Widget _buildQuestionContribution(
+    String testId,
     QuestionContribution contribution,
     String languageCode,
     bool isDark,
@@ -1090,11 +1160,15 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 ),
               ),
               const SizedBox(width: 4),
-              Text(
-                '${contribution.answerScore}/${contribution.maxAnswerScore}',
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
+              Flexible(
+                child: Text(
+                  '${contribution.answerScore}/${contribution.maxAnswerScore} (${_getAnswerText(testId, contribution.questionId, contribution.answerScore, languageCode)})',
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ),
               const SizedBox(width: 12),
@@ -1422,7 +1496,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
   /// Строит 4 биполярные шкалы (E/I, S/N, T/F, J/P)
   Widget _buildBipolarScales(Map<String, BipolarDimensionScore> bipolarScores, String languageCode, bool isDark) {
     final testProvider = Provider.of<TestProvider>(context, listen: false);
-    final dimensions = ['mbti_ei', 'mbti_sn', 'mbti_tf', 'mbti_jp'];
+    final dimensions = ['personality_type_ei', 'personality_type_sn', 'personality_type_tf', 'personality_type_jp'];
 
     return Column(
       children: dimensions.map((dimensionId) {
@@ -1731,7 +1805,7 @@ class _SubscaleExpansionTileState extends State<_SubscaleExpansionTile> {
                   ),
                 ),
               ],
-              ...questions.map((q) => _buildQuestionContribution(q)),
+              ...questions.map((q) => _buildQuestionContribution(testKey, q)),
             ],
           );
         }),
@@ -1739,7 +1813,12 @@ class _SubscaleExpansionTileState extends State<_SubscaleExpansionTile> {
     );
   }
 
-  Widget _buildQuestionContribution(QuestionContribution contribution) {
+  Widget _buildQuestionContribution(String testKey, QuestionContribution contribution) {
+    // Extract testId from testKey (format: "testId" or "testId_attempt_N")
+    final testId = testKey.contains('_attempt_')
+        ? testKey.split('_attempt_')[0]
+        : testKey;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 6),
       padding: const EdgeInsets.all(8),
@@ -1768,11 +1847,15 @@ class _SubscaleExpansionTileState extends State<_SubscaleExpansionTile> {
                 ),
               ),
               const SizedBox(width: 4),
-              Text(
-                '${contribution.answerScore}/${contribution.maxAnswerScore}',
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
+              Flexible(
+                child: Text(
+                  '${contribution.answerScore}/${contribution.maxAnswerScore} (${_getAnswerText(testId, contribution.questionId, contribution.answerScore, widget.languageCode)})',
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ),
               const SizedBox(width: 12),
@@ -2018,13 +2101,13 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
       );
     }
 
-    // Use service to get questions with MBTI weights from ALL tests
+    // Use service to get questions with Personality Type weights from ALL tests
     appLogger.d('Загрузка вопросов для шкал $scaleIds');
-    final questionsData = _summaryService.getQuestionsWithMBTIWeights(
+    final questionsData = _summaryService.getQuestionsWithPersonalityTypeWeights(
       completedTests,
       scaleIds,
     );
-    appLogger.d('Найдено тестов с MBTI весами: ${questionsData.keys.length}');
+    appLogger.d('Найдено тестов с Personality Type весами: ${questionsData.keys.length}');
 
     if (questionsData.isEmpty) {
       return Text(
@@ -2086,13 +2169,13 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
   /// Maps bipolar dimension ID to the two unipolar scale IDs
   List<String> _getScaleIdsForDimension(String dimensionId) {
     switch (dimensionId) {
-      case 'mbti_ei':
+      case 'personality_type_ei':
         return ['extraversion', 'introversion'];
-      case 'mbti_sn':
+      case 'personality_type_sn':
         return ['sensing', 'intuition'];
-      case 'mbti_tf':
+      case 'personality_type_tf':
         return ['thinking', 'feeling'];
-      case 'mbti_jp':
+      case 'personality_type_jp':
         return ['judging', 'perceiving'];
       default:
         appLogger.w('Unknown dimension ID: $dimensionId');
@@ -2301,7 +2384,7 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
     String answerText = '';
 
     if (answerScore != null) {
-      answerText = _getAnswerText(testResult.testId, questionId, answerScore);
+      answerText = _getAnswerText(testResult.testId, questionId, answerScore, widget.languageCode);
     }
 
     if (answerText.isEmpty) {
@@ -2476,6 +2559,9 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
         case 'burnout_diagnostic_v1':
           testModel = burnout.BurnoutDiagnosticData.getBurnoutDiagnosticTest();
           break;
+        case 'social_battery_v1':
+          testModel = SocialBatteryData.getSocialBatteryTest();
+          break;
         default:
           appLogger.w('Unknown testId: $testId');
           return widget.languageCode == 'ru'
@@ -2504,71 +2590,6 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
       return widget.languageCode == 'ru'
           ? 'Вопрос $questionId'
           : 'Question $questionId';
-    }
-  }
-
-  /// Gets answer text from test data
-  String _getAnswerText(String testId, String questionId, int answerScore) {
-    try {
-      // Get the test data
-      TestModel? testModel;
-
-      switch (testId) {
-        case 'ipip_big_five':
-          testModel = IPIPBigFiveData.getIPIPBigFiveTest();
-          break;
-        case 'fisher_temperament':
-          testModel = FisherTemperamentData.getFisherTemperamentTest();
-          break;
-        case 'love_profile':
-          testModel = LoveProfileData.getLoveProfileTest();
-          break;
-        case 'sixteen_types':
-          testModel = SixteenTypesData.getSixteenTypesTest();
-          break;
-        case 'stress_test':
-          testModel = StressTestData.getStressTest();
-          break;
-        case 'self_esteem_test':
-          testModel = SelfEsteemTestData.getSelfEsteemTest();
-          break;
-        case 'temperament_profile_test':
-          testModel = TemperamentProfileTestData.getTemperamentProfileTest();
-          break;
-        case 'digital_detox_test':
-          testModel = digital_detox.DigitalDetoxTestData.getDigitalDetoxTest();
-          break;
-        case 'burnout_diagnostic_v1':
-          testModel = burnout.BurnoutDiagnosticData.getBurnoutDiagnosticTest();
-          break;
-        default:
-          appLogger.w('Unknown testId: $testId');
-          return answerScore.toString();
-      }
-
-      // Find the question by ID
-      if (testModel == null) {
-        return answerScore.toString();
-      }
-
-      final question = testModel.questions.firstWhere(
-        (q) => q.id == questionId,
-        orElse: () => throw Exception('Question not found: $questionId'),
-      );
-
-      // Find the answer by score
-      final answer = question.answers.firstWhere(
-        (a) => a.score == answerScore,
-        orElse: () => throw Exception('Answer not found for score: $answerScore'),
-      );
-
-      // Return the text in the current language
-      return answer.text[widget.languageCode] ??
-             answer.text['ru'] ??
-             answerScore.toString();
-    } catch (e) {
-      appLogger.e('Error loading answer text for $testId:$questionId:$answerScore: $e');
-      return answerScore.toString();
     }
   }
 

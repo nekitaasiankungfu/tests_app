@@ -30,12 +30,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'anxiety': 1.0,                      // Primary: Technology-induced anxiety
         'impulsiveness': 0.8,                // High: Need to check phone
-        'frustration_tolerance': 0.7,        // Secondary: Low tolerance for device separation (reversed)
-        'stress_tolerance': 0.6,             // Secondary: Device separation stress (reversed)
+        'frustration_tolerance': -0.7,        // Secondary: Low tolerance for device separation (reversed)
+        'stress_tolerance': -0.6,             // Secondary: Device separation stress (reversed)
         'emotional_reactivity': 0.6,         // Secondary: Emotional response to separation
         'worry_tendency': 0.5,               // Secondary: Anticipatory worry
-        'self_discipline': 0.4,              // Moderate: Difficulty controlling phone use (reversed)
-        // MBTI personality type scales
+        'self_discipline': -0.4,              // Moderate: Difficulty controlling phone use (reversed)
+        // Personality Type personality type scales
         'feeling': 0.3,
         'judging': 0.2,
       },
@@ -49,13 +49,13 @@ class DigitalDetoxWeights {
       questionId: 'q8',
       axisWeights: {
         'impulsiveness': 1.0,                // Primary: Immediate phone checking
-        'self_discipline': 0.9,              // Primary: Low morning control (reversed)
+        'self_discipline': -0.9,              // Primary: Low morning control (reversed)
         'anxiety': 0.7,                      // Secondary: Need for immediate check
-        'deliberation': 0.6,                 // Secondary: Automatic behavior (reversed)
-        'patience': 0.5,                     // Secondary: Cannot delay (reversed)
-        'autonomy_need': 0.4,                // Moderate: External dependency (reversed)
+        'deliberation': -0.6,                 // Secondary: Automatic behavior (reversed)
+        'patience': -0.5,                     // Secondary: Cannot delay (reversed)
+        'autonomy_need': -0.4,                // Moderate: External dependency (reversed)
         'vitality': 0.3,                     // Tertiary: Morning energy directed to phone
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Morning dependency: impulsiveness + low self-discipline + anxiety + automatic behavior',
@@ -73,8 +73,8 @@ class DigitalDetoxWeights {
         'frustration_tolerance': 0.6,        // Secondary: Inability to tolerate reduction
         'achievement_striving': 0.6,         // Secondary: Failed goal pursuit
         'emotional_resilience': 0.5,         // Secondary: Difficulty with change
-        'autonomy_need': 0.4,                // Moderate: Lack of behavioral autonomy (reversed)
-        // MBTI personality type scales
+        'autonomy_need': -0.4,                // Moderate: Lack of behavioral autonomy (reversed)
+        // Personality Type personality type scales
         'judging': 0.3,
       },
       note: 'Failed control: low self-discipline + failed persistence + impulse control failure',
@@ -90,10 +90,10 @@ class DigitalDetoxWeights {
         'vulnerability': 0.9,                // Primary: Feeling vulnerable without phone
         'fear_of_abandonment': 0.7,          // Secondary: Fear of disconnection
         'worry_tendency': 0.7,               // Secondary: Anticipatory worry
-        'stress_tolerance': 0.6,             // Secondary: Low stress tolerance (reversed)
+        'stress_tolerance': -0.6,             // Secondary: Low stress tolerance (reversed)
         'emotional_reactivity': 0.5,         // Secondary: Emotional response to battery level
         'security_value': 0.4,               // Moderate: Phone as security object
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.2,
       },
@@ -108,12 +108,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'anxiety': 1.0,                      // Primary: Anxious hypervigilance
         'rumination': 0.8,                   // High: Mental preoccupation with phone
-        'attention_control': 0.7,            // Secondary: Attention fixation on phone (reversed)
-        'stress_tolerance': 0.6,             // Secondary: Stress-induced sensation (reversed)
+        'attention_control': -0.7,            // Secondary: Attention fixation on phone (reversed)
+        'stress_tolerance': -0.6,             // Secondary: Stress-induced sensation (reversed)
         'worry_tendency': 0.6,               // Secondary: Anticipatory monitoring
         'impulsiveness': 0.5,                // Secondary: Compulsive checking
         'vulnerability': 0.4,                // Moderate: Psychological vulnerability
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
         'feeling': 0.2,
       },
@@ -127,13 +127,13 @@ class DigitalDetoxWeights {
       questionId: 'q36',
       axisWeights: {
         'impulsiveness': 1.0,                // Primary: Cannot separate from device
-        'self_discipline': 0.9,              // Primary: Lack of boundaries (reversed)
+        'self_discipline': -0.9,              // Primary: Lack of boundaries (reversed)
         'anxiety': 0.7,                      // Secondary: Separation anxiety
-        'boundary_setting': 0.7,             // Secondary: Poor personal boundaries (reversed)
-        'patience': 0.5,                     // Secondary: Cannot delay usage (reversed)
-        'autonomy_need': 0.4,                // Moderate: Device dependency (reversed)
+        'boundary_setting': -0.7,             // Secondary: Poor personal boundaries (reversed)
+        'patience': -0.5,                     // Secondary: Cannot delay usage (reversed)
+        'autonomy_need': -0.4,                // Moderate: Device dependency (reversed)
         'modesty': 0.3,                      // Tertiary: Privacy boundary issues
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Constant proximity: impulsiveness + low self-discipline + anxiety + poor boundaries',
@@ -147,12 +147,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'anxiety': 1.0,                      // Primary: Severe separation anxiety
         'vulnerability': 0.9,                // Primary: Feeling helpless without phone
-        'self_discipline': 0.8,              // High: Cannot function independently (reversed)
-        'emotional_resilience': 0.7,         // Secondary: Low resilience to deprivation (reversed)
-        'autonomy_need': 0.6,                // Secondary: Lack of autonomy (reversed)
-        'stress_tolerance': 0.6,             // Secondary: Stress intolerance (reversed)
+        'self_discipline': -0.8,              // High: Cannot function independently (reversed)
+        'emotional_resilience': -0.7,         // Secondary: Low resilience to deprivation (reversed)
+        'autonomy_need': -0.6,                // Secondary: Lack of autonomy (reversed)
+        'stress_tolerance': -0.6,             // Secondary: Stress intolerance (reversed)
         'fear_of_abandonment': 0.5,          // Secondary: Fear of disconnection
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.2,
       },
@@ -176,7 +176,7 @@ class DigitalDetoxWeights {
         'diligence': 0.6,                    // Secondary: Task persistence
         'intellectual_curiosity': 0.5,       // Secondary: Engagement with content
         'cognitive_flexibility': 0.4,        // Moderate: Single-task focus
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'thinking': 0.2,
       },
@@ -192,11 +192,11 @@ class DigitalDetoxWeights {
         'attention_control': 1.0,            // Primary: Deep focus capacity
         'persistence': 0.8,                  // High: Sustained effort
         'self_discipline': 0.8,              // High: Behavioral control
-        'impulsiveness': 0.7,                // Secondary: Low impulsiveness (reversed)
+        'impulsiveness': -0.7,                // Secondary: Low impulsiveness (reversed)
         'patience': 0.6,                     // Secondary: Delay capacity
         'achievement_striving': 0.5,         // Secondary: Goal pursuit
         'diligence': 0.5,                    // Secondary: Work concentration
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'introversion': 0.2,
       },
@@ -210,13 +210,13 @@ class DigitalDetoxWeights {
       questionId: 'q16',
       axisWeights: {
         'impulsiveness': 1.0,                // Primary: Automatic behavior
-        'attention_control': 0.9,            // Primary: Lack of conscious control (reversed)
-        'self_awareness': 0.8,               // High: Low awareness of actions (reversed)
-        'deliberation': 0.7,                 // Secondary: Lack of intentionality (reversed)
-        'mindfulness_coping': 0.6,           // Secondary: Lack of mindfulness (reversed)
-        'self_discipline': 0.6,              // Secondary: Habitual behavior (reversed)
+        'attention_control': -0.9,            // Primary: Lack of conscious control (reversed)
+        'self_awareness': -0.8,               // High: Low awareness of actions (reversed)
+        'deliberation': -0.7,                 // Secondary: Lack of intentionality (reversed)
+        'mindfulness_coping': -0.6,           // Secondary: Lack of mindfulness (reversed)
+        'self_discipline': -0.6,              // Secondary: Habitual behavior (reversed)
         'rumination': 0.4,                   // Moderate: Mind wandering
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'sensing': 0.2,
       },
@@ -231,12 +231,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'attention_control': 1.0,            // Primary: Shallow attention processing
         'working_memory': 0.9,               // Primary: Poor memory encoding
-        'mindfulness_coping': 0.7,           // Secondary: Lack of present awareness (reversed)
+        'mindfulness_coping': -0.7,           // Secondary: Lack of present awareness (reversed)
         'processing_speed': 0.6,             // Secondary: Information overload
         'cognitive_flexibility': 0.5,        // Secondary: Rapid task switching effects
         'rumination': 0.5,                   // Secondary: Mental distraction
         'self_awareness': 0.4,               // Moderate: Low awareness of consumption
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
         'intuition': 0.2,
       },
@@ -252,11 +252,11 @@ class DigitalDetoxWeights {
         'attention_control': 1.0,            // Primary: Focus during social interaction
         'self_discipline': 0.9,              // Primary: Impulse control in social context
         'politeness': 0.7,                   // Secondary: Social respect
-        'impulsiveness': 0.7,                // Secondary: Low impulsiveness (reversed)
+        'impulsiveness': -0.7,                // Secondary: Low impulsiveness (reversed)
         'active_listening': 0.6,             // Secondary: Engagement with others
         'social_perception': 0.6,            // Secondary: Social awareness
         'patience': 0.5,                     // Secondary: Delay capacity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'feeling': 0.2,
       },
@@ -271,12 +271,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'attention_control': 1.0,            // Primary: Distraction susceptibility
         'impulsiveness': 0.9,                // Primary: Immediate response to notifications
-        'self_discipline': 0.8,              // High: Lack of task persistence (reversed)
-        'persistence': 0.7,                  // Secondary: Task abandonment (reversed)
-        'patience': 0.6,                     // Secondary: Cannot delay notification check (reversed)
-        'achievement_striving': 0.5,         // Secondary: Difficulty with goal pursuit (reversed)
-        'frustration_tolerance': 0.4,        // Moderate: Low tolerance for notification delay (reversed)
-        // MBTI personality type scales
+        'self_discipline': -0.8,              // High: Lack of task persistence (reversed)
+        'persistence': -0.7,                  // Secondary: Task abandonment (reversed)
+        'patience': -0.6,                     // Secondary: Cannot delay notification check (reversed)
+        'achievement_striving': -0.5,         // Secondary: Difficulty with goal pursuit (reversed)
+        'frustration_tolerance': -0.4,        // Moderate: Low tolerance for notification delay (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'extraversion': 0.2,
       },
@@ -292,11 +292,11 @@ class DigitalDetoxWeights {
         'self_discipline': 1.0,              // Primary: Voluntary gadget abstinence
         'autonomy_need': 0.8,                // High: Self-directed leisure
         'intrinsic_motivation': 0.7,         // Secondary: Internal activity drive
-        'impulsiveness': 0.7,                // Secondary: Low impulsiveness (reversed)
-        'creativity': 0.6,                   // Secondary: Alternative activities
+        'impulsiveness': -0.7,                // Secondary: Low impulsiveness (reversed)
+        'flexibility_creative': 0.6,                   // Secondary: Alternative activities
         'attention_control': 0.6,            // Secondary: Ability to focus on offline activities
         'actions': 0.5,                      // Secondary: Openness to non-digital activities
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'introversion': 0.2,
       },
@@ -313,14 +313,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q3',
       axisWeights: {
-        'politeness': 1.0,                   // Primary: Social rudeness (reversed)
-        'active_listening': 0.9,             // Primary: Poor listening (reversed)
-        'communication_quality': 0.8,        // High: Degraded communication (reversed)
-        'attention_control': 0.7,            // Secondary: Divided attention (reversed)
-        'empathy': 0.6,                      // Secondary: Reduced empathic engagement (reversed)
-        'relationship_quality': 0.6,         // Secondary: Relationship harm (reversed)
+        'politeness': -1.0,                   // Primary: Social rudeness (reversed)
+        'active_listening': -0.9,             // Primary: Poor listening (reversed)
+        'communication_quality': -0.8,        // High: Degraded communication (reversed)
+        'attention_control': -0.7,            // Secondary: Divided attention (reversed)
+        'empathy': -0.6,                      // Secondary: Reduced empathic engagement (reversed)
+        'positive_relations': -0.6,         // Secondary: Relationship harm (reversed)
         'impulsiveness': 0.5,                // Secondary: Cannot resist phone use
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
         'perceiving': 0.2,
       },
@@ -333,14 +333,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q10',
       axisWeights: {
-        'relationship_quality': 1.0,         // Primary: Relationship damage
-        'social_perception': 0.8,            // High: Low awareness of social impact (reversed)
-        'communication_quality': 0.7,        // Secondary: Communication problems (reversed)
-        'boundary_setting': 0.7,             // Secondary: Poor digital boundaries (reversed)
-        'empathy': 0.6,                      // Secondary: Low empathy for others' concerns (reversed)
+        'positive_relations': 1.0,         // Primary: Relationship damage
+        'social_perception': -0.8,            // High: Low awareness of social impact (reversed)
+        'communication_quality': -0.7,        // Secondary: Communication problems (reversed)
+        'boundary_setting': -0.7,             // Secondary: Poor digital boundaries (reversed)
+        'empathy': -0.6,                      // Secondary: Low empathy for others' concerns (reversed)
         'conflict_resolution': 0.5,          // Secondary: Recurring conflict pattern
-        'self_awareness': 0.5,               // Secondary: Low self-awareness (reversed)
-        // MBTI personality type scales
+        'self_awareness': -0.5,               // Secondary: Low self-awareness (reversed)
+        // Personality Type personality type scales
         'thinking': 0.3,
         'perceiving': 0.2,
       },
@@ -353,14 +353,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q17',
       axisWeights: {
-        'gregariousness': 1.0,               // Primary: Low in-person social seeking (reversed)
-        'warmth': 0.8,                       // High: Reduced warmth in communication (reversed)
-        'intimacy_comfort': 0.7,             // Secondary: Avoidance of deep connection (reversed)
+        'gregariousness': -1.0,               // Primary: Low in-person social seeking (reversed)
+        'warmth': -0.8,                       // High: Reduced warmth in communication (reversed)
+        'intimacy_comfort': -0.7,             // Secondary: Avoidance of deep connection (reversed)
         'social_confidence': 0.6,            // Secondary: Possible social anxiety
-        'verbal_communication': 0.6,         // Secondary: Reduced verbal skills (reversed)
+        'verbal_communication': -0.6,         // Secondary: Reduced verbal skills (reversed)
         'avoidant_attachment': 0.5,          // Secondary: Intimacy avoidance pattern
         'self_consciousness': 0.5,           // Secondary: Possible social anxiety
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.4,
         'thinking': 0.2,
       },
@@ -373,14 +373,13 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q24',
       axisWeights: {
-        'emotional_intimacy': 1.0,           // Primary: Lack of deep connection (reversed)
-        'positive_relations': 0.9,           // Primary: Poor relationship quality (reversed)
+        'emotional_intimacy': -1.0,           // Primary: Lack of deep connection (reversed)
+        'positive_relations': -0.9,           // Primary: Poor relationship quality (reversed)
         'affiliation_motivation': 0.7,       // Secondary: Unmet connection need
-        'relationship_quality': 0.7,         // Secondary: Shallow relationships (reversed)
-        'warmth': 0.6,                       // Secondary: Lack of warmth in digital connection (reversed)
+        'warmth': -0.6,                       // Secondary: Lack of warmth in digital connection (reversed)
         'depression': 0.6,                   // Secondary: Loneliness-related low mood
-        'vulnerability_sharing': 0.5,        // Secondary: Lack of vulnerability online (reversed)
-        // MBTI personality type scales
+        'vulnerability_sharing': -0.5,        // Secondary: Lack of vulnerability online (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
         'introversion': 0.2,
       },
@@ -393,14 +392,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q31',
       axisWeights: {
-        'gregariousness': 1.0,               // Primary: Reduced in-person socializing (reversed)
-        'relationship_quality': 0.8,         // High: Relationship neglect (reversed)
-        'time_management': 0.7,              // Secondary: Poor priority balance (reversed)
-        'affiliation_motivation': 0.6,       // Secondary: Reduced real connection drive (reversed)
-        'warmth': 0.6,                       // Secondary: Reduced interpersonal warmth (reversed)
-        'self_discipline': 0.5,              // Secondary: Digital time control failure (reversed)
+        'gregariousness': -1.0,               // Primary: Reduced in-person socializing (reversed)
+        'positive_relations': -0.8,         // High: Relationship neglect (reversed)
+        'organization': -0.7,              // Secondary: Poor priority balance (reversed)
+        'affiliation_motivation': -0.6,       // Secondary: Reduced real connection drive (reversed)
+        'warmth': -0.6,                       // Secondary: Reduced interpersonal warmth (reversed)
+        'self_discipline': -0.5,              // Secondary: Digital time control failure (reversed)
         'values': 0.4,                       // Moderate: Misaligned priorities
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.3,
       },
       note: 'Social displacement: reduced gregariousness + relationship neglect + poor time management',
@@ -415,12 +414,12 @@ class DigitalDetoxWeights {
         'actions': 1.0,                      // Primary: Openness to varied activities
         'curiosity': 0.8,                    // High: Exploration of offline interests
         'intrinsic_motivation': 0.7,         // Secondary: Self-driven engagement
-        'creativity': 0.7,                   // Secondary: Creative pursuits
+        'flexibility_creative': 0.7,                   // Secondary: Creative pursuits
         'autonomy_need': 0.6,                // Secondary: Self-directed activity
         'life_satisfaction': 0.6,            // Secondary: Balanced life engagement
         'self_direction': 0.5,               // Secondary: Independent activity choices
-        // MBTI personality type scales
-        'openness': 0.4,
+        // Personality Type personality type scales
+        'intellectual_curiosity': 0.4,
         'perceiving': 0.2,
       },
       note: 'Offline engagement (REVERSED): varied activities + curiosity + intrinsic motivation + creativity',
@@ -432,14 +431,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q45',
       axisWeights: {
-        'mindfulness_coping': 1.0,           // Primary: Lack of present awareness (reversed)
-        'aesthetics': 0.8,                   // High: Reduced aesthetic appreciation (reversed)
-        'curiosity': 0.7,                    // Secondary: Reduced environmental curiosity (reversed)
-        'attention_control': 0.6,            // Secondary: Attention on phone vs. environment (reversed)
-        'openness_to_experience': 0.6,       // Secondary: Closed to immediate experience (reversed)
+        'mindfulness_coping': -1.0,           // Primary: Lack of present awareness (reversed)
+        'aesthetics': -0.8,                   // High: Reduced aesthetic appreciation (reversed)
+        'curiosity': -0.7,                    // Secondary: Reduced environmental curiosity (reversed)
+        'attention_control': -0.6,            // Secondary: Attention on phone vs. environment (reversed)
+        'intellectual_curiosity': -0.6,       // Secondary: Closed to immediate experience (reversed)
         'impulsiveness': 0.5,                // Secondary: Cannot resist phone use
-        'vitality': 0.4,                     // Moderate: Reduced aliveness (reversed)
-        // MBTI personality type scales
+        'vitality': -0.4,                     // Moderate: Reduced aliveness (reversed)
+        // Personality Type personality type scales
         'sensing': 0.3,
         'perceiving': 0.2,
       },
@@ -457,13 +456,13 @@ class DigitalDetoxWeights {
       questionId: 'q4',
       axisWeights: {
         'vulnerability': 1.0,                // Primary: Physical vulnerability to screens
-        'self_discipline': 0.7,              // Secondary: Excessive screen time (reversed)
-        'health_consciousness': 0.7,         // Secondary: Low health awareness (reversed)
-        'stress_tolerance': 0.5,             // Secondary: Physical stress symptoms (reversed)
-        'self_compassion': 0.5,              // Secondary: Ignoring body signals (reversed)
-        'boundary_setting': 0.4,             // Moderate: Poor screen time boundaries (reversed)
-        'patience': 0.3,                     // Tertiary: Cannot take breaks (reversed)
-        // MBTI personality type scales
+        'self_discipline': -0.7,              // Secondary: Excessive screen time (reversed)
+        'prudence': -0.7,         // Secondary: Low health awareness (reversed)
+        'stress_tolerance': -0.5,             // Secondary: Physical stress symptoms (reversed)
+        'self_compassion': -0.5,              // Secondary: Ignoring body signals (reversed)
+        'boundary_setting': -0.4,             // Moderate: Poor screen time boundaries (reversed)
+        'patience': -0.3,                     // Tertiary: Cannot take breaks (reversed)
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Eye strain: physical vulnerability + excessive screen time + low health awareness',
@@ -476,13 +475,13 @@ class DigitalDetoxWeights {
       questionId: 'q11',
       axisWeights: {
         'vulnerability': 1.0,                // Primary: Sleep system vulnerability
-        'self_discipline': 0.9,              // Primary: Poor bedtime boundaries (reversed)
-        'health_consciousness': 0.7,         // Secondary: Ignoring sleep hygiene (reversed)
+        'self_discipline': -0.9,              // Primary: Poor bedtime boundaries (reversed)
+        'prudence': -0.7,         // Secondary: Ignoring sleep hygiene (reversed)
         'impulsiveness': 0.6,                // Secondary: Cannot resist screens before bed
-        'deliberation': 0.5,                 // Secondary: Lack of sleep planning (reversed)
-        'vitality': 0.5,                     // Secondary: Reduced energy from poor sleep (reversed)
-        'patience': 0.4,                     // Moderate: Cannot delay screen use (reversed)
-        // MBTI personality type scales
+        'deliberation': -0.5,                 // Secondary: Lack of sleep planning (reversed)
+        'vitality': -0.5,                     // Secondary: Reduced energy from poor sleep (reversed)
+        'patience': -0.4,                     // Moderate: Cannot delay screen use (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Sleep disruption: vulnerability + low self-discipline + poor health habits + impulsiveness',
@@ -495,13 +494,13 @@ class DigitalDetoxWeights {
       questionId: 'q18',
       axisWeights: {
         'vulnerability': 1.0,                // Primary: Musculoskeletal vulnerability
-        'self_discipline': 0.7,              // Secondary: Excessive usage duration (reversed)
-        'health_consciousness': 0.7,         // Secondary: Ignoring ergonomics (reversed)
+        'self_discipline': -0.7,              // Secondary: Excessive usage duration (reversed)
+        'prudence': -0.7,         // Secondary: Ignoring ergonomics (reversed)
         'body_image': 0.6,                   // Secondary: Body awareness
-        'self_compassion': 0.5,              // Secondary: Ignoring pain signals (reversed)
-        'patience': 0.4,                     // Moderate: Cannot take breaks (reversed)
-        'stress_tolerance': 0.4,             // Moderate: Physical stress symptoms (reversed)
-        // MBTI personality type scales
+        'self_compassion': -0.5,              // Secondary: Ignoring pain signals (reversed)
+        'patience': -0.4,                     // Moderate: Cannot take breaks (reversed)
+        'stress_tolerance': -0.4,             // Moderate: Physical stress symptoms (reversed)
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Musculoskeletal pain: vulnerability + excessive usage + low health awareness + poor self-care',
@@ -513,14 +512,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q25',
       axisWeights: {
-        'vitality': 1.0,                     // Primary: Depleted life energy (reversed)
+        'vitality': -1.0,                     // Primary: Depleted life energy (reversed)
         'vulnerability': 0.8,                // High: Physical exhaustion
-        'health_consciousness': 0.7,         // Secondary: Awareness of screen impact
-        'self_discipline': 0.6,              // Secondary: Excessive screen time (reversed)
-        'stress_tolerance': 0.6,             // Secondary: Depleted stress capacity (reversed)
-        'emotional_resilience': 0.5,         // Secondary: Reduced resilience (reversed)
-        'environmental_mastery': 0.4,        // Moderate: Poor life balance control (reversed)
-        // MBTI personality type scales
+        'prudence': 0.7,         // Secondary: Awareness of screen impact
+        'self_discipline': -0.6,              // Secondary: Excessive screen time (reversed)
+        'stress_tolerance': -0.6,             // Secondary: Depleted stress capacity (reversed)
+        'emotional_resilience': -0.5,         // Secondary: Reduced resilience (reversed)
+        'environmental_mastery': -0.4,        // Moderate: Poor life balance control (reversed)
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Chronic fatigue: depleted vitality + vulnerability + excessive usage + low stress capacity',
@@ -534,12 +533,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'vulnerability': 1.0,                // Primary: Sleep system damage
         'self_awareness': 0.9,               // Primary: Recognition of causal link
-        'health_consciousness': 0.8,         // High: Health impact awareness
-        'self_discipline': 0.7,              // Secondary: Poor boundaries (reversed)
-        'vitality': 0.6,                     // Secondary: Energy depletion (reversed)
-        'emotional_resilience': 0.5,         // Secondary: Sleep affects resilience (reversed)
+        'prudence': 0.8,         // High: Health impact awareness
+        'self_discipline': -0.7,              // Secondary: Poor boundaries (reversed)
+        'vitality': -0.6,                     // Secondary: Energy depletion (reversed)
+        'emotional_resilience': -0.5,         // Secondary: Sleep affects resilience (reversed)
         'self_compassion': 0.4,              // Moderate: Need for self-care
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.3,
         'thinking': 0.2,
       },
@@ -554,12 +553,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'vulnerability': 1.0,                // Primary: Neurological vulnerability
         'self_awareness': 0.8,               // High: Recognition of cause
-        'health_consciousness': 0.7,         // Secondary: Health impact awareness
-        'self_discipline': 0.6,              // Secondary: Excessive screen time (reversed)
-        'stress_tolerance': 0.6,             // Secondary: Stress-related headaches (reversed)
-        'self_compassion': 0.5,              // Secondary: Ignoring pain signals (reversed)
-        'boundary_setting': 0.4,             // Moderate: Poor screen boundaries (reversed)
-        // MBTI personality type scales
+        'prudence': 0.7,         // Secondary: Health impact awareness
+        'self_discipline': -0.6,              // Secondary: Excessive screen time (reversed)
+        'stress_tolerance': -0.6,             // Secondary: Stress-related headaches (reversed)
+        'self_compassion': -0.5,              // Secondary: Ignoring pain signals (reversed)
+        'boundary_setting': -0.4,             // Moderate: Poor screen boundaries (reversed)
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Headaches: vulnerability + self-awareness + excessive usage + stress',
@@ -573,12 +572,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'body_image': 1.0,                   // Primary: Body awareness and posture
         'self_awareness': 0.9,               // Primary: Recognition of physical change
-        'health_consciousness': 0.8,         // High: Health impact awareness
+        'prudence': 0.8,         // High: Health impact awareness
         'vulnerability': 0.7,                // Secondary: Physical vulnerability
-        'self_discipline': 0.6,              // Secondary: Excessive usage (reversed)
+        'self_discipline': -0.6,              // Secondary: Excessive usage (reversed)
         'self_compassion': 0.5,              // Secondary: Body care concern
-        'patience': 0.4,                     // Moderate: Cannot maintain good posture (reversed)
-        // MBTI personality type scales
+        'patience': -0.4,                     // Moderate: Cannot maintain good posture (reversed)
+        // Personality Type personality type scales
         'sensing': 0.4,
       },
       note: 'Posture degradation: body awareness + self-awareness + health consciousness + vulnerability',
@@ -595,13 +594,13 @@ class DigitalDetoxWeights {
       questionId: 'q5',
       axisWeights: {
         'attention_control': 1.0,            // Primary: Distraction susceptibility
-        'self_discipline': 0.9,              // Primary: Poor impulse control (reversed)
-        'achievement_striving': 0.7,         // Secondary: Hindered goal pursuit (reversed)
-        'persistence': 0.7,                  // Secondary: Task abandonment (reversed)
+        'self_discipline': -0.9,              // Primary: Poor impulse control (reversed)
+        'achievement_striving': -0.7,         // Secondary: Hindered goal pursuit (reversed)
+        'persistence': -0.7,                  // Secondary: Task abandonment (reversed)
         'impulsiveness': 0.6,                // Secondary: Cannot resist gadgets
-        'time_management': 0.6,              // Secondary: Poor time allocation (reversed)
-        'diligence': 0.5,                    // Secondary: Reduced work focus (reversed)
-        // MBTI personality type scales
+        'organization': -0.6,              // Secondary: Poor time allocation (reversed)
+        'diligence': -0.5,                    // Secondary: Reduced work focus (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
       },
       note: 'Task distraction: low attention + low self-discipline + hindered achievement + impulsiveness',
@@ -614,13 +613,13 @@ class DigitalDetoxWeights {
       questionId: 'q12',
       axisWeights: {
         'procrastination': 1.0,              // Primary: Active procrastination behavior
-        'self_discipline': 0.9,              // Primary: Impulse control failure (reversed)
-        'time_management': 0.8,              // High: Poor prioritization (reversed)
-        'achievement_striving': 0.7,         // Secondary: Goal avoidance (reversed)
+        'self_discipline': -0.9,              // Primary: Impulse control failure (reversed)
+        'organization': -0.8,              // High: Poor prioritization (reversed)
+        'achievement_striving': -0.7,         // Secondary: Goal avoidance (reversed)
         'impulsiveness': 0.7,                // Secondary: Immediate gratification seeking
         'hedonism': 0.6,                     // Secondary: Pleasure prioritization
-        'deliberation': 0.5,                 // Secondary: Lack of planning (reversed)
-        // MBTI personality type scales
+        'deliberation': -0.5,                 // Secondary: Lack of planning (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.5,
         'feeling': 0.2,
       },
@@ -634,13 +633,13 @@ class DigitalDetoxWeights {
       questionId: 'q19',
       axisWeights: {
         'self_awareness': 1.0,               // Primary: Recognition of productivity decline
-        'achievement_striving': 0.8,         // High: Concern for achievement (reversed)
-        'time_management': 0.7,              // Secondary: Recognition of time waste (reversed)
-        'diligence': 0.7,                    // Secondary: Reduced work quality (reversed)
-        'self_discipline': 0.6,              // Secondary: Control failure (reversed)
-        'competence': 0.6,                   // Secondary: Reduced effectiveness (reversed)
+        'achievement_striving': -0.8,         // High: Concern for achievement (reversed)
+        'organization': -0.7,              // Secondary: Recognition of time waste (reversed)
+        'diligence': -0.7,                    // Secondary: Reduced work quality (reversed)
+        'self_discipline': -0.6,              // Secondary: Control failure (reversed)
+        'competence': -0.6,                   // Secondary: Reduced effectiveness (reversed)
         'frustration_tolerance': 0.4,        // Moderate: Frustration with self
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Productivity awareness: self-awareness + achievement concern + time waste + reduced effectiveness',
@@ -652,14 +651,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q26',
       axisWeights: {
-        'time_management': 1.0,              // Primary: Poor time estimation (reversed)
-        'self_discipline': 0.9,              // Primary: Exceeded planned time (reversed)
-        'self_awareness': 0.7,               // Secondary: Low awareness of time passage (reversed)
+        'organization': -1.0,              // Primary: Poor time estimation (reversed)
+        'self_discipline': -0.9,              // Primary: Exceeded planned time (reversed)
+        'self_awareness': -0.7,               // Secondary: Low awareness of time passage (reversed)
         'impulsiveness': 0.7,                // Secondary: Cannot stop usage
-        'deliberation': 0.6,                 // Secondary: Lack of time planning (reversed)
-        'patience': 0.5,                     // Secondary: Cannot delay gratification (reversed)
+        'deliberation': -0.6,                 // Secondary: Lack of time planning (reversed)
+        'patience': -0.5,                     // Secondary: Cannot delay gratification (reversed)
         'procrastination': 0.5,              // Secondary: Time displacement
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
       },
       note: 'Time underestimation: poor time management + low self-discipline + impulsiveness + low awareness',
@@ -671,14 +670,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q33',
       axisWeights: {
-        'achievement_striving': 1.0,         // Primary: Goal failure (reversed)
-        'responsibility': 0.9,               // Primary: Obligation failure (reversed)
-        'time_management': 0.8,              // High: Poor time allocation (reversed)
-        'self_discipline': 0.8,              // High: Control failure (reversed)
-        'dutifulness': 0.7,                  // Secondary: Duty neglect (reversed)
-        'competence': 0.6,                   // Secondary: Reduced effectiveness (reversed)
+        'achievement_striving': -1.0,         // Primary: Goal failure (reversed)
+        'responsibility': -0.9,               // Primary: Obligation failure (reversed)
+        'organization': -0.8,              // High: Poor time allocation (reversed)
+        'self_discipline': -0.8,              // High: Control failure (reversed)
+        'dutifulness': -0.7,                  // Secondary: Duty neglect (reversed)
+        'competence': -0.6,                   // Secondary: Reduced effectiveness (reversed)
         'procrastination': 0.6,              // Secondary: Procrastination behavior
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Deadline failure: goal failure + responsibility neglect + poor time management + procrastination',
@@ -693,11 +692,10 @@ class DigitalDetoxWeights {
         'achievement_striving': 1.0,         // Primary: Goal achievement
         'competence': 0.8,                   // High: Effective performance
         'self_discipline': 0.7,              // Secondary: Controlled gadget use
-        'time_management': 0.7,              // Secondary: Effective time use
+        'organization': 0.7,              // Secondary: Effective time use
         'self_efficacy': 0.6,                // Secondary: Confidence in abilities
         'diligence': 0.6,                    // Secondary: Work focus
-        'organization': 0.5,                 // Secondary: Structured approach
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'thinking': 0.2,
       },
@@ -712,12 +710,12 @@ class DigitalDetoxWeights {
       axisWeights: {
         'impulsiveness': 1.0,                // Primary: Immediate impulse action
         'procrastination': 0.9,              // Primary: Task avoidance
-        'self_discipline': 0.8,              // High: Control failure (reversed)
-        'self_awareness': 0.7,               // Secondary: Self-deception about "quick" check (reversed)
-        'time_management': 0.6,              // Secondary: Time estimation failure (reversed)
-        'achievement_striving': 0.6,         // Secondary: Goal avoidance (reversed)
-        'deliberation': 0.5,                 // Secondary: Lack of intentionality (reversed)
-        // MBTI personality type scales
+        'self_discipline': -0.8,              // High: Control failure (reversed)
+        'self_awareness': -0.7,               // Secondary: Self-deception about "quick" check (reversed)
+        'organization': -0.6,              // Secondary: Time estimation failure (reversed)
+        'achievement_striving': -0.6,         // Secondary: Goal avoidance (reversed)
+        'deliberation': -0.5,                 // Secondary: Lack of intentionality (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
       },
       note: 'Check impulse: impulsiveness + procrastination + low self-discipline + self-deception',
@@ -735,12 +733,11 @@ class DigitalDetoxWeights {
       axisWeights: {
         'anxiety': 1.0,                      // Primary: Fear of missing out
         'fear_of_abandonment': 0.8,          // High: Fear of social exclusion
-        'insecurity': 0.8,                   // High: Social insecurity
+        'self_esteem': -0.8,                   // High: Social insecurity (reversed for low self-esteem)
         'worry_tendency': 0.7,               // Secondary: Chronic worry
         'anxious_attachment': 0.7,           // Secondary: Anxious relationship pattern
-        'self_esteem': 0.6,                  // Secondary: Need for external validation (reversed)
         'vulnerability': 0.5,                // Secondary: Emotional vulnerability
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.2,
       },
@@ -754,13 +751,13 @@ class DigitalDetoxWeights {
       questionId: 'q13',
       axisWeights: {
         'anger': 1.0,                        // Primary: Irritation/anger response
-        'frustration_tolerance': 0.9,        // Primary: Low interruption tolerance (reversed)
+        'frustration_tolerance': -0.9,        // Primary: Low interruption tolerance (reversed)
         'emotional_reactivity': 0.8,         // High: Strong emotional response
-        'composure': 0.7,                    // Secondary: Loss of composure (reversed)
+        'composure': -0.7,                    // Secondary: Loss of composure (reversed)
         'impulsiveness': 0.6,                // Secondary: Reactive behavior
-        'empathy': 0.6,                      // Secondary: Low empathy for interrupter (reversed)
-        'patience': 0.5,                     // Secondary: Impatience (reversed)
-        // MBTI personality type scales
+        'empathy': -0.6,                      // Secondary: Low empathy for interrupter (reversed)
+        'patience': -0.5,                     // Secondary: Impatience (reversed)
+        // Personality Type personality type scales
         'feeling': 0.3,
         'perceiving': 0.2,
       },
@@ -773,14 +770,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q20',
       axisWeights: {
-        'self_esteem': 1.0,                  // Primary: Low self-worth from comparison (reversed)
+        'self_esteem': -1.0,                  // Primary: Low self-worth from comparison (reversed)
         'depression': 0.9,                   // Primary: Mood lowering
-        'envy': 0.8,                         // High: Envious comparison
-        'self_acceptance': 0.7,              // Secondary: Lack of self-acceptance (reversed)
-        'life_satisfaction': 0.7,            // Secondary: Dissatisfaction (reversed)
+        'jealousy': 0.8,                         // High: Envious comparison
+        'self_acceptance': -0.7,              // Secondary: Lack of self-acceptance (reversed)
+        'life_satisfaction': -0.7,            // Secondary: Dissatisfaction (reversed)
         'rumination': 0.6,                   // Secondary: Obsessive comparison thinking
         'vulnerability': 0.5,                // Secondary: Emotional vulnerability
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'intuition': 0.2,
       },
@@ -796,11 +793,11 @@ class DigitalDetoxWeights {
         'anxiety': 1.0,                      // Primary: Internet disconnection anxiety
         'vulnerability': 0.9,                // Primary: Feeling vulnerable without connection
         'fear_of_abandonment': 0.7,          // Secondary: Fear of disconnection
-        'stress_tolerance': 0.6,             // Secondary: Low stress tolerance (reversed)
-        'emotional_resilience': 0.6,         // Secondary: Low resilience to deprivation (reversed)
-        'autonomy_need': 0.5,                // Secondary: Dependence on external (reversed)
+        'stress_tolerance': -0.6,             // Secondary: Low stress tolerance (reversed)
+        'emotional_resilience': -0.6,         // Secondary: Low resilience to deprivation (reversed)
+        'autonomy_need': -0.5,                // Secondary: Dependence on external (reversed)
         'worry_tendency': 0.5,               // Secondary: Anticipatory worry
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.2,
       },
@@ -813,14 +810,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q34',
       axisWeights: {
-        'envy': 1.0,                         // Primary: Envious feelings
-        'self_esteem': 0.9,                  // Primary: Low self-worth (reversed)
-        'life_satisfaction': 0.8,            // High: Life dissatisfaction (reversed)
+        'jealousy': 1.0,                         // Primary: Envious feelings
+        'self_esteem': -0.9,                  // Primary: Low self-worth (reversed)
+        'life_satisfaction': -0.8,            // High: Life dissatisfaction (reversed)
         'depression': 0.7,                   // Secondary: Depressive mood
-        'self_acceptance': 0.7,              // Secondary: Lack of self-acceptance (reversed)
+        'self_acceptance': -0.7,              // Secondary: Lack of self-acceptance (reversed)
         'rumination': 0.6,                   // Secondary: Obsessive comparison
-        'gratitude': 0.5,                    // Secondary: Lack of gratitude (reversed)
-        // MBTI personality type scales
+        'acceptance': -0.5,                    // Secondary: Lack of gratitude (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Comparison envy: envy + low self-esteem + life dissatisfaction + depression + rumination',
@@ -836,10 +833,10 @@ class DigitalDetoxWeights {
         'fear_of_abandonment': 0.8,          // High: Fear of missing connection
         'worry_tendency': 0.8,               // High: Anticipatory worry
         'vulnerability': 0.7,                // Secondary: Emotional vulnerability
-        'self_discipline': 0.6,              // Secondary: Cannot tolerate notification silence (reversed)
+        'self_discipline': -0.6,              // Secondary: Cannot tolerate notification silence (reversed)
         'impulsiveness': 0.6,                // Secondary: Need for immediate information
-        'stress_tolerance': 0.5,             // Secondary: Low stress tolerance (reversed)
-        // MBTI personality type scales
+        'stress_tolerance': -0.5,             // Secondary: Low stress tolerance (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.3,
       },
@@ -856,10 +853,10 @@ class DigitalDetoxWeights {
         'self_awareness': 0.9,               // Primary: Recognition of negative impact
         'emotional_reactivity': 0.7,         // Secondary: Emotional response to content
         'vulnerability': 0.7,                // Secondary: Emotional vulnerability
-        'life_satisfaction': 0.6,            // Secondary: Reduced satisfaction (reversed)
+        'life_satisfaction': -0.6,            // Secondary: Reduced satisfaction (reversed)
         'rumination': 0.6,                   // Secondary: Post-use negative thinking
-        'self_esteem': 0.5,                  // Secondary: Lowered self-worth (reversed)
-        // MBTI personality type scales
+        'self_esteem': -0.5,                  // Secondary: Lowered self-worth (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
         'introversion': 0.2,
       },
@@ -876,14 +873,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q7',
       axisWeights: {
-        'time_management': 1.0,              // Primary: Time allocation to screens
+        'organization': 1.0,              // Primary: Time allocation to screens
         'self_discipline': 0.8,              // High: Control over screen time (reversed at high levels)
-        'health_consciousness': 0.6,         // Secondary: Awareness of health impact (reversed)
-        'boundary_setting': 0.6,             // Secondary: Poor time boundaries (reversed)
-        'achievement_striving': 0.5,         // Secondary: Time away from goals (reversed)
-        'vitality': 0.4,                     // Moderate: Sedentary behavior impact (reversed)
-        'actions': 0.4,                      // Moderate: Limited varied activities (reversed)
-        // MBTI personality type scales
+        'prudence': -0.6,         // Secondary: Awareness of health impact (reversed)
+        'boundary_setting': -0.6,             // Secondary: Poor time boundaries (reversed)
+        'achievement_striving': -0.5,         // Secondary: Time away from goals (reversed)
+        'vitality': -0.4,                     // Moderate: Sedentary behavior impact (reversed)
+        'actions': -0.4,                      // Moderate: Limited varied activities (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Screen time volume: time allocation + self-discipline + health awareness + boundaries',
@@ -896,13 +893,13 @@ class DigitalDetoxWeights {
       questionId: 'q14',
       axisWeights: {
         'impulsiveness': 1.0,                // Primary: Frequent checking impulse
-        'attention_control': 0.9,            // Primary: Attention fragmentation (reversed)
-        'self_discipline': 0.7,              // Secondary: Low checking control (reversed)
+        'attention_control': -0.9,            // Primary: Attention fragmentation (reversed)
+        'self_discipline': -0.7,              // Secondary: Low checking control (reversed)
         'anxiety': 0.7,                      // Secondary: Anxious checking behavior
-        'patience': 0.6,                     // Secondary: Cannot delay checking (reversed)
+        'patience': -0.6,                     // Secondary: Cannot delay checking (reversed)
         'rumination': 0.5,                   // Secondary: Preoccupation with phone
-        'mindfulness_coping': 0.4,           // Moderate: Lack of present awareness (reversed)
-        // MBTI personality type scales
+        'mindfulness_coping': -0.4,           // Moderate: Lack of present awareness (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'extraversion': 0.2,
       },
@@ -916,13 +913,13 @@ class DigitalDetoxWeights {
       questionId: 'q21',
       axisWeights: {
         'self_discipline': 1.0,              // Primary: Session time control (reversed at high)
-        'time_management': 0.8,              // High: Time awareness (reversed)
+        'organization': -0.8,              // High: Time awareness (reversed)
         'impulsiveness': 0.7,                // Secondary: Cannot stop usage
         'attention_control': 0.6,            // Secondary: Engagement capture
-        'patience': 0.5,                     // Secondary: Delayed gratification (reversed)
-        'self_awareness': 0.5,               // Secondary: Awareness of time passage (reversed)
+        'patience': -0.5,                     // Secondary: Delayed gratification (reversed)
+        'self_awareness': -0.5,               // Secondary: Awareness of time passage (reversed)
         'procrastination': 0.4,              // Moderate: Extended avoidance behavior
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
       },
       note: 'Session duration: low self-discipline + poor time awareness + impulsiveness + engagement capture',
@@ -935,13 +932,13 @@ class DigitalDetoxWeights {
       questionId: 'q28',
       axisWeights: {
         'impulsiveness': 1.0,                // Primary: Immediate response impulse
-        'patience': 0.9,                     // Primary: Cannot delay response (reversed)
-        'self_discipline': 0.7,              // Secondary: Low impulse control (reversed)
+        'patience': -0.9,                     // Primary: Cannot delay response (reversed)
+        'self_discipline': -0.7,              // Secondary: Low impulse control (reversed)
         'anxiety': 0.7,                      // Secondary: Anxious urgency
-        'attention_control': 0.6,            // Secondary: Notification distraction susceptibility (reversed)
-        'frustration_tolerance': 0.5,        // Secondary: Low tolerance for delay (reversed)
-        'deliberation': 0.4,                 // Moderate: Automatic response (reversed)
-        // MBTI personality type scales
+        'attention_control': -0.6,            // Secondary: Notification distraction susceptibility (reversed)
+        'frustration_tolerance': -0.5,        // Secondary: Low tolerance for delay (reversed)
+        'deliberation': -0.4,                 // Moderate: Automatic response (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'extraversion': 0.2,
       },
@@ -954,14 +951,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q35',
       axisWeights: {
-        'mindfulness_coping': 1.0,           // Primary: Lack of present awareness (reversed)
-        'boundary_setting': 0.8,             // High: Poor activity boundaries (reversed)
-        'self_discipline': 0.7,              // Secondary: Cannot abstain during meals (reversed)
+        'mindfulness_coping': -1.0,           // Primary: Lack of present awareness (reversed)
+        'boundary_setting': -0.8,             // High: Poor activity boundaries (reversed)
+        'self_discipline': -0.7,              // Secondary: Cannot abstain during meals (reversed)
         'impulsiveness': 0.6,                // Secondary: Automatic phone use
-        'aesthetics': 0.5,                   // Secondary: Reduced food/meal appreciation (reversed)
-        'health_consciousness': 0.5,         // Secondary: Ignoring mindful eating (reversed)
-        'politeness': 0.4,                   // Moderate: Social meal rudeness (reversed)
-        // MBTI personality type scales
+        'aesthetics': -0.5,                   // Secondary: Reduced food/meal appreciation (reversed)
+        'prudence': -0.5,         // Secondary: Ignoring mindful eating (reversed)
+        'politeness': -0.4,                   // Moderate: Social meal rudeness (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.3,
         'sensing': 0.2,
       },
@@ -974,14 +971,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q42',
       axisWeights: {
-        'boundary_setting': 1.0,             // Primary: Poor sleep boundaries (reversed)
-        'self_discipline': 0.9,              // Primary: Cannot separate from phone (reversed)
-        'health_consciousness': 0.7,         // Secondary: Ignoring sleep hygiene (reversed)
+        'boundary_setting': -1.0,             // Primary: Poor sleep boundaries (reversed)
+        'self_discipline': -0.9,              // Primary: Cannot separate from phone (reversed)
+        'prudence': -0.7,         // Secondary: Ignoring sleep hygiene (reversed)
         'impulsiveness': 0.6,                // Secondary: Cannot resist phone before sleep
-        'deliberation': 0.5,                 // Secondary: Automatic behavior (reversed)
+        'deliberation': -0.5,                 // Secondary: Automatic behavior (reversed)
         'vulnerability': 0.5,                // Secondary: Sleep vulnerability
-        'patience': 0.4,                     // Moderate: Cannot delay usage (reversed)
-        // MBTI personality type scales
+        'patience': -0.4,                     // Moderate: Cannot delay usage (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Bedtime phone use: poor boundaries + low self-discipline + low health awareness + impulsiveness',
@@ -994,13 +991,13 @@ class DigitalDetoxWeights {
       questionId: 'q49',
       axisWeights: {
         'impulsiveness': 1.0,                // Primary: Immediate multi-app checking
-        'self_discipline': 0.8,              // High: Low morning control (reversed)
+        'self_discipline': -0.8,              // High: Low morning control (reversed)
         'anxiety': 0.7,                      // Secondary: Need for immediate information
-        'autonomy_need': 0.6,                // Secondary: External dependency (reversed)
-        'deliberation': 0.5,                 // Secondary: Automatic behavior (reversed)
+        'autonomy_need': -0.6,                // Secondary: External dependency (reversed)
+        'deliberation': -0.5,                 // Secondary: Automatic behavior (reversed)
         'vitality': 0.4,                     // Moderate: Morning energy to phone vs. self
-        'mindfulness_coping': 0.4,           // Moderate: Lack of present awareness (reversed)
-        // MBTI personality type scales
+        'mindfulness_coping': -0.4,           // Moderate: Lack of present awareness (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'extraversion': 0.2,
       },
@@ -1013,14 +1010,14 @@ class DigitalDetoxWeights {
       testId: 'digital_detox_test',
       questionId: 'q50',
       axisWeights: {
-        'patience': 1.0,                     // Primary: Intolerance for waiting (reversed)
+        'patience': -1.0,                     // Primary: Intolerance for waiting (reversed)
         'impulsiveness': 0.9,                // Primary: Automatic phone use when idle
-        'mindfulness_coping': 0.7,           // Secondary: Lack of present awareness (reversed)
-        'self_discipline': 0.6,              // Secondary: Cannot resist idle phone use (reversed)
-        'curiosity': 0.5,                    // Secondary: Reduced environmental curiosity (reversed)
-        'attention_control': 0.5,            // Secondary: Difficulty with unoccupied attention (reversed)
+        'mindfulness_coping': -0.7,           // Secondary: Lack of present awareness (reversed)
+        'self_discipline': -0.6,              // Secondary: Cannot resist idle phone use (reversed)
+        'curiosity': -0.5,                    // Secondary: Reduced environmental curiosity (reversed)
+        'attention_control': -0.5,            // Secondary: Difficulty with unoccupied attention (reversed)
         'vitality': 0.4,                     // Moderate: Low tolerance for idle state
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'sensing': 0.2,
       },

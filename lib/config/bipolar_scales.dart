@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Represents a bipolar dimension in personality testing (e.g., E/I, S/N, T/F, J/P)
 /// A bipolar scale measures two opposite poles rather than a single trait
 class BipolarScale {
-  final String id;                              // e.g., 'mbti_ei'
+  final String id;                              // e.g., 'personality_type_ei'
   final String positiveEnd;                     // e.g., 'E'
   final String negativeEnd;                     // e.g., 'I'
   final Map<String, String> positiveName;       // {'ru': 'Экстраверсия', 'en': 'Extraversion'}
@@ -48,11 +48,11 @@ class BipolarScale {
   }
 }
 
-/// Bipolar scales configuration for personality tests (Jung/MBTI style)
+/// Bipolar scales configuration for personality tests (Jung/Type Theory style)
 class BipolarScalesConfig {
   static const Map<String, BipolarScale> scales = {
-    'mbti_ei': BipolarScale(
-      id: 'mbti_ei',
+    'personality_type_ei': BipolarScale(
+      id: 'personality_type_ei',
       positiveEnd: 'E',
       negativeEnd: 'I',
       positiveName: {'ru': 'Экстраверсия', 'en': 'Extraversion'},
@@ -69,8 +69,8 @@ class BipolarScalesConfig {
       icon: Icons.people,
     ),
 
-    'mbti_sn': BipolarScale(
-      id: 'mbti_sn',
+    'personality_type_sn': BipolarScale(
+      id: 'personality_type_sn',
       positiveEnd: 'S',
       negativeEnd: 'N',
       positiveName: {'ru': 'Сенсорика', 'en': 'Sensing'},
@@ -87,8 +87,8 @@ class BipolarScalesConfig {
       icon: Icons.lightbulb,
     ),
 
-    'mbti_tf': BipolarScale(
-      id: 'mbti_tf',
+    'personality_type_tf': BipolarScale(
+      id: 'personality_type_tf',
       positiveEnd: 'T',
       negativeEnd: 'F',
       positiveName: {'ru': 'Логика', 'en': 'Thinking'},
@@ -105,8 +105,8 @@ class BipolarScalesConfig {
       icon: Icons.favorite,
     ),
 
-    'mbti_jp': BipolarScale(
-      id: 'mbti_jp',
+    'personality_type_jp': BipolarScale(
+      id: 'personality_type_jp',
       positiveEnd: 'J',
       negativeEnd: 'P',
       positiveName: {'ru': 'Рациональность', 'en': 'Judging'},

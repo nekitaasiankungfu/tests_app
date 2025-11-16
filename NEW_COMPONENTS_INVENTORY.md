@@ -549,7 +549,7 @@ availableThemeColors = [
 - ID: `sixteen_types`
 - Type: Multi-factor bipolar
 - Factors: 4 (EI, SN, TF, JP)
-- Bipolar Dimensions: 4 (mbti_ei, mbti_sn, mbti_tf, mbti_jp)
+- Bipolar Dimensions: 4 (personality_type_ei, personality_type_sn, personality_type_tf, personality_type_jp)
 - Questions: 80
 - Scale: 5-point Likert (1-5)
 - Languages: Russian and English

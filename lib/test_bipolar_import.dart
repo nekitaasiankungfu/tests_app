@@ -3,7 +3,7 @@ import 'utils/app_logger.dart';
 
 void testBipolarImport() {
   // Test 1: Check if getBipolarScale method exists
-  final scale = SummaryConfig.getBipolarScale('mbti_ei');
+  final scale = SummaryConfig.getBipolarScale('personality_type_ei');
   appLogger.d('Scale found: ${scale?.id}');
 
   // Test 2: Check if BipolarScale type is available

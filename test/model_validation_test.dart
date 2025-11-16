@@ -211,7 +211,7 @@ void main() {
   group('BipolarDimensionScore Validation Tests', () {
     test('Valid BipolarDimensionScore should deserialize successfully', () {
       final json = {
-        'dimensionId': 'mbti_ei',
+        'dimensionId': 'personality_type_ei',
         'positiveScore': 30,
         'negativeScore': 20,
         'positiveMaxScore': 40,
@@ -221,13 +221,13 @@ void main() {
       };
 
       final bipolar = BipolarDimensionScore.fromJson(json);
-      expect(bipolar.dimensionId, 'mbti_ei');
+      expect(bipolar.dimensionId, 'personality_type_ei');
       expect(bipolar.dominantPole, 'E');
     });
 
     test('NormalizedScore out of range should be clamped', () {
       final json = {
-        'dimensionId': 'mbti_ei',
+        'dimensionId': 'personality_type_ei',
         'positiveScore': 30,
         'negativeScore': 20,
         'positiveMaxScore': 40,

@@ -17,8 +17,8 @@ class FisherTemperamentWeights {
         'novelty_seeking': 0.9,          // Primary: Attraction to new/unknown
         'positive_emotions': 0.7,        // Secondary: Exhilaration/joy
         'sensation_seeking': 0.6,        // Secondary: Arousal seeking
-        'harm_avoidance': 0.5,           // Secondary: Low harm avoidance (reversed)
-        // MBTI personality type scales
+        'harm_avoidance': -0.5,           // Secondary: Low harm avoidance (reversed)
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Dopamine: excitement seeking + novelty + positive emotions + sensation seeking',
@@ -31,9 +31,9 @@ class FisherTemperamentWeights {
       questionId: 'q2',
       axisWeights: {
         'impulsiveness': 1.0,            // Primary: Spontaneous action
-        'deliberation': 0.9,             // Primary: No planning (reversed)
+        'deliberation': -0.9,             // Primary: No planning (reversed)
         'risk_taking': 0.7,              // Secondary: Taking spontaneous risks
-        'self_discipline': 0.6,          // Secondary: Low impulse control (reversed)
+        'self_discipline': -0.6,          // Secondary: Low impulse control (reversed)
         'activity': 0.5,                 // Secondary: Action-oriented
       },
       note: 'Dopamine: impulsiveness + low deliberation + risk-taking + activity',
@@ -45,11 +45,10 @@ class FisherTemperamentWeights {
       testId: 'fisher_temperament',
       questionId: 'q3',
       axisWeights: {'novelty_seeking': 1.0,          // Primary: Need for new experiences
-        'tradition': 0.8,                // High: Rejection of familiar (reversed)
-        'boredom_proneness': 0.7,        // Secondary: Low stimulation tolerance
+        'tradition': -0.8,                // High: Rejection of familiar (reversed)
         'stimulation': 0.6,              // Secondary: Need for variety (Schwartz value)
-        'patience': 0.5,                 // Secondary: Low patience with routine (reversed)
-        // MBTI personality type scales
+        'patience': -0.5,                 // Secondary: Low patience with routine (reversed)
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Dopamine: novelty seeking + anti-tradition + boredom proneness + need for stimulation',
@@ -65,7 +64,7 @@ class FisherTemperamentWeights {
         'ideas': 0.7,                    // Secondary: Openness to ideas (Openness facet)
         'actions': 0.6,                  // Secondary: Openness to new actions (Openness facet)
         'novelty_seeking': 0.5,          // Secondary: Seeking variety
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
       },
       note: 'Dopamine: intellectual curiosity + curiosity + openness to ideas/actions',
@@ -78,10 +77,10 @@ class FisherTemperamentWeights {
       questionId: 'q5',
       axisWeights: {'positive_emotions': 1.0,        // Primary: Optimistic outlook
         'happiness': 0.8,                // High: Baseline positivity
-        'depression': 0.7,               // Secondary: Low depression (reversed)
+        'depression': -0.7,               // Secondary: Low depression (reversed)
         'vitality': 0.6,                 // Secondary: Life energy
         'self_efficacy': 0.5,            // Secondary: Positive self-view
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Dopamine: positive emotions + happiness + low depression + vitality',
@@ -92,12 +91,12 @@ class FisherTemperamentWeights {
     'fisher_temperament:q6': const QuestionWeight(
       testId: 'fisher_temperament',
       questionId: 'q6',
-      axisWeights: {'creativity': 1.0,               // Primary: Creative personality
+      axisWeights: {'flexibility_creative': 1.0,               // Primary: Creative personality
         'originality': 0.9,              // Primary: Novel idea generation
         'divergent_thinking': 0.8,       // High: Creative ideation
         'fluency': 0.6,                  // Secondary: Idea production
         'self_efficacy': 0.5,            // Secondary: Creative confidence
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'intuition': 0.4,
       },
@@ -113,8 +112,8 @@ class FisherTemperamentWeights {
         'actions': 0.8,                  // High: Trying new activities (Openness facet)
         'curiosity': 0.7,                // Secondary: General curiosity
         'excitement_seeking': 0.6,       // Secondary: Thrill seeking
-        'openness_to_experience': 0.6,   // Secondary: General openness (if we had this meta-scale)
-        // MBTI personality type scales
+        'intellectual_curiosity': 0.6,   // Secondary: General openness (if we had this meta-scale)
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Dopamine: novelty seeking + actions + curiosity + excitement seeking',
@@ -130,7 +129,7 @@ class FisherTemperamentWeights {
         'actions': 0.7,                  // Secondary: Action-oriented openness (Openness facet)
         'spontaneity': 0.6,              // Secondary: Unplanned action
         'liveliness': 0.5,               // Secondary: Energetic engagement
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Dopamine: activity + novelty seeking + actions + spontaneity',
@@ -146,7 +145,7 @@ class FisherTemperamentWeights {
         'vitality': 0.8,                 // High: Life energy
         'happiness': 0.6,                // Secondary: Joyful disposition
         'expressiveness': 0.5,           // Secondary: Outward enthusiasm
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Dopamine: positive emotions + liveliness + vitality + happiness',
@@ -159,10 +158,10 @@ class FisherTemperamentWeights {
       questionId: 'q10',
       axisWeights: {
         'risk_taking': 1.0,              // Primary: Risk acceptance
-        'harm_avoidance': 0.9,           // Primary: Low fear (reversed)
+        'harm_avoidance': -0.9,           // Primary: Low fear (reversed)
         'risk_taking_creative': 0.7,     // Secondary: Creative risk-taking
         'impulsiveness': 0.6,            // Secondary: Action without caution
-        'deliberation': 0.5,             // Secondary: Low caution (reversed)
+        'deliberation': -0.5,             // Secondary: Low caution (reversed)
       },
       note: 'Dopamine: risk-taking + low harm avoidance + impulsiveness',
     ),
@@ -174,10 +173,9 @@ class FisherTemperamentWeights {
       questionId: 'q11',
       axisWeights: {'activity': 1.0,                 // Primary: Need for movement/action
         'novelty_seeking': 0.7,          // Secondary: Seeking external stimulation
-        'patience': 0.7,                 // Secondary: Low patience (reversed)
+        'patience': -0.7,                 // Secondary: Low patience (reversed)
         'stimulation': 0.6,              // Secondary: Need for external stimulation
-        'restlessness': 0.5,             // Secondary: Physical restlessness (if we had this)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Dopamine: activity + novelty seeking + low patience + stimulation need',
@@ -193,7 +191,7 @@ class FisherTemperamentWeights {
         'novelty_seeking': 0.7,          // Secondary: Seeking new information
         'ideas': 0.6,                    // Secondary: Openness to ideas (Openness facet)
         'learning_ability': 0.5,         // Secondary: Curiosity drives learning
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
       },
       note: 'Dopamine: curiosity + intellectual curiosity + novelty seeking + ideas',
@@ -209,7 +207,7 @@ class FisherTemperamentWeights {
         'liveliness': 0.7,               // Secondary: Energetic engagement
         'positive_emotions': 0.6,        // Secondary: Energetic positivity
         'drive_for_excellence': 0.5,     // Secondary: Energy for achievement
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Dopamine: vitality + activity + liveliness + positive emotions',
@@ -223,9 +221,9 @@ class FisherTemperamentWeights {
       axisWeights: {'spontaneity': 1.0,              // Primary: Unplanned enjoyment
         'hedonism': 0.9,                 // Primary: Pleasure-seeking (Schwartz value)
         'autonomy_need': 0.7,            // Secondary: Need for freedom
-        'deliberation': 0.6,             // Secondary: Low planning (reversed)
+        'deliberation': -0.6,             // Secondary: Low planning (reversed)
         'playfulness': 0.6,              // Secondary: Fun-oriented
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Dopamine: spontaneity + hedonism + autonomy need + low planning + playfulness',
@@ -239,9 +237,9 @@ class FisherTemperamentWeights {
       axisWeights: {'order': 1.0,                    // Primary: Preference for order
         'organization': 0.8,             // High: Structured approach
         'tradition': 0.7,                // Secondary: Familiar patterns
-        'novelty_seeking': 0.6,          // Secondary: Low novelty seeking (reversed)
+        'novelty_seeking': -0.6,          // Secondary: Low novelty seeking (reversed)
         'calmness': 0.5,                 // Secondary: Routine provides calm
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.2,
         'judging': 0.4,
       },
@@ -256,9 +254,9 @@ class FisherTemperamentWeights {
       axisWeights: {'deliberation': 1.0,             // Primary: Careful planning
         'prudence': 0.9,                 // Primary: Cautiousness
         'critical_thinking': 0.7,        // Secondary: Analytical evaluation
-        'impulsiveness': 0.7,            // Secondary: Low impulsiveness (reversed)
+        'impulsiveness': -0.7,            // Secondary: Low impulsiveness (reversed)
         'harm_avoidance': 0.6,           // Secondary: Risk aversion
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'thinking': 0.4,
       },
@@ -274,7 +272,7 @@ class FisherTemperamentWeights {
         'compliance': 0.7,               // Secondary: Following norms
         'dutifulness': 0.6,              // Secondary: Sense of proper behavior
         'security_value': 0.5,           // Secondary: Social order (Schwartz value)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Serotonin: conformity + tradition + compliance + dutifulness',
@@ -289,7 +287,7 @@ class FisherTemperamentWeights {
         'responsibility': 0.6,           // Secondary: Proactive responsibility
         'prudence': 0.6,                 // Secondary: Foresight
         'achievement_striving': 0.4,     // Moderate: Goal planning
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Serotonin: deliberation + organization + responsibility + prudence',
@@ -318,7 +316,7 @@ class FisherTemperamentWeights {
         'diligence': 0.6,                // Secondary: Careful attention
         'security_value': 0.5,           // Secondary: Protecting resources
         'prudence': 0.5,                 // Secondary: Cautious preservation
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Serotonin: responsibility + order + diligence + security + prudence',
@@ -333,7 +331,7 @@ class FisherTemperamentWeights {
         'values': 0.6,                   // Secondary: Conservative values (Openness facet - reversed)
         'security_value': 0.5,           // Secondary: Stability preference
         'benevolence': 0.4,              // Moderate: Traditional caring values
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'sensing': 0.2,
       },
@@ -377,7 +375,7 @@ class FisherTemperamentWeights {
         'tradition': 0.7,                // Secondary: Moral traditions
         'benevolence': 0.6,              // Secondary: Moral caring
         'universalism': 0.5,             // Secondary: Moral principles
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -404,10 +402,10 @@ class FisherTemperamentWeights {
       questionId: 'q26',
       axisWeights: {'trust': 1.0,                    // Primary: Loyalty valuation
         'security_value': 0.8,           // High: Relationship security
-        'novelty_seeking': 0.7,          // Secondary: Low novelty preference (reversed)
+        'novelty_seeking': -0.7,          // Secondary: Low novelty preference (reversed)
         'dependability': 0.6,            // Secondary: Reliability in relationships
         'tradition': 0.5,                // Secondary: Traditional friendship values
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Serotonin: trust/loyalty + security + low novelty + dependability',
@@ -421,8 +419,7 @@ class FisherTemperamentWeights {
         'conformity': 0.8,               // High: Cultural conformity
         'values': 0.7,                   // Secondary: Traditional values (Openness facet - reversed)
         'security_value': 0.6,           // Secondary: Cultural stability
-        'respect_for_tradition': 0.5,    // Secondary: Cultural respect
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'introversion': 0.4,
         'sensing': 0.2,
@@ -439,7 +436,7 @@ class FisherTemperamentWeights {
         'achievement_striving': 0.6,     // Secondary: Goal orientation
         'diligence': 0.6,                // Secondary: Thorough work
         'deliberation': 0.5,             // Secondary: Planned execution
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Serotonin: organization + self-discipline + achievement + diligence',
@@ -453,8 +450,8 @@ class FisherTemperamentWeights {
         'analytical_thinking': 0.8,      // High: System analysis
         'learning_ability': 0.6,         // Secondary: Technical learning
         'problem_solving': 0.6,          // Secondary: Mechanical problem-solving
-        'intelligence': 0.5,             // Secondary: Technical intelligence
-        // MBTI personality type scales
+        'verbal_intelligence': 0.5,             // Secondary: Technical intelligence
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Testosterone: spatial reasoning + analytical thinking + technical ability',
@@ -467,9 +464,9 @@ class FisherTemperamentWeights {
       axisWeights: {'assertiveness': 1.0,            // Primary: Verbal dominance
         'dominance': 0.9,                // Primary: Competitive drive
         'power_motivation': 0.7,         // Secondary: Power seeking
-        'agreeableness': 0.6,            // Secondary: Low agreeableness (reversed)
+        'cooperativeness': -0.6,            // Secondary: Low agreeableness (reversed)
         'negotiation': 0.5,              // Secondary: Verbal competition skill
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Testosterone: assertiveness + dominance + power motivation + competitiveness',
@@ -484,7 +481,7 @@ class FisherTemperamentWeights {
         'intellectual_curiosity': 0.7,   // Secondary: Systematic curiosity
         'critical_thinking': 0.6,        // Secondary: Analytical evaluation
         'problem_solving': 0.6,          // Secondary: System problem-solving
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.4,
       },
       note: 'Testosterone: analytical thinking + abstract reasoning + intellectual curiosity',
@@ -498,8 +495,8 @@ class FisherTemperamentWeights {
         'critical_thinking': 0.9,        // Primary: Analytical ability
         'abstract_reasoning': 0.7,       // Secondary: Logical reasoning
         'self_efficacy': 0.6,            // Secondary: Intellectual confidence
-        'emotional_intelligence': 0.5,   // Secondary: Low EI (reversed) - favors logic over emotion
-        // MBTI personality type scales
+        'emotional_intelligence': -0.5,   // Secondary: Low EI (reversed) - favors logic over emotion
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'thinking': 0.4,
       },
@@ -515,7 +512,7 @@ class FisherTemperamentWeights {
         'persistence': 0.7,              // Secondary: Regular pursuit
         'ideas': 0.6,                    // Secondary: Intellectual openness (Openness facet)
         'achievement_striving': 0.5,     // Secondary: Intellectual achievement
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
         'judging': 0.3,
       },
@@ -527,11 +524,11 @@ class FisherTemperamentWeights {
       testId: 'fisher_temperament',
       questionId: 'q34',
       axisWeights: {'problem_solving': 1.0,          // Primary: Rational problem-solving
-        'emotional_intelligence': 0.9,   // Primary: Low emotional influence (reversed)
+        'emotional_intelligence': -0.9,   // Primary: Low emotional influence (reversed)
         'composure': 0.7,                // Secondary: Emotional control
         'deliberation': 0.6,             // Secondary: Rational deliberation
-        'tender_mindedness': 0.5,        // Secondary: Tough-mindedness (reversed)
-        // MBTI personality type scales
+        'tender_mindedness': -0.5,        // Secondary: Tough-mindedness (reversed)
+        // Personality Type personality type scales
         'thinking': 0.4,
       },
       note: 'Testosterone: rational problem-solving + low emotion + composure + tough-minded',
@@ -555,12 +552,12 @@ class FisherTemperamentWeights {
     'fisher_temperament:q36': const QuestionWeight(
       testId: 'fisher_temperament',
       questionId: 'q36',
-      axisWeights: {'tender_mindedness': 1.0,        // Primary: Tough-mindedness (reversed)
+      axisWeights: {'tender_mindedness': -1.0,        // Primary: Tough-mindedness (reversed)
         'assertiveness': 0.8,            // High: Assertive stance
-        'emotional_intelligence': 0.7,   // Secondary: Low emotional sensitivity (reversed)
+        'emotional_intelligence': -0.7,   // Secondary: Low emotional sensitivity (reversed)
         'straightforwardness': 0.6,      // Secondary: Direct/blunt
         'callousness': 0.5,              // Secondary: Emotional hardness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
       },
       note: 'Testosterone: tough-minded + assertiveness + low EI + directness',
@@ -575,7 +572,7 @@ class FisherTemperamentWeights {
         'critical_thinking': 0.7,        // Secondary: Argumentative skill
         'power_motivation': 0.6,         // Secondary: Competitive motivation
         'persuasion': 0.5,               // Secondary: Argumentative persuasion
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'thinking': 0.4,
       },
@@ -587,11 +584,11 @@ class FisherTemperamentWeights {
       testId: 'fisher_temperament',
       questionId: 'q38',
       axisWeights: {'decisiveness': 1.0,             // Primary: Quick decision-making
-        'deliberation': 0.8,             // High: Low deliberation (reversed)
+        'deliberation': -0.8,             // High: Low deliberation (reversed)
         'self_efficacy': 0.6,            // Secondary: Decision confidence
         'assertiveness': 0.5,            // Secondary: Decisive action
-        'anxiety': 0.4,                  // Moderate: Low decision anxiety (reversed)
-        // MBTI personality type scales
+        'anxiety': -0.4,                  // Moderate: Low decision anxiety (reversed)
+        // Personality Type personality type scales
         'judging': 0.2,
       },
       note: 'Testosterone: decisiveness + low deliberation + confidence + low anxiety',
@@ -617,10 +614,10 @@ class FisherTemperamentWeights {
       questionId: 'q40',
       axisWeights: {'straightforwardness': 1.0,      // Primary: Direct communication
         'verbal_communication': 0.7,     // Secondary: Clear expression
-        'politeness': 0.6,               // Secondary: Low politeness (reversed) - blunt
+        'politeness': -0.6,               // Secondary: Low politeness (reversed) - blunt
         'assertiveness': 0.5,            // Secondary: Direct assertion
-        'tender_mindedness': 0.4,        // Moderate: Tough directness (reversed)
-        // MBTI personality type scales
+        'tender_mindedness': -0.4,        // Moderate: Tough directness (reversed)
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Testosterone: straightforwardness + direct communication + low politeness',
@@ -632,10 +629,9 @@ class FisherTemperamentWeights {
       questionId: 'q41',
       axisWeights: {'straightforwardness': 1.0,      // Primary: Directness value
         'assertiveness': 0.8,            // High: Direct assertion
-        'honesty': 0.6,                  // Secondary: Honest directness
         'verbal_communication': 0.5,     // Secondary: Clear communication
-        'politeness': 0.4,               // Moderate: Directness over politeness (reversed)
-        // MBTI personality type scales
+        'politeness': -0.4,               // Moderate: Directness over politeness (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'thinking': 0.3,
       },
@@ -647,11 +643,11 @@ class FisherTemperamentWeights {
       testId: 'fisher_temperament',
       questionId: 'q42',
       axisWeights: {'analytical_thinking': 1.0,      // Primary: Fact-based thinking
-        'emotional_intelligence': 0.9,   // Primary: Low emotional consideration (reversed)
+        'emotional_intelligence': -0.9,   // Primary: Low emotional consideration (reversed)
         'deliberation': 0.7,             // Secondary: Rational deliberation
-        'tender_mindedness': 0.6,        // Secondary: Tough-mindedness (reversed)
+        'tender_mindedness': -0.6,        // Secondary: Tough-mindedness (reversed)
         'critical_thinking': 0.6,        // Secondary: Analytical evaluation
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.4,
         'thinking': 0.4,
       },
@@ -667,7 +663,7 @@ class FisherTemperamentWeights {
         'social_perception': 0.7,        // Secondary: Reading others
         'intimacy_comfort': 0.6,         // Secondary: Comfort with emotional depth
         'compassion': 0.6,               // Secondary: Caring for others
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -683,7 +679,7 @@ class FisherTemperamentWeights {
         'vulnerability_sharing': 0.7,    // Secondary: Emotional openness
         'emotional_openness': 0.6,       // Secondary: Emotional sharing
         'warmth': 0.6,                   // Secondary: Relational warmth
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.2,
         'feeling': 0.4,
       },
@@ -696,10 +692,10 @@ class FisherTemperamentWeights {
       questionId: 'q45',
       axisWeights: {'feelings': 1.0,                 // Primary: Emotional decision-making (Openness facet)
         'emotional_intelligence': 0.8,   // High: Emotion-guided
-        'analytical_thinking': 0.7,      // Secondary: Low analytical reliance (reversed)
+        'analytical_thinking': -0.7,      // Secondary: Low analytical reliance (reversed)
         'self_awareness': 0.6,           // Secondary: Awareness of feelings
         'tender_mindedness': 0.5,        // Secondary: Emotional sensitivity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Estrogen: feelings + emotional intelligence + low analytical + awareness',
@@ -712,9 +708,8 @@ class FisherTemperamentWeights {
       axisWeights: {'fantasy': 1.0,                  // Primary: Daydreaming (Openness facet)
         'feelings': 0.7,                 // Secondary: Inner emotional life
         'self_awareness': 0.6,           // Secondary: Awareness of mental states
-        'attention_control': 0.5,        // Secondary: Mind wandering (reversed)
-        'imagination': 0.5,              // Secondary: Imaginative capacity
-        // MBTI personality type scales
+        'attention_control': -0.5,        // Secondary: Mind wandering (reversed)
+        // Personality Type personality type scales
         'intuition': 0.4,
       },
       note: 'Estrogen: fantasy/daydreaming + feelings + self-awareness + imagination',
@@ -726,9 +721,9 @@ class FisherTemperamentWeights {
       questionId: 'q47',
       axisWeights: {
         'cognitive_flexibility': 1.0,    // Primary: Mental flexibility
-        'deliberation': 0.7,             // Secondary: Low fixation (reversed)
+        'deliberation': -0.7,             // Secondary: Low fixation (reversed)
         'identity_flexibility': 0.6,     // Secondary: Flexible identity
-        'openness_to_experience': 0.5,   // Secondary: Open to change
+        'intellectual_curiosity': 0.5,   // Secondary: Open to change
         'compliance': 0.4,               // Moderate: Accommodating
       },
       note: 'Estrogen: cognitive flexibility + low rigidity + identity flexibility + openness',
@@ -743,7 +738,7 @@ class FisherTemperamentWeights {
         'tender_mindedness': 0.7,        // Secondary: Emotional sensitivity
         'empathy': 0.6,                  // Secondary: Empathic response
         'aesthetics': 0.5,               // Secondary: Aesthetic sensitivity (Openness facet)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Estrogen: deep feelings + emotional intelligence + tender-mindedness + empathy',
@@ -756,9 +751,8 @@ class FisherTemperamentWeights {
       axisWeights: {'fantasy': 1.0,                  // Primary: Vivid imagination (Openness facet)
         'feelings': 0.8,                 // High: Emotional imagination
         'anxiety': 0.6,                  // Secondary: Worry tendency (horrible things)
-        'imagination': 0.6,              // Secondary: Imaginative capacity
         'emotional_reactivity': 0.5,     // Secondary: Emotional intensity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.4,
       },
       note: 'Estrogen: fantasy + feelings + anxiety/worry + imagination + reactivity',
@@ -773,7 +767,7 @@ class FisherTemperamentWeights {
         'emotional_intelligence': 0.9,   // Primary: Emotional attunement
         'tender_mindedness': 0.7,        // Secondary: Emotional sensitivity
         'compassion': 0.7,               // Secondary: Caring response
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -788,8 +782,7 @@ class FisherTemperamentWeights {
         'self_awareness': 1.0,           // Primary: Introspective thought
         'fantasy': 0.8,                  // High: Mental wandering (Openness facet)
         'feelings': 0.6,                 // Secondary: Inner emotional life
-        'attention_control': 0.5,        // Secondary: Reduced external focus (reversed)
-        'introspection': 0.5,            // Secondary: Internal focus
+        'attention_control': -0.5,        // Secondary: Reduced external focus (reversed)
       },
       note: 'Estrogen: self-awareness + fantasy + feelings + introspection',
     ),
@@ -803,7 +796,7 @@ class FisherTemperamentWeights {
         'tender_mindedness': 0.8,        // High: Emotional sensitivity
         'emotional_reactivity': 0.6,     // Secondary: Emotional intensity
         'empathy': 0.6,                  // Secondary: Feeling with others
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },
@@ -815,11 +808,11 @@ class FisherTemperamentWeights {
       testId: 'fisher_temperament',
       questionId: 'q53',
       axisWeights: {'fantasy': 1.0,                  // Primary: Imaginative capacity (Openness facet)
-        'creativity': 0.8,               // High: Creative imagination
+        'flexibility_creative': 0.8,               // High: Creative imagination
         'originality': 0.6,              // Secondary: Novel thinking
         'feelings': 0.6,                 // Secondary: Emotional richness
         'divergent_thinking': 0.5,       // Secondary: Imaginative ideation
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.4,
       },
       note: 'Estrogen: fantasy + creativity + originality + feelings + divergent thinking',
@@ -832,9 +825,8 @@ class FisherTemperamentWeights {
       axisWeights: {'fantasy': 1.0,                  // Primary: Dream immersion (Openness facet)
         'feelings': 0.7,                 // Secondary: Emotional dream life
         'self_awareness': 0.6,           // Secondary: Awareness of mental states
-        'imagination': 0.5,              // Secondary: Vivid mental imagery
-        'absorption': 0.5,               // Secondary: Immersive experience
-        // MBTI personality type scales
+        'mindfulness_coping': 0.5,               // Secondary: Immersive experience
+        // Personality Type personality type scales
         'intuition': 0.4,
       },
       note: 'Estrogen: fantasy + feelings + self-awareness + imagination + absorption',
@@ -864,7 +856,7 @@ class FisherTemperamentWeights {
         'social_perception': 0.7,        // Secondary: Reading others
         'tender_mindedness': 0.7,        // Secondary: Emotional sensitivity
         'warmth': 0.6,                   // Secondary: Interpersonal warmth
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.4,
       },

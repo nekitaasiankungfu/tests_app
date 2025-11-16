@@ -33,7 +33,7 @@ class TemperamentProfileTestWeights {
         'excitement_seeking': 0.6,           // Secondary: Stimulation seeking
         'intrinsic_motivation': 0.5,         // Secondary: Self-driven activity
         'liveliness': 0.4,                   // Moderate: Energetic presence
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.3,
         'perceiving': 0.2,
       },
@@ -50,9 +50,9 @@ class TemperamentProfileTestWeights {
         'activity': 0.8,                     // High: Action-oriented
         'novelty_seeking': 0.7,              // Secondary: Openness to new
         'decisiveness': 0.6,                 // Secondary: Quick action decisions
-        'adaptability': 0.5,                 // Secondary: Flexibility in starting
+        'cognitive_flexibility': 0.5,                 // Secondary: Flexibility in starting
         'intrinsic_motivation': 0.4,         // Moderate: Self-starting
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.3,
         'intuition': 0.2,
       },
@@ -71,7 +71,7 @@ class TemperamentProfileTestWeights {
         'liveliness': 0.7,                   // Secondary: Animated energy
         'excitement_seeking': 0.5,           // Secondary: Energy for stimulation
         'mood_stability': 0.4,               // Moderate: Positive baseline mood
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'feeling': 0.2,
       },
@@ -88,9 +88,9 @@ class TemperamentProfileTestWeights {
         'impulsiveness': 0.8,                // High: Can't stay still
         'excitement_seeking': 0.6,           // Secondary: Stimulation through movement
         'vitality': 0.6,                     // Secondary: Physical energy
-        'patience': 0.5,                     // Secondary: Low patience (reversed)
+        'patience': -0.5,                     // Secondary: Low patience (reversed)
         'sensation_seeking': 0.4,            // Moderate: Physical stimulation
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.3,
         'sensing': 0.2,
       },
@@ -103,13 +103,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q5',
       axisWeights: {
-        'vitality': 1.0,                     // Primary: Low energy (reversed)
-        'activity': 0.8,                     // High: Low activity capacity (reversed)
-        'emotional_resilience': 0.6,         // Secondary: Physical resilience (reversed)
-        'stress_tolerance': 0.5,             // Secondary: Energy under pressure (reversed)
-        'persistence': 0.5,                  // Secondary: Endurance (reversed)
-        'composure': 0.4,                    // Moderate: Energy depletion (reversed)
-        // MBTI personality type scales
+        'vitality': -1.0,                     // Primary: Low energy (reversed)
+        'activity': -0.8,                     // High: Low activity capacity (reversed)
+        'emotional_resilience': -0.6,         // Secondary: Physical resilience (reversed)
+        'stress_tolerance': -0.5,             // Secondary: Energy under pressure (reversed)
+        'persistence': -0.5,                  // Secondary: Endurance (reversed)
+        'composure': -0.4,                    // Moderate: Energy depletion (reversed)
+        // Personality Type personality type scales
         'introversion': 0.3,
       },
       note: 'Low stamina (REVERSED): quick fatigue = low vitality + low activity capacity + low resilience',
@@ -124,10 +124,10 @@ class TemperamentProfileTestWeights {
         'impulsiveness': 1.0,                // Primary: Immediate action
         'decisiveness': 0.8,                 // High: Quick decisions
         'activity': 0.7,                     // Secondary: Action orientation
-        'deliberation': 0.6,                 // Secondary: Low planning (reversed)
+        'deliberation': -0.6,                 // Secondary: Low planning (reversed)
         'assertiveness': 0.5,                // Secondary: Proactive action
-        'patience': 0.4,                     // Moderate: Low waiting (reversed)
-        // MBTI personality type scales
+        'patience': -0.4,                     // Moderate: Low waiting (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.3,
         'perceiving': 0.3,
       },
@@ -146,7 +146,7 @@ class TemperamentProfileTestWeights {
         'assertiveness': 0.6,                // Secondary: Self-starting
         'achievement_motivation': 0.5,       // Secondary: Drive for doing
         'autonomy_need': 0.4,                // Moderate: Self-directed action
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.3,
         'judging': 0.2,
       },
@@ -160,12 +160,12 @@ class TemperamentProfileTestWeights {
       questionId: 'q8',
       axisWeights: {
         'activity': 1.0,                     // Primary: Multiple simultaneous actions
-        'attention_control': 0.7,            // Secondary: Divided attention (reversed)
+        'attention_control': -0.7,            // Secondary: Divided attention (reversed)
         'cognitive_flexibility': 0.6,        // Secondary: Task switching
         'vitality': 0.6,                     // Secondary: High energy demand
         'impulsiveness': 0.5,                // Secondary: Action impulse
-        'organization': 0.4,                 // Moderate: Low single-focus (reversed)
-        // MBTI personality type scales
+        'organization': -0.4,                 // Moderate: Low single-focus (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.3,
         'perceiving': 0.3,
       },
@@ -181,10 +181,10 @@ class TemperamentProfileTestWeights {
         'activity': 1.0,                     // Primary: Quick mental activation
         'processing_speed': 0.8,             // High: Fast readiness
         'vitality': 0.7,                     // Secondary: Morning energy
-        'adaptability': 0.6,                 // Secondary: State transition speed
+        'cognitive_flexibility': 0.6,                 // Secondary: State transition speed
         'self_discipline': 0.5,              // Secondary: Morning routine
         'liveliness': 0.4,                   // Moderate: Quick energy state
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.3,
       },
       note: 'Quick activation: fast arousal + alertness + vitality + processing speed',
@@ -196,13 +196,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q10',
       axisWeights: {
-        'activity': 1.0,                     // Primary: Low activity preference (reversed)
-        'excitement_seeking': 0.9,           // Primary: Low stimulation need (reversed)
-        'sensation_seeking': 0.7,            // Secondary: Low novelty (reversed)
+        'activity': -1.0,                     // Primary: Low activity preference (reversed)
+        'excitement_seeking': -0.9,           // Primary: Low stimulation need (reversed)
+        'sensation_seeking': -0.7,            // Secondary: Low novelty (reversed)
         'calmness': 0.6,                     // Secondary: Preference for calm (positive)
-        'novelty_seeking': 0.5,              // Secondary: Low variety seeking (reversed)
+        'novelty_seeking': -0.5,              // Secondary: Low variety seeking (reversed)
         'impulsiveness': 0.4,                // Moderate: Low impulsiveness (positive)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.4,
         'sensing': 0.2,
       },
@@ -223,9 +223,9 @@ class TemperamentProfileTestWeights {
         'stress_tolerance': 0.9,             // Primary: Stress resilience
         'emotional_resilience': 0.8,         // High: Bounce-back capacity
         'calmness': 0.7,                     // Secondary: Baseline calm
-        'emotional_reactivity': 0.6,         // Secondary: Low reactivity (reversed)
+        'emotional_reactivity': -0.6,         // Secondary: Low reactivity (reversed)
         'emotional_intelligence': 0.5,       // Secondary: Emotional regulation
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
         'judging': 0.2,
       },
@@ -238,13 +238,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q12',
       axisWeights: {
-        'panic_tendency': 1.0,               // Primary: Low panic (reversed)
-        'anxiety': 0.9,                      // Primary: Low anxiety (reversed)
+        'panic_tendency': -1.0,               // Primary: Low panic (reversed)
+        'anxiety': -0.9,                      // Primary: Low anxiety (reversed)
         'emotional_resilience': 0.8,         // High: Stable emotional state
         'calmness': 0.7,                     // Secondary: Calm temperament
         'stress_tolerance': 0.6,             // Secondary: Stress resistance
         'composure': 0.5,                    // Secondary: Maintained control
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Low panic: panic resistance + low anxiety + emotional stability + calmness',
@@ -260,9 +260,9 @@ class TemperamentProfileTestWeights {
         'frustration_tolerance': 0.8,        // High: Criticism tolerance
         'self_acceptance': 0.7,              // Secondary: Secure self-view
         'emotional_resilience': 0.6,         // Secondary: Resilience to feedback
-        'anger': 0.6,                        // Secondary: Low anger (reversed)
-        'self_consciousness': 0.5,           // Secondary: Low social anxiety (reversed)
-        // MBTI personality type scales
+        'anger': -0.6,                        // Secondary: Low anger (reversed)
+        'self_consciousness': -0.5,           // Secondary: Low social anxiety (reversed)
+        // Personality Type personality type scales
         'thinking': 0.4,
         'introversion': 0.2,
       },
@@ -275,13 +275,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q14',
       axisWeights: {
-        'rumination': 1.0,                   // Primary: Mental dwelling (reversed)
-        'emotional_resilience': 0.9,         // Primary: Low bounce-back (reversed)
-        'worry_tendency': 0.8,               // High: Persistent worry (reversed)
-        'catastrophizing': 0.6,              // Secondary: Negative focus (reversed)
-        'cognitive_reappraisal': 0.5,        // Secondary: Low reframing (reversed)
-        'mood_stability': 0.5,               // Secondary: Mood persistence (reversed)
-        // MBTI personality type scales
+        'rumination': -1.0,                   // Primary: Mental dwelling (reversed)
+        'emotional_resilience': -0.9,         // Primary: Low bounce-back (reversed)
+        'worry_tendency': -0.8,               // High: Persistent worry (reversed)
+        'catastrophizing': -0.6,              // Secondary: Negative focus (reversed)
+        'cognitive_reappraisal': -0.5,        // Secondary: Low reframing (reversed)
+        'mood_stability': -0.5,               // Secondary: Mood persistence (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
         'introversion': 0.2,
       },
@@ -296,11 +296,11 @@ class TemperamentProfileTestWeights {
       axisWeights: {
         'emotional_resilience': 1.0,         // Primary: Recovery capacity
         'stress_tolerance': 0.9,             // Primary: Stress resistance
-        'adaptability': 0.7,                 // Secondary: Adaptive flexibility
+        'cognitive_flexibility': 0.7,                 // Secondary: Adaptive flexibility
         'calmness': 0.6,                     // Secondary: Return to baseline
         'vitality': 0.5,                     // Secondary: Energy restoration
         'problem_focused_coping': 0.5,       // Secondary: Effective coping
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Resilience: quick recovery + stress tolerance + adaptability + coping',
@@ -313,12 +313,12 @@ class TemperamentProfileTestWeights {
       questionId: 'q16',
       axisWeights: {
         'frustration_tolerance': 1.0,        // Primary: Tolerance to minor annoyances
-        'emotional_reactivity': 0.9,         // Primary: Low reactivity (reversed)
+        'emotional_reactivity': -0.9,         // Primary: Low reactivity (reversed)
         'composure': 0.8,                    // High: Maintained calm
-        'anger': 0.7,                        // Secondary: Low irritability (reversed)
+        'anger': -0.7,                        // Secondary: Low irritability (reversed)
         'calmness': 0.6,                     // Secondary: Baseline tranquility
         'patience': 0.5,                     // Secondary: Tolerance capacity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Frustration tolerance: low reactivity to trivia + composure + low anger + patience',
@@ -336,7 +336,7 @@ class TemperamentProfileTestWeights {
         'cognitive_reappraisal': 0.6,        // Secondary: Reframing skill
         'self_awareness': 0.6,               // Secondary: Emotion recognition
         'maturity': 0.5,                     // Secondary: Emotional maturity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.2,
       },
@@ -349,13 +349,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q18',
       axisWeights: {
-        'anxiety': 1.0,                      // Primary: Generalized anxiety (reversed)
-        'worry_tendency': 0.9,               // Primary: Chronic worry (reversed)
-        'emotional_stability': 0.8,          // High: Low stability (reversed)
-        'calmness': 0.7,                     // Secondary: Low calm (reversed)
-        'rumination': 0.6,                   // Secondary: Mental preoccupation (reversed)
-        'stress_tolerance': 0.5,             // Secondary: Low tolerance (reversed)
-        // MBTI personality type scales
+        'anxiety': -1.0,                      // Primary: Generalized anxiety (reversed)
+        'worry_tendency': -0.9,               // Primary: Chronic worry (reversed)
+        'emotional_resilience': -0.8,          // High: Low stability (reversed)
+        'calmness': -0.7,                     // Secondary: Low calm (reversed)
+        'rumination': -0.6,                   // Secondary: Mental preoccupation (reversed)
+        'stress_tolerance': -0.5,             // Secondary: Low tolerance (reversed)
+        // Personality Type personality type scales
         'feeling': 0.4,
         'intuition': 0.2,
       },
@@ -369,12 +369,11 @@ class TemperamentProfileTestWeights {
       questionId: 'q19',
       axisWeights: {
         'composure': 1.0,                    // Primary: Calm under unexpected
-        'adaptability': 0.9,                 // Primary: Flexibility to change
-        'anxiety': 0.7,                      // Secondary: Low anticipatory anxiety (reversed)
-        'cognitive_flexibility': 0.6,        // Secondary: Mental adjustment
+        'cognitive_flexibility': 0.9,                 // Primary: Flexibility to change
+        'anxiety': -0.7,                      // Secondary: Low anticipatory anxiety (reversed)
         'stress_tolerance': 0.6,             // Secondary: Stress resistance
-        'emotional_reactivity': 0.5,         // Secondary: Low reactivity (reversed)
-        // MBTI personality type scales
+        'emotional_reactivity': -0.5,         // Secondary: Low reactivity (reversed)
+        // Personality Type personality type scales
         'thinking': 0.3,
         'perceiving': 0.3,
       },
@@ -387,13 +386,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q20',
       axisWeights: {
-        'catastrophizing': 1.0,              // Primary: Exaggeration tendency (reversed)
-        'emotional_reactivity': 0.9,         // Primary: High reactivity (reversed)
-        'composure': 0.8,                    // High: Low composure (reversed)
-        'emotional_intelligence': 0.6,       // Secondary: Low regulation (reversed)
-        'anxiety': 0.6,                      // Secondary: Anxious amplification (reversed)
+        'catastrophizing': -1.0,              // Primary: Exaggeration tendency (reversed)
+        'emotional_reactivity': -0.9,         // Primary: High reactivity (reversed)
+        'composure': -0.8,                    // High: Low composure (reversed)
+        'emotional_intelligence': -0.6,       // Secondary: Low regulation (reversed)
+        'anxiety': -0.6,                      // Secondary: Anxious amplification (reversed)
         'expressiveness': 0.4,               // Moderate: Dramatic expression
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'extraversion': 0.2,
       },
@@ -410,13 +409,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q21',
       axisWeights: {
-        'impulsiveness': 1.0,                // Primary: Unthinking action (reversed)
-        'deliberation': 0.9,                 // Primary: Low planning (reversed)
-        'self_discipline': 0.8,              // High: Low control (reversed)
-        'patience': 0.6,                     // Secondary: Low waiting (reversed)
-        'cognitive_reappraisal': 0.5,        // Secondary: Low reflection (reversed)
+        'impulsiveness': -1.0,                // Primary: Unthinking action (reversed)
+        'deliberation': -0.9,                 // Primary: Low planning (reversed)
+        'self_discipline': -0.8,              // High: Low control (reversed)
+        'patience': -0.6,                     // Secondary: Low waiting (reversed)
+        'cognitive_reappraisal': -0.5,        // Secondary: Low reflection (reversed)
         'decisiveness_behavior': 0.4,        // Moderate: Quick but hasty decisions
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'extraversion': 0.2,
       },
@@ -435,7 +434,7 @@ class TemperamentProfileTestWeights {
         'self_discipline': 0.6,              // Secondary: Controlled decision-making
         'prudence': 0.6,                     // Secondary: Cautious approach
         'patience': 0.5,                     // Secondary: Takes time
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.4,
         'judging': 0.4,
       },
@@ -448,13 +447,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q23',
       axisWeights: {
-        'impulsiveness': 1.0,                // Primary: Impulse yielding (reversed)
-        'self_discipline': 0.9,              // Primary: Low control (reversed)
-        'deliberation': 0.7,                 // Secondary: Low planning (reversed)
-        'patience': 0.6,                     // Secondary: Low delay capacity (reversed)
-        'hedonism': 0.6,                     // Secondary: Pleasure seeking (reversed)
+        'impulsiveness': -1.0,                // Primary: Impulse yielding (reversed)
+        'self_discipline': -0.9,              // Primary: Low control (reversed)
+        'deliberation': -0.7,                 // Secondary: Low planning (reversed)
+        'patience': -0.6,                     // Secondary: Low delay capacity (reversed)
+        'hedonism': -0.6,                     // Secondary: Pleasure seeking (reversed)
         'emotional_reactivity': 0.4,         // Moderate: Reactive behavior
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'feeling': 0.2,
       },
@@ -468,12 +467,12 @@ class TemperamentProfileTestWeights {
       questionId: 'q24',
       axisWeights: {
         'self_discipline': 1.0,              // Primary: Emotional self-control
-        'anger': 0.9,                        // Primary: Anger control (reversed)
+        'anger': -0.9,                        // Primary: Anger control (reversed)
         'composure': 0.8,                    // High: Maintained calm
         'frustration_tolerance': 0.7,        // Secondary: Irritation tolerance
         'emotional_intelligence': 0.6,       // Secondary: Emotion management
         'patience': 0.5,                     // Secondary: Tolerance capacity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
         'judging': 0.3,
       },
@@ -486,13 +485,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q25',
       axisWeights: {
-        'impulsiveness': 1.0,                // Primary: Hasty action (reversed)
-        'prudence': 0.9,                     // Primary: Low caution (reversed)
-        'deliberation': 0.8,                 // High: Low consideration (reversed)
+        'impulsiveness': -1.0,                // Primary: Hasty action (reversed)
+        'prudence': -0.9,                     // Primary: Low caution (reversed)
+        'deliberation': -0.8,                 // High: Low consideration (reversed)
         'risk_taking': 0.6,                  // Secondary: Risk tolerance
-        'patience': 0.5,                     // Secondary: Low waiting (reversed)
+        'patience': -0.5,                     // Secondary: Low waiting (reversed)
         'anxiety': 0.4,                      // Moderate: Low anticipatory anxiety
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'extraversion': 0.2,
       },
@@ -506,12 +505,12 @@ class TemperamentProfileTestWeights {
       questionId: 'q26',
       axisWeights: {
         'self_discipline': 1.0,              // Primary: Behavioral self-control
-        'impulsiveness': 0.9,                // Primary: Low impulsiveness (reversed)
+        'impulsiveness': -0.9,                // Primary: Low impulsiveness (reversed)
         'composure': 0.7,                    // Secondary: Maintained control
         'deliberation': 0.6,                 // Secondary: Considered restraint
         'emotional_intelligence': 0.5,       // Secondary: Self-awareness
         'patience': 0.5,                     // Secondary: Delay capacity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'thinking': 0.2,
       },
@@ -524,13 +523,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q27',
       axisWeights: {
-        'emotional_reactivity': 1.0,         // Primary: Emotion-driven behavior (reversed)
-        'self_discipline': 0.9,              // Primary: Low emotional control (reversed)
-        'deliberation': 0.7,                 // Secondary: Low rational thought (reversed)
-        'impulsiveness': 0.6,                // Secondary: Reactive impulsiveness (reversed)
-        'emotional_intelligence': 0.5,       // Secondary: Low regulation (reversed)
-        'composure': 0.5,                    // Secondary: Low composure (reversed)
-        // MBTI personality type scales
+        'emotional_reactivity': -1.0,         // Primary: Emotion-driven behavior (reversed)
+        'self_discipline': -0.9,              // Primary: Low emotional control (reversed)
+        'deliberation': -0.7,                 // Secondary: Low rational thought (reversed)
+        'impulsiveness': -0.6,                // Secondary: Reactive impulsiveness (reversed)
+        'emotional_intelligence': -0.5,       // Secondary: Low regulation (reversed)
+        'composure': -0.5,                    // Secondary: Low composure (reversed)
+        // Personality Type personality type scales
         'feeling': 0.5,
         'perceiving': 0.3,
       },
@@ -549,7 +548,7 @@ class TemperamentProfileTestWeights {
         'self_discipline': 0.6,              // Secondary: Planning discipline
         'analytical_thinking': 0.6,          // Secondary: Systematic thought
         'patience': 0.5,                     // Secondary: Takes time to plan
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.5,
         'thinking': 0.3,
       },
@@ -564,11 +563,11 @@ class TemperamentProfileTestWeights {
       axisWeights: {
         'self_discipline': 1.0,              // Primary: Controlled decisions
         'deliberation': 0.8,                 // High: Thoughtful action
-        'impulsiveness': 0.7,                // Secondary: Low impulsiveness (reversed)
+        'impulsiveness': -0.7,                // Secondary: Low impulsiveness (reversed)
         'prudence': 0.7,                     // Secondary: Cautious choices
         'wisdom': 0.6,                       // Secondary: Good judgment
         'maturity': 0.5,                     // Secondary: Mature decisions
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'thinking': 0.3,
       },
@@ -581,13 +580,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q30',
       axisWeights: {
-        'patience': 1.0,                     // Primary: Impatience (reversed)
-        'impulsiveness': 0.9,                // Primary: Hasty action (reversed)
-        'self_discipline': 0.8,              // High: Low delay control (reversed)
-        'deliberation': 0.6,                 // Secondary: Low strategic waiting (reversed)
-        'frustration_tolerance': 0.5,        // Secondary: Low waiting tolerance (reversed)
-        'strategic_thinking': 0.4,           // Moderate: Low timing sense (reversed)
-        // MBTI personality type scales
+        'patience': -1.0,                     // Primary: Impatience (reversed)
+        'impulsiveness': -0.9,                // Primary: Hasty action (reversed)
+        'self_discipline': -0.8,              // High: Low delay control (reversed)
+        'deliberation': -0.6,                 // Secondary: Low strategic waiting (reversed)
+        'frustration_tolerance': -0.5,        // Secondary: Low waiting tolerance (reversed)
+        'strategic_thinking': -0.4,           // Moderate: Low timing sense (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'extraversion': 0.2,
       },
@@ -607,10 +606,10 @@ class TemperamentProfileTestWeights {
         'social_boldness': 1.0,              // Primary: Social approach confidence
         'gregariousness': 0.9,               // Primary: Social engagement
         'warmth': 0.7,                       // Secondary: Friendly approach
-        'self_consciousness': 0.7,           // Secondary: Low social anxiety (reversed)
+        'self_consciousness': -0.7,           // Secondary: Low social anxiety (reversed)
         'assertiveness': 0.6,                // Secondary: Social initiative
         'social_confidence': 0.6,            // Secondary: Comfort with strangers
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.5,
         'feeling': 0.2,
       },
@@ -625,11 +624,11 @@ class TemperamentProfileTestWeights {
       axisWeights: {
         'social_boldness': 1.0,              // Primary: Comfort with visibility
         'dominance': 0.8,                    // High: Social prominence desire
-        'modesty': 0.7,                      // Secondary: Low modesty (reversed)
+        'modesty': -0.7,                      // Secondary: Low modesty (reversed)
         'social_confidence': 0.6,            // Secondary: Confidence in spotlight
         'expressiveness': 0.6,               // Secondary: Outward display
         'narcissism': 0.4,                   // Moderate: Attention need
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.5,
       },
       note: 'Attention-seeking: social boldness + dominance + low modesty + social confidence',
@@ -643,11 +642,11 @@ class TemperamentProfileTestWeights {
       axisWeights: {
         'gregariousness': 1.0,               // Primary: Group preference
         'social_confidence': 0.9,            // Primary: Comfort in crowds
-        'self_consciousness': 0.7,           // Secondary: Low social anxiety (reversed)
+        'self_consciousness': -0.7,           // Secondary: Low social anxiety (reversed)
         'warmth': 0.6,                       // Secondary: Social warmth
         'affiliation_motivation': 0.6,       // Secondary: Social connection drive
         'social_boldness': 0.5,              // Secondary: Social comfort
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.5,
         'feeling': 0.2,
       },
@@ -660,13 +659,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q34',
       axisWeights: {
-        'gregariousness': 1.0,               // Primary: Low social seeking (reversed)
-        'affiliation_motivation': 0.8,       // High: Low social connection need (reversed)
-        'warmth': 0.6,                       // Secondary: Social distance (reversed)
-        'social_confidence': 0.5,            // Secondary: Possible social discomfort (reversed)
+        'gregariousness': -1.0,               // Primary: Low social seeking (reversed)
+        'affiliation_motivation': -0.8,       // High: Low social connection need (reversed)
+        'warmth': -0.6,                       // Secondary: Social distance (reversed)
+        'social_confidence': -0.5,            // Secondary: Possible social discomfort (reversed)
         'autonomy_need': 0.5,                // Secondary: High autonomy (positive)
         'self_consciousness': 0.4,           // Moderate: Possible shyness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.5,
       },
       note: 'Solitude preference (REVERSED): low gregariousness + low affiliation + autonomy need',
@@ -684,7 +683,7 @@ class TemperamentProfileTestWeights {
         'affiliation_motivation': 0.7,       // Secondary: Social connection drive
         'positive_emotions': 0.6,            // Secondary: Social joy
         'expressiveness': 0.5,               // Secondary: Communication openness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.5,
         'feeling': 0.3,
       },
@@ -697,13 +696,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q36',
       axisWeights: {
-        'self_consciousness': 1.0,           // Primary: Social anxiety (reversed)
-        'social_boldness': 0.9,              // Primary: Low social approach (reversed)
-        'assertiveness': 0.7,                // Secondary: Low social initiative (reversed)
-        'social_confidence': 0.7,            // Secondary: Low stranger comfort (reversed)
-        'warmth': 0.5,                       // Secondary: Social hesitation (reversed)
-        'anxiety': 0.5,                      // Secondary: Social anxiety (reversed)
-        // MBTI personality type scales
+        'self_consciousness': -1.0,           // Primary: Social anxiety (reversed)
+        'social_boldness': -0.9,              // Primary: Low social approach (reversed)
+        'assertiveness': -0.7,                // Secondary: Low social initiative (reversed)
+        'social_confidence': -0.7,            // Secondary: Low stranger comfort (reversed)
+        'warmth': -0.5,                       // Secondary: Social hesitation (reversed)
+        'anxiety': -0.5,                      // Secondary: Social anxiety (reversed)
+        // Personality Type personality type scales
         'introversion': 0.5,
       },
       note: 'Conversation difficulty (REVERSED): social anxiety + low boldness + low assertiveness + low confidence',
@@ -721,7 +720,7 @@ class TemperamentProfileTestWeights {
         'verbal_communication': 0.6,         // Secondary: Discussion engagement
         'affiliation_motivation': 0.6,       // Secondary: Social connection drive
         'ideas': 0.5,                        // Secondary: Openness to ideas
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'intuition': 0.4,
       },
@@ -740,7 +739,7 @@ class TemperamentProfileTestWeights {
         'positive_emotions': 0.7,            // Secondary: Social joy
         'warmth': 0.6,                       // Secondary: Social warmth
         'social_confidence': 0.5,            // Secondary: Social comfort
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.5,
         'feeling': 0.2,
       },
@@ -753,13 +752,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q39',
       axisWeights: {
-        'assertiveness': 1.0,                // Primary: Low social initiative (reversed)
-        'social_boldness': 0.9,              // Primary: Low social approach (reversed)
-        'gregariousness': 0.7,               // Secondary: Low social seeking (reversed)
-        'social_confidence': 0.6,            // Secondary: Low social comfort (reversed)
+        'assertiveness': -1.0,                // Primary: Low social initiative (reversed)
+        'social_boldness': -0.9,              // Primary: Low social approach (reversed)
+        'gregariousness': -0.7,               // Secondary: Low social seeking (reversed)
+        'social_confidence': -0.6,            // Secondary: Low social comfort (reversed)
         'self_consciousness': 0.6,           // Secondary: Social anxiety
-        'dominance': 0.4,                    // Moderate: Low social leadership (reversed)
-        // MBTI personality type scales
+        'dominance': -0.4,                    // Moderate: Low social leadership (reversed)
+        // Personality Type personality type scales
         'introversion': 0.5,
       },
       note: 'Low initiative (REVERSED): low assertiveness + low boldness + low gregariousness + anxiety',
@@ -771,13 +770,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q40',
       axisWeights: {
-        'assertiveness': 1.0,                // Primary: Low participation (reversed)
-        'gregariousness': 0.8,               // High: Low engagement (reversed)
-        'social_boldness': 0.7,              // Secondary: Low visibility seeking (reversed)
+        'assertiveness': -1.0,                // Primary: Low participation (reversed)
+        'gregariousness': -0.8,               // High: Low engagement (reversed)
+        'social_boldness': -0.7,              // Secondary: Low visibility seeking (reversed)
         'self_consciousness': 0.6,           // Secondary: Social caution
         'modesty': 0.5,                      // Secondary: Background preference (positive)
-        'affiliation_motivation': 0.5,       // Secondary: Low social drive (reversed)
-        // MBTI personality type scales
+        'affiliation_motivation': -0.5,       // Secondary: Low social drive (reversed)
+        // Personality Type personality type scales
         'introversion': 0.5,
         'thinking': 0.2,
       },
@@ -795,12 +794,11 @@ class TemperamentProfileTestWeights {
       questionId: 'q41',
       axisWeights: {
         'processing_speed': 1.0,             // Primary: Fast cognitive processing
-        'adaptability': 0.8,                 // High: Quick awareness
-        'cognitive_flexibility': 0.7,        // Secondary: Response speed
+        'cognitive_flexibility': 0.8,                 // High: Quick awareness
         'attention_control': 0.6,            // Secondary: Quick adjustment
         'liveliness': 0.5,                   // Secondary: Rapid attention shift
         'impulsiveness': 0.4,                // Moderate: Rapid response tendency
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.3,
         'sensing': 0.3,
       },
@@ -815,11 +813,10 @@ class TemperamentProfileTestWeights {
       axisWeights: {
         'cognitive_flexibility': 1.0,        // Primary: Mental switching
         'attention_control': 0.8,            // High: Attention shift capacity
-        'adaptability': 0.7,                 // Secondary: Behavioral flexibility
         'processing_speed': 0.6,             // Secondary: Quick transitions
         'working_memory': 0.5,               // Secondary: Task maintenance
         'activity': 0.5,                     // Secondary: Parallel processing
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'intuition': 0.2,
       },
@@ -838,7 +835,7 @@ class TemperamentProfileTestWeights {
         'liveliness': 0.6,                   // Secondary: Animated tempo
         'expressiveness': 0.5,               // Secondary: Rapid expression
         'impulsiveness': 0.4,                // Moderate: Quick verbal output
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'intuition': 0.2,
       },
@@ -851,13 +848,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q44',
       axisWeights: {
-        'processing_speed': 1.0,             // Primary: Slow processing (reversed)
-        'adaptability': 0.8,                 // High: Slow readiness (reversed)
-        'cognitive_flexibility': 0.6,        // Secondary: Slow adjustment (reversed)
-        'vitality': 0.6,                     // Secondary: Slow response (reversed)
+        'processing_speed': -1.0,             // Primary: Slow processing (reversed)
+        'cognitive_flexibility': -0.8,                 // High: Slow readiness (reversed)
+        'vitality': -0.6,                     // Secondary: Slow response (reversed)
         'anxiety': 0.5,                      // Secondary: Possible anxiety
         'deliberation': 0.4,                 // Moderate: Takes time (positive)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.4,
         'sensing': 0.2,
       },
@@ -876,7 +872,7 @@ class TemperamentProfileTestWeights {
         'diligence': 0.6,                    // Secondary: Steady application
         'patience': 0.5,                     // Secondary: Paced tolerance
         'mood_stability': 0.4,               // Moderate: Stable state
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'sensing': 0.2,
       },
@@ -889,13 +885,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q46',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Low pace flexibility (reversed)
-        'processing_speed': 0.8,             // High: Low speed capacity (reversed)
-        'cognitive_flexibility': 0.6,        // Secondary: Low mental adjustment (reversed)
-        'stress_tolerance': 0.5,             // Secondary: Pressure difficulty (reversed)
-        'vitality': 0.5,                     // Secondary: Low activation (reversed)
+        'cognitive_flexibility': -1.0,                 // Primary: Low pace flexibility (reversed)
+        'processing_speed': -0.8,             // High: Low speed capacity (reversed)
+        'stress_tolerance': -0.5,             // Secondary: Pressure difficulty (reversed)
+        'vitality': -0.5,                     // Secondary: Low activation (reversed)
         'anxiety': 0.4,                      // Moderate: Possible stress anxiety
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.3,
         'sensing': 0.2,
       },
@@ -914,7 +909,7 @@ class TemperamentProfileTestWeights {
         'critical_thinking': 0.6,            // Secondary: General cognitive ability
         'cognitive_flexibility': 0.6,        // Secondary: Quick mental adjustment
         'intellectual_curiosity': 0.5,       // Secondary: Idea engagement
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.5,
         'thinking': 0.2,
       },
@@ -927,13 +922,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q48',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Tempo flexibility
+        'cognitive_flexibility': 1.0,                 // Primary: Tempo flexibility
         'social_perception': 0.7,            // Secondary: Group tempo awareness
-        'cognitive_flexibility': 0.6,        // Secondary: Mental pace adjustment
         'cooperativeness': 0.6,              // Secondary: Group alignment
         'processing_speed': 0.5,             // Secondary: Matching speed capacity
         'conformity': 0.4,                   // Moderate: Pace conformity
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
         'perceiving': 0.3,
       },
@@ -946,13 +940,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q49',
       axisWeights: {
-        'processing_speed': 1.0,             // Primary: Slow pace (reversed)
+        'processing_speed': -1.0,             // Primary: Slow pace (reversed)
         'deliberation': 0.7,                 // Secondary: Considered approach (positive)
         'patience': 0.6,                     // Secondary: Paced tolerance (positive)
         'impulsiveness': 0.6,                // Secondary: Low impulsiveness (positive)
         'prudence': 0.5,                     // Secondary: Cautious pacing (positive)
         'anxiety': 0.4,                      // Moderate: Possible anxiety about rushing
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'introversion': 0.4,
         'judging': 0.2,
       },
@@ -970,8 +964,8 @@ class TemperamentProfileTestWeights {
         'processing_speed': 0.6,             // Secondary: Comfort with speed
         'sensation_seeking': 0.6,            // Secondary: Dynamic stimulation
         'liveliness': 0.5,                   // Secondary: Energetic preference
-        'patience': 0.4,                     // Moderate: Low patience for slow (reversed)
-        // MBTI personality type scales
+        'patience': -0.4,                     // Moderate: Low patience for slow (reversed)
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'perceiving': 0.3,
       },
@@ -988,13 +982,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q51',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Behavioral flexibility
-        'cognitive_flexibility': 0.8,        // High: Mental adjustment
+        'cognitive_flexibility': 1.0,                 // Primary: Behavioral flexibility
         'stress_tolerance': 0.7,             // Secondary: Change resilience
         'emotional_resilience': 0.6,         // Secondary: Emotional flexibility
         'novelty_seeking': 0.5,              // Secondary: Openness to new
         'composure': 0.5,                    // Secondary: Calm during change
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.5,
         'intuition': 0.2,
       },
@@ -1007,13 +1000,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q52',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Behavioral flexibility
-        'cognitive_flexibility': 0.9,        // Primary: Mental flexibility
+        'cognitive_flexibility': 1.0,                 // Primary: Behavioral flexibility
         'spontaneity': 0.6,                  // Secondary: Non-rigidity
         'composure': 0.6,                    // Secondary: Calm with change
-        'openness_to_experience': 0.5,       // Secondary: Openness to variation
-        'organization': 0.4,                 // Moderate: Low rigid planning (reversed)
-        // MBTI personality type scales
+        'intellectual_curiosity': 0.5,       // Secondary: Openness to variation
+        'organization': -0.4,                 // Moderate: Low rigid planning (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.5,
         'intuition': 0.2,
       },
@@ -1028,11 +1020,11 @@ class TemperamentProfileTestWeights {
       axisWeights: {
         'composure': 1.0,                    // Primary: Emotional stability during change
         'stress_tolerance': 0.9,             // Primary: Change stress resistance
-        'adaptability': 0.8,                 // High: Flexible response
+        'cognitive_flexibility': 0.8,                 // High: Flexible response
         'emotional_resilience': 0.7,         // Secondary: Emotional flexibility
-        'anxiety': 0.6,                      // Secondary: Low change anxiety (reversed)
+        'anxiety': -0.6,                      // Secondary: Low change anxiety (reversed)
         'calmness': 0.5,                     // Secondary: Baseline tranquility
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
         'perceiving': 0.3,
       },
@@ -1045,13 +1037,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q54',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Low flexibility (reversed)
-        'cognitive_flexibility': 0.8,        // High: Mental rigidity (reversed)
-        'novelty_seeking': 0.7,              // Secondary: Low openness to new (reversed)
+        'cognitive_flexibility': -1.0,                 // Primary: Low flexibility (reversed)
+        'novelty_seeking': -0.7,              // Secondary: Low openness to new (reversed)
         'anxiety': 0.6,                      // Secondary: Change anxiety
         'harm_avoidance': 0.5,               // Secondary: Preference for familiar
         'tradition': 0.4,                    // Moderate: Preference for established
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'sensing': 0.3,
       },
@@ -1067,10 +1058,10 @@ class TemperamentProfileTestWeights {
         'divergent_thinking': 1.0,           // Primary: Generative ideation
         'cognitive_flexibility': 0.9,        // Primary: Mental flexibility
         'problem_solving': 0.7,              // Secondary: Solution generation
-        'creativity': 0.7,                   // Secondary: Creative thinking
+        'flexibility_creative': 0.7,                   // Secondary: Creative thinking
         'originality': 0.6,                  // Secondary: Novel solutions
         'intellectual_curiosity': 0.5,       // Secondary: Exploratory thinking
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.5,
         'perceiving': 0.3,
       },
@@ -1083,13 +1074,13 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q56',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Positive change orientation
+        'cognitive_flexibility': 1.0,                 // Primary: Positive change orientation
         'growth_mindset': 0.9,               // Primary: Learning/growth perspective
         'positive_emotions': 0.7,            // Secondary: Positive framing
         'novelty_seeking': 0.6,              // Secondary: Openness to new
         'curiosity': 0.6,                    // Secondary: Welcoming change
         'cognitive_reappraisal': 0.5,        // Secondary: Positive reframing
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.4,
         'perceiving': 0.3,
       },
@@ -1102,13 +1093,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q57',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Low behavioral flexibility (reversed)
-        'cognitive_flexibility': 0.8,        // High: Mental rigidity (reversed)
+        'cognitive_flexibility': -1.0,                 // Primary: Low behavioral flexibility (reversed)
         'tradition': 0.6,                    // Secondary: Attachment to established
         'harm_avoidance': 0.6,               // Secondary: Preference for familiar
         'self_discipline': 0.5,              // Secondary: Habit strength (positive)
-        'curiosity': 0.5,                    // Secondary: Low openness (reversed)
-        // MBTI personality type scales
+        'curiosity': -0.5,                    // Secondary: Low openness (reversed)
+        // Personality Type personality type scales
         'judging': 0.4,
         'sensing': 0.3,
       },
@@ -1121,13 +1111,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q58',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Behavioral flexibility
+        'cognitive_flexibility': 1.0,                 // Primary: Behavioral flexibility
         'social_perception': 0.9,            // Primary: Understanding differences
         'emotional_intelligence': 0.8,       // High: Adaptive social skill
-        'cognitive_flexibility': 0.6,        // Secondary: Mental adjustment
         'cooperativeness': 0.6,              // Secondary: Collaborative flexibility
         'empathy': 0.5,                      // Secondary: Understanding others
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'perceiving': 0.3,
       },
@@ -1141,12 +1130,12 @@ class TemperamentProfileTestWeights {
       questionId: 'q59',
       axisWeights: {
         'composure': 1.0,                    // Primary: Calm under surprise
-        'adaptability': 0.9,                 // Primary: Flexible response
+        'cognitive_flexibility': 0.9,                 // Primary: Flexible response
         'stress_tolerance': 0.7,             // Secondary: Unexpected stress resistance
         'acceptance': 0.7,                   // Secondary: Non-resistance
         'emotional_resilience': 0.6,         // Secondary: Emotional flexibility
-        'anxiety': 0.5,                      // Secondary: Low anticipatory anxiety (reversed)
-        // MBTI personality type scales
+        'anxiety': -0.5,                      // Secondary: Low anticipatory anxiety (reversed)
+        // Personality Type personality type scales
         'thinking': 0.3,
         'perceiving': 0.4,
       },
@@ -1159,13 +1148,12 @@ class TemperamentProfileTestWeights {
       testId: 'temperament_profile_test',
       questionId: 'q60',
       axisWeights: {
-        'adaptability': 1.0,                 // Primary: Low flexibility (reversed)
-        'frustration_tolerance': 0.9,        // Primary: Low change tolerance (reversed)
-        'anger': 0.7,                        // Secondary: Irritation tendency (reversed)
-        'cognitive_flexibility': 0.7,        // Secondary: Mental rigidity (reversed)
-        'emotional_reactivity': 0.6,         // Secondary: High reactivity to change (reversed)
+        'cognitive_flexibility': -1.0,                 // Primary: Low flexibility (reversed)
+        'frustration_tolerance': -0.9,        // Primary: Low change tolerance (reversed)
+        'anger': -0.7,                        // Secondary: Irritation tendency (reversed)
+        'emotional_reactivity': -0.6,         // Secondary: High reactivity to change (reversed)
         'harm_avoidance': 0.5,               // Secondary: Preference for stability
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
         'thinking': 0.2,
       },
@@ -1222,7 +1210,7 @@ class TemperamentProfileTestWeights {
     // - Detailed mapping to 195 hierarchical scales
     // - Balanced weight distribution across factors
     // - Accurate reversed question handling
-    // - MBTI type indicators included
+    // - Personality Type type indicators included
     // - Strong construct validity for temperament assessment
     //
     // Next: Fisher Temperament Test, Stress Test, Self-Esteem Test

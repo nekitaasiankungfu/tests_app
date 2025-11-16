@@ -170,7 +170,7 @@ test/integration/
 #### 4.2 Screens (4 hours)
 - `test_screen.dart` - Complex answer saving logic
 - `summary_screen.dart` - Hierarchical scale display
-- `sixteen_types_result_screen.dart` - MBTI type interpretation
+- `sixteen_types_result_screen.dart` - Personality Type type interpretation
 
 #### 4.3 Complex Algorithms (3 hours)
 - `SummaryService.calculateSummary()` - Weight calculation

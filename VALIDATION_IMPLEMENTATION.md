@@ -122,7 +122,7 @@ Similar helpers created in `SummaryScore` class for summary models.
 - Range validation with clamping for scores
 - Relationship validation (totalScore vs maxScore)
 - Empty collection checks
-- Format validation (dates, MBTI types, dominant poles)
+- Format validation (dates, Personality Type types, dominant poles)
 
 ### 4. Logging Strategy
 - **Errors** (`appLogger.e`): Critical validation failures with stack traces

@@ -1,9 +1,9 @@
 import 'test_stub.dart';
 
-/// 16 Personality Types Test (MBTI-style)
+/// 16 Personality Types Test (Type Theory style)
 ///
 /// An 80-question test to determine personality type based on
-/// Myers-Briggs Type Indicator dimensions: Extraversion/Introversion,
+/// Jungian Type Theory dimensions: Extraversion/Introversion,
 /// Sensing/Intuition, Thinking/Feeling, and Judging/Perceiving.
 class SixteenTypesTest extends TestStub {
   @override
@@ -21,9 +21,9 @@ class SixteenTypesTest extends TestStub {
   @override
   Map<String, String> get description => {
         'ru':
-            'Тест для определения типа личности по системе MBTI: определите свой тип среди 16 возможных комбинаций',
+            'Тест для определения типа личности по системе Personality Type: определите свой тип среди 16 возможных комбинаций',
         'en':
-            'MBTI-style test to determine your personality type among 16 possible combinations',
+            'Personality Type-style test to determine your personality type among 16 possible combinations',
       };
 
   @override
@@ -38,7 +38,7 @@ class SixteenTypesTest extends TestStub {
   @override
   List<String> get tags => [
         'personality',
-        'mbti',
+        'type_theory',
         'professional',
         'detailed',
         '16types',

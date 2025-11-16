@@ -35,9 +35,8 @@ class BurnoutDiagnosticWeights {
         'emotional_resilience': -0.8,        // High: Reduced resilience (reversed)
         'depression': 0.7,                   // Secondary: Mood lowering
         'vulnerability': 0.7,                // Secondary: Emotional vulnerability
-        'emotional_stability': -0.6,         // Secondary: Instability (reversed)
         'frustration_tolerance': -0.5,       // Secondary: Low tolerance (reversed)
-        'work_satisfaction': -0.5,           // Secondary: Job dissatisfaction (reversed)
+        'achievement_motivation': -0.5,           // Secondary: Job dissatisfaction (reversed)
         // NEW: Emotional regulation scales
         'mood_stability': -0.6,              // Moderate: Unstable emotional state (reversed)
         'calmness': -0.5,                    // Moderate: Lost tranquility (reversed)
@@ -45,7 +44,7 @@ class BurnoutDiagnosticWeights {
         // NEW: Energy scales
         'activity': -0.5,                    // Moderate: Reduced activity level (reversed)
         'positive_emotions': -0.4,           // Moderate: Lost joy/enthusiasm (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
         'judging': 0.2,
       },
@@ -64,10 +63,10 @@ class BurnoutDiagnosticWeights {
         'vulnerability': 0.7,                // Secondary: Physical/emotional vulnerability
         'anxiety': 0.7,                      // Secondary: Anticipatory work anxiety
         'depression': 0.6,                   // Secondary: Depressive fatigue
-        'work_satisfaction': -0.6,           // Secondary: Job dissatisfaction (reversed)
+        'achievement_motivation': -0.6,           // Secondary: Job dissatisfaction (reversed)
         'self_compassion': -0.4,             // Moderate: Ignoring exhaustion signals (reversed)
         'boundary_setting': -0.4,            // Moderate: Poor work boundaries (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.2,
       },
       note: 'End-of-day exhaustion: severe vitality depletion + stress intolerance + vulnerability',
@@ -83,17 +82,16 @@ class BurnoutDiagnosticWeights {
         'stress_tolerance': -1.0,            // Primary: Stress intolerance (reversed)
         'depression': 0.8,                   // High: Depressive dread
         'worry_tendency': 0.8,               // High: Anticipatory worry
-        'work_satisfaction': -0.8,           // High: Job aversion (reversed)
+        'achievement_motivation': -0.8,           // High: Job aversion (reversed)
         'emotional_resilience': -0.7,        // Secondary: Low resilience (reversed)
-        'avoidance': 0.6,                    // Secondary: Work avoidance motivation
+        'avoidant_coping': 0.6,                    // Secondary: Work avoidance motivation
         'vulnerability': 0.6,                // Secondary: Emotional vulnerability
-        'fear_of_failure': 0.5,              // Secondary: Work-related fear
         // NEW: Emotional regulation scales
         'panic_tendency': 0.7,               // Secondary: Predisposition to panic about work
         'calmness': -0.7,                    // Secondary: Lost peace (reversed)
         'mood_stability': -0.5,              // Moderate: Emotional instability (reversed)
         'self_consciousness': 0.4,           // Moderate: Social evaluation anxiety
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.3,
       },
@@ -115,7 +113,7 @@ class BurnoutDiagnosticWeights {
         'frustration_tolerance': -0.7,       // Secondary: Low tolerance (reversed)
         'emotional_reactivity': 0.6,         // Secondary: Heightened reactivity
         'self_compassion': -0.5,             // Secondary: Lack of self-care (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Emotional overload: critical stress intolerance + resilience failure + vulnerability',
@@ -132,11 +130,11 @@ class BurnoutDiagnosticWeights {
         'depression': 0.9,                   // High: Depressive exhaustion
         'stress_tolerance': -0.9,            // High: Stress intolerance (reversed)
         'emotional_resilience': -0.8,        // Secondary: Resilience depletion (reversed)
-        'work_satisfaction': -0.8,           // Secondary: Work aversion (reversed)
+        'achievement_motivation': -0.8,           // Secondary: Work aversion (reversed)
         'rumination': 0.6,                   // Secondary: Obsessive work thoughts
-        'avoidance': 0.6,                    // Secondary: Work avoidance
+        'avoidant_coping': 0.6,                    // Secondary: Work avoidance
         'vulnerability': 0.5,                // Secondary: Emotional vulnerability
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
         'introversion': 0.2,
       },
@@ -158,7 +156,7 @@ class BurnoutDiagnosticWeights {
         'warmth': -0.6,                      // Secondary: Reduced warmth (reversed)
         'vulnerability': 0.6,                // Secondary: Emotional vulnerability
         'boundary_setting': -0.5,            // Secondary: Poor emotional boundaries (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'introversion': 0.3,
       },
@@ -177,10 +175,10 @@ class BurnoutDiagnosticWeights {
         'emotional_resilience': -0.9,        // High: Recovery failure (reversed)
         'stress_tolerance': -0.8,            // Secondary: Depleted stress capacity (reversed)
         'anxiety': 0.7,                      // Secondary: Chronic anxiety
-        'health_consciousness': 0.6,         // Secondary: Awareness of health impact
+        'prudence': 0.6,         // Secondary: Awareness of health impact
         'self_compassion': -0.5,             // Secondary: Lack of self-care (reversed)
         'environmental_mastery': -0.5,       // Secondary: Life control loss (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Chronic exhaustion: profound vitality loss + vulnerability + recovery failure + depression',
@@ -194,14 +192,14 @@ class BurnoutDiagnosticWeights {
       axisWeights: {
         'vitality': -1.5,                    // Primary: Total energy depletion (reversed)
         'stress_tolerance': -1.1,            // Primary: Stress capacity exhaustion (reversed)
-        'work_satisfaction': -1.0,           // High: Work dissatisfaction (reversed)
+        'achievement_motivation': -1.0,           // High: Work dissatisfaction (reversed)
         'emotional_resilience': -0.9,        // High: Resilience depletion (reversed)
         'vulnerability': 0.8,                // Secondary: Physical/emotional vulnerability
         'anxiety': 0.7,                      // Secondary: Work-related anxiety
         'depression': 0.7,                   // Secondary: Depressive exhaustion
-        'motivation': -0.6,                  // Secondary: Lost motivation (reversed)
+        'intrinsic_motivation': -0.6,                  // Secondary: Lost motivation (reversed)
         'life_satisfaction': -0.5,           // Secondary: Overall dissatisfaction (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Complete energy drain: total vitality loss + stress exhaustion + work dissatisfaction',
@@ -220,14 +218,14 @@ class BurnoutDiagnosticWeights {
       axisWeights: {
         'empathy': -1.2,                     // Primary: Empathy loss (reversed)
         'warmth': -1.0,                      // Primary: Emotional coldness (reversed)
-        'work_satisfaction': -0.9,           // High: Job disengagement (reversed)
+        'achievement_motivation': -0.9,           // High: Job disengagement (reversed)
         'emotional_resilience': -0.8,        // Secondary: Protective detachment (reversed)
         'anxiety': 0.7,                      // Secondary: Underlying anxiety (defense mechanism)
         'values': -0.6,                      // Secondary: Values disconnect (reversed)
         'trust': -0.6,                       // Secondary: Loss of trust (reversed)
-        'motivation': -0.5,                  // Secondary: Lost motivation (reversed)
+        'intrinsic_motivation': -0.5,                  // Secondary: Lost motivation (reversed)
         'altruism': -0.5,                    // Secondary: Reduced helping drive (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.4,
         'judging': 0.2,
       },
@@ -245,11 +243,11 @@ class BurnoutDiagnosticWeights {
         'warmth': -1.1,                      // Primary: Emotional disconnection (reversed)
         'responsibility': -0.9,              // High: Responsibility abandonment (reversed)
         'emotional_resilience': -0.8,        // Secondary: Extreme protective detachment (reversed)
-        'work_satisfaction': -0.8,           // Secondary: Complete disengagement (reversed)
+        'achievement_motivation': -0.8,           // Secondary: Complete disengagement (reversed)
         'values': -0.7,                      // Secondary: Values betrayal (reversed)
         'depression': 0.6,                   // Secondary: Depressive apathy
         'vulnerability': 0.5,                // Secondary: Emotional shutdown
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.5,
       },
       note: 'Extreme apathy: severe empathy loss + altruism loss + disconnection + responsibility abandonment',
@@ -270,7 +268,7 @@ class BurnoutDiagnosticWeights {
         'values': -0.7,                      // Secondary: Ethical disconnect (reversed)
         'anxiety': 0.6,                      // Secondary: Underlying anxiety
         'vulnerability': 0.5,                // Secondary: Emotional protection
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.5,
         'judging': 0.2,
       },
@@ -290,9 +288,9 @@ class BurnoutDiagnosticWeights {
         'emotional_reactivity': 0.7,         // Secondary: Heightened reactivity
         'composure': -0.7,                   // Secondary: Lost composure (reversed)
         'anxiety': 0.6,                      // Secondary: Underlying stress
-        'work_satisfaction': -0.6,           // Secondary: Job dissatisfaction (reversed)
+        'achievement_motivation': -0.6,           // Secondary: Job dissatisfaction (reversed)
         'gregariousness': -0.5,              // Secondary: Social withdrawal (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
         'introversion': 0.2,
       },
@@ -313,8 +311,8 @@ class BurnoutDiagnosticWeights {
         'altruism': -0.7,                    // Secondary: Lost kindness (reversed)
         'anxiety': 0.6,                      // Secondary: Defensive anxiety
         'anger': 0.6,                        // Secondary: Irritability
-        'work_satisfaction': -0.5,           // Secondary: Job dissatisfaction (reversed)
-        // MBTI personality type scales
+        'achievement_motivation': -0.5,           // Secondary: Job dissatisfaction (reversed)
+        // Personality Type personality type scales
         'thinking': 0.4,
       },
       note: 'Communication coldness: warmth loss + empathy loss + rudeness + degraded communication',
@@ -326,16 +324,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q37',
       axisWeights: {
-        'work_satisfaction': -1.3,           // Primary: Complete work disengagement (reversed)
+        'achievement_motivation': -1.3,           // Primary: Complete work disengagement (reversed)
         'achievement_striving': -1.1,        // Primary: Lost achievement drive (reversed)
         'responsibility': -1.0,              // High: Responsibility abandonment (reversed)
-        'motivation': -0.9,                  // High: Lost motivation (reversed)
+        'intrinsic_motivation': -0.9,                  // High: Lost motivation (reversed)
         'empathy': -0.8,                     // Secondary: Lost caring (reversed)
         'depression': 0.7,                   // Secondary: Depressive apathy
         'values': -0.7,                      // Secondary: Values disconnect (reversed)
         'diligence': -0.6,                   // Secondary: Lost work ethic (reversed)
         'emotional_resilience': -0.6,        // Secondary: Protective detachment (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
         'perceiving': 0.3,
       },
@@ -357,7 +355,7 @@ class BurnoutDiagnosticWeights {
         'anxiety': 0.6,                      // Secondary: Empathy avoidance anxiety
         'social_perception': -0.6,           // Secondary: Reduced perspective-taking (reversed)
         'boundary_setting': -0.5,            // Secondary: Poor emotional boundaries (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.4,
         'introversion': 0.2,
       },
@@ -378,8 +376,8 @@ class BurnoutDiagnosticWeights {
         'values': -0.8,                      // Secondary: Ethical disconnect (reversed)
         'politeness': -0.7,                  // Secondary: Lost courtesy (reversed)
         'anxiety': 0.7,                      // Secondary: Underlying anxiety
-        'work_satisfaction': -0.6,           // Secondary: Job dissatisfaction (reversed)
-        // MBTI personality type scales
+        'achievement_motivation': -0.6,           // Secondary: Job dissatisfaction (reversed)
+        // Personality Type personality type scales
         'thinking': 0.5,
         'judging': 0.3,
       },
@@ -403,10 +401,10 @@ class BurnoutDiagnosticWeights {
         'self_efficacy': -0.8,               // High: Confidence loss (reversed)
         'attention_control': -0.7,           // Secondary: Focus issues (reversed)
         'vitality': -0.7,                    // Secondary: Energy depletion (reversed)
-        'motivation': -0.6,                  // Secondary: Lost drive (reversed)
-        'work_satisfaction': -0.6,           // Secondary: Job dissatisfaction (reversed)
+        'intrinsic_motivation': -0.6,                  // Secondary: Lost drive (reversed)
+        'achievement_motivation': -0.6,           // Secondary: Job dissatisfaction (reversed)
         'self_esteem': -0.5,                 // Secondary: Self-worth impact (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Productivity decline: achievement decline + competence loss + diligence reduction + low energy',
@@ -418,16 +416,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q10',
       axisWeights: {
-        'work_satisfaction': -1.2,           // Primary: Work meaninglessness (reversed)
+        'achievement_motivation': -1.2,           // Primary: Work meaninglessness (reversed)
         'values': -1.0,                      // Primary: Values disconnect (reversed)
         'self_esteem': -0.9,                 // High: Self-worth loss (reversed)
-        'motivation': -0.8,                  // Secondary: Lost motivation (reversed)
+        'intrinsic_motivation': -0.8,                  // Secondary: Lost motivation (reversed)
         'depression': 0.7,                   // Secondary: Existential depression
         'life_satisfaction': -0.7,           // Secondary: Life dissatisfaction (reversed)
         'achievement_striving': -0.6,        // Secondary: Goal pursuit decline (reversed)
         'self_efficacy': -0.6,               // Secondary: Confidence loss (reversed)
-        'purpose': -0.6,                     // Secondary: Lost sense of purpose (reversed)
-        // MBTI personality type scales
+        'meaning_purpose': -0.6,                     // Secondary: Lost sense of purpose (reversed)
+        // Personality Type personality type scales
         'feeling': 0.3,
         'perceiving': 0.2,
       },
@@ -449,7 +447,7 @@ class BurnoutDiagnosticWeights {
         'vulnerability': 0.6,                // Secondary: Emotional vulnerability
         'depression': 0.6,                   // Secondary: Depressive self-view
         'stress_tolerance': -0.5,            // Secondary: Stress capacity (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'perceiving': 0.3,
       },
@@ -470,8 +468,8 @@ class BurnoutDiagnosticWeights {
         'self_esteem': 0.6,                  // Secondary: Self-worth (REVERSED)
         'attention_control': 0.6,            // Secondary: Focus (REVERSED)
         'emotional_resilience': 0.5,         // Secondary: Resilience (REVERSED)
-        'work_satisfaction': 0.5,            // Secondary: Job satisfaction (REVERSED)
-        // MBTI personality type scales
+        'achievement_motivation': 0.5,            // Secondary: Job satisfaction (REVERSED)
+        // Personality Type personality type scales
         'thinking': 0.3,
         'judging': 0.3,
       },
@@ -487,13 +485,13 @@ class BurnoutDiagnosticWeights {
         'achievement_striving': -1.1,        // Primary: Achievement devaluation (reversed)
         'self_esteem': -1.0,                 // Primary: Self-worth decline (reversed)
         'self_efficacy': -0.9,               // High: Confidence loss (reversed)
-        'work_satisfaction': -0.8,           // Secondary: Job dissatisfaction (reversed)
+        'achievement_motivation': -0.8,           // Secondary: Job dissatisfaction (reversed)
         'depression': 0.7,                   // Secondary: Depressive self-view
         'values': -0.6,                      // Secondary: Values disconnect (reversed)
-        'motivation': -0.6,                  // Secondary: Lost motivation (reversed)
+        'intrinsic_motivation': -0.6,                  // Secondary: Lost motivation (reversed)
         'life_satisfaction': -0.5,           // Secondary: Life dissatisfaction (reversed)
-        'purpose': -0.5,                     // Secondary: Lost purpose (reversed)
-        // MBTI personality type scales
+        'meaning_purpose': -0.5,                     // Secondary: Lost purpose (reversed)
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Achievement devaluation: achievement decline + self-worth loss + confidence loss + depression',
@@ -507,14 +505,14 @@ class BurnoutDiagnosticWeights {
       axisWeights: {
         'self_esteem': 1.2,                  // Primary: Self-worth (REVERSED - positive)
         'achievement_striving': 1.0,         // Primary: Achievement pride (REVERSED)
-        'work_satisfaction': 1.0,            // High: Job satisfaction (REVERSED)
+        'achievement_motivation': 1.0,            // High: Job satisfaction (REVERSED)
         'self_efficacy': 0.8,                // Secondary: Confidence (REVERSED)
-        'motivation': 0.7,                   // Secondary: Work motivation (REVERSED)
+        'intrinsic_motivation': 0.7,                   // Secondary: Work motivation (REVERSED)
         'values': 0.7,                       // Secondary: Values alignment (REVERSED)
         'life_satisfaction': 0.6,            // Secondary: Overall satisfaction (REVERSED)
-        'purpose': 0.6,                      // Secondary: Sense of purpose (REVERSED)
+        'meaning_purpose': 0.6,                      // Secondary: Sense of purpose (REVERSED)
         'emotional_resilience': 0.5,         // Secondary: Resilience (REVERSED)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
         'judging': 0.2,
       },
@@ -532,11 +530,11 @@ class BurnoutDiagnosticWeights {
         'diligence': 0.9,                    // High: Work quality (REVERSED)
         'self_efficacy': 0.8,                // Secondary: Confidence (REVERSED)
         'responsibility': 0.7,               // Secondary: Duty fulfillment (REVERSED)
-        'work_satisfaction': 0.7,            // Secondary: Job satisfaction (REVERSED)
+        'achievement_motivation': 0.7,            // Secondary: Job satisfaction (REVERSED)
         'organization': 0.6,                 // Secondary: Structure (REVERSED)
         'attention_control': 0.5,            // Secondary: Focus (REVERSED)
         'self_esteem': 0.5,                  // Secondary: Self-worth (REVERSED)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Task effectiveness (REVERSED): high competence + achievement + diligence + responsibility',
@@ -552,12 +550,12 @@ class BurnoutDiagnosticWeights {
         'self_efficacy': 1.2,                // Primary: Confidence (REVERSED)
         'self_esteem': 1.0,                  // High: Self-worth (REVERSED)
         'achievement_striving': 0.8,         // Secondary: Achievement drive (REVERSED)
-        'work_satisfaction': 0.8,            // Secondary: Job satisfaction (REVERSED)
+        'achievement_motivation': 0.8,            // Secondary: Job satisfaction (REVERSED)
         'diligence': 0.7,                    // Secondary: Work quality (REVERSED)
         'emotional_resilience': 0.6,         // Secondary: Resilience (REVERSED)
         'values': 0.6,                       // Secondary: Values alignment (REVERSED)
-        'purpose': 0.5,                      // Secondary: Sense of purpose (REVERSED)
-        // MBTI personality type scales
+        'meaning_purpose': 0.5,                      // Secondary: Sense of purpose (REVERSED)
+        // Personality Type personality type scales
         'thinking': 0.3,
         'judging': 0.3,
       },
@@ -580,11 +578,11 @@ class BurnoutDiagnosticWeights {
         'stress_tolerance': -0.9,            // High: Depleted stress capacity (reversed)
         'depression': 0.7,                   // Secondary: Depressive fatigue
         'emotional_resilience': -0.7,        // Secondary: Recovery failure (reversed)
-        'health_consciousness': 0.6,         // Secondary: Awareness of symptoms
+        'prudence': 0.6,         // Secondary: Awareness of symptoms
         'anxiety': 0.6,                      // Secondary: Fatigue-related anxiety
         'self_compassion': -0.5,             // Secondary: Ignoring body signals (reversed)
-        'work_satisfaction': -0.5,           // Secondary: Work-related exhaustion (reversed)
-        // MBTI personality type scales
+        'achievement_motivation': -0.5,           // Secondary: Work-related exhaustion (reversed)
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Chronic fatigue: vitality depletion + vulnerability + stress intolerance + recovery failure',
@@ -603,9 +601,9 @@ class BurnoutDiagnosticWeights {
         'depression': 0.7,                   // Secondary: Sleep-related depression
         'rumination': 0.7,                   // Secondary: Pre-sleep rumination
         'emotional_resilience': -0.6,        // Secondary: Recovery failure (reversed)
-        'health_consciousness': 0.6,         // Secondary: Awareness of sleep issues
+        'prudence': 0.6,         // Secondary: Awareness of sleep issues
         'boundary_setting': -0.5,            // Secondary: Work-life boundaries (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Sleep disturbance: vulnerability + anxiety + stress impact + rumination + energy depletion',
@@ -621,12 +619,12 @@ class BurnoutDiagnosticWeights {
         'stress_tolerance': -0.9,            // High: Stress-related pain (reversed)
         'anxiety': 0.8,                      // Secondary: Tension-related pain
         'vitality': -0.7,                    // Secondary: Energy depletion (reversed)
-        'health_consciousness': 0.6,         // Secondary: Awareness of symptoms
+        'prudence': 0.6,         // Secondary: Awareness of symptoms
         'self_compassion': -0.6,             // Secondary: Ignoring pain signals (reversed)
         'body_image': 0.5,                   // Secondary: Body awareness
         'emotional_resilience': -0.5,        // Secondary: Stress manifestation (reversed)
         'boundary_setting': -0.4,            // Moderate: Work overload (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.4,
       },
       note: 'Musculoskeletal pain: vulnerability + stress impact + anxiety + energy depletion + poor self-care',
@@ -641,13 +639,13 @@ class BurnoutDiagnosticWeights {
         'vulnerability': 1.3,                // Primary: Immune vulnerability
         'stress_tolerance': -1.0,            // Primary: Chronic stress impact (reversed)
         'vitality': -0.8,                    // Secondary: Energy depletion (reversed)
-        'health_consciousness': 0.7,         // Secondary: Awareness of health decline
+        'prudence': 0.7,         // Secondary: Awareness of health decline
         'emotional_resilience': -0.7,        // Secondary: Resilience depletion (reversed)
         'self_compassion': -0.6,             // Secondary: Poor self-care (reversed)
         'anxiety': 0.6,                      // Secondary: Health anxiety
         'depression': 0.5,                   // Secondary: Immune-mood connection
         'boundary_setting': -0.5,            // Secondary: Overwork impact (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Immune suppression: severe vulnerability + chronic stress + energy depletion + poor resilience',
@@ -664,11 +662,11 @@ class BurnoutDiagnosticWeights {
         'stress_tolerance': -0.9,            // High: Stress-related symptoms (reversed)
         'vitality': -0.7,                    // Secondary: Energy impact (reversed)
         'emotional_reactivity': 0.7,         // Secondary: Somatic reactivity
-        'health_consciousness': 0.6,         // Secondary: Symptom awareness
+        'prudence': 0.6,         // Secondary: Symptom awareness
         'depression': 0.6,                   // Secondary: Depression-GI link
         'self_compassion': -0.5,             // Secondary: Poor self-care (reversed)
         'emotional_resilience': -0.5,        // Secondary: Stress manifestation (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
         'sensing': 0.2,
       },
@@ -687,10 +685,10 @@ class BurnoutDiagnosticWeights {
         'stress_tolerance': -0.8,            // Secondary: Stress impact (reversed)
         'vitality': -0.7,                    // Secondary: Energy dysregulation (reversed)
         'self_compassion': -0.6,             // Secondary: Poor self-care (reversed)
-        'health_consciousness': 0.6,         // Secondary: Awareness of changes
+        'prudence': 0.6,         // Secondary: Awareness of changes
         'emotional_reactivity': 0.5,         // Secondary: Emotional eating/suppression
         'body_image': 0.5,                   // Secondary: Body awareness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Appetite dysregulation: vulnerability + depression + anxiety + stress impact + poor self-care',
@@ -706,12 +704,12 @@ class BurnoutDiagnosticWeights {
         'anxiety': 1.1,                      // Primary: Cardiovascular anxiety
         'stress_tolerance': -1.0,            // High: Chronic stress impact (reversed)
         'vitality': -0.8,                    // Secondary: Energy/health depletion (reversed)
-        'health_consciousness': 0.8,         // Secondary: Critical awareness
+        'prudence': 0.8,         // Secondary: Critical awareness
         'emotional_resilience': -0.7,        // Secondary: Stress manifestation (reversed)
         'self_compassion': -0.6,             // Secondary: Severe self-neglect (reversed)
         'depression': 0.6,                   // Secondary: Depression-cardiovascular link
         'boundary_setting': -0.5,            // Secondary: Extreme overwork (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.4,
       },
       note: 'Cardiovascular symptoms: severe vulnerability + anxiety + chronic stress + health crisis awareness',
@@ -736,8 +734,8 @@ class BurnoutDiagnosticWeights {
         'depression': 0.6,                   // Secondary: Depressive concentration loss
         'competence': -0.6,                  // Secondary: Self-efficacy impact (reversed)
         'cognitive_flexibility': -0.5,       // Secondary: Mental rigidity (reversed)
-        'work_satisfaction': -0.5,           // Secondary: Work disengagement (reversed)
-        // MBTI personality type scales
+        'achievement_motivation': -0.5,           // Secondary: Work disengagement (reversed)
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Attention deficit: focus impairment + energy depletion + anxiety + rumination + depression',
@@ -758,7 +756,7 @@ class BurnoutDiagnosticWeights {
         'diligence': -0.6,                   // Secondary: Work quality decline (reversed)
         'self_esteem': -0.6,                 // Secondary: Self-worth impact (reversed)
         'depression': 0.5,                   // Secondary: Depressive impact
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Error increase: focus impairment + competence decline + anxiety + confidence loss + energy depletion',
@@ -779,7 +777,7 @@ class BurnoutDiagnosticWeights {
         'attention_control': -0.7,           // Secondary: Focus issues (reversed)
         'vulnerability': 0.6,                // Secondary: Emotional vulnerability
         'rumination': 0.6,                   // Secondary: Overthinking
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
         'feeling': 0.3,
       },
@@ -801,7 +799,7 @@ class BurnoutDiagnosticWeights {
         'competence': -0.6,                  // Secondary: Performance impact (reversed)
         'rumination': 0.6,                   // Secondary: Mental overload
         'self_efficacy': -0.5,               // Secondary: Confidence impact (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
       },
       note: 'Memory impairment: attention/memory loss + energy depletion + stress + anxiety + depression',
@@ -822,7 +820,7 @@ class BurnoutDiagnosticWeights {
         'stress_tolerance': -0.6,            // Secondary: Cognitive stress (reversed)
         'competence': -0.6,                  // Secondary: Professional impact (reversed)
         'rumination': 0.5,                   // Secondary: Mental distraction
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Processing difficulty: attention impairment + processing slowdown + energy loss + anxiety + depression',
@@ -843,7 +841,7 @@ class BurnoutDiagnosticWeights {
         'processing_speed': 0.6,             // Secondary: Processing efficiency (REVERSED)
         'stress_tolerance': 0.6,             // Secondary: Stress capacity (REVERSED)
         'diligence': 0.5,                    // Secondary: Work quality (REVERSED)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.4,
         'judging': 0.2,
       },
@@ -865,7 +863,7 @@ class BurnoutDiagnosticWeights {
         'competence': -0.7,                  // Secondary: Performance impact (reversed)
         'depression': 0.6,                   // Secondary: Depressive cognitive impact
         'processing_speed': -0.6,            // Secondary: Processing slowdown (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Multitasking deficit: working memory overload + attention fragmentation + energy loss + stress',
@@ -882,16 +880,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q6',
       axisWeights: {
-        'motivation': -1.3,                  // Primary: Lost work motivation (reversed)
-        'work_satisfaction': -1.2,           // Primary: Job dissatisfaction (reversed)
+        'intrinsic_motivation': -1.3,                  // Primary: Lost work motivation (reversed)
+        'achievement_motivation': -1.2,           // Primary: Job dissatisfaction (reversed)
         'depression': 0.9,                   // High: Depressive anhedonia
         'achievement_striving': -0.8,        // Secondary: Lost achievement drive (reversed)
         'vitality': -0.8,                    // Secondary: Energy depletion (reversed)
         'values': -0.7,                      // Secondary: Values disconnect (reversed)
-        'purpose': -0.7,                     // Secondary: Lost purpose (reversed)
+        'meaning_purpose': -0.7,                     // Secondary: Lost purpose (reversed)
         'emotional_resilience': -0.6,        // Secondary: Resilience depletion (reversed)
         'life_satisfaction': -0.5,           // Secondary: Life dissatisfaction (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
         'perceiving': 0.2,
       },
@@ -904,16 +902,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q13',
       axisWeights: {
-        'work_satisfaction': -1.4,           // Primary: Extreme job dissatisfaction (reversed)
-        'motivation': -1.2,                  // Primary: Lost work motivation (reversed)
+        'achievement_motivation': -1.4,           // Primary: Extreme job dissatisfaction (reversed)
+        'intrinsic_motivation': -1.2,                  // Primary: Lost work motivation (reversed)
         'values': -1.0,                      // High: Values disconnect (reversed)
         'depression': 0.9,                   // High: Depressive escape thoughts
-        'purpose': -0.8,                     // Secondary: Lost career purpose (reversed)
+        'meaning_purpose': -0.8,                     // Secondary: Lost career purpose (reversed)
         'life_satisfaction': -0.7,           // Secondary: Life dissatisfaction (reversed)
         'anxiety': 0.7,                      // Secondary: Career anxiety
-        'avoidance': 0.7,                    // Secondary: Avoidance motivation
+        'avoidant_coping': 0.7,                    // Secondary: Avoidance motivation
         'emotional_resilience': -0.6,        // Secondary: Resilience depletion (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Career escape ideation: extreme dissatisfaction + motivation loss + values disconnect + depression',
@@ -925,16 +923,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q20',
       axisWeights: {
-        'purpose': -1.4,                     // Primary: Complete purpose loss (reversed)
+        'meaning_purpose': -1.4,                     // Primary: Complete purpose loss (reversed)
         'values': -1.3,                      // Primary: Values disconnect (reversed)
-        'work_satisfaction': -1.2,           // Primary: Work meaninglessness (reversed)
+        'achievement_motivation': -1.2,           // Primary: Work meaninglessness (reversed)
         'depression': 1.0,                   // High: Existential depression
-        'motivation': -0.9,                  // High: Lost motivation (reversed)
+        'intrinsic_motivation': -0.9,                  // High: Lost motivation (reversed)
         'life_satisfaction': -0.8,           // Secondary: Life dissatisfaction (reversed)
         'self_esteem': -0.7,                 // Secondary: Self-worth decline (reversed)
         'emotional_resilience': -0.7,        // Secondary: Resilience loss (reversed)
         'achievement_striving': -0.6,        // Secondary: Goal pursuit decline (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'intuition': 0.3,
       },
@@ -948,15 +946,15 @@ class BurnoutDiagnosticWeights {
       questionId: 'q27',
       axisWeights: {
         'depression': 1.2,                   // Primary: Depressive morning dread
-        'work_satisfaction': -1.1,           // Primary: Job dissatisfaction (reversed)
-        'motivation': -1.0,                  // High: Lost motivation (reversed)
+        'achievement_motivation': -1.1,           // Primary: Job dissatisfaction (reversed)
+        'intrinsic_motivation': -1.0,                  // High: Lost motivation (reversed)
         'vitality': -0.9,                    // High: Energy depletion (reversed)
         'anxiety': 0.8,                      // Secondary: Anticipatory anxiety
-        'purpose': -0.7,                     // Secondary: Lost purpose (reversed)
-        'avoidance': 0.7,                    // Secondary: Work avoidance
+        'meaning_purpose': -0.7,                     // Secondary: Lost purpose (reversed)
+        'avoidant_coping': 0.7,                    // Secondary: Work avoidance
         'emotional_resilience': -0.6,        // Secondary: Resilience depletion (reversed)
         'life_satisfaction': -0.6,           // Secondary: Life dissatisfaction (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Morning dread: depression + work dissatisfaction + motivation loss + anxiety + energy depletion',
@@ -969,15 +967,15 @@ class BurnoutDiagnosticWeights {
       questionId: 'q34',
       axisWeights: {
         'values': -1.4,                      // Primary: Deep values disconnect (reversed)
-        'work_satisfaction': -1.3,           // Primary: Career dissatisfaction (reversed)
-        'purpose': -1.2,                     // Primary: Lost career purpose (reversed)
+        'achievement_motivation': -1.3,           // Primary: Career dissatisfaction (reversed)
+        'meaning_purpose': -1.2,                     // Primary: Lost career purpose (reversed)
         'depression': 1.0,                   // High: Depressive regret
         'self_esteem': -0.9,                 // High: Self-worth impact (reversed)
-        'motivation': -0.8,                  // Secondary: Lost motivation (reversed)
+        'intrinsic_motivation': -0.8,                  // Secondary: Lost motivation (reversed)
         'life_satisfaction': -0.8,           // Secondary: Life dissatisfaction (reversed)
         'anxiety': 0.7,                      // Secondary: Career anxiety
         'self_acceptance': -0.6,             // Secondary: Self-judgment (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'perceiving': 0.2,
       },
@@ -990,16 +988,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q41',
       axisWeights: {
-        'work_satisfaction': -1.3,           // Primary: Work aversion (reversed)
-        'motivation': -1.1,                  // Primary: Lost motivation (reversed)
-        'avoidance': 0.9,                    // High: Avoidance motivation
+        'achievement_motivation': -1.3,           // Primary: Work aversion (reversed)
+        'intrinsic_motivation': -1.1,                  // Primary: Lost motivation (reversed)
+        'avoidant_coping': 0.9,                    // High: Avoidance motivation
         'vitality': -0.8,                    // Secondary: Energy depletion (reversed)
         'depression': 0.7,                   // Secondary: Depressive escape ideation
-        'purpose': -0.7,                     // Secondary: Lost purpose (reversed)
+        'meaning_purpose': -0.7,                     // Secondary: Lost purpose (reversed)
         'anxiety': 0.6,                      // Secondary: Work stress
         'emotional_resilience': -0.6,        // Secondary: Resilience depletion (reversed)
         'boundary_setting': -0.5,            // Secondary: Work-life imbalance (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Work aversion: work dissatisfaction + motivation loss + avoidance + energy depletion + depression',
@@ -1012,15 +1010,15 @@ class BurnoutDiagnosticWeights {
       questionId: 'q48',
       axisWeights: {
         'procrastination': 1.2,              // Primary: Active procrastination
-        'motivation': -1.1,                  // Primary: Lost work motivation (reversed)
-        'avoidance': 1.0,                    // High: Task avoidance
-        'work_satisfaction': -0.9,           // High: Job dissatisfaction (reversed)
+        'intrinsic_motivation': -1.1,                  // Primary: Lost work motivation (reversed)
+        'avoidant_coping': 1.0,                    // High: Task avoidance
+        'achievement_motivation': -0.9,           // High: Job dissatisfaction (reversed)
         'self_discipline': -0.8,             // Secondary: Self-control failure (reversed)
         'anxiety': 0.7,                      // Secondary: Performance anxiety
         'depression': 0.7,                   // Secondary: Depressive avoidance
         'achievement_striving': -0.6,        // Secondary: Goal pursuit decline (reversed)
         'vitality': -0.6,                    // Secondary: Energy depletion (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'perceiving': 0.4,
       },
       note: 'Work procrastination: procrastination + motivation loss + avoidance + work dissatisfaction + anxiety',
@@ -1038,15 +1036,15 @@ class BurnoutDiagnosticWeights {
       questionId: 'q7',
       axisWeights: {
         'boundary_setting': -1.0,            // Primary: Work-life boundaries (reversed at high)
-        'time_management': -0.8,             // Secondary: Time control (reversed)
+        'organization': -0.8,             // Secondary: Time control (reversed)
         'vitality': -0.7,                    // Secondary: Energy depletion (reversed)
         'stress_tolerance': -0.7,            // Secondary: Stress exposure (reversed)
-        'work_satisfaction': -0.6,           // Secondary: Overwork dissatisfaction (reversed)
-        'health_consciousness': -0.5,        // Secondary: Health neglect (reversed)
+        'achievement_motivation': -0.6,           // Secondary: Overwork dissatisfaction (reversed)
+        'prudence': -0.5,        // Secondary: Health neglect (reversed)
         'self_compassion': -0.5,             // Secondary: Self-care neglect (reversed)
         'vulnerability': 0.4,                // Moderate: Physical vulnerability
         'anxiety': 0.4,                      // Moderate: Work stress
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.3,
       },
       note: 'Work hours volume: poor boundaries + time control loss + energy depletion + stress exposure',
@@ -1059,15 +1057,15 @@ class BurnoutDiagnosticWeights {
       questionId: 'q14',
       axisWeights: {
         'boundary_setting': -1.1,            // Primary: Work-life boundaries (reversed)
-        'time_management': -0.8,             // Secondary: Time control (reversed)
+        'organization': -0.8,             // Secondary: Time control (reversed)
         'vitality': -0.7,                    // Secondary: Recovery time loss (reversed)
-        'work_satisfaction': -0.7,           // Secondary: Work encroachment (reversed)
+        'achievement_motivation': -0.7,           // Secondary: Work encroachment (reversed)
         'stress_tolerance': -0.6,            // Secondary: Stress accumulation (reversed)
         'self_compassion': -0.6,             // Secondary: Self-care neglect (reversed)
         'life_satisfaction': -0.5,           // Secondary: Life balance (reversed)
         'emotional_resilience': -0.5,        // Secondary: Recovery failure (reversed)
-        'health_consciousness': -0.4,        // Moderate: Health neglect (reversed)
-        // MBTI personality type scales
+        'prudence': -0.4,        // Moderate: Health neglect (reversed)
+        // Personality Type personality type scales
         'judging': 0.3,
       },
       note: 'Weekend work: poor boundaries + time control loss + recovery deprivation + self-care neglect',
@@ -1081,14 +1079,14 @@ class BurnoutDiagnosticWeights {
       axisWeights: {
         'autonomy_need': 1.0,                // Primary: Work autonomy (REVERSED - positive)
         'environmental_mastery': 0.9,        // Primary: Control over environment (REVERSED)
-        'work_satisfaction': 0.8,            // High: Job satisfaction (REVERSED)
+        'achievement_motivation': 0.8,            // High: Job satisfaction (REVERSED)
         'self_efficacy': 0.7,                // Secondary: Confidence (REVERSED)
         'stress_tolerance': 0.6,             // Secondary: Stress capacity (REVERSED)
-        'motivation': 0.6,                   // Secondary: Work motivation (REVERSED)
+        'intrinsic_motivation': 0.6,                   // Secondary: Work motivation (REVERSED)
         'competence': 0.5,                   // Secondary: Professional efficacy (REVERSED)
         'emotional_resilience': 0.5,         // Secondary: Resilience (REVERSED)
         'values': 0.4,                       // Moderate: Values alignment (REVERSED)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
         'judging': 0.2,
       },
@@ -1101,16 +1099,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q28',
       axisWeights: {
-        'work_satisfaction': 1.1,            // Primary: Job satisfaction (REVERSED - positive)
+        'achievement_motivation': 1.1,            // Primary: Job satisfaction (REVERSED - positive)
         'emotional_resilience': 0.9,         // High: Resilience through support (REVERSED)
         'self_esteem': 0.8,                  // Secondary: Self-worth via recognition (REVERSED)
         'stress_tolerance': 0.7,             // Secondary: Support buffer (REVERSED)
-        'motivation': 0.7,                   // Secondary: Motivated by recognition (REVERSED)
+        'intrinsic_motivation': 0.7,                   // Secondary: Motivated by recognition (REVERSED)
         'values': 0.6,                       // Secondary: Values alignment (REVERSED)
         'trust': 0.6,                        // Secondary: Trust in leadership (REVERSED)
         'anxiety': -0.5,                     // Secondary: Reduced anxiety (REVERSED - negative)
         'vulnerability': -0.4,               // Moderate: Reduced vulnerability (REVERSED - negative)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Management support (REVERSED): satisfaction + resilience + self-esteem + stress buffer + motivation',
@@ -1123,7 +1121,7 @@ class BurnoutDiagnosticWeights {
       questionId: 'q35',
       axisWeights: {
         'stress_tolerance': 1.0,             // Primary: Manageable stress (REVERSED - positive)
-        'work_satisfaction': 0.9,            // High: Job satisfaction (REVERSED)
+        'achievement_motivation': 0.9,            // High: Job satisfaction (REVERSED)
         'competence': 0.8,                   // Secondary: Efficacy match (REVERSED)
         'environmental_mastery': 0.7,        // Secondary: Control (REVERSED)
         'vitality': 0.7,                     // Secondary: Energy preservation (REVERSED)
@@ -1131,7 +1129,7 @@ class BurnoutDiagnosticWeights {
         'emotional_resilience': 0.6,         // Secondary: Resilience (REVERSED)
         'anxiety': -0.5,                     // Secondary: Reduced anxiety (REVERSED - negative)
         'boundary_setting': 0.4,             // Moderate: Good boundaries (REVERSED)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.3,
       },
       note: 'Workload fit (REVERSED): stress tolerance + satisfaction + competence match + energy preservation',
@@ -1148,11 +1146,11 @@ class BurnoutDiagnosticWeights {
         'anxiety': 0.8,                      // Secondary: Work-related anxiety
         'stress_tolerance': -0.7,            // Secondary: Continuous stress (reversed)
         'vitality': -0.7,                    // Secondary: Recovery deprivation (reversed)
-        'work_satisfaction': -0.6,           // Secondary: Work dissatisfaction (reversed)
+        'achievement_motivation': -0.6,           // Secondary: Work dissatisfaction (reversed)
         'emotional_resilience': -0.6,        // Secondary: No recovery time (reversed)
-        'time_management': -0.5,             // Secondary: Time control loss (reversed)
+        'organization': -0.5,             // Secondary: Time control loss (reversed)
         'life_satisfaction': -0.5,           // Secondary: Life encroachment (reversed)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.3,
       },
       note: 'Work intrusion: poor boundaries + rumination + anxiety + continuous stress + recovery loss',
@@ -1168,12 +1166,12 @@ class BurnoutDiagnosticWeights {
         'self_compassion': -0.8,             // High: Self-care neglect (reversed)
         'vitality': -0.7,                    // Secondary: Recovery deprivation (reversed)
         'emotional_resilience': -0.7,        // Secondary: No renewal time (reversed)
-        'health_consciousness': -0.6,        // Secondary: Health neglect (reversed)
-        'work_satisfaction': -0.6,           // Secondary: Overwork (reversed)
+        'prudence': -0.6,        // Secondary: Health neglect (reversed)
+        'achievement_motivation': -0.6,           // Secondary: Overwork (reversed)
         'stress_tolerance': -0.5,            // Secondary: Stress accumulation (reversed)
-        'time_management': -0.5,             // Secondary: Time control (reversed)
+        'organization': -0.5,             // Secondary: Time control (reversed)
         'vulnerability': 0.4,                // Moderate: Health vulnerability
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.2,
       },
       note: 'Vacation deprivation: poor boundaries + self-care neglect + recovery loss + stress accumulation',
@@ -1185,16 +1183,16 @@ class BurnoutDiagnosticWeights {
       testId: 'burnout_diagnostic_v1',
       questionId: 'q53',
       axisWeights: {
-        'work_satisfaction': 1.0,            // Primary: Job satisfaction (REVERSED - positive)
+        'achievement_motivation': 1.0,            // Primary: Job satisfaction (REVERSED - positive)
         'stress_tolerance': 0.9,             // High: Reduced stress (REVERSED)
         'competence': 0.8,                   // Secondary: Efficacy through support (REVERSED)
         'environmental_mastery': 0.7,        // Secondary: Control (REVERSED)
         'emotional_resilience': 0.7,         // Secondary: Resilience through resources (REVERSED)
         'self_efficacy': 0.6,                // Secondary: Confidence (REVERSED)
         'anxiety': -0.6,                     // Secondary: Reduced anxiety (REVERSED - negative)
-        'motivation': 0.5,                   // Secondary: Work motivation (REVERSED)
+        'intrinsic_motivation': 0.5,                   // Secondary: Work motivation (REVERSED)
         'trust': 0.4,                        // Moderate: Trust in organization (REVERSED)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.2,
       },
       note: 'Organizational resources (REVERSED): satisfaction + stress reduction + competence + resilience',
@@ -1207,15 +1205,15 @@ class BurnoutDiagnosticWeights {
       questionId: 'q54',
       axisWeights: {
         'values': 1.3,                       // Primary: Values alignment (REVERSED - positive)
-        'work_satisfaction': 1.2,            // Primary: Job satisfaction (REVERSED)
-        'purpose': 1.1,                      // Primary: Meaningful work (REVERSED)
-        'motivation': 0.9,                   // High: Work motivation (REVERSED)
+        'achievement_motivation': 1.2,            // Primary: Job satisfaction (REVERSED)
+        'meaning_purpose': 1.1,                      // Primary: Meaningful work (REVERSED)
+        'intrinsic_motivation': 0.9,                   // High: Work motivation (REVERSED)
         'life_satisfaction': 0.8,            // Secondary: Overall satisfaction (REVERSED)
         'emotional_resilience': 0.7,         // Secondary: Resilience through meaning (REVERSED)
         'self_esteem': 0.7,                  // Secondary: Self-worth (REVERSED)
         'achievement_striving': 0.6,         // Secondary: Goal pursuit (REVERSED)
         'trust': 0.5,                        // Secondary: Trust in organization (REVERSED)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
         'judging': 0.2,
       },
@@ -1293,7 +1291,7 @@ class BurnoutDiagnosticWeights {
     // ⭐ Openness (3): curiosity, openness_experience (via actions), intellectual_curiosity
     // ⭐ Wellbeing Factors (5): resilience_meta, optimism (via positive_emotions), hope (via purpose), happiness, meaning_purpose
     // ⭐ Work-Life Balance (2): work_life_balance (via boundary_setting), rest_recovery (via vitality)
-    // ⭐ MBTI Scales (8): thinking, feeling, extraversion, introversion, sensing, intuition, judging, perceiving
+    // ⭐ Personality Type Scales (8): thinking, feeling, extraversion, introversion, sensing, intuition, judging, perceiving
     // ⭐ Additional Burnout-Relevant (6): fear_of_failure, social_support_seeking, acceptance, persistence, time_pressure (via time_management), decision_making
     //
     // Psychological Construct Mapping (Maslach MBI + modern research):

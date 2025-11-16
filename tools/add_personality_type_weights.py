@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Script to add MBTI personality type weights to existing test question weights.
+Script to add Personality Type personality type weights to existing test question weights.
 
-Adds weights for 8 MBTI scales:
+Adds weights for 8 Personality Type scales:
 - extraversion / introversion
 - sensing / intuition
 - thinking / feeling
@@ -14,9 +14,9 @@ Weight range: 0.1-0.5 (flexible, based on question relevance)
 import re
 import sys
 
-# MBTI scale mapping logic
+# Personality Type scale mapping logic
 # Each entry: (keyword patterns, scale_id, weight)
-MBTI_MAPPINGS = {
+Personality Type_MAPPINGS = {
     # Extraversion / Introversion
     'extraversion': [
         (r'party|social|talk|people|outgoing|gregarious|lively|assertive|active|enthusiasm', 'extraversion', 0.4),
@@ -67,16 +67,16 @@ MBTI_MAPPINGS = {
 }
 
 
-def find_mbti_weights(question_text, comment_text):
+def find_personality_type_weights(question_text, comment_text):
     """
-    Analyze question and comment to determine relevant MBTI weights.
+    Analyze question and comment to determine relevant Personality Type weights.
 
     Returns: dict of {scale_id: weight}
     """
     combined_text = f"{question_text} {comment_text}".lower()
     weights = {}
 
-    for scale, patterns in MBTI_MAPPINGS.items():
+    for scale, patterns in Personality Type_MAPPINGS.items():
         for pattern, scale_id, weight in patterns:
             if re.search(pattern, combined_text, re.IGNORECASE):
                 # Use highest matching weight for this scale
@@ -87,9 +87,9 @@ def find_mbti_weights(question_text, comment_text):
     return weights
 
 
-def add_mbti_weights_to_file(filepath):
+def add_personality_type_weights_to_file(filepath):
     """
-    Read weights file, add MBTI weights to each question, write back.
+    Read weights file, add Personality Type weights to each question, write back.
     """
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -117,14 +117,14 @@ def add_mbti_weights_to_file(filepath):
 
         comment_text = ' '.join(comment_lines)
 
-        # Find MBTI weights for this question
-        mbti_weights = find_mbti_weights(comment_text, note_text)
+        # Find Personality Type weights for this question
+        personality_type_weights = find_personality_type_weights(comment_text, note_text)
 
-        if not mbti_weights:
-            # No relevant MBTI weights found
+        if not personality_type_weights:
+            # No relevant Personality Type weights found
             return match.group(0)
 
-        # Add MBTI weights to existing weights
+        # Add Personality Type weights to existing weights
         # Parse existing weights to find last weight line
         existing_lines = existing_weights.strip().split('\n')
 
@@ -132,14 +132,14 @@ def add_mbti_weights_to_file(filepath):
         if existing_lines and existing_lines[-1].rstrip().endswith(','):
             existing_lines[-1] = existing_lines[-1].rstrip()[:-1] + ','
 
-        # Add MBTI weights section
-        mbti_lines = []
-        mbti_lines.append("        // MBTI personality type scales")
-        for scale_id, weight in sorted(mbti_weights.items()):
-            mbti_lines.append(f"        '{scale_id}': {weight},")
+        # Add Personality Type weights section
+        personality_type_lines = []
+        personality_type_lines.append("        // Personality Type personality type scales")
+        for scale_id, weight in sorted(personality_type_weights.items()):
+            personality_type_lines.append(f"        '{scale_id}': {weight},")
 
         # Combine
-        new_weights = '\n'.join(existing_lines) + '\n' + '\n'.join(mbti_lines) + '\n      '
+        new_weights = '\n'.join(existing_lines) + '\n' + '\n'.join(personality_type_lines) + '\n      '
 
         return prefix + new_weights + suffix
 
@@ -153,14 +153,14 @@ def add_mbti_weights_to_file(filepath):
     print(f"✅ Updated {filepath}")
 
     # Count how many questions were updated
-    mbti_count = updated_content.count("// MBTI personality type scales")
-    print(f"   Added MBTI weights to {mbti_count} questions")
+    personality_type_count = updated_content.count("// Personality Type personality type scales")
+    print(f"   Added Personality Type weights to {personality_type_count} questions")
 
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print("Usage: python add_mbti_weights.py <weights_file.dart>")
+        print("Usage: python add_personality_type_weights.py <weights_file.dart>")
         sys.exit(1)
 
     filepath = sys.argv[1]
-    add_mbti_weights_to_file(filepath)
+    add_personality_type_weights_to_file(filepath)

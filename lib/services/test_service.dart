@@ -8,6 +8,7 @@ import '../data/sixteen_types_data.dart';
 import '../data/temperament_profile_test_data.dart';
 import '../data/digital_detox_data.dart' as digital_detox;
 import '../data/burnout_diagnostic_data.dart' as burnout;
+import '../data/social_battery_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -52,7 +53,7 @@ class TestService {
     // For multi-factor tests
     if (test.type == TestType.multiFactor && test.factorIds != null) {
       appLogger.d('Multi-factor test detected');
-      // Bipolar tests (16 personality types / MBTI-style)
+      // Bipolar tests (16 personality types / Personality Type-style)
       if (test.isBipolar && test.bipolarDimensions != null) {
         appLogger.d('Calling _completeBipolarTest()');
         return _completeBipolarTest(test, answers, languageCode);
@@ -168,7 +169,7 @@ class TestService {
             answerScore.toDouble(),
             minAnswerScore.toDouble(), // Pass min score for proper normalization
             maxAnswerScore.toDouble(),
-            weight,
+            weight.abs(), // Use absolute value - direction is handled separately
             question,
             answerScore,
             direction, // Pass direction (1 = direct, -1 = inverted)
@@ -214,6 +215,9 @@ class TestService {
     } else if (test.id == 'burnout_diagnostic_v1') {
       factorNames = burnout.BurnoutDiagnosticData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'social_battery_v1') {
+      factorNames = SocialBatteryData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
@@ -250,6 +254,11 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             burnout.BurnoutDiagnosticData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'social_battery_v1') {
+        // For Social Battery test use percentage-based interpretation
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            SocialBatteryData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }
@@ -347,7 +356,7 @@ class TestService {
             answerScore.toDouble(),
             minAnswerScore.toDouble(), // Pass min score for proper normalization
             maxAnswerScore.toDouble(),
-            weight,
+            weight.abs(), // Use absolute value - direction is handled separately
             question,
             answerScore,
             direction, // Pass direction (1 = direct, -1 = inverted)
@@ -398,7 +407,7 @@ class TestService {
     return result;
   }
 
-  /// Completes a bipolar test (16 personality types / MBTI-style)
+  /// Completes a bipolar test (16 personality types / Personality Type-style)
   /// Now uses 8 unipolar scales instead of 4 bipolar scales for better granularity
   Future<TestResult> _completeBipolarTest(
     TestModel test,
@@ -538,10 +547,10 @@ class TestService {
     const WEAK_THRESHOLD = 10.0; // Threshold for weak manifestation
 
     final dimensionMapping = {
-      'mbti_ei': 'EI',
-      'mbti_sn': 'SN',
-      'mbti_tf': 'TF',
-      'mbti_jp': 'JP',
+      'personality_type_ei': 'EI',
+      'personality_type_sn': 'SN',
+      'personality_type_tf': 'TF',
+      'personality_type_jp': 'JP',
     };
 
     for (final entry in dimensionMapping.entries) {

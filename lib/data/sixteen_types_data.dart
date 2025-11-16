@@ -1,7 +1,7 @@
 import '../models/test_model.dart';
 
 /// Test data for 16 Personality Types (based on Jung's typology)
-/// IMPORTANT: Never use "MBTI" trademark - use "16 Personality Types" instead
+/// IMPORTANT: Never use trademarked terms - use "16 Personality Types" instead
 class SixteenTypesData {
   static TestModel getSixteenTypesTest() {
     return TestModel(
@@ -23,7 +23,7 @@ class SixteenTypesData {
       type: TestType.multiFactor,
       isBipolar: true,
       factorIds: ['EI', 'SN', 'TF', 'JP'],
-      bipolarDimensions: ['mbti_ei', 'mbti_sn', 'mbti_tf', 'mbti_jp'],
+      bipolarDimensions: ['personality_type_ei', 'personality_type_sn', 'personality_type_tf', 'personality_type_jp'],
       disclaimer: {
         'ru': '''Этот тест основан на концепции психологических типов К.Г. Юнга и помогает лучше понять свои предпочтения в восприятии мира и принятии решений.
 
@@ -84,7 +84,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
       QuestionModel(
@@ -95,7 +95,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
       QuestionModel(
@@ -106,7 +106,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
 
@@ -119,7 +119,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
       QuestionModel(
@@ -130,7 +130,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
       QuestionModel(
@@ -141,7 +141,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
 
@@ -154,7 +154,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
       QuestionModel(
@@ -165,7 +165,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
 
@@ -178,7 +178,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
       QuestionModel(
@@ -189,7 +189,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
 
@@ -202,7 +202,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
 
@@ -215,7 +215,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
 
@@ -228,7 +228,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
 
@@ -241,7 +241,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
 
@@ -254,7 +254,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
 
@@ -267,7 +267,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
 
@@ -280,7 +280,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
 
@@ -293,7 +293,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
 
@@ -306,7 +306,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'E',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'extraversion',
       ),
 
@@ -319,7 +319,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'I',
-        bipolarDimension: 'mbti_ei',
+        bipolarDimension: 'personality_type_ei',
         targetScale: 'introversion',
       ),
 
@@ -336,7 +336,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
       QuestionModel(
@@ -347,7 +347,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
       QuestionModel(
@@ -358,7 +358,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
       QuestionModel(
@@ -369,7 +369,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
       QuestionModel(
@@ -380,7 +380,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
 
@@ -393,7 +393,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
       QuestionModel(
@@ -404,7 +404,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
       QuestionModel(
@@ -415,7 +415,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
       QuestionModel(
@@ -426,7 +426,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
 
@@ -439,7 +439,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
       QuestionModel(
@@ -450,7 +450,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
 
@@ -463,7 +463,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
       QuestionModel(
@@ -474,7 +474,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
 
@@ -487,7 +487,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
       QuestionModel(
@@ -498,7 +498,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
 
@@ -511,7 +511,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
       QuestionModel(
@@ -522,7 +522,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
 
@@ -535,7 +535,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
 
@@ -548,7 +548,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'N',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'intuition',
       ),
 
@@ -561,7 +561,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'S',
-        bipolarDimension: 'mbti_sn',
+        bipolarDimension: 'personality_type_sn',
         targetScale: 'sensing',
       ),
 
@@ -578,7 +578,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
       QuestionModel(
@@ -589,7 +589,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
       QuestionModel(
@@ -600,7 +600,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -613,7 +613,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
       QuestionModel(
@@ -624,7 +624,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
       QuestionModel(
@@ -635,7 +635,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
 
@@ -648,7 +648,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -661,7 +661,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
 
@@ -674,7 +674,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -687,7 +687,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
 
@@ -700,7 +700,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -713,7 +713,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
 
@@ -726,7 +726,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -739,7 +739,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
 
@@ -752,7 +752,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -765,7 +765,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
 
@@ -778,7 +778,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -791,7 +791,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
       QuestionModel(
@@ -802,7 +802,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'F',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'feeling',
       ),
 
@@ -815,7 +815,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'T',
-        bipolarDimension: 'mbti_tf',
+        bipolarDimension: 'personality_type_tf',
         targetScale: 'thinking',
       ),
 
@@ -832,7 +832,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
       QuestionModel(
@@ -843,7 +843,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
       QuestionModel(
@@ -854,7 +854,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
       QuestionModel(
@@ -865,7 +865,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
 
@@ -878,7 +878,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
       QuestionModel(
@@ -889,7 +889,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
       QuestionModel(
@@ -900,7 +900,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
       QuestionModel(
@@ -911,7 +911,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
 
@@ -924,7 +924,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
 
@@ -937,7 +937,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
 
@@ -950,7 +950,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
 
@@ -963,7 +963,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
 
@@ -976,7 +976,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
 
@@ -989,7 +989,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
 
@@ -1002,7 +1002,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
 
@@ -1015,7 +1015,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
 
@@ -1028,7 +1028,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
 
@@ -1041,7 +1041,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
 
@@ -1054,7 +1054,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'J',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'judging',
       ),
 
@@ -1067,7 +1067,7 @@ Results are for guidance only and are not professional psychological diagnostics
         },
         answers: answers,
         bipolarPole: 'P',
-        bipolarDimension: 'mbti_jp',
+        bipolarDimension: 'personality_type_jp',
         targetScale: 'perceiving',
       ),
     ];

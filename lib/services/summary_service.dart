@@ -11,6 +11,7 @@ import '../config/summary/question_weights/sixteen_types_weights.dart';
 import '../config/summary/question_weights/temperament_profile_test_weights.dart';
 import '../config/summary/question_weights/digital_detox_weights.dart';
 import '../config/summary/question_weights/burnout_diagnostic_weights.dart';
+import '../config/summary/question_weights/social_battery_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -20,56 +21,56 @@ import '../utils/app_logger.dart';
 /// This service separates data processing from UI presentation, making the
 /// code more maintainable and testable.
 class SummaryService {
-  /// Calculates personality type based on ALL completed tests with MBTI weights.
+  /// Calculates personality type based on ALL completed tests with personality type weights.
   ///
   /// This method aggregates scores from:
   /// - 16 Personality Types test (80 questions)
-  /// - IPIP Big Five test (questions with MBTI weights)
-  /// - Fisher Temperament test (questions with MBTI weights)
-  /// - Love Profile test (questions with MBTI weights)
+  /// - IPIP Big Five test (questions with personality type weights)
+  /// - Fisher Temperament test (questions with personality type weights)
+  /// - Love Profile test (questions with personality type weights)
   ///
   /// Returns a map containing:
   /// - 'personalityType': String (e.g., 'ENFP', 'ISTJ')
   /// - 'typeName': String (localized type name)
   /// - 'bipolarScores': Map<String, BipolarDimensionScore>
   ///
-  /// Returns null if no tests with MBTI data are found.
+  /// Returns null if no tests with Personality Type data are found.
   Map<String, dynamic>? calculateAveragedPersonalityType(
     List<TestResult> completedTests,
     String languageCode,
   ) {
     appLogger.d('Calculating personality type from ${completedTests.length} completed tests');
 
-    // Calculate MBTI scale scores using weights from ALL tests
-    final mbtiScores = _calculateMBTIScalesFromAllTests(completedTests);
+    // Calculate personality type scale scores using weights from ALL tests
+    final typeScores = _calculatePersonalityTypeScalesFromAllTests(completedTests);
 
-    if (mbtiScores.isEmpty) {
-      appLogger.d('No MBTI scale data found');
+    if (typeScores.isEmpty) {
+      appLogger.d('No personality type scale data found');
       return null;
     }
 
-    appLogger.d('MBTI scale scores calculated: ${mbtiScores.keys.join(", ")}');
+    appLogger.d('Personality type scale scores calculated: ${typeScores.keys.join(", ")}');
 
     // Convert unipolar scores to bipolar percentages
-    // mbtiScores contains normalized 0-100 scores for each of 8 scales
+    // typeScores contains normalized 0-100 scores for each of 8 scales
     final bipolarPercentages = <String, double>{};
 
     // Calculate bipolar percentages: E vs I, S vs N, T vs F, J vs P
     final eiPercentage = _calculateBipolarPercentage(
-      mbtiScores['extraversion'] ?? 0.0,
-      mbtiScores['introversion'] ?? 0.0,
+      typeScores['extraversion'] ?? 0.0,
+      typeScores['introversion'] ?? 0.0,
     );
     final snPercentage = _calculateBipolarPercentage(
-      mbtiScores['sensing'] ?? 0.0,
-      mbtiScores['intuition'] ?? 0.0,
+      typeScores['sensing'] ?? 0.0,
+      typeScores['intuition'] ?? 0.0,
     );
     final tfPercentage = _calculateBipolarPercentage(
-      mbtiScores['thinking'] ?? 0.0,
-      mbtiScores['feeling'] ?? 0.0,
+      typeScores['thinking'] ?? 0.0,
+      typeScores['feeling'] ?? 0.0,
     );
     final jpPercentage = _calculateBipolarPercentage(
-      mbtiScores['judging'] ?? 0.0,
-      mbtiScores['perceiving'] ?? 0.0,
+      typeScores['judging'] ?? 0.0,
+      typeScores['perceiving'] ?? 0.0,
     );
 
     bipolarPercentages['EI'] = eiPercentage;
@@ -89,8 +90,8 @@ class SummaryService {
       final isPositiveDominant = percentage > 50;
 
       // Create score that matches old format
-      bipolarScores['mbti_${dimension.toLowerCase()}'] = BipolarDimensionScore(
-        dimensionId: 'mbti_${dimension.toLowerCase()}',
+      bipolarScores['personality_type_${dimension.toLowerCase()}'] = BipolarDimensionScore(
+        dimensionId: 'personality_type_${dimension.toLowerCase()}',
         positiveScore: isPositiveDominant ? (percentage / 100 * 40).round() : ((100 - percentage) / 100 * 20).round(),
         negativeScore: isPositiveDominant ? ((100 - percentage) / 100 * 20).round() : (percentage / 100 * 40).round(),
         positiveMaxScore: 40,
@@ -106,13 +107,13 @@ class SummaryService {
       'personalityType': personalityType,
       'typeName': getTypeName(personalityType, languageCode),
       'bipolarScores': bipolarScores,
-      'typeScales': mbtiScores, // Include raw scale scores
+      'typeScales': typeScores, // Include raw scale scores
     };
   }
 
-  /// Calculate MBTI scale scores from ALL completed tests using question weights
-  Map<String, double> _calculateMBTIScalesFromAllTests(List<TestResult> completedTests) {
-    // Load all MBTI question weights
+  /// Calculate personality type scale scores from ALL completed tests using question weights
+  Map<String, double> _calculatePersonalityTypeScalesFromAllTests(List<TestResult> completedTests) {
+    // Load all personality type question weights
     final allWeights = <String, QuestionWeight>{
       ...IPIPBigFiveWeights.weights,
       ...FisherTemperamentWeights.weights,
@@ -122,7 +123,7 @@ class SummaryService {
       ...TemperamentProfileTestWeights.weights,
     };
 
-    // 8 MBTI scales
+    // 8 personality type scales
     final scaleIds = ['extraversion', 'introversion', 'sensing', 'intuition',
                       'thinking', 'feeling', 'judging', 'perceiving'];
 
@@ -142,7 +143,7 @@ class SummaryService {
       }
 
       final testId = testResult.testId;
-      appLogger.d('Processing $testId for MBTI scales');
+      appLogger.d('Processing $testId for personality type scales');
 
       // For each question in this test
       testResult.userAnswers!.forEach((questionId, answerScore) {
@@ -153,16 +154,16 @@ class SummaryService {
           return; // Skip questions without weights
         }
 
-        // Check if this question contributes to any MBTI scale
+        // Check if this question contributes to any personality type scale
         questionWeight.axisWeights.forEach((scaleId, weight) {
           if (scaleIds.contains(scaleId)) {
-            // Found MBTI scale contribution
-            // Normalize answer score (assuming Likert 1-5 scale, normalize to 0-1)
-            final normalizedAnswer = (answerScore - 1) / 4.0; // 1-5 -> 0-1
-            final weightedContribution = normalizedAnswer * weight;
+            // Found personality type scale contribution
+            // Normalize answer score (0-4 scale -> 0-1 range)
+            final normalizedAnswer = answerScore / 4.0; // 0-4 -> 0-1
+            final weightedContribution = normalizedAnswer * weight.abs();
 
             scaleScores[scaleId] = (scaleScores[scaleId] ?? 0.0) + weightedContribution;
-            scaleWeights[scaleId] = (scaleWeights[scaleId] ?? 0.0) + weight;
+            scaleWeights[scaleId] = (scaleWeights[scaleId] ?? 0.0) + weight.abs();
           }
         });
       });
@@ -187,10 +188,30 @@ class SummaryService {
 
   /// Calculate bipolar percentage from two unipolar scores
   /// Returns percentage favoring positive pole (0-100, where >50 means positive dominant)
+  ///
+  /// Special handling: If only one pole has data, we assume the opposite pole
+  /// should get the inverse contribution (e.g., low Feeling score = high Thinking score)
   double _calculateBipolarPercentage(double positiveScore, double negativeScore) {
-    final total = positiveScore + negativeScore;
-    if (total == 0) return 50.0; // Neutral if no data
-    return (positiveScore / total) * 100;
+    // If both poles have data, use standard formula
+    if (positiveScore > 0 && negativeScore > 0) {
+      final total = positiveScore + negativeScore;
+      return (positiveScore / total) * 100;
+    }
+
+    // If only positive pole has data
+    if (positiveScore > 0 && negativeScore == 0) {
+      // positiveScore is already 0-100, return it directly
+      return positiveScore;
+    }
+
+    // If only negative pole has data
+    if (negativeScore > 0 && positiveScore == 0) {
+      // Invert: high negative score = low positive percentage
+      return 100 - negativeScore;
+    }
+
+    // If no data at all
+    return 50.0; // Neutral
   }
 
   /// Determine personality type code from bipolar percentages
@@ -251,7 +272,7 @@ class SummaryService {
 
   /// Gets questions for a specific bipolar dimension.
   ///
-  /// Returns questions that measure the specified dimension (e.g., 'mbti_ei').
+  /// Returns questions that measure the specified dimension (e.g., 'personality_type_ei').
   List<QuestionModel> getQuestionsForDimension(String dimensionId) {
     final testData = SixteenTypesData.getSixteenTypesTest();
     return testData.questions
@@ -452,16 +473,16 @@ class SummaryService {
     };
   }
 
-  /// Gets all questions from all tests that have MBTI weights for specified scales.
+  /// Gets all questions from all tests that have personality type weights for specified scales.
   ///
   /// Returns a map of {testId_attemptIndex: {scaleId: [questions]}}.
   /// Each test attempt is tracked separately to show all answers from multiple completions.
-  /// Useful for displaying questions that contribute to MBTI personality type scales.
-  Map<String, Map<String, List<Map<String, dynamic>>>> getQuestionsWithMBTIWeights(
+  /// Useful for displaying questions that contribute to personality type scales.
+  Map<String, Map<String, List<Map<String, dynamic>>>> getQuestionsWithPersonalityTypeWeights(
     List<TestResult> completedTests,
     List<String> scaleIds, // e.g., ['extraversion', 'introversion']
   ) {
-    appLogger.d('getQuestionsWithMBTIWeights called with ${completedTests.length} completed tests for scales: $scaleIds');
+    appLogger.d('getQuestionsWithPersonalityTypeWeights called with ${completedTests.length} completed tests for scales: $scaleIds');
 
     // Combine all weights from different tests
     final allWeights = <String, QuestionWeight>{
@@ -473,6 +494,7 @@ class SummaryService {
       ...TemperamentProfileTestWeights.weights,
       ...DigitalDetoxWeights.weights,
       ...BurnoutDiagnosticWeights.weights,
+      ...SocialBatteryWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');
@@ -500,7 +522,7 @@ class SummaryService {
         continue;
       }
 
-      // Find questions from this test that have MBTI weights
+      // Find questions from this test that have Personality Type weights
       final testQuestions = <String, List<Map<String, dynamic>>>{};
 
       for (final scale in scaleIds) {
@@ -509,7 +531,7 @@ class SummaryService {
 
       // Search through all weights to find questions from this test
       int questionsChecked = 0;
-      int questionsWithMBTI = 0;
+      int questionsWithTypeWeight = 0;
 
       allWeights.forEach((key, weight) {
         // Key format: 'test_id:question_id'
@@ -521,10 +543,10 @@ class SummaryService {
         final questionId = key.split(':')[1];
 
         // Check if this question has weights on any of our target scales
-        bool hasAnyMBTI = false;
+        bool hasAnyTypeWeight = false;
         for (final scale in scaleIds) {
           if (weight.axisWeights.containsKey(scale)) {
-            hasAnyMBTI = true;
+            hasAnyTypeWeight = true;
             final weightValue = weight.axisWeights[scale]!;
 
             testQuestions[scale]!.add({
@@ -537,12 +559,12 @@ class SummaryService {
           }
         }
 
-        if (hasAnyMBTI) {
-          questionsWithMBTI++;
+        if (hasAnyTypeWeight) {
+          questionsWithTypeWeight++;
         }
       });
 
-      appLogger.d('Test $testId attempt #$attemptNumber: checked $questionsChecked questions, found $questionsWithMBTI with MBTI weights');
+      appLogger.d('Test $testId attempt #$attemptNumber: checked $questionsChecked questions, found $questionsWithTypeWeight with personality type weights');
 
       // Only add test to result if it has questions for at least one scale
       bool hasQuestions = testQuestions.values.any((list) => list.isNotEmpty);
@@ -552,11 +574,11 @@ class SummaryService {
         result[uniqueKey] = testQuestions;
         appLogger.d('Added $uniqueKey to results');
       } else {
-        appLogger.d('No MBTI questions found for $testId attempt #$attemptNumber');
+        appLogger.d('No personality type questions found for $testId attempt #$attemptNumber');
       }
     }
 
-    appLogger.d('Final result: ${result.keys.length} test attempts with MBTI questions');
+    appLogger.d('Final result: ${result.keys.length} test attempts with personality type questions');
     return result;
   }
 }

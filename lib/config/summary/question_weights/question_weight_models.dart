@@ -24,9 +24,21 @@ class QuestionWeight {
     this.note,
   });
 
-  /// Get direction for a specific axis (defaults to 1 if not specified)
+  /// Get direction for a specific axis
+  /// Returns -1 for inverted (negative weight), 1 for direct (positive weight)
   int getDirection(String axisId) {
-    return axisDirections?[axisId] ?? 1;
+    // First check if direction is explicitly set in axisDirections
+    if (axisDirections != null && axisDirections!.containsKey(axisId)) {
+      return axisDirections![axisId]!;
+    }
+
+    // Otherwise, determine direction from weight sign
+    final weight = axisWeights[axisId];
+    if (weight != null && weight < 0) {
+      return -1; // Negative weight = inverted (high answer → low scale)
+    }
+
+    return 1; // Positive weight = direct (high answer → high scale)
   }
 }
 

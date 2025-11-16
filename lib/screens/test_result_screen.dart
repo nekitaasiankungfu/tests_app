@@ -803,7 +803,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
       'activity': {'ru': 'Активность', 'en': 'Activity'},
       'values': {'ru': 'Ценности', 'en': 'Values'},
 
-      // MBTI шкалы (8 униполярных)
+      // Personality Type шкалы (8 униполярных)
       'extraversion': {'ru': 'Экстраверсия', 'en': 'Extraversion'},
       'introversion': {'ru': 'Интроверсия', 'en': 'Introversion'},
       'sensing': {'ru': 'Сенсорика', 'en': 'Sensing'},

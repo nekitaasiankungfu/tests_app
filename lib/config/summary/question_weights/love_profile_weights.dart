@@ -37,8 +37,8 @@ class LoveProfileWeights {
       questionId: 'BP_02',
       axisWeights: {
         'secure_attachment': 1.0,        // Primary: Separation comfort
-        'fear_of_abandonment': 0.9,      // Primary: Low abandonment fear (reversed)
-        'anxious_attachment': 0.8,       // High: Low anxious attachment (reversed)
+        'fear_of_abandonment': -0.9,      // Primary: Low abandonment fear (reversed)
+        'anxious_attachment': -0.8,       // High: Low anxious attachment (reversed)
         'emotional_resilience': 0.6,     // Secondary: Emotional stability
         'autonomy_wellbeing': 0.5,       // Secondary: Independent functioning
       },
@@ -83,7 +83,7 @@ class LoveProfileWeights {
         'mindfulness_coping': 0.7,       // Secondary: Present-moment awareness
         'secure_attachment': 0.6,        // Secondary: Emotional regulation
         'feelings': 0.6,                 // Secondary: Depth of feelings (Big Five facet)
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'EI + self-awareness + mindfulness + emotional regulation + feelings depth',
@@ -96,7 +96,7 @@ class LoveProfileWeights {
       axisWeights: {
         'anxious_attachment': 1.0,       // Primary: Anxious attachment (reversed - low score = good)
         'secure_attachment': 0.9,        // Primary: Security in relationship
-        'fear_of_abandonment': 0.8,      // High: Abandonment fears (reversed)
+        'fear_of_abandonment': -0.8,      // High: Abandonment fears (reversed)
         'self_esteem': 0.7,              // Secondary: Self-worth
         'emotional_resilience': 0.5,     // Secondary: Emotional stability
       },
@@ -151,9 +151,9 @@ class LoveProfileWeights {
       questionId: 'BP_10',
       axisWeights: {
         'fear_of_abandonment': 1.0,      // Primary: Abandonment fear (reversed - low = good)
-        'anxious_attachment': 0.9,       // Primary: Anxious attachment (reversed)
+        'anxious_attachment': -0.9,       // Primary: Anxious attachment (reversed)
         'secure_attachment': 0.8,        // High: Security
-        'panic_tendency': 0.7,           // Secondary: Panic response (reversed)
+        'panic_tendency': -0.7,           // Secondary: Panic response (reversed)
         'emotional_resilience': 0.6,     // Secondary: Stability
       },
       note: 'Reversed: low abandonment fear + low anxious attachment + secure + low panic + resilience',
@@ -173,7 +173,7 @@ class LoveProfileWeights {
         'emotional_intelligence': 0.7,   // Secondary: Emotional awareness
         'intimacy_comfort': 0.7,         // Secondary: Comfort with depth
         'assertiveness': 0.5,            // Secondary: Speaking openly
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
         'extraversion': 0.2,
       },
@@ -204,7 +204,7 @@ class LoveProfileWeights {
         'emotional_openness': 0.7,       // Secondary: Emotional expression
         'relatedness_need': 0.6,         // Secondary: Connection needs
         'social_support_seeking': 0.5,   // Secondary: Seeking support
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Vulnerability + assertiveness + emotional openness + connection needs + support seeking',
@@ -243,12 +243,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'IU_16',
       axisWeights: {
-        'emotional_openness': 1.0,       // Primary: Emotional expression (reversed)
-        'emotional_avoidance': 0.9,      // Primary: Avoidance pattern (reversed)
-        'intimacy_comfort': 0.8,         // High: Closeness discomfort (reversed)
-        'vulnerability_sharing': 0.7,    // Secondary: Sharing reluctance (reversed)
-        'alexithymia': 0.6,              // Secondary: Difficulty identifying feelings
-        // MBTI personality type scales
+        'emotional_openness': -1.0,       // Primary: Emotional expression (reversed)
+        'avoidant_coping': -0.9,      // Primary: Avoidance pattern (reversed)
+        'intimacy_comfort': -0.8,         // High: Closeness discomfort (reversed)
+        'vulnerability_sharing': -0.7,    // Secondary: Sharing reluctance (reversed)
+        'emotional_intelligence': 0.6,              // Secondary: Difficulty identifying feelings
+        // Personality Type personality type scales
         'thinking': 0.3,
         'introversion': 0.2,
       },
@@ -262,10 +262,10 @@ class LoveProfileWeights {
       axisWeights: {
         'active_listening': 1.0,         // Primary: Listening skill
         'empathy': 0.9,                  // Primary: Empathic response
-        'respect': 0.8,                  // High: Respectful attitude
+        'politeness': 0.8,                  // High: Respectful attitude
         'emotional_intelligence': 0.7,   // Secondary: Emotional understanding
         'patience': 0.6,                 // Secondary: Patience in listening
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.3,
       },
       note: 'Active listening + empathy + respect + EI + patience',
@@ -278,10 +278,10 @@ class LoveProfileWeights {
       axisWeights: {
         'self_acceptance': 1.0,          // Primary: Accepting emotions
         'emotional_openness': 0.9,       // Primary: Emotional expression
-        'self_consciousness': 0.8,       // High: Low shame (reversed)
+        'self_consciousness': -0.8,       // High: Low shame (reversed)
         'authenticity': 0.7,             // Secondary: Being genuine
         'self_compassion': 0.6,          // Secondary: Self-kindness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Self-acceptance + emotional openness + low self-consciousness + authenticity + self-compassion',
@@ -295,8 +295,7 @@ class LoveProfileWeights {
         'assertiveness': 1.0,            // Primary: Expressing needs
         'self_awareness': 0.9,           // Primary: Knowing needs
         'emotional_intelligence': 0.8,   // High: Emotional clarity
-        'communication_skills': 0.7,     // Secondary: Verbal expression
-        'clarity': 0.6,                  // Secondary: Clear communication
+        'communication_quality': 0.7,     // Secondary: Verbal expression
       },
       note: 'Assertiveness + self-awareness + EI + communication + clarity',
     ),
@@ -306,12 +305,11 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'IU_20',
       axisWeights: {
-        'emotional_avoidance': 1.0,      // Primary: Avoidance (reversed)
-        'intimacy_comfort': 0.9,         // Primary: Discomfort with depth (reversed)
-        'vulnerability_sharing': 0.8,    // High: Closing off (reversed)
-        'emotional_openness': 0.7,       // Secondary: Shutting down (reversed)
-        'fear_of_intimacy': 0.6,         // Secondary: Intimacy fear (reversed)
-        // MBTI personality type scales
+        'avoidant_coping': -1.0,      // Primary: Avoidance (reversed)
+        'intimacy_comfort': -0.9,         // Primary: Discomfort with depth (reversed)
+        'vulnerability_sharing': -0.8,    // High: Closing off (reversed)
+        'emotional_openness': -0.7,       // Secondary: Shutting down (reversed)
+        // Personality Type personality type scales
         'introversion': 0.3,
         'thinking': 0.2,
       },
@@ -332,7 +330,7 @@ class LoveProfileWeights {
         'positive_emotions': 0.8,        // High: Positive affect
         'excitement_seeking': 0.7,       // Secondary: Seeking excitement
         'liveliness': 0.6,               // Secondary: Energetic engagement
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.4,
         'intuition': 0.2,
       },
@@ -345,11 +343,10 @@ class LoveProfileWeights {
       questionId: 'ST_22',
       axisWeights: {
         'assertiveness': 1.0,            // Primary: Initiating behavior
-        'sexual_confidence': 0.9,        // Primary: Sexual self-assurance
+        'self_efficacy': 0.9,        // Primary: Sexual self-assurance
         'activity': 0.8,                 // High: Taking action
-        'self_efficacy': 0.7,            // Secondary: Confidence in ability
         'dominance': 0.5,                // Secondary: Leading role
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'extraversion': 0.3,
       },
       note: 'Assertiveness + sexual confidence + activity + self-efficacy + dominance',
@@ -360,12 +357,11 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'ST_23',
       axisWeights: {
-        'sexual_openness': 1.0,          // Primary: Sexual communication
+        'emotional_openness': 1.0,          // Primary: Sexual communication
         'vulnerability_sharing': 0.9,    // Primary: Sharing intimate thoughts
-        'emotional_openness': 0.8,       // High: Open expression
         'assertiveness': 0.7,            // Secondary: Speaking up
         'fantasy': 0.6,                  // Secondary: Imaginative openness
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.3,
         'extraversion': 0.2,
       },
@@ -379,10 +375,10 @@ class LoveProfileWeights {
       axisWeights: {
         'novelty_seeking': 1.0,          // Primary: Seeking new experiences
         'spontaneity': 0.9,              // Primary: Spontaneous behavior
-        'creativity': 0.8,               // High: Creative approaches
-        'openness_to_experience': 0.7,   // Secondary: Open to new
+        'flexibility_creative': 0.8,               // High: Creative approaches
+        'intellectual_curiosity': 0.7,   // Secondary: Open to new
         'excitement_seeking': 0.6,       // Secondary: Seeking stimulation
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.4,
         'perceiving': 0.3,
       },
@@ -395,11 +391,11 @@ class LoveProfileWeights {
       questionId: 'ST_25',
       axisWeights: {
         'empathy': 1.0,                  // Primary: Sensing partner's state
-        'attentiveness': 0.9,            // Primary: Paying attention
+        'attention_control': 0.9,            // Primary: Paying attention
         'emotional_intelligence': 0.8,   // High: Reading cues
         'mindfulness_coping': 0.7,       // Secondary: Present awareness
-        'sensitivity': 0.6,              // Secondary: Sensory awareness
-        // MBTI personality type scales
+        'emotional_openness': 0.6,              // Secondary: Sensory awareness
+        // Personality Type personality type scales
         'feeling': 0.4,
         'sensing': 0.3,
       },
@@ -411,12 +407,10 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'ST_26',
       axisWeights: {
-        'sexual_openness': 1.0,          // Primary: Sexual comfort (reversed)
-        'self_consciousness': 0.9,       // Primary: Embarrassment (reversed)
-        'sexual_anxiety': 0.8,           // High: Sexual discomfort (reversed)
-        'emotional_avoidance': 0.7,      // Secondary: Topic avoidance (reversed)
-        'shame': 0.6,                    // Secondary: Shame about sexuality (reversed)
-        // MBTI personality type scales
+        'emotional_openness': -1.0,          // Primary: Sexual comfort (reversed)
+        'self_consciousness': -0.9,       // Primary: Embarrassment (reversed)
+        'avoidant_coping': -0.7,      // Secondary: Topic avoidance (reversed)
+        // Personality Type personality type scales
         'introversion': 0.3,
         'judging': 0.2,
       },
@@ -428,12 +422,11 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'ST_27',
       axisWeights: {
-        'self_care': 1.0,                // Primary: Body care
-        'body_awareness': 0.9,           // Primary: Bodily awareness
+        'self_compassion': 1.0,                // Primary: Body care
+        'body_image': 0.9,           // Primary: Bodily awareness
         'mindfulness_coping': 0.8,       // High: Present-moment awareness
         'vitality': 0.7,                 // Secondary: Energy level
-        'self_compassion': 0.6,          // Secondary: Self-care attitude
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'sensing': 0.3,
       },
       note: 'Self-care + body awareness + mindfulness + vitality + self-compassion',
@@ -444,12 +437,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'ST_28',
       axisWeights: {
-        'respect': 1.0,                  // Primary: Respecting boundaries
+        'politeness': 1.0,                  // Primary: Respecting boundaries
         'empathy': 0.9,                  // Primary: Sensing partner's comfort
         'boundary_setting': 0.8,         // High: Honoring boundaries
-        'morality': 0.7,                 // Secondary: Ethical behavior
-        'cooperation': 0.6,              // Secondary: Mutual agreement
-        // MBTI personality type scales
+        'values': 0.7,                 // Secondary: Ethical behavior
+        'cooperativeness': 0.6,              // Secondary: Mutual agreement
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Respect + empathy + boundary setting + morality + cooperation',
@@ -460,11 +453,10 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'ST_29',
       axisWeights: {
-        'relationship_investment': 1.0,  // Primary: Relationship effort
-        'sexual_satisfaction': 0.9,      // Primary: Intimacy maintenance
-        'commitment': 0.8,               // High: Ongoing engagement
+        'commitment': 1.0,  // Primary: Relationship effort
+        'physical_intimacy': 0.9,      // Primary: Intimacy maintenance
         'vitality': 0.7,                 // Secondary: Energy for intimacy
-        'prioritization': 0.6,           // Secondary: Making time
+        'deliberation': 0.6,           // Secondary: Making time
       },
       note: 'Relationship investment + sexual satisfaction + commitment + vitality + prioritization',
     ),
@@ -474,12 +466,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'ST_30',
       axisWeights: {
-        'fear_of_rejection': 1.0,        // Primary: Rejection fear (reversed)
-        'assertiveness': 0.9,            // Primary: Initiative (reversed)
-        'sexual_confidence': 0.8,        // High: Sexual assurance (reversed)
-        'self_esteem': 0.7,              // Secondary: Self-worth (reversed)
-        'anxiety': 0.6,                  // Secondary: Anxious suppression (reversed)
-        // MBTI personality type scales
+        'fear_of_abandonment': -1.0,        // Primary: Rejection fear (reversed)
+        'assertiveness': -0.9,            // Primary: Initiative (reversed)
+        'self_efficacy': -0.8,        // High: Sexual assurance (reversed)
+        'self_esteem': -0.7,              // Secondary: Self-worth (reversed)
+        'anxiety': -0.6,                  // Secondary: Anxious suppression (reversed)
+        // Personality Type personality type scales
         'introversion': 0.3,
       },
       note: 'Reversed: fear of rejection + low assertiveness + low sexual confidence + low self-esteem + anxiety',
@@ -494,12 +486,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'OG_31',
       axisWeights: {
-        'communication_skills': 1.0,     // Primary: Effective communication
+        'communication_quality': 1.0,     // Primary: Effective communication
         'assertiveness': 0.9,            // Primary: Speaking up
-        'cooperation': 0.8,              // High: Working together
-        'perspective_taking': 0.7,       // Secondary: Understanding other
+        'cooperativeness': 0.8,              // High: Working together
+        'empathy': 0.7,       // Secondary: Understanding other
         'negotiation': 0.6,              // Secondary: Reaching agreement
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Communication + assertiveness + cooperation + perspective-taking + negotiation',
@@ -511,11 +503,11 @@ class LoveProfileWeights {
       questionId: 'OG_32',
       axisWeights: {
         'dutifulness': 1.0,              // Primary: Keeping commitments
-        'reliability': 0.9,              // Primary: Being dependable
-        'integrity': 0.8,                // High: Honoring word
-        'conscientiousness': 0.7,        // Secondary: Responsible behavior
-        'honesty': 0.6,                  // Secondary: Truthfulness
-        // MBTI personality type scales
+        'dependability': 0.9,              // Primary: Being dependable
+        'authenticity': 0.8,                // High: Honoring word
+        'self_discipline': 0.7,        // Secondary: Responsible behavior
+        'straightforwardness': 0.6,                  // Secondary: Truthfulness
+        // Personality Type personality type scales
         'judging': 0.4,
       },
       note: 'Dutifulness + reliability + integrity + conscientiousness + honesty',
@@ -526,12 +518,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'OG_33',
       axisWeights: {
-        'relationship_investment': 1.0,  // Primary: Investing in relationship
+        'commitment': 1.0,  // Primary: Investing in relationship
         'tradition': 0.9,                // Primary: Valuing rituals
         'shared_goals': 0.8,             // High: Common vision
-        'orderliness': 0.7,              // Secondary: Structure
-        'cooperation': 0.6,              // Secondary: Joint planning
-        // MBTI personality type scales
+        'order': 0.7,              // Secondary: Structure
+        'cooperativeness': 0.6,              // Secondary: Joint planning
+        // Personality Type personality type scales
         'judging': 0.4,
         'sensing': 0.2,
       },
@@ -543,12 +535,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'OG_34',
       axisWeights: {
-        'practical_skills': 1.0,         // Primary: Practical competence
-        'cooperation': 0.9,              // Primary: Working together
+        'competence': 1.0,         // Primary: Practical competence
+        'cooperativeness': 0.9,              // Primary: Working together
         'conflict_management': 0.8,      // High: Avoiding conflicts
-        'orderliness': 0.7,              // Secondary: Organization
-        'fairness': 0.6,                 // Secondary: Equitable division
-        // MBTI personality type scales
+        'order': 0.7,              // Secondary: Organization
+        'benevolence': 0.6,                 // Secondary: Equitable division
+        // Personality Type personality type scales
         'thinking': 0.4,
         'judging': 0.3,
         'sensing': 0.2,
@@ -563,10 +555,10 @@ class LoveProfileWeights {
       axisWeights: {
         'emotional_resilience': 1.0,     // Primary: Resilience
         'commitment': 0.9,               // Primary: Staying power
-        'perseverance': 0.8,             // High: Persistence
+        'persistence': 0.8,             // High: Persistence
         'stress_tolerance': 0.7,         // Secondary: Handling stress
         'self_efficacy': 0.6,            // Secondary: Confidence in coping
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.3,
       },
       note: 'Resilience + commitment + perseverance + stress tolerance + self-efficacy',
@@ -577,12 +569,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'OG_36',
       axisWeights: {
-        'procrastination': 1.0,          // Primary: Delaying (reversed)
-        'avoidance': 0.9,                // Primary: Avoiding issues (reversed)
-        'assertiveness': 0.8,            // High: Speaking up (reversed)
-        'self_discipline': 0.7,          // Secondary: Self-control (reversed)
-        'courage': 0.6,                  // Secondary: Facing difficult topics (reversed)
-        // MBTI personality type scales
+        'procrastination': -1.0,          // Primary: Delaying (reversed)
+        'avoidant_coping': -0.9,                // Primary: Avoiding issues (reversed)
+        'assertiveness': -0.8,            // High: Speaking up (reversed)
+        'self_discipline': -0.7,          // Secondary: Self-control (reversed)
+        'risk_taking': -0.6,                  // Secondary: Facing difficult topics (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.3,
       },
       note: 'Reversed: procrastination + avoidance + low assertiveness + low self-discipline + low courage',
@@ -594,11 +586,10 @@ class LoveProfileWeights {
       questionId: 'OG_37',
       axisWeights: {
         'commitment': 1.0,               // Primary: Long-term commitment
-        'future_orientation': 0.9,       // Primary: Planning ahead
-        'relationship_investment': 0.8,  // High: Investing effort
-        'cooperation': 0.7,              // Secondary: Joint work
-        'optimism': 0.6,                 // Secondary: Positive outlook
-        // MBTI personality type scales
+        'strategic_thinking': 0.9,       // Primary: Planning ahead
+        'cooperativeness': 0.7,              // Secondary: Joint work
+        'positive_emotions': 0.6,                 // Secondary: Positive outlook
+        // Personality Type personality type scales
         'judging': 0.4,
         'intuition': 0.2,
       },
@@ -610,8 +601,8 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'OG_38',
       axisWeights: {
-        'cooperation': 1.0,              // Primary: Working together
-        'fairness': 0.9,                 // Primary: Equitable sharing
+        'cooperativeness': 1.0,              // Primary: Working together
+        'benevolence': 0.9,                 // Primary: Equitable sharing
         'responsibility': 0.8,           // High: Taking responsibility
         'altruism': 0.7,                 // Secondary: Helping partner
         'dutifulness': 0.6,              // Secondary: Fulfilling duties
@@ -625,11 +616,10 @@ class LoveProfileWeights {
       questionId: 'OG_39',
       axisWeights: {
         'empathy': 1.0,                  // Primary: Understanding partner
-        'respect': 0.9,                  // Primary: Respecting values
-        'perspective_taking': 0.8,       // High: Seeing from their view
+        'politeness': 0.9,                  // Primary: Respecting values
         'altruism': 0.7,                 // Secondary: Supporting partner
-        'cooperation': 0.6,              // Secondary: Joint planning
-        // MBTI personality type scales
+        'cooperativeness': 0.6,              // Secondary: Joint planning
+        // Personality Type personality type scales
         'feeling': 0.4,
         'intuition': 0.2,
       },
@@ -641,12 +631,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'OG_40',
       axisWeights: {
-        'commitment': 1.0,               // Primary: Commitment (reversed)
-        'ambiguity_tolerance': 0.9,      // Primary: Preferring ambiguity (reversed)
-        'fear_of_commitment': 0.8,       // High: Commitment avoidance (reversed)
-        'avoidant_attachment': 0.7,      // Secondary: Avoidant pattern (reversed)
-        'clarity': 0.6,                  // Secondary: Defining relationship (reversed)
-        // MBTI personality type scales
+        'commitment': -1.0,               // Primary: Commitment (reversed)
+        'cognitive_flexibility': -0.9,      // Primary: Preferring ambiguity (reversed)
+        'fear_of_abandonment': -0.8,       // High: Commitment avoidance (reversed)
+        'avoidant_attachment': -0.7,      // Secondary: Avoidant pattern (reversed)
+        'self_awareness': -0.6,                  // Secondary: Defining relationship (reversed)
+        // Personality Type personality type scales
         'perceiving': 0.4,
       },
       note: 'Reversed: low commitment + high ambiguity tolerance + fear of commitment + avoidant attachment',
@@ -663,9 +653,9 @@ class LoveProfileWeights {
       axisWeights: {
         'trust': 1.0,                    // Primary: Basic trust
         'secure_attachment': 0.9,        // Primary: Attachment security
-        'anxiety': 0.8,                  // High: Low anxiety (reversed)
-        'jealousy': 0.7,                 // Secondary: Low jealousy (reversed)
-        'faith': 0.6,                    // Secondary: Belief in partner
+        'anxiety': -0.8,                  // High: Low anxiety (reversed)
+        'jealousy': -0.7,                 // Secondary: Low jealousy (reversed)
+        'meaning_purpose': 0.6,                    // Secondary: Belief in partner
       },
       note: 'Trust + secure attachment + low anxiety + low jealousy + faith',
     ),
@@ -675,12 +665,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'DR_42',
       axisWeights: {
-        'reality_testing': 1.0,          // Primary: Reality vs fantasy
+        'wisdom': 1.0,          // Primary: Reality vs fantasy
         'cognitive_flexibility': 0.9,    // Primary: Thinking flexibility
-        'emotional_regulation': 0.8,     // High: Managing emotions
-        'rationality': 0.7,              // Secondary: Logical thinking
-        'paranoia': 0.6,                 // Secondary: Low paranoia (reversed)
-        // MBTI personality type scales
+        'cognitive_reappraisal': 0.8,     // High: Managing emotions
+        'analytical_thinking': 0.7,              // Secondary: Logical thinking
+        'anxiety': -0.6,                 // Secondary: Low paranoia (reversed)
+        // Personality Type personality type scales
         'thinking': 0.4,
         'sensing': 0.3,
       },
@@ -695,8 +685,8 @@ class LoveProfileWeights {
         'assertiveness': 1.0,            // Primary: Speaking up
         'vulnerability_sharing': 0.9,    // Primary: Sharing pain
         'emotional_openness': 0.8,       // High: Expressing feelings
-        'courage': 0.7,                  // Secondary: Facing conflict
-        'communication_skills': 0.6,     // Secondary: Effective expression
+        'risk_taking': 0.7,                  // Secondary: Facing conflict
+        'communication_quality': 0.6,     // Secondary: Effective expression
       },
       note: 'Assertiveness + vulnerability + emotional openness + courage + communication',
     ),
@@ -707,10 +697,10 @@ class LoveProfileWeights {
       questionId: 'DR_44',
       axisWeights: {
         'trust': 1.0,                    // Primary: Trusting partner
-        'respect': 0.9,                  // Primary: Respecting privacy
-        'jealousy': 0.8,                 // High: Low jealousy (reversed)
-        'anxious_attachment': 0.7,       // Secondary: Low anxiety (reversed)
-        'control': 0.6,                  // Secondary: Low controlling (reversed)
+        'politeness': 0.9,                  // Primary: Respecting privacy
+        'jealousy': -0.8,                 // High: Low jealousy (reversed)
+        'anxious_attachment': -0.7,       // Secondary: Low anxiety (reversed)
+        'self_direction': -0.6,                  // Secondary: Low controlling (reversed)
       },
       note: 'Trust + respect + low jealousy + low anxious attachment + low control',
     ),
@@ -720,9 +710,9 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'DR_45',
       axisWeights: {
-        'respect': 1.0,                  // Primary: Respecting boundaries
+        'politeness': 1.0,                  // Primary: Respecting boundaries
         'boundary_setting': 0.9,         // Primary: Recognizing boundaries
-        'autonomy_support': 0.8,         // High: Supporting independence
+        'autonomy_wellbeing': 0.8,         // High: Supporting independence
         'empathy': 0.7,                  // Secondary: Understanding needs
         'trust': 0.6,                    // Secondary: Trusting space
       },
@@ -734,11 +724,11 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'DR_46',
       axisWeights: {
-        'jealousy': 1.0,                 // Primary: Jealous reactions (reversed)
-        'anxious_attachment': 0.9,       // Primary: Anxious pattern (reversed)
-        'trust': 0.8,                    // High: Low trust (reversed)
-        'paranoia': 0.7,                 // Secondary: Suspicious thinking (reversed)
-        'emotional_reactivity': 0.6,     // Secondary: Strong reactions (reversed)
+        'jealousy': -1.0,                 // Primary: Jealous reactions (reversed)
+        'anxious_attachment': -0.9,       // Primary: Anxious pattern (reversed)
+        'trust': -0.8,                    // High: Low trust (reversed)
+        'anxiety': -0.7,                 // Secondary: Suspicious thinking (reversed)
+        'emotional_reactivity': -0.6,     // Secondary: Strong reactions (reversed)
       },
       note: 'Reversed: high jealousy + anxious attachment + low trust + paranoia + emotional reactivity',
     ),
@@ -750,9 +740,9 @@ class LoveProfileWeights {
       axisWeights: {
         'self_esteem': 1.0,              // Primary: Secure self-worth
         'secure_attachment': 0.9,        // Primary: Attachment security
-        'jealousy': 0.8,                 // High: Low jealousy (reversed)
-        'self_monitoring': 0.7,          // Secondary: Low social comparison (reversed)
-        'confidence': 0.6,               // Secondary: Self-confidence
+        'jealousy': -0.8,                 // High: Low jealousy (reversed)
+        'self_monitoring': -0.7,          // Secondary: Low social comparison (reversed)
+        'self_efficacy': 0.6,               // Secondary: Self-confidence
       },
       note: 'Self-esteem + secure attachment + low jealousy + low comparison + confidence',
     ),
@@ -762,9 +752,9 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'DR_48',
       axisWeights: {
-        'emotional_regulation': 1.0,     // Primary: Managing emotions
-        'self_soothing': 0.9,            // Primary: Calming self
-        'coping_skills': 0.8,            // High: Effective coping
+        'cognitive_reappraisal': 1.0,     // Primary: Managing emotions
+        'emotion_focused_coping': 0.9,            // Primary: Calming self
+        'problem_focused_coping': 0.8,            // High: Effective coping
         'mindfulness_coping': 0.7,       // Secondary: Mindful awareness
         'self_efficacy': 0.6,            // Secondary: Confidence in coping
       },
@@ -777,11 +767,10 @@ class LoveProfileWeights {
       questionId: 'DR_49',
       axisWeights: {
         'trust': 1.0,                    // Primary: Trust in resolution
-        'optimism': 0.9,                 // Primary: Positive outlook
-        'communication_confidence': 0.8, // High: Belief in communication
-        'hope': 0.7,                     // Secondary: Hopeful attitude
+        'positive_emotions': 0.9,                 // Primary: Positive outlook
+        'social_confidence': 0.8, // High: Belief in communication
         'problem_solving': 0.6,          // Secondary: Solution-focused
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'intuition': 0.2,
       },
       note: 'Trust + optimism + communication confidence + hope + problem-solving',
@@ -792,11 +781,11 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'DR_50',
       axisWeights: {
-        'trust': 1.0,                    // Primary: Trust capacity (reversed)
-        'anxious_attachment': 0.9,       // Primary: Anxious pattern (reversed)
-        'paranoia': 0.8,                 // High: Suspicious thinking (reversed)
-        'past_trauma': 0.7,              // Secondary: Past hurt (reversed)
-        'secure_attachment': 0.6,        // Secondary: Security (reversed)
+        'trust': -1.0,                    // Primary: Trust capacity (reversed)
+        'anxious_attachment': -0.9,       // Primary: Anxious pattern (reversed)
+        'anxiety': -0.8,                 // High: Suspicious thinking (reversed)
+        'vulnerability': -0.7,              // Secondary: Past hurt (reversed)
+        'secure_attachment': -0.6,        // Secondary: Security (reversed)
       },
       note: 'Reversed: low trust + anxious attachment + paranoia + past trauma + insecurity',
     ),
@@ -811,10 +800,9 @@ class LoveProfileWeights {
       questionId: 'KK_51',
       axisWeights: {
         'assertiveness': 1.0,            // Primary: Assertive communication
-        'communication_skills': 0.9,     // Primary: Effective communication
+        'communication_quality': 0.9,     // Primary: Effective communication
         'self_awareness': 0.8,           // High: Knowing own feelings
         'responsibility': 0.7,           // Secondary: Taking ownership
-        'clarity': 0.6,                  // Secondary: Clear expression
       },
       note: 'Assertiveness + communication skills + self-awareness + responsibility + clarity',
     ),
@@ -825,11 +813,10 @@ class LoveProfileWeights {
       questionId: 'KK_52',
       axisWeights: {
         'empathy': 1.0,                  // Primary: Understanding other
-        'cooperation': 0.9,              // Primary: Collaborative approach
+        'cooperativeness': 0.9,              // Primary: Collaborative approach
         'conflict_resolution': 0.8,      // High: Resolving conflicts
-        'humility': 0.7,                 // Secondary: Not needing to win
-        'perspective_taking': 0.6,       // Secondary: Seeing their view
-        // MBTI personality type scales
+        'modesty': 0.7,                 // Secondary: Not needing to win
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Empathy + cooperation + conflict resolution + humility + perspective-taking',
@@ -840,12 +827,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'KK_53',
       axisWeights: {
-        'emotional_regulation': 1.0,     // Primary: Managing emotions
-        'self_control': 0.9,             // Primary: Controlling impulses
+        'cognitive_reappraisal': 1.0,     // Primary: Managing emotions
+        'self_discipline': 0.9,             // Primary: Controlling impulses
         'conflict_management': 0.8,      // High: Managing conflicts
         'wisdom': 0.7,                   // Secondary: Strategic timing
         'patience': 0.6,                 // Secondary: Waiting when needed
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'judging': 0.3,
       },
       note: 'Emotional regulation + self-control + conflict management + wisdom + patience',
@@ -857,10 +844,10 @@ class LoveProfileWeights {
       questionId: 'KK_54',
       axisWeights: {
         'active_listening': 1.0,         // Primary: Listening skill
-        'communication_skills': 0.9,     // Primary: Effective communication
+        'communication_quality': 0.9,     // Primary: Effective communication
         'empathy': 0.8,                  // High: Understanding other
         'diligence': 0.7,                // Secondary: Careful attention
-        'clarity': 0.6,                  // Secondary: Ensuring clarity
+        'self_awareness': 0.6,                  // Secondary: Ensuring clarity
       },
       note: 'Active listening + communication skills + empathy + diligence + clarity',
     ),
@@ -870,12 +857,11 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'KK_55',
       axisWeights: {
-        'gratitude': 1.0,                // Primary: Being grateful
-        'appreciation': 0.9,             // Primary: Appreciating partner
-        'positive_communication': 0.8,   // High: Positive expression
-        'attentiveness': 0.7,            // Secondary: Noticing actions
-        'warmth': 0.6,                   // Secondary: Warm expression
-        // MBTI personality type scales
+        'acceptance': 1.0,                // Primary: Being grateful
+        'aesthetics': 0.9,             // Primary: Appreciating partner
+        'warmth': 0.8,   // High: Positive expression
+        'attention_control': 0.7,            // Secondary: Noticing actions
+        // Personality Type personality type scales
         'feeling': 0.4,
       },
       note: 'Gratitude + appreciation + positive communication + attentiveness + warmth',
@@ -886,12 +872,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'KK_56',
       axisWeights: {
-        'anger': 1.0,                    // Primary: Angry behavior (reversed)
-        'emotional_control': 0.9,        // Primary: Control (reversed)
-        'hostility': 0.8,                // High: Hostile behavior (reversed)
-        'respect': 0.7,                  // Secondary: Respect (reversed)
-        'empathy': 0.6,                  // Secondary: Empathy (reversed)
-        // MBTI personality type scales
+        'anger': -1.0,                    // Primary: Angry behavior (reversed)
+        'composure': -0.9,        // Primary: Control (reversed)
+        'hostility': -0.8,                // High: Hostile behavior (reversed)
+        'politeness': -0.7,                  // Secondary: Respect (reversed)
+        'empathy': -0.6,                  // Secondary: Empathy (reversed)
+        // Personality Type personality type scales
         'thinking': 0.3,
       },
       note: 'Reversed: high anger + low emotional control + hostility + low respect + low empathy',
@@ -903,10 +889,10 @@ class LoveProfileWeights {
       questionId: 'KK_57',
       axisWeights: {
         'assertiveness': 1.0,            // Primary: Assertive asking
-        'clarity': 0.9,                  // Primary: Clear expression
-        'communication_skills': 0.8,     // High: Effective communication
-        'self_awareness': 0.7,           // Secondary: Knowing needs
-        'directness': 0.6,               // Secondary: Direct communication
+        'self_awareness': 0.9,                  // Primary: Clear expression
+        'communication_quality': 0.8,     // High: Effective communication
+        'clarity': 0.7,           // Secondary: Knowing needs
+        'straightforwardness': 0.6,               // Secondary: Direct communication
       },
       note: 'Assertiveness + clarity + communication skills + self-awareness + directness',
     ),
@@ -918,10 +904,10 @@ class LoveProfileWeights {
       axisWeights: {
         'emotional_intelligence': 1.0,   // Primary: Emotional understanding
         'cognitive_flexibility': 0.9,    // Primary: Flexible thinking
-        'fairness': 0.8,                 // High: Fair judgment
-        'perspective_taking': 0.7,       // Secondary: Seeing difference
+        'benevolence': 0.8,                 // High: Fair judgment
+        'empathy': 0.7,       // Secondary: Seeing difference
         'wisdom': 0.6,                   // Secondary: Mature understanding
-        // MBTI personality type scales
+        // Personality Type personality type scales
         'thinking': 0.4,
         'intuition': 0.2,
       },
@@ -935,9 +921,9 @@ class LoveProfileWeights {
       axisWeights: {
         'conflict_resolution': 1.0,      // Primary: Resolving conflicts
         'negotiation': 0.9,              // Primary: Reaching agreement
-        'cooperation': 0.8,              // High: Working together
+        'cooperativeness': 0.8,              // High: Working together
         'compromise': 0.7,               // Secondary: Finding middle ground
-        'communication_skills': 0.6,     // Secondary: Effective communication
+        'communication_quality': 0.6,     // Secondary: Effective communication
       },
       note: 'Conflict resolution + negotiation + cooperation + compromise + communication',
     ),
@@ -947,12 +933,12 @@ class LoveProfileWeights {
       testId: 'love_profile',
       questionId: 'KK_60',
       axisWeights: {
-        'passive_aggression': 1.0,       // Primary: Passive-aggressive pattern (reversed)
-        'anger': 0.9,                    // Primary: Anger buildup (reversed)
-        'emotional_dysregulation': 0.8,  // High: Poor regulation (reversed)
-        'assertiveness': 0.7,            // Secondary: Low assertiveness (reversed)
-        'communication_avoidance': 0.6,  // Secondary: Avoiding communication (reversed)
-        // MBTI personality type scales
+        'anger': -1.0,       // Primary: Passive-aggressive pattern (reversed)
+        'emotional_suppression': -0.9,                    // Primary: Anger buildup (reversed)
+        'emotional_reactivity': -0.8,  // High: Poor regulation (reversed)
+        'assertiveness': -0.7,            // Secondary: Low assertiveness (reversed)
+        'avoidant_coping': -0.6,  // Secondary: Avoiding communication (reversed)
+        // Personality Type personality type scales
         'introversion': 0.3,
       },
       note: 'Reversed: passive-aggression + anger + emotional dysregulation + low assertiveness + avoidance',

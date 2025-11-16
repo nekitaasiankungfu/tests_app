@@ -48,7 +48,7 @@ The application follows a **Provider-based Clean Architecture** with clear separ
   - `ipip_big_five_data.dart` - IPIP Big Five personality test (50 questions)
   - `fisher_temperament_data.dart` - Fisher Temperament test (56 questions)
   - `love_profile_data.dart` - Love Profile test (60 questions)
-  - `sixteen_types_data.dart` - 16 Personality Types/MBTI (80 questions) ⭐ NEW
+  - `sixteen_types_data.dart` - 16 Personality Types/Personality Type (80 questions) ⭐ NEW
 - **Responsibility:** Provide test content in multiple languages
 
 ### 2. Model Layer (`lib/models/`)
@@ -83,7 +83,7 @@ The application follows a **Provider-based Clean Architecture** with clear separ
   - **`summary/` subdirectory:** ⭐ NEW
     - `hierarchical_scales.dart` - 195 psychological scales in 18 categories
     - `scale_categories.dart` - Category definitions and metadata
-    - `personality_type_scales.dart` - MBTI dimension mappings
+    - `personality_type_scales.dart` - Personality Type dimension mappings
     - `legacy_axes.dart` - Legacy system compatibility
     - `test_mappings.dart` - Test-to-scale mappings
     - `question_weights/` - Question weight configurations per test

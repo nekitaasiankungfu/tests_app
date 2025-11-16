@@ -30,7 +30,9 @@ A mobile application providing professional psychological tests for self-assessm
 - Daily mood tracking
 - Result history and archive
 - Aggregate summary analysis with **195 psychological scales**
-- **Cross-test MBTI calculation** - all tests contribute to personality type ⭐ NEW
+- **Cross-test personality type calculation** - all tests contribute to personality type
+- **Automatic direction detection** - negative weights auto-invert scale values ⭐ NEW
+- **Answer text display** - shows actual answer text in summary (e.g., "2/4 (Иногда)") ⭐ NEW
 - Theme customization (6 pastel colors + dark mode)
 - Onboarding experience for new users
 - Offline-first architecture with local persistence
@@ -154,7 +156,7 @@ Data & Config Layer (Test Data, Storage)
 ├── lib/                           # Main application (~32,000 lines)
 │   ├── main.dart                  # App entry point
 │   ├── config/                    # Configuration (17 files, 12,700 lines)
-│   │   └── summary/question_weights/  # MBTI weights (8 files)
+│   │   └── summary/question_weights/  # Personality type weights (8 files)
 │   │       ├── sixteen_types_weights.dart  # 80 questions
 │   │       ├── digital_detox_weights.dart  # 50 questions
 │   │       ├── burnout_diagnostic_weights.dart  # 54 questions ⭐ NEW
@@ -168,7 +170,7 @@ Data & Config Layer (Test Data, Storage)
 │   │   ├── category_provider.dart # Category state ⭐ NEW
 │   │   └── ...
 │   ├── services/                  # Business logic (2 files, 1,500 lines)
-│   │   └── summary_service.dart   # Cross-test MBTI ⭐ UPDATED
+│   │   └── summary_service.dart   # Cross-test personality type ⭐ UPDATED
 │   ├── utils/                     # Utilities (2 files, 121 lines)
 │   ├── constants/                 # Constants (2 files, 148 lines)
 │   ├── exceptions/                # Custom exceptions (132 lines)
@@ -292,7 +294,7 @@ SummaryData? calculateSummary(List<TestResult> results) {
 5. ✅ **Service Layer** - Business logic separated from UI
 6. ✅ **Critical UI Tests** - Widget tests for race conditions, persistence, i18n
 7. ✅ **Love Profile Weights** - All 60 questions with full weights (was 13)
-8. ✅ **MBTI Cross-Test Questions** - Summary screen shows questions from ALL tests
+8. ✅ **Personality Type Cross-Test Questions** - Summary screen shows questions from ALL tests
 9. ✅ **Question Text Display** - Real question/answer texts with percentage influence
 10. ✅ **Test Categorization** - 4 categories with collapsible sections, state persistence
 11. ✅ **Legacy Dart Architecture** - Converted temperament_profile_test from JSON to Dart (7/9 tests use Legacy Dart)
@@ -392,12 +394,14 @@ All comprehensive documentation is in the `docs/` directory:
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 3.7.0 | 2025-01-09 | Claude Code | **BURNOUT DIAGNOSTIC TEST ADDED:** Professional burnout assessment ⭐<br>- **New Test:** Burnout Diagnostic (54 questions, 7 factors, 12 minutes)<br>- Created test stub: `burnout_diagnostic_test.dart` (118 lines)<br>- Created test data: `burnout_diagnostic_data.dart` (1,540 lines, bilingual, NaN protection)<br>- Created weights mapping: `burnout_diagnostic_weights.dart` (1,115 lines, 105 scales coverage)<br>- **7 Factors:** emotional_exhaustion, depersonalization, reduced_efficacy, physical_symptoms, cognitive_impairment, motivation_loss, work_environment<br>- **10 reversed questions:** [21, 24, 28, 35, 38, 40, 45, 52, 53, 54]<br>- **Critical fixes:** 9 errors resolved (NaN, 20% minimum score, MBTI weights, scale coverage)<br>- **Scale coverage:** 57 → 105 scales (+84% expansion)<br>- Added expandable "Affected Scales" section in test results<br>- Fixed MBTI bipolar weights: 10 negative weights inverted to opposite poles<br>- Updated summary_service.dart: added burnout weights to allWeights map<br>- **Updated ADDING_NEW_TEST.md v2.3.0** with 4 critical rules and 11 typical problems<br>- Integrated in 7 files: test_registry, test_service, test_loader_service, summary_screen (×2), summary_service, test_result_screen<br>- **Test Architecture:** 7 Legacy Dart + 2 JSON = 9 total tests<br>- **Codebase growth:** 33,400 → 35,000 lines (+4.8%) ✅ |
+| 3.9.0 | 2025-01-15 | Claude Code | **CRITICAL FIX: Bipolar scales calculation** ⭐<br>- **FIXED:** Bipolar scales showed 100% on one pole with mixed answers (e.g., 2×"Never" + 2×"Always" → "Emotions 100%")<br>- **Root cause 1:** Score normalization used `(answerScore - 1) / 4.0` (assumed scores 1-5) instead of `answerScore / 4.0` (scores 0-4)<br>- **Root cause 2:** `_calculateBipolarPercentage()` didn't handle single-pole data correctly<br>- **Solution 1:** Fixed normalization in `summary_service.dart:162` to `answerScore / 4.0`<br>- **Solution 2:** New logic for 3 scenarios: both poles, one pole, no data<br>- **Result:** Bipolar scales now calculate correctly (2×0% + 2×100% → 50%) ✅<br>- **Updated ADDING_NEW_TEST.md v2.6.0** with RULE #7 (220+ lines: scale structure, bipolar calculation, examples)<br>- **Files changed:** 2 (summary_service.dart lines 162-166, 189-215; ADDING_NEW_TEST.md)<br>- **Bug impact:** All personality type scales (E/I, S/N, T/F, J/P) now accurate ✅<br>- **Documentation:** Complete explanation of 195 unipolar + 8 bipolar pole scales |
+| 3.8.0 | 2025-01-15 | Claude Code | **CRITICAL FIX: Direction auto-detection + Answer text display** ⭐<br>- **FIXED:** Scales with negative weights showed 0% instead of inverted values<br>- **Root cause:** `getDirection()` didn't check weight sign, only `axisDirections` (unused)<br>- **Solution:** Auto-detect direction from weight sign (`weight < 0` → `direction = -1`)<br>- Modified `question_weight_models.dart`: `getDirection()` now checks weight sign<br>- Modified `test_service.dart`: use `weight.abs()` when passing to accumulator<br>- **Result:** Negative weights now work correctly (75% answer → 25% scale) ✅<br>- **Summary Screen:** Added answer text display "2/4 (Иногда)" instead of "2/4"<br>- Created global `_getAnswerText()` function in `summary_screen.dart`<br>- Supports bilingual (ru/en) with error handling<br>- **Updated ADDING_NEW_TEST.md v2.5.0** with RULE #3 (direction auto-detection)<br>- **Files changed:** 3 (question_weight_models.dart, test_service.dart, summary_screen.dart, ADDING_NEW_TEST.md, CLAUDE.md)<br>- **Bug impact:** All 501 fixed negative weights now functional ✅ |
+| 3.7.0 | 2025-01-09 | Claude Code | **BURNOUT DIAGNOSTIC TEST ADDED:** Professional burnout assessment ⭐<br>- **New Test:** Burnout Diagnostic (54 questions, 7 factors, 12 minutes)<br>- Created test stub: `burnout_diagnostic_test.dart` (118 lines)<br>- Created test data: `burnout_diagnostic_data.dart` (1,540 lines, bilingual, NaN protection)<br>- Created weights mapping: `burnout_diagnostic_weights.dart` (1,115 lines, 105 scales coverage)<br>- **7 Factors:** emotional_exhaustion, depersonalization, reduced_efficacy, physical_symptoms, cognitive_impairment, motivation_loss, work_environment<br>- **10 reversed questions:** [21, 24, 28, 35, 38, 40, 45, 52, 53, 54]<br>- **Critical fixes:** 9 errors resolved (NaN, 20% minimum score, personality type weights, scale coverage)<br>- **Scale coverage:** 57 → 105 scales (+84% expansion)<br>- Added expandable "Affected Scales" section in test results<br>- Fixed Personality Type bipolar weights: 10 negative weights inverted to opposite poles<br>- Updated summary_service.dart: added burnout weights to allWeights map<br>- **Updated ADDING_NEW_TEST.md v2.3.0** with 4 critical rules and 11 typical problems<br>- Integrated in 7 files: test_registry, test_service, test_loader_service, summary_screen (×2), summary_service, test_result_screen<br>- **Test Architecture:** 7 Legacy Dart + 2 JSON = 9 total tests<br>- **Codebase growth:** 33,400 → 35,000 lines (+4.8%) ✅ |
 | 3.6.0 | 2025-01-09 | Claude Code | **DIGITAL DETOX TEST ADDED:** Technology addiction diagnostic<br>- **New Test:** Digital Detox (50 questions, 7 factors, 10 minutes)<br>- Created test stub: `digital_detox_test.dart` (118 lines)<br>- Created test data: `digital_detox_data.dart` (1,150 lines, bilingual)<br>- Created weights mapping: `digital_detox_weights.dart` (1,115 lines, 50 questions → 195 scales)<br>- **7 Factors:** dependency_level, attention_control, social_impact, physical_health, productivity_loss, emotional_state, usage_patterns<br>- **Scientific basis:** Digital Wellbeing Framework, Nomophobia Research, FOMO Theory, Cognitive Load Theory<br>- Integrated in 6 files: test_registry, test_service, test_loader_service, summary_screen (×2), summary_config<br>- Fixed class naming issue: `DigitalDetoxTestData` → alias imports<br>- Updated ADDING_NEW_TEST.md v2.2.0 with naming verification step<br>- **Test Architecture:** 6 Legacy Dart + 2 JSON = 8 total tests<br>- **Codebase growth:** 31,000 → 33,400 lines (+7.7%) ✅ |
 | 3.5.0 | 2025-01-09 | Claude Code | **LEGACY DART MIGRATION:** Converted to Legacy Dart architecture ⭐<br>- **Architecture Decision:** Legacy Dart chosen for 100-200 test scalability<br>- Converted temperament_profile_test from JSON to Legacy Dart (934 lines)<br>- Updated all 7 TestStub files with correct assetPath (5 empty, 2 JSON)<br>- Updated test_loader_service.dart: added temperament_profile_test case<br>- Optimized pubspec.yaml: only 2 JSON files (stress_test, self_esteem_test)<br>- Removed 4 placeholder JSON files (ipip_big_five, fisher_temperament, love_profile, sixteen_types)<br>- Fixed test loading: empty assetPath → Legacy Dart, non-empty → JSON<br>- Removed "should be converted to JSON" warnings<br>- Updated ADDING_NEW_TEST.md v2.0.0 with Legacy Dart instructions<br>- **Test Architecture:** 5 Legacy Dart + 2 JSON = 7 total tests<br>- All tests now load successfully without errors ✅ |
 | 3.4.0 | 2025-01-09 | Claude Code | **NEW TEST:** Temperament Profile Test added (60 questions, 6 factors) ⭐<br>- Created comprehensive temperament assessment based on Pavlov/Eysenck theories<br>- Added Dart stub: `temperament_profile_test.dart` (103 lines)<br>- Initially created with JSON (later converted to Legacy Dart in v3.5.0)<br>- Mapped all questions to 195 scales: `temperament_profile_test_weights.dart` (1,231 lines)<br>- 6 temperament factors: Energy, Emotional Stability, Self-Control, Social Openness, Tempo, Flexibility<br>- Added disclaimer and detailed interpretations (low/medium/high)<br>- Updated test registry and documentation<br>- Total tests: 6 → 7 |
 | 3.3.0 | 2025-01-09 | Claude Code | **TEST CATEGORIZATION:** Organized home screen with collapsible categories<br>- Created TestCategory model with 4 categories (🎭🧠❤️🌟)<br>- Implemented CategoryProvider with state persistence<br>- Redesigned home screen with animated collapsible sections<br>- Added categoryId to all test models (6 test data files)<br>- Categories collapsed by default for clean UX<br>- AnimatedSize + AnimatedRotation for smooth interactions<br>- Updated TODO: 10 items completed (+1 new) |
-| 3.2.0 | 2025-01-08 | Claude Code | **MBTI ENHANCEMENTS:** Complete Love Profile weights + cross-test display<br>- Separated Love Profile into dedicated file (978 lines, 60 questions)<br>- Fixed import conflicts and QuestionWeight type mismatches<br>- Implemented cross-test MBTI question aggregation in SummaryService<br>- Added real question/answer text loading with i18n support<br>- Added percentage influence display (weight/totalWeight × 100)<br>- Summary screen now shows questions from ALL tests, not just 16 Types<br>- Updated TODO: 9 items completed (+3 new) |
+| 3.2.0 | 2025-01-08 | Claude Code | **Personality Type ENHANCEMENTS:** Complete Love Profile weights + cross-test display<br>- Separated Love Profile into dedicated file (978 lines, 60 questions)<br>- Fixed import conflicts and QuestionWeight type mismatches<br>- Implemented cross-test Personality Type question aggregation in SummaryService<br>- Added real question/answer text loading with i18n support<br>- Added percentage influence display (weight/totalWeight × 100)<br>- Summary screen now shows questions from ALL tests, not just 16 Types<br>- Updated TODO: 9 items completed (+3 new) |
 | 3.1.0 | 2025-11-08 | Claude Code | **UI TESTS COMPLETE:** Critical widget tests implemented<br>- Added 3 widget test files (1,340 lines, 32+ tests)<br>- test_screen_test.dart: Fast clicking, race condition protection<br>- test_result_saving_test.dart: Data persistence, integrity<br>- language_switch_test.dart: i18n switching, UI updates<br>- Test coverage: 2,649 → 3,989 lines (+50%)<br>- Updated TODO list: 6 completed items |
 | 3.0.0 | 2025-11-08 | Claude Code | **MAJOR REFACTOR:** Documentation restructuring<br>- Split CLAUDE.md into modular docs/ directory<br>- Created 6 specialized guides (Architecture, Testing, etc.)<br>- Reduced main file from ~900 to ~400 lines<br>- Added CHANGELOG.md for version tracking<br>- Improved navigation and findability |
 | 2.1.0 | 2025-11-08 | Claude Code | Critical fix: blocking issue during fast clicks |
@@ -407,13 +411,13 @@ All comprehensive documentation is in the `docs/` directory:
 
 ---
 
-**Last Updated:** 2025-01-09
-**Document Version:** 3.7.0
+**Last Updated:** 2025-01-15
+**Document Version:** 3.9.0
 **Codebase State:** ~35,000 lines across 59 files (+238% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 tests (+50% since v3.0.0)
 **Architecture Status:** Production-ready with clean separation of concerns
 **Test Architecture:** 7 Legacy Dart + 2 JSON = 9 total tests ⭐ UPDATED
-**Recent Updates:** Added Burnout Diagnostic Test - professional burnout assessment (54 questions, 7 factors, 105 scales) ⭐ NEW
+**Recent Updates:** Fixed critical bipolar scales calculation bug - personality type scales now accurate (v3.9.0) ⭐ NEW
 
 ---
 

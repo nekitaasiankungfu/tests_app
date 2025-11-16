@@ -45,8 +45,8 @@ void main() {
     test('averages scores across multiple 16 Types attempts', () {
       final completedTests = [
         _createBipolarTestResult('ENFP', scores: {
-          'mbti_ei': BipolarDimensionScore(
-            dimensionId: 'mbti_ei',
+          'personality_type_ei': BipolarDimensionScore(
+            dimensionId: 'personality_type_ei',
             positiveScore: 30,
             negativeScore: 20,
             positiveMaxScore: 50,
@@ -56,8 +56,8 @@ void main() {
           ),
         }),
         _createBipolarTestResult('ENFP', scores: {
-          'mbti_ei': BipolarDimensionScore(
-            dimensionId: 'mbti_ei',
+          'personality_type_ei': BipolarDimensionScore(
+            dimensionId: 'personality_type_ei',
             positiveScore: 40,
             negativeScore: 10,
             positiveMaxScore: 50,
@@ -75,15 +75,15 @@ void main() {
 
       expect(result, isNotNull);
       final bipolarScores = result!['bipolarScores'] as Map<String, BipolarDimensionScore>;
-      expect(bipolarScores['mbti_ei']!.positiveScore, 70); // 30 + 40
-      expect(bipolarScores['mbti_ei']!.negativeScore, 30); // 20 + 10
+      expect(bipolarScores['personality_type_ei']!.positiveScore, 70); // 30 + 40
+      expect(bipolarScores['personality_type_ei']!.negativeScore, 30); // 20 + 10
     });
 
     test('determines dominant pole correctly for each dimension', () {
       final completedTests = [
         _createBipolarTestResult('ISTJ', scores: {
-          'mbti_ei': BipolarDimensionScore(
-            dimensionId: 'mbti_ei',
+          'personality_type_ei': BipolarDimensionScore(
+            dimensionId: 'personality_type_ei',
             positiveScore: 10, // E
             negativeScore: 40, // I (dominant)
             positiveMaxScore: 50,
@@ -105,8 +105,8 @@ void main() {
     test('handles balanced scores (equal positive and negative)', () {
       final completedTests = [
         _createBipolarTestResult('XXXX', scores: {
-          'mbti_ei': BipolarDimensionScore(
-            dimensionId: 'mbti_ei',
+          'personality_type_ei': BipolarDimensionScore(
+            dimensionId: 'personality_type_ei',
             positiveScore: 25,
             negativeScore: 25,
             positiveMaxScore: 50,
@@ -231,7 +231,7 @@ void main() {
   group('analyzeBipolarScore()', () {
     test('correctly identifies dominant positive pole', () {
       final score = BipolarDimensionScore(
-        dimensionId: 'mbti_ei',
+        dimensionId: 'personality_type_ei',
         positiveScore: 35,
         negativeScore: 15,
         positiveMaxScore: 50,
@@ -251,7 +251,7 @@ void main() {
 
     test('correctly identifies dominant negative pole', () {
       final score = BipolarDimensionScore(
-        dimensionId: 'mbti_ei',
+        dimensionId: 'personality_type_ei',
         positiveScore: 15,
         negativeScore: 35,
         positiveMaxScore: 50,
@@ -271,7 +271,7 @@ void main() {
 
     test('correctly identifies balanced score', () {
       final score = BipolarDimensionScore(
-        dimensionId: 'mbti_ei',
+        dimensionId: 'personality_type_ei',
         positiveScore: 25,
         negativeScore: 25,
         positiveMaxScore: 50,
@@ -288,7 +288,7 @@ void main() {
 
     test('handles edge case with 0% normalized score', () {
       final score = BipolarDimensionScore(
-        dimensionId: 'mbti_ei',
+        dimensionId: 'personality_type_ei',
         positiveScore: 0,
         negativeScore: 50,
         positiveMaxScore: 50,
@@ -305,7 +305,7 @@ void main() {
 
     test('handles edge case with 100% normalized score', () {
       final score = BipolarDimensionScore(
-        dimensionId: 'mbti_ei',
+        dimensionId: 'personality_type_ei',
         positiveScore: 50,
         negativeScore: 0,
         positiveMaxScore: 50,
@@ -577,7 +577,7 @@ void main() {
 
       final data = summaryService.getBipolarDimensionData(
         result,
-        'mbti_ei',
+        'personality_type_ei',
         'en',
       );
 
@@ -594,7 +594,7 @@ void main() {
 
       final data = summaryService.getBipolarDimensionData(
         result,
-        'mbti_ei',
+        'personality_type_ei',
         'en',
       );
 
@@ -606,7 +606,7 @@ void main() {
 
       final data = summaryService.getBipolarDimensionData(
         result,
-        'mbti_ei',
+        'personality_type_ei',
         'en',
       );
 
@@ -659,8 +659,8 @@ void main() {
         interpretation: 'Test',
         completedAt: DateTime.now(),
         bipolarScores: {
-          'mbti_ei': BipolarDimensionScore(
-            dimensionId: 'mbti_ei',
+          'personality_type_ei': BipolarDimensionScore(
+            dimensionId: 'personality_type_ei',
             positiveScore: 30,
             negativeScore: 20,
             positiveMaxScore: 50,
@@ -742,8 +742,8 @@ TestResult _createBipolarTestResult(
   // Create default scores if not provided
   final defaultScores = scores ??
       {
-        'mbti_ei': BipolarDimensionScore(
-          dimensionId: 'mbti_ei',
+        'personality_type_ei': BipolarDimensionScore(
+          dimensionId: 'personality_type_ei',
           positiveScore: personalityType[0] == 'E' ? 35 : 15,
           negativeScore: personalityType[0] == 'I' ? 35 : 15,
           positiveMaxScore: 50,
@@ -751,8 +751,8 @@ TestResult _createBipolarTestResult(
           dominantPole: personalityType[0],
           normalizedScore: personalityType[0] == 'E' ? 70.0 : 30.0,
         ),
-        'mbti_sn': BipolarDimensionScore(
-          dimensionId: 'mbti_sn',
+        'personality_type_sn': BipolarDimensionScore(
+          dimensionId: 'personality_type_sn',
           positiveScore: personalityType[1] == 'S' ? 35 : 15,
           negativeScore: personalityType[1] == 'N' ? 35 : 15,
           positiveMaxScore: 50,
@@ -760,8 +760,8 @@ TestResult _createBipolarTestResult(
           dominantPole: personalityType[1],
           normalizedScore: personalityType[1] == 'S' ? 70.0 : 30.0,
         ),
-        'mbti_tf': BipolarDimensionScore(
-          dimensionId: 'mbti_tf',
+        'personality_type_tf': BipolarDimensionScore(
+          dimensionId: 'personality_type_tf',
           positiveScore: personalityType[2] == 'T' ? 35 : 15,
           negativeScore: personalityType[2] == 'F' ? 35 : 15,
           positiveMaxScore: 50,
@@ -769,8 +769,8 @@ TestResult _createBipolarTestResult(
           dominantPole: personalityType[2],
           normalizedScore: personalityType[2] == 'T' ? 70.0 : 30.0,
         ),
-        'mbti_jp': BipolarDimensionScore(
-          dimensionId: 'mbti_jp',
+        'personality_type_jp': BipolarDimensionScore(
+          dimensionId: 'personality_type_jp',
           positiveScore: personalityType[3] == 'J' ? 35 : 15,
           negativeScore: personalityType[3] == 'P' ? 35 : 15,
           positiveMaxScore: 50,

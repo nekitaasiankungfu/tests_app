@@ -1,11 +1,11 @@
 import 'question_weight_models.dart';
 
 /// Question weights configuration for 16 Personality Types test
-/// Maps 80 questions to 8 MBTI unipolar scales (E/I, S/N, T/F, J/P)
+/// Maps 80 questions to 8 Personality Type unipolar scales (E/I, S/N, T/F, J/P)
 class SixteenTypesWeights {
   /// SIXTEEN TYPES - 80 Questions
   ///
-  /// Each question measures one of the 8 unipolar MBTI dimensions:
+  /// Each question measures one of the 8 unipolar Personality Type dimensions:
   /// - Extraversion (E) vs Introversion (I): 20 questions (10 per pole)
   /// - Sensing (S) vs Intuition (N): 20 questions (11 S, 9 N)
   /// - Thinking (T) vs Feeling (F): 20 questions (10 per pole)
