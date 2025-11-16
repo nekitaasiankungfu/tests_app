@@ -1,6 +1,6 @@
-# 🔴 ADDING TEST - 12 типичных ошибок и их решения
+# 🔴 ADDING TEST - 14 типичных ошибок и их решения
 
-> **Эти ошибки были обнаружены при добавлении реальных тестов (DISC, Burnout, Digital Detox)**
+> **Эти ошибки были обнаружены при добавлении реальных тестов (DISC, Burnout, Digital Detox, Holland Code, Love Languages)**
 > Используйте этот документ для быстрой диагностики проблем
 
 ---
@@ -395,6 +395,44 @@ static final Map<String, QuestionWeight> _weights = {
 
 ---
 
+## Ошибка #14: Использование неправильной переменной в test_service.dart
+
+### 🔍 Симптомы
+- Ошибка компиляции: `The getter 'testResult' isn't defined for the type 'TestService'`
+- Build failed на этапе компиляции
+- Сообщение: "Try correcting the name to the name of an existing getter"
+
+### ❌ Неправильно
+```dart
+// BLOCK 3: Интерпретации (строка ~292)
+} else if (testResult.testId == 'love_languages_v1') {
+  final percentage = (score / maxFactorScore) * 100;
+  interpretation = LoveLanguagesData.getFactorInterpretation(factorId, percentage);
+}
+```
+
+### ✅ Решение
+Используйте `test.id` вместо `testResult.testId`:
+```dart
+} else if (test.id == 'love_languages_v1') {
+  final percentage = (score / maxFactorScore) * 100;
+  interpretation = LoveLanguagesData.getFactorInterpretation(factorId, percentage);
+}
+```
+
+### 📍 Где искать проблему
+- Файл: `lib/services/test_service.dart`
+- Метод: `getTestResult()` → BLOCK 3 (интерпретации)
+- Строка: ~292
+
+### ⚠️ Важно
+В методе `getTestResult()` доступна переменная `test` (тип `TestModel`), а не `testResult`. Проверяйте условия как `test.id == 'your_test_id'`, следуя паттерну других тестов:
+- ✅ `test.id == 'holland_code_v1'`
+- ✅ `test.id == 'disc_personality_v1'`
+- ❌ `testResult.testId == 'your_test_id'` (переменная не существует в этом контексте)
+
+---
+
 ## 📝 Чеклист отладки
 
 При возникновении проблемы проверьте по порядку:
@@ -409,7 +447,8 @@ static final Map<String, QuestionWeight> _weights = {
 8. □ Правильное имя класса (без "Test")?
 9. □ Все 7 точек интеграции выполнены?
 10. □ Weights добавлены в summary_config._weights?
-11. □ Full restart (не hot reload)?
+11. □ В test_service.dart используется `test.id` (не `testResult.testId`)?
+12. □ Full restart (не hot reload)?
 
 ---
 

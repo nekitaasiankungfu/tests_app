@@ -11,6 +11,7 @@ import 'tests/burnout_diagnostic_test.dart';
 import 'tests/social_battery_test.dart';
 import 'tests/disc_personality_test.dart';
 import 'tests/holland_code_test.dart';
+import 'tests/love_languages_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -44,6 +45,7 @@ class TestRegistry {
     SixteenTypesTest(),
     IPIPBigFiveTest(),
     LoveProfileTest(),
+    LoveLanguagesTest(),
 
     // Temperament/Personality
     DISCPersonalityTest(),

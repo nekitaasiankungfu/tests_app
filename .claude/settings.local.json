@@ -34,7 +34,11 @@
       "Bash(ADDING_NEW_TEST_v3_renum.md)",
       "Bash(/tmp/combined.txt)",
       "Bash(/tmp/part1.txt)",
-      "Bash(/mnt/c/flutter/bin/dart:*)"
+      "Bash(/mnt/c/flutter/bin/dart:*)",
+      "Bash(while read scale)",
+      "Bash(do if ! grep -q \"id: ''''$scale''''\" lib/config/summary/hierarchical_scales.dart)",
+      "Bash(! echo \"$scale\")",
+      "Bash(then echo \"$scale\")"
     ],
     "deny": [],
     "ask": []

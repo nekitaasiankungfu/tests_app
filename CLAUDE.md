@@ -20,12 +20,12 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **12 psychological tests organized in 5 categories:**
+- **13 psychological tests organized in 5 categories:**
   - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
   - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
-  - ❤️ **Отношения:** Love Profile (60 q)
+  - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q) ⭐ NEW
   - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q)
-  - 💼 **Карьера:** Holland Code RIASEC (60 q) ⭐ NEW
+  - 💼 **Карьера:** Holland Code RIASEC (60 q)
 - **Category-based test grouping** with collapsible sections
 - Multilingual support (Russian/English)
 - Daily mood tracking
@@ -403,6 +403,7 @@ All comprehensive documentation is in the `docs/` directory:
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.12.0 | 2025-01-16 | Claude Code | **Love Languages Test Added** ⭐<br>- **Новый тест:** Love Languages (30 вопросов, 5 языков любви, 8 минут)<br>- **5 Love Languages:** Words of Affirmation (💬), Quality Time (⏰), Receiving Gifts (🎁), Acts of Service (🤝), Physical Touch (🤗)<br>- Created: test stub, data file (bilingual), weights file (41 scales: 37 unipolar + 4 bipolar)<br>- Integrated in 7 points: test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Fixed:** Ошибка #14 - использование `testResult.testId` вместо `test.id` в test_service.dart<br>- **Обновлена документация:** ADDING_TEST_ERRORS.md теперь содержит 14 ошибок (было 13)<br>- **Всего тестов:** 13 (5 категорий, 616 вопросов)<br>- **Test Architecture:** 11 Legacy Dart + 2 JSON = 13 total tests |
 | 3.11.0 | 2025-01-16 | Claude Code | **Holland Code Test + Documentation Fix** ⭐<br>- **Добавлен тест:** Holland Code RIASEC (60 вопросов, 6 факторов)<br>- **Новая категория:** 'career' для профориентационных тестов<br>- **Исправлена ошибка:** Weights не отображались в результатах<br>- **Обновлена документация:** Добавлена Ошибка #13 про summary_config._weights<br>- **Всего тестов:** 12 (5 категорий)<br>- **Codebase:** 37,000+ строк (+257% с v1.0.0) |
 | 3.10.0 | 2025-01-16 | Claude Code | **ADDING_NEW_TEST.md модульная структура v3.0.0** ⭐<br>- **Проблема:** Файл 3200+ строк превышал лимит токенов Claude Code (25000)<br>- **Решение:** Разбито на модульную структуру в `docs/adding-new-test/`<br>- **Создано 5 модулей:**<br>  • `ADDING_NEW_TEST_INDEX.md` - главный индекс<br>  • `ADDING_TEST_CHECKLIST.md` - 65-пунктовый чеклист<br>  • `ADDING_TEST_RULES.md` - 8 критических правил с ПРАВИЛОМ #8 (maxQuestionScore)<br>  • `ADDING_TEST_ERRORS.md` - 13 типичных ошибок с решениями<br>  • `ADDING_TEST_EXAMPLES.md` - готовые примеры кода<br>- **Результат:** Claude Code теперь читает каждый модуль полностью<br>- **Удалены:** устаревшие версии (v2.6.0, v3.md, v3_renum.md)<br>- **Польза:** Снижение ошибок при добавлении тестов благодаря каталогу проблем и правильным примерам |
 | 3.9.0 | 2025-01-15 | Claude Code | **CRITICAL FIX: Bipolar scales calculation** ⭐<br>- **FIXED:** Bipolar scales showed 100% on one pole with mixed answers (e.g., 2×"Never" + 2×"Always" → "Emotions 100%")<br>- **Root cause 1:** Score normalization used `(answerScore - 1) / 4.0` (assumed scores 1-5) instead of `answerScore / 4.0` (scores 0-4)<br>- **Root cause 2:** `_calculateBipolarPercentage()` didn't handle single-pole data correctly<br>- **Solution 1:** Fixed normalization in `summary_service.dart:162` to `answerScore / 4.0`<br>- **Solution 2:** New logic for 3 scenarios: both poles, one pole, no data<br>- **Result:** Bipolar scales now calculate correctly (2×0% + 2×100% → 50%) ✅<br>- **Updated ADDING_NEW_TEST.md v2.6.0** with RULE #7 (220+ lines: scale structure, bipolar calculation, examples)<br>- **Files changed:** 2 (summary_service.dart lines 162-166, 189-215; ADDING_NEW_TEST.md)<br>- **Bug impact:** All personality type scales (E/I, S/N, T/F, J/P) now accurate ✅<br>- **Documentation:** Complete explanation of 195 unipolar + 8 bipolar pole scales |
@@ -423,16 +424,16 @@ All comprehensive documentation is in the `docs/` directory:
 ---
 
 **Last Updated:** 2025-01-16
-**Document Version:** 3.11.0
-**Codebase State:** ~37,000+ lines across 60+ files (+257% growth since v1.0.0)
+**Document Version:** 3.12.0
+**Codebase State:** ~38,000+ lines across 63+ files (+266% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 12 tests across 5 categories (586 total questions)
+**Psychological Tests:** 13 tests across 5 categories (616 total questions)
 **Architecture Status:** Production-ready with clean separation of concerns
-**Test Architecture:** 10 Legacy Dart + 2 JSON = 12 total tests
+**Test Architecture:** 11 Legacy Dart + 2 JSON = 13 total tests
 **Recent Updates:**
-- Holland Code Career Test добавлен (v3.11.0) ⭐ NEW
-- Исправлена ошибка с отображением weights в результатах
-- Документация обновлена с Ошибкой #13
+- Love Languages Test добавлен (v3.12.0) ⭐ NEW
+- Исправлена Ошибка #14 (test.id vs testResult.testId)
+- Документация обновлена: ADDING_TEST_ERRORS.md теперь 14 ошибок
 
 ---
 

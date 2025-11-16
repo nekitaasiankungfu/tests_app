@@ -15,6 +15,7 @@ import '../data/burnout_diagnostic_data.dart' as burnout;
 import '../data/social_battery_data.dart';
 import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
+import '../data/love_languages_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -126,6 +127,9 @@ class TestLoaderService {
         break;
       case 'holland_code_v1':
         test = HollandCodeData.getHollandCodeTest();
+        break;
+      case 'love_languages_v1':
+        test = LoveLanguagesData.getLoveLanguagesTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

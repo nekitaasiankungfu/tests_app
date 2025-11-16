@@ -14,6 +14,7 @@ import '../config/summary/question_weights/burnout_diagnostic_weights.dart';
 import '../config/summary/question_weights/social_battery_weights.dart';
 import '../config/summary/question_weights/disc_personality_weights.dart';
 import '../config/summary/question_weights/holland_code_weights.dart';
+import '../config/summary/question_weights/love_languages_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -125,6 +126,7 @@ class SummaryService {
       ...TemperamentProfileTestWeights.weights,
       ...DISCPersonalityWeights.weights,
       ...HollandCodeWeights.weights,
+      ...LoveLanguagesWeights.weights,
     };
 
     // 8 personality type scales
@@ -501,6 +503,7 @@ class SummaryService {
       ...SocialBatteryWeights.weights,
       ...DISCPersonalityWeights.weights,
       ...HollandCodeWeights.weights,
+      ...LoveLanguagesWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');
