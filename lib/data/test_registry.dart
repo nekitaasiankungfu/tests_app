@@ -12,6 +12,7 @@ import 'tests/social_battery_test.dart';
 import 'tests/disc_personality_test.dart';
 import 'tests/holland_code_test.dart';
 import 'tests/love_languages_test.dart';
+import 'tests/color_psychology_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -57,6 +58,7 @@ class TestRegistry {
     HollandCodeTest(),
 
     // Emotional/Wellbeing
+    ColorPsychologyTest(), // Special color-based test
     DigitalDetoxTest(),
     BurnoutDiagnosticTest(),
 

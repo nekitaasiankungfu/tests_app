@@ -16,6 +16,7 @@ import '../data/social_battery_data.dart';
 import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
+import '../data/tests/color_psychology_test.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -130,6 +131,9 @@ class TestLoaderService {
         break;
       case 'love_languages_v1':
         test = LoveLanguagesData.getLoveLanguagesTest();
+        break;
+      case 'color_psychology_v1':
+        test = ColorPsychologyTest.getColorPsychologyTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

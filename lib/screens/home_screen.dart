@@ -12,6 +12,7 @@ import 'test_screen.dart';
 import 'test_disclaimer_screen.dart';
 import 'results_screen.dart';
 import 'settings_screen.dart';
+import 'color_psychology_test_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -348,8 +349,16 @@ class HomeScreen extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            // Если есть дисклеймер, показываем его, иначе сразу идем к тесту
-            if (test.disclaimer != null) {
+            // Проверяем, является ли это специальным цветовым тестом
+            if (test.id == 'color_psychology_v1') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ColorPsychologyTestScreen(),
+                ),
+              );
+            } else if (test.disclaimer != null) {
+              // Если есть дисклеймер, показываем его
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -357,6 +366,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             } else {
+              // Обычный тест
               Navigator.push(
                 context,
                 MaterialPageRoute(

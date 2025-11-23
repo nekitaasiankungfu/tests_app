@@ -38,7 +38,11 @@
       "Bash(while read scale)",
       "Bash(do if ! grep -q \"id: ''''$scale''''\" lib/config/summary/hierarchical_scales.dart)",
       "Bash(! echo \"$scale\")",
-      "Bash(then echo \"$scale\")"
+      "Bash(then echo \"$scale\")",
+      "Bash(flutter --version:*)",
+      "Bash(dart --version:*)",
+      "Bash(/mnt/r/flutter/bin/flutter doctor:*)",
+      "Bash(/mnt/r/flutter/bin/dart analyze:*)"
     ],
     "deny": [],
     "ask": []
