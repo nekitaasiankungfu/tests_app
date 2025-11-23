@@ -28,7 +28,9 @@ import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
 import '../data/anxiety_symptoms_inventory_data.dart';
+import '../data/depression_symptoms_inventory_data.dart';
 import '../data/career_compass_data.dart';
+import '../data/self_confidence_multiscale_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -82,6 +84,9 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
       case 'anxiety_symptoms_inventory_v1':
         testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
         break;
+      case 'depression_symptoms_inventory_v1':
+        testModel = DepressionSymptomsInventoryData.getDepressionSymptomsInventoryTest();
+        break;
       case 'career_compass_v1':
         // Career Compass: score is 0-4 representing career interest level
         // Show as descriptive text
@@ -92,6 +97,9 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
       case 'color_psychology_v1':
         // Special tests don't have traditional questions
         return answerScore.toString();
+      case 'self_confidence_multiscale_v1':
+        testModel = SelfConfidenceMultiscaleData.getSelfConfidenceMultiscaleTest();
+        break;
       default:
         appLogger.w('Unknown testId: $testId');
         return answerScore.toString();
@@ -2614,6 +2622,9 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
         case 'anxiety_symptoms_inventory_v1':
           testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
           break;
+        case 'depression_symptoms_inventory_v1':
+          testModel = DepressionSymptomsInventoryData.getDepressionSymptomsInventoryTest();
+          break;
         case 'career_compass_v1':
           // Career Compass uses scale names as "questions"
           final careerScaleId = questionId.replaceFirst('scale_', '');
@@ -2629,6 +2640,9 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
           return widget.languageCode == 'ru'
               ? 'Специальный тест: $questionId'
               : 'Special test: $questionId';
+        case 'self_confidence_multiscale_v1':
+          testModel = SelfConfidenceMultiscaleData.getSelfConfidenceMultiscaleTest();
+          break;
         default:
           appLogger.w('Unknown testId: $testId');
           return widget.languageCode == 'ru'

@@ -16,7 +16,9 @@ import '../config/summary/question_weights/disc_personality_weights.dart';
 import '../config/summary/question_weights/holland_code_weights.dart';
 import '../config/summary/question_weights/love_languages_weights.dart';
 import '../config/summary/question_weights/anxiety_symptoms_inventory_weights.dart';
+import '../config/summary/question_weights/depression_symptoms_inventory_weights.dart';
 import '../config/summary/question_weights/career_compass_weights.dart';
+import '../config/summary/question_weights/self_confidence_multiscale_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -130,7 +132,9 @@ class SummaryService {
       ...HollandCodeWeights.weights,
       ...LoveLanguagesWeights.weights,
       ...AnxietySymptomsInventoryWeights.weights,
+      ...DepressionSymptomsInventoryWeights.weights,
       ...CareerCompassWeights.weights,
+      ...SelfConfidenceMultiscaleWeights.weights,
     };
 
     // 8 personality type scales
@@ -519,7 +523,9 @@ class SummaryService {
       ...HollandCodeWeights.weights,
       ...LoveLanguagesWeights.weights,
       ...AnxietySymptomsInventoryWeights.weights,
+      ...DepressionSymptomsInventoryWeights.weights,
       ...CareerCompassWeights.weights,
+      ...SelfConfidenceMultiscaleWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

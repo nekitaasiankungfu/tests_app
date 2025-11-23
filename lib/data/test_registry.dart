@@ -14,7 +14,9 @@ import 'tests/holland_code_test.dart';
 import 'tests/love_languages_test.dart';
 import 'tests/color_psychology_test.dart';
 import 'tests/anxiety_symptoms_inventory_test.dart';
+import 'tests/depression_symptoms_inventory_test.dart';
 import 'tests/career_compass_test.dart';
+import 'tests/self_confidence_multiscale_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -65,6 +67,8 @@ class TestRegistry {
     DigitalDetoxTest(),
     BurnoutDiagnosticTest(),
     AnxietySymptomsInventoryTest(), // Anxiety assessment
+    DepressionSymptomsInventoryTest(), // Depression assessment
+    SelfConfidenceMultiscaleTest(), // Self-confidence assessment
 
     // Quick assessments
     StressTest(),

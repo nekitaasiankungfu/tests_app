@@ -20,15 +20,15 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **16 psychological tests organized in 5 categories:**
+- **17 psychological tests organized in 5 categories:**
   - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
   - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
   - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q)
-  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q)
+  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q), Depression Symptoms Inventory (27 q)
   - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice)
 - **Category-based test grouping** with collapsible sections
 - **Two test architectures:**
-  - Standard tests (14) - questionnaires with Likert scales
+  - Standard tests (15) - questionnaires with Likert scales
   - Special tests (2) - visual/interactive with custom UI (Color Psychology, Career Compass)
 - Multilingual support (Russian/English)
 - Daily mood tracking
@@ -485,6 +485,7 @@ Comprehensive modular guide for adding psychological tests (v3.2.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.16.0 | 2025-11-23 | Claude Code | **Depression Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Depression Symptoms Inventory (27 вопросов, 5 факторов, 7 минут)<br>- **5 Factors:** emotional (эмоциональные), cognitive (когнитивные), motivational (мотивационные), somatic (соматические), social (социальные)<br>- **4-point frequency scale:** scores 0-3 (Совсем нет / Несколько дней / Более половины дней / Почти каждый день)<br>- **Interpretation levels:** minimal (0-16%), mild (17-35%), moderate (36-58%), severe (59-78%), very_severe (79-100%)<br>- **Critical item:** Q27 (суицидальные мысли) - требует особого внимания<br>- **Created 3 files:**<br>  • Test stub: `depression_symptoms_inventory_test.dart`<br>  • Data file: `depression_symptoms_inventory_data.dart` (bilingual ru/en)<br>  • Weights: `depression_symptoms_inventory_weights.dart` (~40 scales)<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Scales mapped:** depression, positive_emotions, mood_stability, self_esteem, vitality, optimism, attention_control, and more<br>- **Всего тестов:** 17 (15 стандартных + 2 специальных)<br>- **Test Architecture:** 15 Legacy Dart + 2 Special = 17 total tests |
 | 3.15.0 | 2025-11-23 | Claude Code | **Merge: Anxiety Symptoms Inventory + Career Compass** ⭐<br>- **Объединение двух тестов из параллельных веток**<br>- **Anxiety Symptoms Inventory:** 24 вопроса, 4 фактора (somatic, cognitive, affective, behavioral), 4-point intensity scale (0-3)<br>- **Career Compass:** 56 forced_choice вопросов, 8 шкал, ipsative scoring<br>- **Всего тестов:** 16 (14 стандартных + 2 специальных)<br>- **Test Architecture:** 14 Legacy Dart + 2 Special = 16 total tests |
 | 3.14.0 | 2025-11-23 | Claude Code | **Anxiety Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Anxiety Symptoms Inventory (24 вопроса, 4 фактора, 5 минут)<br>- **4 Factors:** somatic (телесные), cognitive (когнитивные), affective (эмоциональные), behavioral (поведенческие)<br>- **4-point intensity scale:** scores 0-3 (Совсем нет / Слегка / Умеренно / Сильно)<br>- **Interpretation levels:** minimal (0-20%), mild (21-42%), moderate (43-69%), severe (70-100%)<br>- **Created 3 files:**<br>  • Test stub: `anxiety_symptoms_inventory_test.dart` (90 lines)<br>  • Data file: `anxiety_symptoms_inventory_data.dart` (500 lines, bilingual ru/en)<br>  • Weights: `anxiety_symptoms_inventory_weights.dart` (430 lines, ~30 scales)<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Scales mapped:** anxiety, panic_tendency, stress_tolerance, emotional_resilience, worry_tendency, attention_control, calmness, composure, vulnerability, neuroticism, and more<br>- **Note:** Does NOT affect 4 bipolar personality type scales (E/I, S/N, T/F, J/P) - тест измеряет симптоматику, а не когнитивные предпочтения<br>- **Всего тестов:** 15 (14 стандартных + 1 специальный)<br>- **Test Architecture:** 14 Legacy Dart + 1 Special = 15 total tests |
 | 3.14.0-career | 2025-01-23 | Claude Code | **Career Compass Test Added** ⭐ NEW<br>- **Новый тест:** Career Compass (56 forced_choice вопросов, 8 шкал, ~15 минут)<br>- **Второй специальный тест** - использует парные сравнения (A vs B)<br>- **8 Career Interest Scales:** people, analysis, creation, technology, business, nature, order, care<br>- **Ipsative Scoring:** очки распределяются между выбранными шкалами<br>- **Created 7 files:**<br>  • Models: `career_compass_model.dart` (210 lines)<br>  • Data: `career_compass_data.dart` (700 lines, 56 questions, 8 profiles)<br>  • Widget: `career_compass_question_widget.dart` (300 lines, VS cards)<br>  • Service: `career_compass_service.dart` (200 lines, ipsative scoring)<br>  • Main screen: `career_compass_test_screen.dart` (410 lines)<br>  • Results: `career_compass_result_screen.dart` (700 lines, radar chart)<br>  • Test stub: `career_compass_test.dart` (145 lines)<br>- **Bug fix:** maxScaleScore исправлен с 7 на 14 (формула: questions×2/scales)<br>- **Documentation updated:**<br>  • `ADDING_SPECIAL_TESTS.md` v1.2.0 - добавлен Forced Choice раздел<br>  • `ADDING_NEW_TEST_INDEX.md` v3.2.0 - Career Compass в примерах<br>- **Всего тестов:** 15 (13 стандартных + 2 специальных)<br>- **Test Architecture:** 13 Legacy Dart + 2 Special = 15 total tests |
@@ -510,20 +511,19 @@ Comprehensive modular guide for adding psychological tests (v3.2.0):
 ---
 
 **Last Updated:** 2025-11-23
-**Document Version:** 3.15.0
-**Codebase State:** ~43,000+ lines across 87+ files (+315% growth since v1.0.0)
+**Document Version:** 3.16.0
+**Codebase State:** ~44,000+ lines across 90+ files (+320% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 16 tests across 5 categories
-  - 14 standard tests (664 questions total)
+**Psychological Tests:** 17 tests across 5 categories
+  - 15 standard tests (691 questions total)
   - 2 special tests:
     - Color Psychology (6 interactive stages, 34+ interactions)
     - Career Compass (56 forced_choice questions, 8 career scales)
 **Architecture Status:** Production-ready with dual architecture support
-**Test Architecture:** 14 Legacy Dart + 2 Special = 16 total tests
+**Test Architecture:** 15 Legacy Dart + 2 Special = 17 total tests
 **Recent Updates:**
+- Depression Symptoms Inventory: 27 вопросов, 5 факторов, 4-point frequency scale (v3.16.0)
 - Merge: Anxiety Symptoms Inventory + Career Compass (v3.15.0)
-- Anxiety Symptoms Inventory: 24 вопроса, 4 фактора, 4-point intensity scale
-- Career Compass: 56 forced_choice вопросов, 8 career scales, ipsative scoring
 
 ---
 
