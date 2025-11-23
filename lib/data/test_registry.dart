@@ -19,6 +19,8 @@ import 'tests/career_compass_test.dart';
 import 'tests/wellbeing_happiness_inventory_test.dart';
 import 'tests/digital_career_fit_test.dart';
 import 'tests/self_confidence_multiscale_test.dart';
+import 'tests/relationship_compatibility_test.dart';
+import 'tests/friendship_psychology_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -53,6 +55,8 @@ class TestRegistry {
     IPIPBigFiveTest(),
     LoveProfileTest(),
     LoveLanguagesTest(),
+    RelationshipCompatibilityTest(), // Relationship compatibility assessment
+    FriendshipPsychologyTest(), // Friendship style and depth assessment
 
     // Temperament/Personality
     DISCPersonalityTest(),

@@ -33,6 +33,8 @@ import '../data/career_compass_data.dart';
 import '../data/wellbeing_happiness_inventory_data.dart';
 import '../data/digital_career_fit_data.dart';
 import '../data/self_confidence_multiscale_data.dart';
+import '../data/relationship_compatibility_data.dart';
+import '../data/friendship_psychology_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -107,6 +109,12 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
         return answerScore.toString();
       case 'self_confidence_multiscale_v1':
         testModel = SelfConfidenceMultiscaleData.getSelfConfidenceMultiscaleTest();
+        break;
+      case 'relationship_compatibility_v1':
+        testModel = RelationshipCompatibilityData.getRelationshipCompatibilityTest();
+        break;
+      case 'friendship_psychology_v1':
+        testModel = FriendshipPsychologyData.getFriendshipPsychologyTest();
         break;
       default:
         appLogger.w('Unknown testId: $testId');
@@ -2656,6 +2664,12 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
               : 'Special test: $questionId';
         case 'self_confidence_multiscale_v1':
           testModel = SelfConfidenceMultiscaleData.getSelfConfidenceMultiscaleTest();
+          break;
+        case 'relationship_compatibility_v1':
+          testModel = RelationshipCompatibilityData.getRelationshipCompatibilityTest();
+          break;
+        case 'friendship_psychology_v1':
+          testModel = FriendshipPsychologyData.getFriendshipPsychologyTest();
           break;
         default:
           appLogger.w('Unknown testId: $testId');
