@@ -20,17 +20,17 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **20 psychological tests organized in 5 categories:**
+- **22 psychological tests organized in 5 categories:**
   - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
   - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
-  - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q)
+  - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q), Romantic Potential (36 q)
   - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q), Depression Symptoms Inventory (27 q), Self Confidence Multiscale (36 q)
-  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice), Digital Career Fit (18 q)
+  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice), Digital Career Fit (18 q), Cognitive Ability (60 q) ⭐ NEW
 - **Category-based test grouping** with collapsible sections
 - **Three test architectures:**
-  - Standard tests (17) - questionnaires with Likert scales
+  - Standard tests (19) - questionnaires with Likert scales
   - Special tests (2) - visual/interactive with custom UI (Color Psychology, Career Compass)
-  - Profile tests (1) - multi-choice with 7-section result structure (Digital Career Fit)
+  - Profile tests (2) - multi-choice with 7-section result structure (Digital Career Fit, Romantic Potential)
 - Multilingual support (Russian/English)
 - Daily mood tracking
 - Result history and archive
@@ -51,7 +51,7 @@ A mobile application providing professional psychological tests for self-assessm
   - Radar chart visualization
   - Career profile matching with recommendations
   - ~15 minutes completion time
-- **Digital Career Fit Test features:** ⭐ NEW
+- **Digital Career Fit Test features:**
   - 18 multi-choice questions (6 options each)
   - 6 career directions: product_thinking, data_analytics, design_ux, content_marketing, management_communication, tech_development
   - **7-section result structure:**
@@ -66,6 +66,21 @@ A mobile application providing professional psychological tests for self-assessm
   - Dominant scale algorithm (10% gap threshold)
   - Bipolar personality scales integration
   - ~5 minutes completion time
+- **Romantic Potential Test features:**
+  - 36 questions (5-point Likert scale)
+  - 3 factors: romantic_potential, love_attitudes, love_stories
+  - **7-section result structure** (same as Digital Career Fit)
+  - 3 romantic profiles: Secure Romantic, Mixed Romantic, Romantic Challenges
+  - 12 reversed questions with proper handling
+  - ~8 minutes completion time
+- **Cognitive Ability Test features:** ⭐ NEW
+  - 60 questions (20 logical + 20 numerical + 20 verbal)
+  - 3 factors: logical_reasoning, numerical_ability, verbal_ability
+  - Binary scoring (0 = incorrect, 1 = correct)
+  - IQ-style assessment with correct answers
+  - Time-limited sections (10 minutes per section)
+  - ~15 psychological scales mapped per question
+  - ~30 minutes completion time
 - Theme customization (6 pastel colors + dark mode)
 - Onboarding experience for new users
 - Offline-first architecture with local persistence
@@ -430,11 +445,19 @@ SummaryData? calculateSummary(List<TestResult> results) {
 | `lib/services/career_compass_service.dart` | 200 | Ipsative scoring, profile matching |
 | `lib/widgets/career_compass_question_widget.dart` | 300 | Forced choice UI (A vs B cards) |
 | `lib/data/tests/career_compass_test.dart` | 145 | Test stub (questions: []) |
-| **Digital Career Fit Test (Profile)** ||| ⭐ NEW
+| **Digital Career Fit Test (Profile)** |||
 | `lib/data/tests/digital_career_fit_test.dart` | 100 | Test stub with metadata |
 | `lib/data/digital_career_fit_data.dart` | 800 | 18 questions, 7 profiles, determineProfile() |
 | `lib/config/summary/question_weights/digital_career_fit_weights.dart` | 400 | Weights + bipolar scales |
 | `lib/screens/test_result_screen.dart` | +200 | _buildDigitalCareerProfileCard(), _buildDigitalCareerExtendedSection() |
+| **Romantic Potential Test (Profile)** |||
+| `lib/data/tests/romantic_potential_test.dart` | 90 | Test stub with metadata |
+| `lib/data/romantic_potential_data.dart` | 850 | 36 questions, 3 profiles, 7-section structure |
+| `lib/config/summary/question_weights/romantic_potential_weights.dart` | 750 | Weights for ~60 scales |
+| **Cognitive Ability Test** ||| ⭐ NEW
+| `lib/data/tests/cognitive_ability_test.dart` | 57 | Test stub with metadata |
+| `lib/data/cognitive_ability_data.dart` | ~900 | 60 questions (bilingual), 3 factors, binary scoring |
+| `lib/config/summary/question_weights/cognitive_ability_weights.dart` | 1115 | Weights for ~15 scales per question |
 
 ---
 
@@ -512,6 +535,8 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.20.0 | 2025-11-23 | Claude Code | **Cognitive Ability Test Added** ⭐ NEW<br>- **Новый тест:** Cognitive Ability Test (60 вопросов, 3 фактора, ~30 минут)<br>- **3 Factors:** logical_reasoning (Q1-20), numerical_ability (Q21-40), verbal_ability (Q41-60)<br>- **Binary scoring:** 0 = incorrect, 1 = correct (IQ-style test)<br>- **Time-limited:** 10 minutes per section<br>- **Created 3 files:**<br>  • Test stub: `cognitive_ability_test.dart` (57 lines)<br>  • Data file: `cognitive_ability_data.dart` (60 questions, bilingual ru/en)<br>  • Weights: `cognitive_ability_weights.dart` (1115 lines, ~15 scales per question)<br>- **Scales mapped:** analytical_thinking, abstract_reasoning, problem_solving, critical_thinking, learning_ability, attention_control, cognitive_flexibility, working_memory, numerical_ability, verbal_intelligence, openness, conscientiousness, achievement_orientation, intellectual_curiosity, intuition_pole, thinking_pole<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service, summary_screen (2 switches), summary_config<br>- **Всего тестов:** 22 (19 стандартных + 2 специальных + 1 profile)<br>- **Test Architecture:** 19 Legacy Dart + 2 Special + 1 Profile = 22 total tests |
+| 3.19.0 | 2025-11-23 | Claude Code | **Romantic Potential Test Added**<br>- **Новый тест:** Romantic Potential and Love Beliefs (36 вопросов, 3 фактора, ~8 минут)<br>- **3 Factors:** romantic_potential, love_attitudes, love_stories<br>- **3 Profiles:** Secure Romantic, Mixed Romantic, Romantic Challenges<br>- **7-section result structure** (same as Digital Career Fit)<br>- **Created 3 files:** test stub, data file (850 lines), weights file (750 lines, ~60 scales)<br>- **Integrated in 9 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (3 switches), summary_config, test_result_screen<br>- **12 reversed questions** with proper handling<br>- **Всего тестов:** 21 (18 стандартных + 2 специальных + 1 profile)<br>- **Test Architecture:** 18 Legacy Dart + 2 Special + 1 Profile = 21 total tests |
 | 3.18.0 | 2025-11-23 | Claude Code | **Merge: Digital Career Fit + Depression Symptoms + Self Confidence** ⭐<br>- **Объединение тестов из параллельных веток**<br>- **Digital Career Fit:** 18 вопросов, 6 направлений, 7-секционная структура результатов<br>- **Depression Symptoms Inventory:** 27 вопросов, 5 факторов<br>- **Self Confidence Multiscale:** 36 вопросов (из remote)<br>- **Documentation v3.3.0:** ADDING_TEST_RESULTS.md, 75-point checklist<br>- **Всего тестов:** 20 (18 стандартных + 2 специальных)<br>- **Test Architecture:** 18 Legacy Dart + 2 Special = 20 total tests |
 | 3.17.0 | 2025-11-23 | Claude Code | **Digital Career Fit Test + 7-Section Results Documentation** ⭐<br>- **Новый тест:** Digital Career Fit (18 вопросов, 6 карьерных направлений, ~5 минут)<br>- **6 Career Directions:** product_thinking, data_analytics, design_ux, content_marketing, management_communication, tech_development<br>- **7 Career Profiles:** Product Manager, Data Analyst, UX Designer, Content Marketer, Project Manager, Developer, Mixed<br>- **7-Section Result Structure**<br>- **Documentation v3.3.0:** ADDING_TEST_RESULTS.md (NEW) |
 | 3.16.0 | 2025-11-23 | Claude Code | **Depression Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Depression Symptoms Inventory (27 вопросов, 5 факторов, 7 минут)<br>- **5 Factors:** emotional, cognitive, motivational, somatic, social<br>- **4-point frequency scale:** scores 0-3 |
@@ -540,24 +565,24 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 ---
 
 **Last Updated:** 2025-11-23
-**Document Version:** 3.18.0
-**Codebase State:** ~47,000+ lines across 100+ files (+350% growth since v1.0.0)
+**Document Version:** 3.20.0
+**Codebase State:** ~50,000+ lines across 100+ files (+380% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 20 tests across 5 categories
-  - 17 standard tests (775 questions total)
+**Psychological Tests:** 22 tests across 5 categories
+  - 19 standard tests (871 questions total)
   - 2 special tests:
     - Color Psychology (6 interactive stages, 34+ interactions)
     - Career Compass (56 forced_choice questions, 8 career scales)
   - 1 profile test:
     - Digital Career Fit (18 questions, 7-section result structure)
 **Architecture Status:** Production-ready with triple architecture support
-**Test Architecture:** 17 Legacy Dart + 2 Special + 1 Profile = 20 total tests
+**Test Architecture:** 19 Legacy Dart + 2 Special + 1 Profile = 22 total tests
 **Recent Updates:**
-- Merge: Digital Career Fit + Self Confidence Multiscale (v3.18.0) ⭐ NEW
+- Cognitive Ability Test: 60 вопросов (IQ-style), 3 фактора, binary scoring (v3.20.0) ⭐ NEW
+- Romantic Potential: 36 вопросов, 3 фактора, 7-секционная структура (v3.19.0)
+- Merge: Digital Career Fit + Self Confidence Multiscale (v3.18.0)
 - Digital Career Fit: 18 вопросов, 6 направлений, 7-секционная структура (v3.17.0)
-- Self Confidence Multiscale: 36 вопросов, 3 фактора (v3.16.0 remote)
 - Depression Symptoms Inventory: 27 вопросов, 5 факторов (v3.16.0 remote)
-- Wellbeing Happiness Inventory: 30 вопросов, 6 факторов PERMA+ (v3.16.0 local)
 
 ---
 

@@ -19,6 +19,8 @@ import 'tests/career_compass_test.dart';
 import 'tests/wellbeing_happiness_inventory_test.dart';
 import 'tests/digital_career_fit_test.dart';
 import 'tests/self_confidence_multiscale_test.dart';
+import 'tests/romantic_potential_test.dart';
+import 'tests/cognitive_ability_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -53,6 +55,7 @@ class TestRegistry {
     IPIPBigFiveTest(),
     LoveProfileTest(),
     LoveLanguagesTest(),
+    RomanticPotentialTest(), // Romantic beliefs and potential assessment
 
     // Temperament/Personality
     DISCPersonalityTest(),
@@ -64,6 +67,7 @@ class TestRegistry {
     HollandCodeTest(),
     CareerCompassTest(), // Special forced_choice test
     DigitalCareerFitTest(), // Digital career direction assessment
+    CognitiveAbilityTest(), // Cognitive ability assessment (IQ-style)
 
     // Emotional/Wellbeing
     ColorPsychologyTest(), // Special color-based test

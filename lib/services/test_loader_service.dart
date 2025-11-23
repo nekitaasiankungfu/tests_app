@@ -23,6 +23,8 @@ import '../data/tests/career_compass_test.dart';
 import '../data/wellbeing_happiness_inventory_data.dart';
 import '../data/digital_career_fit_data.dart';
 import '../data/self_confidence_multiscale_data.dart';
+import '../data/romantic_potential_data.dart';
+import '../data/cognitive_ability_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -158,6 +160,12 @@ class TestLoaderService {
         break;
       case 'self_confidence_multiscale_v1':
         test = SelfConfidenceMultiscaleData.getSelfConfidenceMultiscaleTest();
+        break;
+      case 'romantic_potential_v1':
+        test = RomanticPotentialData.getRomanticPotentialTest();
+        break;
+      case 'cognitive_ability_v1':
+        test = CognitiveAbilityData.getCognitiveAbilityTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

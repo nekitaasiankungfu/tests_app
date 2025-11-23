@@ -7,6 +7,7 @@ import '../providers/user_preferences_provider.dart';
 import '../data/ipip_big_five_data.dart';
 import '../data/love_profile_data.dart';
 import '../data/digital_career_fit_data.dart';
+import '../data/romantic_potential_data.dart';
 import '../utils/theme_utils.dart';
 import '../constants/color_constants.dart';
 import '../config/summary_config.dart';
@@ -90,6 +91,9 @@ class _TestResultScreenState extends State<TestResultScreen> {
                       ] else if (widget.result.testId == 'digital_career_fit_v1') ...[
                         // Digital Career Fit - показываем карточку профиля
                         _buildDigitalCareerProfileCard(widget.result, languageCode, themeColor, isDark),
+                      ] else if (widget.result.testId == 'romantic_potential_v1') ...[
+                        // Romantic Potential - показываем карточку профиля
+                        _buildRomanticProfileCard(widget.result, languageCode, themeColor, isDark),
                       ] else
                         _buildResultCard(widget.result, languageCode, themeColor, isDark),
                       const SizedBox(height: 30),
@@ -105,6 +109,11 @@ class _TestResultScreenState extends State<TestResultScreen> {
                         if (widget.result.testId == 'digital_career_fit_v1') ...[
                           const SizedBox(height: 30),
                           _buildDigitalCareerExtendedSection(widget.result, languageCode, themeColor, isDark),
+                        ],
+                        // Расширенный профиль для Romantic Potential
+                        if (widget.result.testId == 'romantic_potential_v1') ...[
+                          const SizedBox(height: 30),
+                          _buildRomanticExtendedSection(widget.result, languageCode, themeColor, isDark),
                         ],
                       ] else
                         ...[
@@ -1081,6 +1090,287 @@ class _TestResultScreenState extends State<TestResultScreen> {
               ],
             ),
           )),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================================
+  // ROMANTIC POTENTIAL - Карточка профиля (7 секций)
+  // ============================================================================
+
+  Widget _buildRomanticProfileCard(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = RomanticPotentialData.determineProfile(percentages);
+    final profile = RomanticPotentialData.getProfile(profileId);
+
+    if (profile == null) {
+      return _buildResultCard(result, languageCode, themeColor, isDark);
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            AppColors.darkCard,
+            AppColors.darkSurfaceHigh,
+          ] : [
+            themeColor.withOpacity(0.15),
+            themeColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : themeColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          // Иконка профиля
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: themeColor.withOpacity(isDark ? 0.3 : 0.2),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              _getRomanticProfileIcon(profileId),
+              size: 50,
+              color: isDark ? Colors.white : themeColor,
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Название профиля
+          Text(
+            languageCode == 'ru' ? 'Ваш романтический профиль' : 'Your Romantic Profile',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            profile.getName(languageCode),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : themeColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          // Описание профиля (секция 2: Почему именно он)
+          Text(
+            profile.getDescription(languageCode),
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData _getRomanticProfileIcon(String profileId) {
+    switch (profileId) {
+      case 'profile_secure_romantic':
+        return Icons.favorite;
+      case 'profile_mixed_romantic':
+        return Icons.favorite_border;
+      case 'profile_romantic_challenges':
+        return Icons.healing;
+      default:
+        return Icons.favorite_outline;
+    }
+  }
+
+  Widget _buildRomanticExtendedSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = RomanticPotentialData.determineProfile(percentages);
+    final profile = RomanticPotentialData.getProfile(profileId);
+
+    if (profile == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Секция 3: Сильные стороны (characteristics)
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Ваши сильные стороны' : 'Your Strengths',
+          icon: Icons.star_outline,
+          items: profile.getCharacteristics(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Секция 4: Подходящие направления (suitableRoles)
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Что подходит именно вам' : 'What Suits You',
+          icon: Icons.lightbulb_outline,
+          items: profile.getSuitableRoles(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Секция 5: Рекомендации по развитию
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Рекомендации по развитию' : 'Development Recommendations',
+          icon: Icons.trending_up,
+          items: profile.getRecommendations(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Секция 6: Что попробовать сегодня (tryToday)
+        _buildTryTodayCard(
+          title: languageCode == 'ru' ? 'Что попробовать сегодня' : 'Try Today',
+          content: profile.getTryToday(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Секция 7: Вдохновляющий вывод (inspiringMessage)
+        _buildInspiringCard(
+          content: profile.getInspiringMessage(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+      ],
+    );
+  }
+
+  /// Карточка "Что попробовать сегодня" - одиночный текст
+  Widget _buildTryTodayCard({
+    required String title,
+    required String content,
+    required Color themeColor,
+    required bool isDark,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.amber.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? Colors.amber.withOpacity(0.3) : Colors.amber.withOpacity(0.5),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.today,
+                color: isDark ? Colors.amber[300] : Colors.amber[700],
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.amber[300] : Colors.amber[800],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.6,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Карточка вдохновляющего сообщения
+  Widget _buildInspiringCard({
+    required String content,
+    required Color themeColor,
+    required bool isDark,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            themeColor.withOpacity(0.2),
+            themeColor.withOpacity(0.1),
+          ] : [
+            themeColor.withOpacity(0.15),
+            themeColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? themeColor.withOpacity(0.3) : themeColor.withOpacity(0.4),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.auto_awesome,
+            color: isDark ? Colors.white : themeColor,
+            size: 32,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 16,
+              height: 1.6,
+              fontStyle: FontStyle.italic,
+              color: isDark ? Colors.white : Colors.grey[800],
+            ),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );
