@@ -13,6 +13,7 @@ import 'summary/question_weights/social_battery_weights.dart';
 import 'summary/question_weights/disc_personality_weights.dart';
 import 'summary/question_weights/holland_code_weights.dart';
 import 'summary/question_weights/love_languages_weights.dart';
+import 'summary/question_weights/anxiety_symptoms_inventory_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2305,6 +2306,7 @@ class QuestionWeightsConfig {
     ...DISCPersonalityWeights.weights,
     ...HollandCodeWeights.weights,
     ...LoveLanguagesWeights.weights,
+    ...AnxietySymptomsInventoryWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

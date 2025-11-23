@@ -27,6 +27,7 @@ import '../data/social_battery_data.dart';
 import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
+import '../data/anxiety_symptoms_inventory_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -76,6 +77,9 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
         break;
       case 'love_languages_v1':
         testModel = LoveLanguagesData.getLoveLanguagesTest();
+        break;
+      case 'anxiety_symptoms_inventory_v1':
+        testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
         break;
       default:
         appLogger.w('Unknown testId: $testId');
@@ -2582,6 +2586,9 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
           break;
         case 'love_languages_v1':
           testModel = LoveLanguagesData.getLoveLanguagesTest();
+          break;
+        case 'anxiety_symptoms_inventory_v1':
+          testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
           break;
         default:
           appLogger.w('Unknown testId: $testId');

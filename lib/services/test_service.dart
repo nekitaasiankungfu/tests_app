@@ -12,6 +12,7 @@ import '../data/social_battery_data.dart';
 import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
+import '../data/anxiety_symptoms_inventory_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -93,13 +94,15 @@ class TestService {
     // Determine max question score depending on test
     final int maxQuestionScore = test.id == 'fisher_temperament'
         ? 3
-        : test.id == 'disc_personality_v1'
-            ? 4  // DISC uses 0-4 scoring
-            : test.id == 'holland_code_v1'
-                ? 4  // Holland Code uses 0-4 scoring
-                : test.id == 'love_languages_v1'
-                    ? 4  // Love Languages uses 0-4 scoring
-                    : 5;
+        : test.id == 'anxiety_symptoms_inventory_v1'
+            ? 3  // Anxiety Symptoms Inventory uses 0-3 scoring (4-point intensity scale)
+            : test.id == 'disc_personality_v1'
+                ? 4  // DISC uses 0-4 scoring
+                : test.id == 'holland_code_v1'
+                    ? 4  // Holland Code uses 0-4 scoring
+                    : test.id == 'love_languages_v1'
+                        ? 4  // Love Languages uses 0-4 scoring
+                        : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -238,6 +241,9 @@ class TestService {
     } else if (test.id == 'love_languages_v1') {
       factorNames = LoveLanguagesData.getFactorNames();
       factorInterpretations = {};
+    } else if (test.id == 'anxiety_symptoms_inventory_v1') {
+      factorNames = AnxietySymptomsInventoryData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
@@ -293,6 +299,10 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             LoveLanguagesData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'anxiety_symptoms_inventory_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            AnxietySymptomsInventoryData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }

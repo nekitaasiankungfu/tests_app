@@ -20,16 +20,16 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **14 psychological tests organized in 5 categories:**
+- **15 psychological tests organized in 5 categories:**
   - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
   - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
   - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q)
-  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages) ⭐ NEW
+  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q) ⭐ NEW
   - 💼 **Карьера:** Holland Code RIASEC (60 q)
 - **Category-based test grouping** with collapsible sections
 - **Two test architectures:**
-  - Standard tests (13) - questionnaires with Likert scales
-  - Special tests (1) - visual/interactive with custom UI ⭐ NEW
+  - Standard tests (14) - questionnaires with Likert scales
+  - Special tests (1) - visual/interactive with custom UI
 - Multilingual support (Russian/English)
 - Daily mood tracking
 - Result history and archive
@@ -337,27 +337,28 @@ SummaryData? calculateSummary(List<TestResult> results) {
 15. ✅ **Social Battery Test** - Social energy assessment (40 questions, 6 factors)
 16. ✅ **Holland Code Test** - Career interests RIASEC (60 questions, 6 factors)
 17. ✅ **Love Languages Test** - Five love languages (30 questions, 5 languages)
-18. ✅ **Color Psychology Test** - Visual projective test (6 stages, 12 scales, 34+ interactions) ⭐ NEW
+18. ✅ **Color Psychology Test** - Visual projective test (6 stages, 12 scales, 34+ interactions)
+19. ✅ **Anxiety Symptoms Inventory** - Anxiety assessment (24 questions, 4 factors, 5 minutes) ⭐ NEW
 
 ### 🔄 In Progress
 
-19. 🔄 **Large File Refactoring** - Services extracted, data files remain
-20. 🔄 **Documentation Coverage** - 5-7% (target: 60%+) - improved with special tests guide
-21. 🔄 **Test Coverage** - 3,989 lines, ~35 tests (target: 60% of codebase)
+20. 🔄 **Large File Refactoring** - Services extracted, data files remain
+21. 🔄 **Documentation Coverage** - 5-7% (target: 60%+) - improved with special tests guide
+22. 🔄 **Test Coverage** - 3,989 lines, ~35 tests (target: 60% of codebase)
 
 ### 🔴 High Priority
 
-22. 🔴 **Encrypted Storage** - Migrate to `flutter_secure_storage` (4-6 hours)
-23. 🔴 **Incomplete TODOs** - Resolve remaining TODO items in code (3-4 hours)
+23. 🔴 **Encrypted Storage** - Migrate to `flutter_secure_storage` (4-6 hours)
+24. 🔴 **Incomplete TODOs** - Resolve remaining TODO items in code (3-4 hours)
 
 ### 🟢 Low Priority
 
-24. 🟢 **i18n Enhancement** - ARB-based internationalization (10 hours)
-25. 🟢 **Analytics** - Firebase Analytics integration (4 hours)
-26. 🟢 **Accessibility** - Screen reader support (8 hours)
-27. ~~🟢 **JSON Test Data** - Extract to JSON files~~ **CANCELLED** - Using Legacy Dart + Special architecture
+25. 🟢 **i18n Enhancement** - ARB-based internationalization (10 hours)
+26. 🟢 **Analytics** - Firebase Analytics integration (4 hours)
+27. 🟢 **Accessibility** - Screen reader support (8 hours)
+28. ~~🟢 **JSON Test Data** - Extract to JSON files~~ **CANCELLED** - Using Legacy Dart + Special architecture
 
-**📊 Progress:** 18 critical items completed, 3 in progress, 2 high-priority remaining
+**📊 Progress:** 19 critical items completed, 3 in progress, 2 high-priority remaining
 
 **📌 Architecture Decisions:**
 - Legacy Dart chosen for standard tests (scalability, performance, type safety)
@@ -381,7 +382,11 @@ SummaryData? calculateSummary(List<TestResult> results) {
 | `lib/data/burnout_diagnostic_data.dart` | 1,540 | Burnout Diagnostic test (54 questions) |
 | `lib/data/holland_code_data.dart` | 1,150 | Holland Code test (60 questions) |
 | `lib/config/summary/question_weights/holland_code_weights.dart` | 960 | Holland Code weights |
-| **Color Psychology Test (Special)** ||| ⭐ NEW
+| **Anxiety Symptoms Inventory** ||| ⭐ NEW
+| `lib/data/tests/anxiety_symptoms_inventory_test.dart` | 90 | Test stub with metadata |
+| `lib/data/anxiety_symptoms_inventory_data.dart` | 500 | 24 questions (bilingual), 4 factors |
+| `lib/config/summary/question_weights/anxiety_symptoms_inventory_weights.dart` | 430 | Weights mapping (~30 scales) |
+| **Color Psychology Test (Special)** |||
 | `lib/models/color_psychology_model.dart` | 280 | Color test data models (6 result types) |
 | `lib/data/color_psychology_data.dart` | 450 | Color test data (10 colors, 8 emotions, scales) |
 | `lib/screens/color_psychology_test_screen.dart` | 495 | Main test screen (6 stages management) |
@@ -463,6 +468,7 @@ Comprehensive modular guide for adding psychological tests (v3.1.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.14.0 | 2025-11-23 | Claude Code | **Anxiety Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Anxiety Symptoms Inventory (24 вопроса, 4 фактора, 5 минут)<br>- **4 Factors:** somatic (телесные), cognitive (когнитивные), affective (эмоциональные), behavioral (поведенческие)<br>- **4-point intensity scale:** scores 0-3 (Совсем нет / Слегка / Умеренно / Сильно)<br>- **Interpretation levels:** minimal (0-20%), mild (21-42%), moderate (43-69%), severe (70-100%)<br>- **Created 3 files:**<br>  • Test stub: `anxiety_symptoms_inventory_test.dart` (90 lines)<br>  • Data file: `anxiety_symptoms_inventory_data.dart` (500 lines, bilingual ru/en)<br>  • Weights: `anxiety_symptoms_inventory_weights.dart` (430 lines, ~30 scales)<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Scales mapped:** anxiety, panic_tendency, stress_tolerance, emotional_resilience, worry_tendency, attention_control, calmness, composure, vulnerability, neuroticism, and more<br>- **Note:** Does NOT affect 4 bipolar personality type scales (E/I, S/N, T/F, J/P) - тест измеряет симптоматику, а не когнитивные предпочтения<br>- **Всего тестов:** 15 (14 стандартных + 1 специальный)<br>- **Test Architecture:** 14 Legacy Dart + 1 Special = 15 total tests |
 | 3.13.0 | 2025-01-18 | Claude Code | **Color Psychology Test + Special Tests Architecture** ⭐ MAJOR<br>- **Новый тест:** Color Psychology (6 этапов, 12-15 минут, 34+ взаимодействий)<br>- **Первый тест со специальной архитектурой** - не использует стандартный вопрос-ответ формат<br>- **6 Interactive Stages:**<br>  1. Быстрый выбор (30 сек, 3+3 цвета)<br>  2. Ранжирование (60 сек, drag-and-drop всех 10 цветов)<br>  3. Парные сравнения (2 мин, 20 пар из 45)<br>  4. Эмоциональные ассоциации (8 базовых эмоций → цвета)<br>  5. Жизненные сферы (6 сфер + 4 ситуации → цвета)<br>  6. Временная перспектива (прошлое/настоящее/будущее/идеал/страх)<br>- **Created 13 files:**<br>  • Models: `color_psychology_model.dart` (280 lines, 6 result types)<br>  • Data: `color_psychology_data.dart` (450 lines, 10 colors, 8 emotions, 12 scales)<br>  • 7 Widgets: selection, ranking, paired_comparisons, emotional_associations, life_domains, temporal_perspective, association (200-280 lines each)<br>  • Main screen: `color_psychology_test_screen.dart` (495 lines, stage management)<br>  • Results screen: `color_psychology_result_screen.dart` (1,150 lines, all 6 stages display) ⭐<br>  • Service: `color_psychology_service.dart` (850 lines, 12 scales + consistency metrics)<br>  • Test stub: `color_psychology_test.dart` (empty questions list)<br>- **Results screen features:** 12 scales, 6 stage results, consistency metrics, patterns, recommendations<br>- **Documentation updated:**<br>  • `ADDING_NEW_TEST_INDEX.md` v3.1.0 - added special tests section<br>  • `ADDING_SPECIAL_TESTS.md` v1.1.0 created - comprehensive guide (1900+ lines)<br>  • ЭТАП 9 added: Creating results screen (400+ lines of templates and examples)<br>- **Всего тестов:** 14 (13 стандартных + 1 специальный)<br>- **Test Architecture:** 13 Legacy Dart + 1 Special = 14 total tests<br>- **Codebase growth:** 38,000 → 40,000+ lines (+287% с v1.0.0) |
 | 3.12.0 | 2025-01-16 | Claude Code | **Love Languages Test Added** ⭐<br>- **Новый тест:** Love Languages (30 вопросов, 5 языков любви, 8 минут)<br>- **5 Love Languages:** Words of Affirmation (💬), Quality Time (⏰), Receiving Gifts (🎁), Acts of Service (🤝), Physical Touch (🤗)<br>- Created: test stub, data file (bilingual), weights file (41 scales: 37 unipolar + 4 bipolar)<br>- Integrated in 7 points: test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Fixed:** Ошибка #14 - использование `testResult.testId` вместо `test.id` в test_service.dart<br>- **Обновлена документация:** ADDING_TEST_ERRORS.md теперь содержит 14 ошибок (было 13)<br>- **Всего тестов:** 13 (5 категорий, 616 вопросов)<br>- **Test Architecture:** 11 Legacy Dart + 2 JSON = 13 total tests |
 | 3.11.0 | 2025-01-16 | Claude Code | **Holland Code Test + Documentation Fix** ⭐<br>- **Добавлен тест:** Holland Code RIASEC (60 вопросов, 6 факторов)<br>- **Новая категория:** 'career' для профориентационных тестов<br>- **Исправлена ошибка:** Weights не отображались в результатах<br>- **Обновлена документация:** Добавлена Ошибка #13 про summary_config._weights<br>- **Всего тестов:** 12 (5 категорий)<br>- **Codebase:** 37,000+ строк (+257% с v1.0.0) |
@@ -484,20 +490,19 @@ Comprehensive modular guide for adding psychological tests (v3.1.0):
 
 ---
 
-**Last Updated:** 2025-01-18
-**Document Version:** 3.13.0
-**Codebase State:** ~40,000+ lines across 77+ files (+287% growth since v1.0.0)
+**Last Updated:** 2025-11-23
+**Document Version:** 3.14.0
+**Codebase State:** ~41,000+ lines across 80+ files (+296% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 14 tests across 5 categories
-  - 13 standard tests (616 questions total)
+**Psychological Tests:** 15 tests across 5 categories
+  - 14 standard tests (640 questions total)
   - 1 special test (6 interactive stages, 34+ interactions)
 **Architecture Status:** Production-ready with dual architecture support
-**Test Architecture:** 13 Legacy Dart + 1 Special = 14 total tests
+**Test Architecture:** 14 Legacy Dart + 1 Special = 15 total tests
 **Recent Updates:**
-- Color Psychology Test добавлен (v3.13.0) ⭐ NEW - первый специальный тест
-- 13 новых файлов: 7 widgets, results screen (1150 lines), models, service, data
-- ADDING_SPECIAL_TESTS.md (v1.1.0) - comprehensive guide for visual/interactive tests
-- Documentation v3.1.0 - dual architecture support (standard + special)
+- Anxiety Symptoms Inventory добавлен (v3.14.0) ⭐ NEW - тест тревоги (24 вопроса, 4 фактора)
+- 3 новых файла: test stub, data file (bilingual), weights (~30 scales)
+- Интеграция в 7 файлов: test_registry, test_loader_service, test_service, summary_service, summary_screen, summary_config
 
 ---
 

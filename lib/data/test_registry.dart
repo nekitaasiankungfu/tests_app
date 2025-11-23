@@ -13,6 +13,7 @@ import 'tests/disc_personality_test.dart';
 import 'tests/holland_code_test.dart';
 import 'tests/love_languages_test.dart';
 import 'tests/color_psychology_test.dart';
+import 'tests/anxiety_symptoms_inventory_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -61,6 +62,7 @@ class TestRegistry {
     ColorPsychologyTest(), // Special color-based test
     DigitalDetoxTest(),
     BurnoutDiagnosticTest(),
+    AnxietySymptomsInventoryTest(), // Anxiety assessment
 
     // Quick assessments
     StressTest(),
