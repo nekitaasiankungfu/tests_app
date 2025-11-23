@@ -13,6 +13,7 @@ import 'test_disclaimer_screen.dart';
 import 'results_screen.dart';
 import 'settings_screen.dart';
 import 'color_psychology_test_screen.dart';
+import 'career_compass_test_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -349,12 +350,20 @@ class HomeScreen extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            // Проверяем, является ли это специальным цветовым тестом
+            // Проверяем, является ли это специальным тестом
             if (test.id == 'color_psychology_v1') {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const ColorPsychologyTestScreen(),
+                ),
+              );
+            } else if (test.id == 'career_compass_v1') {
+              // Специальный тест с forced_choice форматом
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CareerCompassTestScreen(),
                 ),
               );
             } else if (test.disclaimer != null) {

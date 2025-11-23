@@ -855,7 +855,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
   Widget _buildDomainItem(
     BuildContext context,
     Map<String, dynamic> domainData,
-    ColorPsychologyColor color,
+    ColorInfo color,
     bool isRussian,
   ) {
     return Padding(

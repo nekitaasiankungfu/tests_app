@@ -42,7 +42,8 @@
       "Bash(flutter --version:*)",
       "Bash(dart --version:*)",
       "Bash(/mnt/r/flutter/bin/flutter doctor:*)",
-      "Bash(/mnt/r/flutter/bin/dart analyze:*)"
+      "Bash(/mnt/r/flutter/bin/dart analyze:*)",
+      "Bash(/mnt/r/flutter/bin/flutter analyze:*)"
     ],
     "deny": [],
     "ask": []

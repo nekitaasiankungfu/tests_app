@@ -1889,6 +1889,374 @@ int get questionCount => 6; // Количество ЭТАПОВ!
 
 ---
 
+## 🎯 Пример 2: Forced Choice тест (Career Compass)
+
+> **Career Compass** — тест с парными сравнениями (forced_choice), где пользователь выбирает один из двух вариантов в каждом вопросе.
+
+### Характеристики Forced Choice тестов:
+
+| Параметр | Значение |
+|----------|----------|
+| **Тип вопросов** | Парные сравнения (A vs B) |
+| **Скоринг** | Ипсативный (очки распределяются между шкалами) |
+| **UI** | Две карточки с "VS" разделителем |
+| **Максимум на шкалу** | = количество появлений шкалы в вопросах |
+
+### Структура файлов Career Compass:
+
+```
+lib/
+├── models/
+│   └── career_compass_model.dart      # Модели данных
+├── data/
+│   ├── career_compass_data.dart       # 56 вопросов, 8 шкал
+│   └── tests/
+│       └── career_compass_test.dart   # Test stub
+├── widgets/
+│   └── career_compass_question_widget.dart  # UI вопроса
+├── services/
+│   └── career_compass_service.dart    # Расчёт результатов
+└── screens/
+    ├── career_compass_test_screen.dart    # Главный экран
+    └── career_compass_result_screen.dart  # Результаты
+```
+
+### ЭТАП 1: Модели данных
+
+```dart
+// lib/models/career_compass_model.dart
+
+/// Вариант ответа в парном сравнении
+class ForcedChoiceOption {
+  final String text;
+  final String scaleId;
+
+  const ForcedChoiceOption({
+    required this.text,
+    required this.scaleId,
+  });
+}
+
+/// Вопрос forced_choice
+class ForcedChoiceQuestion {
+  final int id;
+  final Map<String, String> instruction;
+  final ForcedChoiceOption optionA;
+  final ForcedChoiceOption optionB;
+
+  const ForcedChoiceQuestion({
+    required this.id,
+    required this.instruction,
+    required this.optionA,
+    required this.optionB,
+  });
+}
+
+/// Ответ пользователя
+class ForcedChoiceAnswer {
+  final int questionId;
+  final String chosenScaleId;  // ID выбранной шкалы
+  final int responseTimeMs;
+  final DateTime timestamp;
+
+  ForcedChoiceAnswer({
+    required this.questionId,
+    required this.chosenScaleId,
+    required this.responseTimeMs,
+    DateTime? timestamp,
+  }) : timestamp = timestamp ?? DateTime.now();
+}
+
+/// Конфигурация теста
+class CareerCompassConfig {
+  static const int questionCount = 56;
+  static const int scaleCount = 8;
+
+  // ⚠️ КРИТИЧНО: maxScaleScore = количество появлений шкалы в вопросах!
+  // Считается так: (questionCount * 2) / scaleCount
+  // Для 56 вопросов и 8 шкал: (56 * 2) / 8 = 14
+  static const int maxScaleScore = 14;
+
+  static const String testId = 'career_compass_v1';
+}
+```
+
+### ЭТАП 2: Данные теста
+
+```dart
+// lib/data/career_compass_data.dart
+
+class CareerCompassData {
+  /// Шкалы
+  static const List<CareerScale> scales = [
+    CareerScale(
+      id: 'people',
+      name: {'ru': 'Работа с людьми', 'en': 'Working with People'},
+      icon: '👥',
+      color: '#FF6B6B',
+    ),
+    // ... остальные шкалы
+  ];
+
+  /// Вопросы forced_choice
+  static const List<ForcedChoiceQuestion> questions = [
+    ForcedChoiceQuestion(
+      id: 1,
+      instruction: {'ru': 'Что вам ближе?', 'en': 'Which is closer to you?'},
+      optionA: ForcedChoiceOption(
+        text: 'Объяснять сложные вещи простым языком',
+        scaleId: 'people',
+      ),
+      optionB: ForcedChoiceOption(
+        text: 'Разбираться в сложных механизмах',
+        scaleId: 'technology',
+      ),
+    ),
+    // ... остальные 55 вопросов
+  ];
+
+  /// Интерпретации
+  static Map<String, String> getScaleInterpretation(
+    String scaleId,
+    int score,
+    bool isRussian,
+  ) {
+    // ⚠️ Пороги должны соответствовать maxScaleScore!
+    // Для maxScaleScore = 14:
+    // low: 0-4 (0-29%), medium: 5-9 (36-64%), high: 10-14 (71-100%)
+    final level = score <= 4 ? 'low' : (score <= 9 ? 'medium' : 'high');
+    // ...
+  }
+}
+```
+
+### ЭТАП 3: Виджет вопроса
+
+```dart
+// lib/widgets/career_compass_question_widget.dart
+
+class CareerCompassQuestionWidget extends StatefulWidget {
+  final ForcedChoiceQuestion question;
+  final int questionNumber;
+  final int totalQuestions;
+  final Function(String scaleId, int responseTimeMs) onAnswer;
+  final bool isRussian;
+
+  // ...
+}
+
+class _CareerCompassQuestionWidgetState extends State<CareerCompassQuestionWidget> {
+  DateTime? _questionStartTime;
+  String? _selectedOption;
+
+  @override
+  void initState() {
+    super.initState();
+    _questionStartTime = DateTime.now();
+  }
+
+  void _handleOptionSelected(String scaleId) {
+    if (_selectedOption != null) return; // Предотвращаем двойное нажатие
+
+    setState(() => _selectedOption = scaleId);
+
+    final responseTime = DateTime.now()
+        .difference(_questionStartTime!)
+        .inMilliseconds;
+
+    Future.delayed(const Duration(milliseconds: 200), () {
+      widget.onAnswer(scaleId, responseTime);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Прогресс
+        _buildProgressHeader(context),
+
+        // Инструкция
+        Text(widget.question.instruction[widget.isRussian ? 'ru' : 'en']!),
+
+        // Вариант A
+        _buildOptionCard(widget.question.optionA, 'A', Colors.blue),
+
+        // VS разделитель
+        Text('VS'),
+
+        // Вариант B
+        _buildOptionCard(widget.question.optionB, 'B', Colors.orange),
+      ],
+    );
+  }
+
+  Widget _buildOptionCard(ForcedChoiceOption option, String label, Color color) {
+    final isSelected = _selectedOption == option.scaleId;
+
+    return InkWell(
+      onTap: _selectedOption == null
+          ? () => _handleOptionSelected(option.scaleId)
+          : null,
+      child: Card(
+        color: isSelected ? color.withOpacity(0.15) : Colors.white,
+        child: Row(
+          children: [
+            // Буква (A или B)
+            CircleAvatar(child: Text(label)),
+            // Текст варианта
+            Expanded(child: Text(option.text)),
+            // Галочка при выборе
+            if (isSelected) Icon(Icons.check_circle),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+### ЭТАП 4: Сервис расчёта
+
+```dart
+// lib/services/career_compass_service.dart
+
+class CareerCompassService {
+  CareerCompassResult calculateResult({
+    required List<ForcedChoiceAnswer> answers,
+  }) {
+    // 1. Подсчёт сырых баллов
+    final scaleScores = _calculateScaleScores(answers);
+
+    // 2. Нормализация к процентам
+    final scalePercentages = _calculatePercentages(scaleScores);
+
+    // 3. Топ-N шкал
+    final topScales = _getTopScales(scaleScores, 3);
+
+    // 4. Определение профиля
+    final profileId = _matchProfile(topScales);
+
+    return CareerCompassResult(
+      scaleScores: scaleScores,
+      scalePercentages: scalePercentages,
+      topScales: topScales,
+      profileId: profileId,
+      // ...
+    );
+  }
+
+  /// Подсчёт баллов (ипсативный скоринг)
+  Map<String, int> _calculateScaleScores(List<ForcedChoiceAnswer> answers) {
+    final scores = <String, int>{
+      'people': 0,
+      'analysis': 0,
+      // ... все шкалы инициализируем нулём
+    };
+
+    for (final answer in answers) {
+      // +1 балл выбранной шкале
+      if (scores.containsKey(answer.chosenScaleId)) {
+        scores[answer.chosenScaleId] = scores[answer.chosenScaleId]! + 1;
+      }
+    }
+
+    return scores;
+  }
+
+  /// Нормализация к процентам
+  Map<String, double> _calculatePercentages(Map<String, int> scores) {
+    final percentages = <String, double>{};
+
+    for (final entry in scores.entries) {
+      // ⚠️ КРИТИЧНО: делим на maxScaleScore (14), а не на 7!
+      final percentage = (entry.value / CareerCompassConfig.maxScaleScore) * 100;
+      percentages[entry.key] = percentage.clamp(0.0, 100.0);
+    }
+
+    return percentages;
+  }
+}
+```
+
+### ⚠️ Критическая ошибка: Неправильный maxScaleScore
+
+**Проблема:** Все шкалы показывают 100%
+
+**Причина:** `maxScaleScore` установлен неправильно.
+
+**Как рассчитать правильно:**
+
+```dart
+// Формула:
+maxScaleScore = (количество_вопросов × 2) / количество_шкал
+
+// Примеры:
+// 56 вопросов, 8 шкал: (56 × 2) / 8 = 14
+// 30 вопросов, 5 шкал: (30 × 2) / 5 = 12
+// 28 вопросов, 7 шкал: (28 × 2) / 7 = 8
+```
+
+**Проверка через grep:**
+```bash
+# Подсчитать сколько раз каждая шкала появляется
+grep -o "scaleId: '[^']*'" lib/data/career_compass_data.dart | sort | uniq -c
+
+# Ожидаемый результат для 56 вопросов, 8 шкал:
+#     14 scaleId: 'analysis'
+#     14 scaleId: 'business'
+#     ... (≈14 для каждой шкалы)
+```
+
+### ЭТАП 5: Интеграция в приложение
+
+```dart
+// 1. lib/data/test_registry.dart
+import 'tests/career_compass_test.dart';
+
+static final List<TestStub> allTests = [
+  // ...
+  CareerCompassTest(), // Добавить в нужную категорию
+];
+
+// 2. lib/services/test_loader_service.dart
+import '../data/tests/career_compass_test.dart';
+
+case 'career_compass_v1':
+  test = CareerCompassTest.getCareerCompassTest();
+  break;
+
+// 3. lib/screens/home_screen.dart - КРИТИЧНО!
+import 'career_compass_test_screen.dart';
+
+// В методе _buildTestCard:
+if (test.id == 'career_compass_v1') {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const CareerCompassTestScreen(),
+    ),
+  );
+} else if (test.id == 'color_psychology_v1') {
+  // ...
+}
+```
+
+### Чеклист для Forced Choice теста
+
+- [ ] Модели: `ForcedChoiceOption`, `ForcedChoiceQuestion`, `ForcedChoiceAnswer`
+- [ ] Конфиг: `maxScaleScore` рассчитан правильно
+- [ ] Данные: все вопросы с двумя вариантами (optionA, optionB)
+- [ ] Виджет: защита от двойного нажатия, время ответа
+- [ ] Сервис: ипсативный скоринг (+1 выбранной шкале)
+- [ ] Сервис: нормализация делит на `maxScaleScore`
+- [ ] Пороги интерпретаций соответствуют `maxScaleScore`
+- [ ] Test stub: `questions: []` (пустой список!)
+- [ ] home_screen.dart: специальная навигация добавлена
+- [ ] Экран результатов: показывает "X из {maxScaleScore}"
+
+---
+
 ## 🎓 Резюме
 
 Специальные тесты дают полную свободу в создании UI и логики, но требуют:
@@ -1901,6 +2269,8 @@ int get questionCount => 6; // Количество ЭТАПОВ!
 
 ---
 
-**Последнее обновление:** 2025-01-18
-**Версия документа:** 1.1.0 (добавлен детальный ЭТАП 9 - экран результатов)
-**Примеры тестов:** Color Psychology Test (color_psychology_v1)
+**Последнее обновление:** 2025-01-23
+**Версия документа:** 1.2.0 (добавлен Forced Choice тест - Career Compass)
+**Примеры тестов:**
+- Color Psychology Test (color_psychology_v1) - визуальный тест с 6 этапами
+- Career Compass (career_compass_v1) - forced_choice с 56 вопросами
