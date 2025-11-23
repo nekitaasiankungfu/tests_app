@@ -17,6 +17,8 @@ import '../config/summary/question_weights/holland_code_weights.dart';
 import '../config/summary/question_weights/love_languages_weights.dart';
 import '../config/summary/question_weights/anxiety_symptoms_inventory_weights.dart';
 import '../config/summary/question_weights/career_compass_weights.dart';
+import '../config/summary/question_weights/wellbeing_happiness_inventory_weights.dart';
+import '../config/summary/question_weights/digital_career_fit_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -131,6 +133,8 @@ class SummaryService {
       ...LoveLanguagesWeights.weights,
       ...AnxietySymptomsInventoryWeights.weights,
       ...CareerCompassWeights.weights,
+      ...WellbeingHappinessInventoryWeights.weights,
+      ...DigitalCareerFitWeights.weights,
     };
 
     // 8 personality type scales
@@ -312,6 +316,8 @@ class SummaryService {
       'anxiety_symptoms_inventory_v1': {'ru': 'Инвентарь симптомов тревоги', 'en': 'Anxiety Symptoms Inventory'},
       'career_compass_v1': {'ru': 'Карьерный компас', 'en': 'Career Compass'},
       'color_psychology_v1': {'ru': 'Психология цвета', 'en': 'Color Psychology'},
+      'wellbeing_happiness_inventory_v1': {'ru': 'Индекс субъективного благополучия', 'en': 'Wellbeing Happiness Inventory'},
+      'digital_career_fit_v1': {'ru': 'Какая цифровая профессия вам подходит?', 'en': 'Digital Career Fit'},
     };
 
     return testNames[testId]?[languageCode] ?? testId;
@@ -520,6 +526,8 @@ class SummaryService {
       ...LoveLanguagesWeights.weights,
       ...AnxietySymptomsInventoryWeights.weights,
       ...CareerCompassWeights.weights,
+      ...WellbeingHappinessInventoryWeights.weights,
+      ...DigitalCareerFitWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

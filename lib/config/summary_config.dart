@@ -15,6 +15,8 @@ import 'summary/question_weights/holland_code_weights.dart';
 import 'summary/question_weights/love_languages_weights.dart';
 import 'summary/question_weights/anxiety_symptoms_inventory_weights.dart';
 import 'summary/question_weights/career_compass_weights.dart';
+import 'summary/question_weights/wellbeing_happiness_inventory_weights.dart';
+import 'summary/question_weights/digital_career_fit_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2309,6 +2311,8 @@ class QuestionWeightsConfig {
     ...LoveLanguagesWeights.weights,
     ...AnxietySymptomsInventoryWeights.weights,
     ...CareerCompassWeights.weights,
+    ...WellbeingHappinessInventoryWeights.weights,
+    ...DigitalCareerFitWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

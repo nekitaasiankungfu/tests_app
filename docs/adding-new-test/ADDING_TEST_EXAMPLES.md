@@ -1,7 +1,8 @@
 # 📝 ADDING TEST - Примеры кода
 
 > **Готовые шаблоны для копирования при добавлении нового теста**
-> Все примеры проверены и соответствуют версии 3.0.0
+> Все примеры проверены и соответствуют версии 3.3.0
+> **NEW:** Добавлены примеры 7-секционной структуры результатов
 
 ---
 
@@ -555,6 +556,184 @@ grep "'\\(extra\\|intro\\)version': -" lib/config/summary/question_weights/emoti
 # Проверить дубликаты ключей
 sort lib/config/summary/question_weights/emotional_intelligence_weights.dart | uniq -d
 ```
+
+---
+
+## 📁 Файл 4: Профильная структура результатов (7 секций) ⭐ NEW
+
+> **Для профильных тестов** (карьерные, типология личности, стили поведения)
+> **Референс:** Digital Career Fit Test (`digital_career_fit_v1`)
+
+### Модель профиля
+
+```dart
+/// Модель профиля результата теста
+class TestProfile {
+  final String id;
+  final Map<String, String> name;
+  final Map<String, String> description;
+  final Map<String, List<String>> characteristics;    // Секция 3
+  final Map<String, List<String>> recommendations;    // Секция 5
+  final Map<String, List<String>> suitableRoles;      // Секция 4
+  final Map<String, String> tryToday;                 // Секция 6
+  final Map<String, String> inspiringMessage;         // Секция 7
+
+  const TestProfile({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.characteristics,
+    required this.recommendations,
+    required this.suitableRoles,
+    required this.tryToday,
+    required this.inspiringMessage,
+  });
+
+  // Геттеры с fallback на английский
+  String getName(String lang) => name[lang] ?? name['en'] ?? '';
+  String getDescription(String lang) => description[lang] ?? description['en'] ?? '';
+  List<String> getCharacteristics(String lang) => characteristics[lang] ?? characteristics['en'] ?? [];
+  List<String> getRecommendations(String lang) => recommendations[lang] ?? recommendations['en'] ?? [];
+  List<String> getSuitableRoles(String lang) => suitableRoles[lang] ?? suitableRoles['en'] ?? [];
+  String getTryToday(String lang) => tryToday[lang] ?? tryToday['en'] ?? '';
+  String getInspiringMessage(String lang) => inspiringMessage[lang] ?? inspiringMessage['en'] ?? '';
+}
+```
+
+### Пример профиля
+
+```dart
+static final List<TestProfile> profiles = [
+  TestProfile(
+    id: 'profile_analyst',
+    name: {
+      'ru': 'Аналитик данных',
+      'en': 'Data Analyst',
+    },
+    description: {
+      'ru': 'У вас выраженный интерес к данным и закономерностям. Вы любите опираться на факты.',
+      'en': 'You have a pronounced interest in data and patterns. You like to rely on facts.',
+    },
+    characteristics: {
+      'ru': [
+        'Вам нравится работать с таблицами и находить закономерности',
+        'Вы предпочитаете проверять гипотезы, а не полагаться на ощущения',
+        'Умеете понятно объяснять сложные вещи простым языком',
+      ],
+      'en': [
+        'You enjoy working with tables and finding patterns',
+        'You prefer to test hypotheses rather than rely on feelings',
+        'You can explain complex things in simple terms',
+      ],
+    },
+    recommendations: {
+      'ru': [
+        'Освойте SQL — базовый инструмент для работы с данными',
+        'Изучите основы статистики: средние, распределения, A/B-тесты',
+        'Попробуйте инструменты визуализации (Power BI, Tableau)',
+      ],
+      'en': [
+        'Master SQL — the basic tool for working with data',
+        'Learn statistics basics: means, distributions, A/B tests',
+        'Try visualization tools (Power BI, Tableau)',
+      ],
+    },
+    suitableRoles: {
+      'ru': ['Data Analyst', 'Продуктовый аналитик', 'BI-аналитик'],
+      'en': ['Data Analyst', 'Product Analyst', 'BI Analyst'],
+    },
+    tryToday: {
+      'ru': 'Найдите открытый датасет и попробуйте построить простой график.',
+      'en': 'Find an open dataset and try to build a simple chart.',
+    },
+    inspiringMessage: {
+      'ru': 'Ваши аналитические способности — ценный актив в мире данных.',
+      'en': 'Your analytical skills are a valuable asset in the world of data.',
+    },
+  ),
+
+  // ⚠️ ОБЯЗАТЕЛЬНО: fallback профиль
+  TestProfile(
+    id: 'profile_mixed',
+    name: {'ru': 'Смешанный профиль', 'en': 'Mixed Profile'},
+    description: {
+      'ru': 'У вас несколько сильных направлений без явного доминирования.',
+      'en': 'You have several strong directions without clear dominance.',
+    },
+    characteristics: {
+      'ru': ['Вам интересны разные области', 'Вы легко переключаетесь между задачами'],
+      'en': ['You are interested in different areas', 'You easily switch between tasks'],
+    },
+    recommendations: {
+      'ru': ['Попробуйте разные роли', 'Отслеживайте, что даёт больше энергии'],
+      'en': ['Try different roles', 'Track what gives you more energy'],
+    },
+    suitableRoles: {
+      'ru': ['Гибридные позиции', 'Кросс-функциональные роли'],
+      'en': ['Hybrid positions', 'Cross-functional roles'],
+    },
+    tryToday: {
+      'ru': 'Выберите одно направление и углубитесь в него на неделю.',
+      'en': 'Choose one direction and dive into it for a week.',
+    },
+    inspiringMessage: {
+      'ru': 'Широкий профиль — преимущество в современном мире.',
+      'en': 'A broad profile is an advantage in the modern world.',
+    },
+  ),
+];
+```
+
+### Логика определения профиля
+
+```dart
+/// Определяет профиль: доминантная шкала с разрывом >= 10%
+static String determineProfile(Map<String, double> percentages) {
+  if (percentages.isEmpty) return 'profile_mixed';
+
+  // Находим доминирующую шкалу
+  String? dominantScale;
+  double maxPercentage = 0;
+  for (final entry in percentages.entries) {
+    if (entry.value > maxPercentage) {
+      maxPercentage = entry.value;
+      dominantScale = entry.key;
+    }
+  }
+
+  // Маппинг шкал на профили
+  final scaleToProfile = {
+    'data_analytics': 'profile_analyst',
+    'design_ux': 'profile_designer',
+    'tech_development': 'profile_developer',
+    // ... остальные
+  };
+
+  // Проверяем разрыв
+  final sorted = percentages.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
+
+  if (sorted.length >= 2 && sorted[0].value - sorted[1].value < 10) {
+    return 'profile_mixed';  // Разрыв < 10% = смешанный
+  }
+
+  return scaleToProfile[dominantScale] ?? 'profile_mixed';
+}
+```
+
+### 7 секций результата
+
+| № | Секция | Поле в TestProfile | UI метод |
+|---|--------|-------------------|----------|
+| 1 | Ваш профиль | `name` | `_buildProfileCard()` |
+| 2 | Почему именно он | `description` | `_buildProfileCard()` |
+| 3 | Сильные стороны | `characteristics` | `_buildSectionCard()` |
+| 4 | Подходящие направления | `suitableRoles` | `_buildSectionCard()` |
+| 5 | Рекомендации | `recommendations` | `_buildSectionCard()` |
+| 6 | Что сделать сегодня | `tryToday` | `_buildTextCard()` |
+| 7 | Вдохновляющий вывод | `inspiringMessage` | `_buildTextCard(highlight: true)` |
+
+> **📖 Полная документация:** [ADDING_TEST_RESULTS.md](./ADDING_TEST_RESULTS.md)
 
 ---
 

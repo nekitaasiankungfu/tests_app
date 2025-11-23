@@ -6,6 +6,7 @@ import '../providers/locale_provider.dart';
 import '../providers/user_preferences_provider.dart';
 import '../data/ipip_big_five_data.dart';
 import '../data/love_profile_data.dart';
+import '../data/digital_career_fit_data.dart';
 import '../utils/theme_utils.dart';
 import '../constants/color_constants.dart';
 import '../config/summary_config.dart';
@@ -86,6 +87,9 @@ class _TestResultScreenState extends State<TestResultScreen> {
                         _buildLoveIndexCard(widget.result, languageCode, themeColor, isDark),
                         const SizedBox(height: 30),
                         _buildDisclaimerCard(languageCode, isDark),
+                      ] else if (widget.result.testId == 'digital_career_fit_v1') ...[
+                        // Digital Career Fit - показываем карточку профиля
+                        _buildDigitalCareerProfileCard(widget.result, languageCode, themeColor, isDark),
                       ] else
                         _buildResultCard(widget.result, languageCode, themeColor, isDark),
                       const SizedBox(height: 30),
@@ -96,6 +100,11 @@ class _TestResultScreenState extends State<TestResultScreen> {
                         if (widget.result.testId == 'love_profile') ...[
                           const SizedBox(height: 30),
                           _buildRecommendationsSection(widget.result, languageCode, themeColor, isDark),
+                        ],
+                        // Расширенный профиль для Digital Career Fit
+                        if (widget.result.testId == 'digital_career_fit_v1') ...[
+                          const SizedBox(height: 30),
+                          _buildDigitalCareerExtendedSection(widget.result, languageCode, themeColor, isDark),
                         ],
                       ] else
                         ...[
@@ -823,6 +832,258 @@ class _TestResultScreenState extends State<TestResultScreen> {
         .split('_')
         .map((word) => word[0].toUpperCase() + word.substring(1))
         .join(' ');
+  }
+
+  // ============================================================================
+  // DIGITAL CAREER FIT - Карточка профиля
+  // ============================================================================
+
+  Widget _buildDigitalCareerProfileCard(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = DigitalCareerFitData.determineProfile(percentages);
+    final profile = DigitalCareerFitData.getProfile(profileId);
+
+    if (profile == null) {
+      return _buildResultCard(result, languageCode, themeColor, isDark);
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            AppColors.darkCard,
+            AppColors.darkSurfaceHigh,
+          ] : [
+            themeColor.withOpacity(0.15),
+            themeColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : themeColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          // Иконка профиля
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: themeColor.withOpacity(isDark ? 0.3 : 0.2),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              _getProfileIcon(profileId),
+              size: 50,
+              color: isDark ? Colors.white : themeColor,
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Название профиля
+          Text(
+            languageCode == 'ru' ? 'Ваш цифровой профиль' : 'Your Digital Profile',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            profile.getName(languageCode),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : themeColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          // Описание профиля
+          Text(
+            profile.getDescription(languageCode),
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData _getProfileIcon(String profileId) {
+    switch (profileId) {
+      case 'profile_product_manager':
+        return Icons.lightbulb_outline;
+      case 'profile_data_analyst':
+        return Icons.analytics_outlined;
+      case 'profile_ux_designer':
+        return Icons.brush_outlined;
+      case 'profile_content_marketer':
+        return Icons.campaign_outlined;
+      case 'profile_project_manager':
+        return Icons.people_outline;
+      case 'profile_developer':
+        return Icons.code;
+      case 'profile_mixed':
+        return Icons.hub_outlined;
+      default:
+        return Icons.work_outline;
+    }
+  }
+
+  Widget _buildDigitalCareerExtendedSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = DigitalCareerFitData.determineProfile(percentages);
+    final profile = DigitalCareerFitData.getProfile(profileId);
+
+    if (profile == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Характеристики
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Ваши сильные стороны' : 'Your Strengths',
+          icon: Icons.star_outline,
+          items: profile.getCharacteristics(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Подходящие роли
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Подходящие направления' : 'Suitable Directions',
+          icon: Icons.work_outline,
+          items: profile.getSuitableRoles(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Рекомендации
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Как развиваться' : 'How to Develop',
+          icon: Icons.trending_up,
+          items: profile.getRecommendations(languageCode),
+          themeColor: themeColor,
+          isDark: isDark,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionCard({
+    required String title,
+    required IconData icon,
+    required List<String> items,
+    required Color themeColor,
+    required bool isDark,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
+          width: 1,
+        ),
+        boxShadow: isDark ? null : [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icon,
+                color: themeColor,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : Colors.grey[800],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          ...items.map((item) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 6),
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: themeColor,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    item,
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.5,
+                      color: isDark ? Colors.grey[300] : Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
+        ],
+      ),
+    );
   }
 }
 

@@ -29,6 +29,8 @@ import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
 import '../data/anxiety_symptoms_inventory_data.dart';
 import '../data/career_compass_data.dart';
+import '../data/wellbeing_happiness_inventory_data.dart';
+import '../data/digital_career_fit_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -81,6 +83,12 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
         break;
       case 'anxiety_symptoms_inventory_v1':
         testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
+        break;
+      case 'wellbeing_happiness_inventory_v1':
+        testModel = WellbeingHappinessInventoryData.getWellbeingHappinessInventoryTest();
+        break;
+      case 'digital_career_fit_v1':
+        testModel = DigitalCareerFitData.getDigitalCareerFitTest();
         break;
       case 'career_compass_v1':
         // Career Compass: score is 0-4 representing career interest level
@@ -2613,6 +2621,12 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
           break;
         case 'anxiety_symptoms_inventory_v1':
           testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
+          break;
+        case 'wellbeing_happiness_inventory_v1':
+          testModel = WellbeingHappinessInventoryData.getWellbeingHappinessInventoryTest();
+          break;
+        case 'digital_career_fit_v1':
+          testModel = DigitalCareerFitData.getDigitalCareerFitTest();
           break;
         case 'career_compass_v1':
           // Career Compass uses scale names as "questions"

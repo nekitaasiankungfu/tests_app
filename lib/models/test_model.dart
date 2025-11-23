@@ -595,7 +595,12 @@ class FactorScore {
 
       // Validate required numeric fields
       final score = TestResult._validateInt(json, 'score', required: true, min: 0);
-      final maxScore = TestResult._validateInt(json, 'maxScore', required: true, min: 1);
+      // Allow maxScore = 0 from old data, but fix it to 1 to prevent division by zero
+      var maxScore = TestResult._validateInt(json, 'maxScore', required: true, min: 0);
+      if (maxScore <= 0) {
+        appLogger.w('FactorScore.fromJson: maxScore was $maxScore, fixing to 1');
+        maxScore = 1;
+      }
 
       // Validate score relationship
       if (score > maxScore) {

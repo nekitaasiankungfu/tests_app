@@ -13,6 +13,8 @@ import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
 import '../data/anxiety_symptoms_inventory_data.dart';
+import '../data/wellbeing_happiness_inventory_data.dart';
+import '../data/digital_career_fit_data.dart' as digital_career;
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -102,7 +104,11 @@ class TestService {
                     ? 4  // Holland Code uses 0-4 scoring
                     : test.id == 'love_languages_v1'
                         ? 4  // Love Languages uses 0-4 scoring
-                        : 5;
+                        : test.id == 'wellbeing_happiness_inventory_v1'
+                            ? 5  // Wellbeing Happiness Inventory uses 0-5 scoring (6-point Likert)
+                            : test.id == 'digital_career_fit_v1'
+                                ? 5  // Digital Career Fit uses 0-5 scoring (6 career directions)
+                                : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -128,10 +134,25 @@ class TestService {
 
         // Add score to corresponding factor
         if (question.factorId != null) {
-          factorScores[question.factorId!] =
-              (factorScores[question.factorId!] ?? 0) + score;
-          factorMaxScores[question.factorId!] =
-              (factorMaxScores[question.factorId!] ?? 0) + maxQuestionScore;
+          // Special handling for Digital Career Fit test
+          // Score (0-5) indicates which factor was chosen, not the intensity
+          if (test.id == 'digital_career_fit_v1' && question.factorId == 'multi_choice') {
+            // Map score to factor: 0=product_thinking, 1=data_analytics, etc.
+            final factorOrder = digital_career.DigitalCareerFitData.factorOrder;
+            if (score >= 0 && score < factorOrder.length) {
+              final selectedFactor = factorOrder[score];
+              // Each question adds 1 point to the chosen factor
+              factorScores[selectedFactor] = (factorScores[selectedFactor] ?? 0) + 1;
+              // Max score per factor = number of questions (18)
+              // We track how many questions contributed to each factor
+              factorMaxScores[selectedFactor] = (factorMaxScores[selectedFactor] ?? 0) + 0; // Will set max later
+            }
+          } else {
+            factorScores[question.factorId!] =
+                (factorScores[question.factorId!] ?? 0) + score;
+            factorMaxScores[question.factorId!] =
+                (factorMaxScores[question.factorId!] ?? 0) + maxQuestionScore;
+          }
         }
       }
 
@@ -244,6 +265,12 @@ class TestService {
     } else if (test.id == 'anxiety_symptoms_inventory_v1') {
       factorNames = AnxietySymptomsInventoryData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'wellbeing_happiness_inventory_v1') {
+      factorNames = WellbeingHappinessInventoryData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'digital_career_fit_v1') {
+      factorNames = digital_career.DigitalCareerFitData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
@@ -252,8 +279,19 @@ class TestService {
     for (String factorId in test.factorIds!) {
       final score = factorScores[factorId] ?? 0;
       // For Love Profile test max is 50 points per factor (10 questions × 5 points)
-      final maxFactorScore =
-          test.id == 'love_profile' ? 50 : (factorMaxScores[factorId] ?? 50);
+      // For Digital Career Fit test max is 18 (total questions, since each adds 1 to chosen factor)
+      int maxFactorScore;
+      if (test.id == 'love_profile') {
+        maxFactorScore = 50;
+      } else if (test.id == 'digital_career_fit_v1') {
+        maxFactorScore = test.questions.length; // 18 questions
+      } else {
+        maxFactorScore = factorMaxScores[factorId] ?? 50;
+      }
+      // Protect against division by zero
+      if (maxFactorScore <= 0) {
+        maxFactorScore = 1;
+      }
 
       Map<String, String> interpretation;
       if (test.id == 'fisher_temperament') {
@@ -303,6 +341,14 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             AnxietySymptomsInventoryData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'wellbeing_happiness_inventory_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            WellbeingHappinessInventoryData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'digital_career_fit_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            digital_career.DigitalCareerFitData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }

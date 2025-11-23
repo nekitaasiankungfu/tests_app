@@ -19,6 +19,8 @@ import '../data/love_languages_data.dart';
 import '../data/tests/color_psychology_test.dart';
 import '../data/anxiety_symptoms_inventory_data.dart';
 import '../data/tests/career_compass_test.dart';
+import '../data/wellbeing_happiness_inventory_data.dart';
+import '../data/digital_career_fit_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -142,6 +144,12 @@ class TestLoaderService {
         break;
       case 'career_compass_v1':
         test = CareerCompassTest.getCareerCompassTest();
+        break;
+      case 'wellbeing_happiness_inventory_v1':
+        test = WellbeingHappinessInventoryData.getWellbeingHappinessInventoryTest();
+        break;
+      case 'digital_career_fit_v1':
+        test = DigitalCareerFitData.getDigitalCareerFitTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');
