@@ -5,10 +5,12 @@ import '../providers/locale_provider.dart';
 import '../providers/user_preferences_provider.dart';
 import '../providers/summary_provider.dart';
 import '../models/test_model.dart';
+import '../models/career_compass_model.dart';
 import '../utils/theme_utils.dart';
 import '../constants/color_constants.dart';
 import 'test_result_screen.dart';
 import 'sixteen_types_result_screen.dart';
+import 'career_compass_result_screen.dart';
 import 'summary_screen.dart';
 
 class ResultsScreen extends StatefulWidget {
@@ -375,6 +377,18 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       builder: (context) => SixteenTypesResultScreen(result: result),
                     ),
                   );
+                } else if (result.testId == 'career_compass_v1') {
+                  // Для Career Compass используем специальный экран
+                  final careerResult = _createCareerCompassResult(result);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CareerCompassResultScreen(
+                        result: careerResult,
+                        fromHistory: true, // Don't save again when viewing from history
+                      ),
+                    ),
+                  );
                 } else {
                   Navigator.push(
                     context,
@@ -599,6 +613,35 @@ class _ResultsScreenState extends State<ResultsScreen> {
     if (percentage >= 60) return Colors.orange;
     if (percentage >= 40) return Colors.amber;
     return Colors.red;
+  }
+
+  /// Creates CareerCompassResult from saved TestResult
+  CareerCompassResult _createCareerCompassResult(TestResult result) {
+    // Extract scale scores from factorScores
+    final scaleScores = <String, int>{};
+    final scalePercentages = <String, double>{};
+
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        scaleScores[entry.key] = entry.value.score;
+        scalePercentages[entry.key] = entry.value.percentage;
+      }
+    }
+
+    // Fallback to scaleScores if available
+    if (scaleScores.isEmpty && result.scaleScores != null) {
+      for (final entry in result.scaleScores!.entries) {
+        scalePercentages[entry.key] = entry.value;
+        // Convert percentage back to raw score (approximate)
+        scaleScores[entry.key] = ((entry.value / 100) * CareerCompassConfig.maxScaleScore).round();
+      }
+    }
+
+    return CareerCompassResult.fromSavedResult(
+      scaleScores: scaleScores,
+      scalePercentages: scalePercentages,
+      completedAt: result.completedAt,
+    );
   }
 
   String _formatDate(DateTime date) {

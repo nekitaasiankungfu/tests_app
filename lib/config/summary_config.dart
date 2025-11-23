@@ -14,6 +14,7 @@ import 'summary/question_weights/disc_personality_weights.dart';
 import 'summary/question_weights/holland_code_weights.dart';
 import 'summary/question_weights/love_languages_weights.dart';
 import 'summary/question_weights/anxiety_symptoms_inventory_weights.dart';
+import 'summary/question_weights/career_compass_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2307,6 +2308,7 @@ class QuestionWeightsConfig {
     ...HollandCodeWeights.weights,
     ...LoveLanguagesWeights.weights,
     ...AnxietySymptomsInventoryWeights.weights,
+    ...CareerCompassWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES
@@ -2322,7 +2324,8 @@ class QuestionWeightsConfig {
     // - social_battery_weights.dart (40 questions)
     // - disc_personality_weights.dart (56 questions, 45 unipolar + 7 bipolar poles)
     // - holland_code_weights.dart (60 questions)
-    // - love_languages_weights.dart (30 questions) ⭐ NEW
+    // - love_languages_weights.dart (30 questions)
+    // - career_compass_weights.dart (8 scale scores) ⭐ NEW
     // ========================================================================
     //
     // Old inline weights removed - now imported from separate files

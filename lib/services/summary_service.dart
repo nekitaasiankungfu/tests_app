@@ -16,6 +16,7 @@ import '../config/summary/question_weights/disc_personality_weights.dart';
 import '../config/summary/question_weights/holland_code_weights.dart';
 import '../config/summary/question_weights/love_languages_weights.dart';
 import '../config/summary/question_weights/anxiety_symptoms_inventory_weights.dart';
+import '../config/summary/question_weights/career_compass_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -129,6 +130,7 @@ class SummaryService {
       ...HollandCodeWeights.weights,
       ...LoveLanguagesWeights.weights,
       ...AnxietySymptomsInventoryWeights.weights,
+      ...CareerCompassWeights.weights,
     };
 
     // 8 personality type scales
@@ -300,6 +302,16 @@ class SummaryService {
       'stress_test': {'ru': 'Тест на стресс', 'en': 'Stress Test'},
       'self_esteem_test': {'ru': 'Самооценка', 'en': 'Self-Esteem'},
       'sixteen_types': {'ru': 'Тест 16 типов', 'en': '16 Types Test'},
+      'temperament_profile_test': {'ru': 'Профиль темперамента', 'en': 'Temperament Profile'},
+      'digital_detox_test': {'ru': 'Цифровой детокс', 'en': 'Digital Detox'},
+      'burnout_diagnostic_v1': {'ru': 'Диагностика выгорания', 'en': 'Burnout Diagnostic'},
+      'social_battery_v1': {'ru': 'Социальная батарея', 'en': 'Social Battery'},
+      'disc_personality_v1': {'ru': 'DISC Личность', 'en': 'DISC Personality'},
+      'holland_code_v1': {'ru': 'Код Холланда RIASEC', 'en': 'Holland Code RIASEC'},
+      'love_languages_v1': {'ru': 'Языки любви', 'en': 'Love Languages'},
+      'anxiety_symptoms_inventory_v1': {'ru': 'Инвентарь симптомов тревоги', 'en': 'Anxiety Symptoms Inventory'},
+      'career_compass_v1': {'ru': 'Карьерный компас', 'en': 'Career Compass'},
+      'color_psychology_v1': {'ru': 'Психология цвета', 'en': 'Color Psychology'},
     };
 
     return testNames[testId]?[languageCode] ?? testId;
@@ -507,6 +519,7 @@ class SummaryService {
       ...HollandCodeWeights.weights,
       ...LoveLanguagesWeights.weights,
       ...AnxietySymptomsInventoryWeights.weights,
+      ...CareerCompassWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

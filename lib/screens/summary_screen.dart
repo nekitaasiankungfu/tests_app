@@ -28,6 +28,7 @@ import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
 import '../data/anxiety_symptoms_inventory_data.dart';
+import '../data/career_compass_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -81,6 +82,16 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
       case 'anxiety_symptoms_inventory_v1':
         testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
         break;
+      case 'career_compass_v1':
+        // Career Compass: score is 0-4 representing career interest level
+        // Show as descriptive text
+        if (languageCode == 'ru') {
+          return ['Низкий', 'Ниже среднего', 'Средний', 'Выше среднего', 'Высокий'][answerScore.clamp(0, 4)];
+        }
+        return ['Low', 'Below Avg', 'Average', 'Above Avg', 'High'][answerScore.clamp(0, 4)];
+      case 'color_psychology_v1':
+        // Special tests don't have traditional questions
+        return answerScore.toString();
       default:
         appLogger.w('Unknown testId: $testId');
         return answerScore.toString();
@@ -2313,6 +2324,15 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
         'stress_test': widget.languageCode == 'ru' ? 'Стресс-тест' : 'Stress Test',
         'self_esteem_test': widget.languageCode == 'ru' ? 'Тест самооценки' : 'Self-Esteem Test',
         'sixteen_types': widget.languageCode == 'ru' ? '16 типов личности' : '16 Personality Types',
+        'career_compass_v1': widget.languageCode == 'ru' ? 'Карьерный компас' : 'Career Compass',
+        'temperament_profile_test': widget.languageCode == 'ru' ? 'Темперамент профиль' : 'Temperament Profile',
+        'digital_detox_test': widget.languageCode == 'ru' ? 'Цифровой детокс' : 'Digital Detox',
+        'burnout_diagnostic_v1': widget.languageCode == 'ru' ? 'Диагностика выгорания' : 'Burnout Diagnostic',
+        'social_battery_v1': widget.languageCode == 'ru' ? 'Социальная батарея' : 'Social Battery',
+        'disc_personality_v1': widget.languageCode == 'ru' ? 'DISC личность' : 'DISC Personality',
+        'holland_code_v1': widget.languageCode == 'ru' ? 'Код Холланда' : 'Holland Code',
+        'love_languages_v1': widget.languageCode == 'ru' ? 'Языки любви' : 'Love Languages',
+        'anxiety_symptoms_inventory_v1': widget.languageCode == 'ru' ? 'Инвентарь тревоги' : 'Anxiety Symptoms',
       };
 
       final baseName = testNameMap[testId] ?? testId;
@@ -2434,6 +2454,10 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
             break;
           case 'self_esteem_test':
             testModel = SelfEsteemTestData.getSelfEsteemTest();
+            break;
+          case 'career_compass_v1':
+            // Career Compass uses 0-4 scale for normalized career scale scores
+            maxAnswerScore = 4;
             break;
         }
 
@@ -2590,6 +2614,21 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
         case 'anxiety_symptoms_inventory_v1':
           testModel = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
           break;
+        case 'career_compass_v1':
+          // Career Compass uses scale names as "questions"
+          final careerScaleId = questionId.replaceFirst('scale_', '');
+          final careerScale = CareerCompassData.getScaleById(careerScaleId);
+          if (careerScale != null) {
+            return '${careerScale.icon} ${careerScale.name[widget.languageCode] ?? careerScale.name['ru']} - ${careerScale.description[widget.languageCode] ?? careerScale.description['ru']}';
+          }
+          return widget.languageCode == 'ru'
+              ? 'Карьерная шкала: $careerScaleId'
+              : 'Career scale: $careerScaleId';
+        case 'color_psychology_v1':
+          // Special tests don't have traditional questions
+          return widget.languageCode == 'ru'
+              ? 'Специальный тест: $questionId'
+              : 'Special test: $questionId';
         default:
           appLogger.w('Unknown testId: $testId');
           return widget.languageCode == 'ru'

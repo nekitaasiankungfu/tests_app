@@ -46,7 +46,8 @@
       "Bash(/mnt/c/flutter/bin/flutter analyze:*)",
       "Bash(/mnt/r/flutter/bin/flutter analyze:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nMerge branch ''main'' - resolve conflicts, combine Anxiety + Career Compass tests\n\n- Resolved conflicts in 4 files:\n  - .claude/settings.local.json - combined both flutter analyze paths\n  - CLAUDE.md - merged both test additions, updated to v3.15.0\n  - lib/data/test_registry.dart - added both imports\n  - lib/services/test_loader_service.dart - added both imports and cases\n\n- Combined tests: 16 total (14 standard + 2 special)\n  - Anxiety Symptoms Inventory (24 questions, 4 factors)\n  - Career Compass (56 forced_choice questions, 8 career scales)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nMerge branch ''main'' - resolve conflicts, combine Anxiety + Career Compass tests\n\n- Resolved conflicts in 4 files:\n  - .claude/settings.local.json - combined both flutter analyze paths\n  - CLAUDE.md - merged both test additions, updated to v3.15.0\n  - lib/data/test_registry.dart - added both imports\n  - lib/services/test_loader_service.dart - added both imports and cases\n\n- Combined tests: 16 total (14 standard + 2 special)\n  - Anxiety Symptoms Inventory (24 questions, 4 factors)\n  - Career Compass (56 forced_choice questions, 8 career scales)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(/mnt/r/flutter/bin/cache/dart-sdk/bin/dart analyze:*)"
     ],
     "deny": [],
     "ask": []

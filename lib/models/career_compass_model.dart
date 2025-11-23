@@ -144,7 +144,7 @@ class CareerProfile {
 class CareerCompassResult {
   final String testId;
   final List<ForcedChoiceAnswer> answers;
-  final Map<String, int> scaleScores; // Raw scores (0-7)
+  final Map<String, int> scaleScores; // Raw scores (0-14)
   final Map<String, double> scalePercentages; // Normalized (0-100)
   final List<String> topScales; // Top 3 scales
   final String? profileId; // Matched career profile
@@ -167,6 +167,74 @@ class CareerCompassResult {
     required this.averageResponseTimeMs,
     DateTime? completedAt,
   }) : completedAt = completedAt ?? DateTime.now();
+
+  /// Factory constructor to create CareerCompassResult from saved TestResult
+  /// Used when viewing saved results from history
+  factory CareerCompassResult.fromSavedResult({
+    required Map<String, int> scaleScores,
+    required Map<String, double> scalePercentages,
+    required DateTime completedAt,
+    String? profileId,
+    Map<String, String>? interpretations,
+    List<String>? recommendations,
+  }) {
+    // Calculate top scales from scores
+    final sortedScales = scaleScores.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    final topScales = sortedScales.take(3).map((e) => e.key).toList();
+
+    // Determine profile from top 2 scales if not provided
+    String? matchedProfile = profileId;
+    if (matchedProfile == null && topScales.length >= 2) {
+      // Profile matching logic based on career_compass_data.dart profiles
+      // Each profile has topScales that define the combination
+      final top2 = topScales.take(2).toSet();
+      final profileMatches = {
+        {'people', 'care'}: 'helper',        // Помощник
+        {'analysis', 'order'}: 'analyst',    // Аналитик
+        {'creation', 'people'}: 'creator',   // Творец
+        {'technology', 'analysis'}: 'engineer', // Инженер
+        {'business', 'people'}: 'leader',    // Лидер
+        {'nature', 'care'}: 'practitioner',  // Практик
+        {'order', 'analysis'}: 'organizer',  // Организатор
+        {'care', 'nature'}: 'protector',     // Защитник
+      };
+      for (final entry in profileMatches.entries) {
+        if (entry.key.containsAll(top2) || top2.containsAll(entry.key)) {
+          matchedProfile = entry.value;
+          break;
+        }
+      }
+      // Fallback to first scale - map scale to most likely profile
+      if (matchedProfile == null && topScales.isNotEmpty) {
+        final fallbackProfiles = {
+          'people': 'helper',       // People -> Помощник
+          'analysis': 'analyst',    // Analysis -> Аналитик
+          'creation': 'creator',    // Creation -> Творец
+          'technology': 'engineer', // Technology -> Инженер
+          'business': 'leader',     // Business -> Лидер
+          'nature': 'practitioner', // Nature -> Практик
+          'order': 'organizer',     // Order -> Организатор
+          'care': 'helper',         // Care -> Помощник
+        };
+        matchedProfile = fallbackProfiles[topScales[0]];
+      }
+    }
+
+    return CareerCompassResult(
+      testId: CareerCompassConfig.testId,
+      answers: [], // No answers stored in history
+      scaleScores: scaleScores,
+      scalePercentages: scalePercentages,
+      topScales: topScales,
+      profileId: matchedProfile,
+      interpretations: interpretations ?? {},
+      recommendations: recommendations ?? [],
+      totalTimeMs: 0, // Not stored in history
+      averageResponseTimeMs: 0, // Not stored in history
+      completedAt: completedAt,
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {

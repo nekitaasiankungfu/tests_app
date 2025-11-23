@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
 import '../models/career_compass_model.dart';
+import '../models/test_model.dart';
 import '../data/career_compass_data.dart';
 import '../providers/locale_provider.dart';
+import '../providers/test_provider.dart';
+import '../utils/app_logger.dart';
+import '../config/summary/question_weights/career_compass_weights.dart';
 
 /// Экран результатов теста "Карьерный компас"
 ///
@@ -14,26 +18,258 @@ import '../providers/locale_provider.dart';
 /// - Детальные интерпретации
 /// - Рекомендации
 ///
-/// @version: 1.0.0
+/// @version: 1.2.0 - Added fromHistory flag to prevent duplicate saves
 
-class CareerCompassResultScreen extends StatelessWidget {
+class CareerCompassResultScreen extends StatefulWidget {
   final CareerCompassResult result;
+
+  /// If true, viewing from history - don't save again
+  final bool fromHistory;
 
   const CareerCompassResultScreen({
     super.key,
     required this.result,
+    this.fromHistory = false,
   });
+
+  @override
+  State<CareerCompassResultScreen> createState() => _CareerCompassResultScreenState();
+}
+
+class _CareerCompassResultScreenState extends State<CareerCompassResultScreen> {
+  bool _resultSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Save result after first frame, but only if not viewing from history
+    if (!widget.fromHistory) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _saveResult();
+      });
+    }
+  }
+
+  Future<void> _saveResult() async {
+    if (_resultSaved || widget.fromHistory) return;
+
+    try {
+      final testProvider = context.read<TestProvider>();
+
+      // Convert CareerCompassResult to standard TestResult
+      final testResult = _convertToTestResult(widget.result);
+
+      final success = await testProvider.saveTestResult(testResult);
+      if (success) {
+        _resultSaved = true;
+        appLogger.i('Career Compass result saved successfully');
+      } else {
+        appLogger.e('Failed to save Career Compass result');
+      }
+    } catch (e, stackTrace) {
+      appLogger.e('Error saving Career Compass result', error: e, stackTrace: stackTrace);
+    }
+  }
+
+  /// Convert CareerCompassResult to standard TestResult for storage
+  TestResult _convertToTestResult(CareerCompassResult result) {
+    // Calculate total score as sum of all scale scores
+    final totalScore = result.scaleScores.values.fold<int>(0, (sum, v) => sum + v);
+    // Max possible score: 8 scales × maxScaleScore
+    final maxScore = CareerCompassConfig.scaleCount * CareerCompassConfig.maxScaleScore;
+
+    // Create factor scores for each scale
+    final factorScores = <String, FactorScore>{};
+    for (final entry in result.scaleScores.entries) {
+      final scale = CareerCompassData.getScaleById(entry.key);
+      final interp = CareerCompassData.getScaleInterpretation(entry.key, entry.value, true);
+
+      factorScores[entry.key] = FactorScore(
+        factorId: entry.key,
+        factorName: scale?.name ?? {'ru': entry.key, 'en': entry.key},
+        score: entry.value,
+        maxScore: CareerCompassConfig.maxScaleScore,
+        interpretation: {
+          'ru': interp['shortDescription'] ?? '',
+          'en': interp['shortDescription'] ?? '',
+        },
+      );
+    }
+
+    // Create scale scores in 0-100 format
+    final scaleScores = <String, double>{};
+    for (final entry in result.scalePercentages.entries) {
+      scaleScores[entry.key] = entry.value;
+    }
+
+    // Create userAnswers for summary integration
+    // Each scale becomes a "question" with normalized score (0-4)
+    // This allows Career Compass to contribute to personality type calculation
+    final userAnswers = <String, int>{};
+    for (final entry in result.scaleScores.entries) {
+      // Normalize: 0-14 (maxScaleScore) -> 0-4
+      final normalizedScore = ((entry.value / CareerCompassConfig.maxScaleScore) * 4).round().clamp(0, 4);
+      userAnswers['scale_${entry.key}'] = normalizedScore;
+    }
+
+    // Calculate psychological scale scores (195 scales) from Career Compass weights
+    // This makes Career Compass contribute to the overall psychological profile
+    final psychScaleScores = _calculatePsychologicalScaleScores(result, userAnswers);
+
+    // Calculate question contributions for summary transparency
+    // Shows which career scales influenced which psychological scales
+    final questionContributions = _calculateQuestionContributions(result, userAnswers);
+
+    // Create interpretation text
+    String interpretation;
+    if (result.profileId != null) {
+      final profile = CareerCompassData.getProfileById(result.profileId!);
+      interpretation = profile?.name['ru'] ?? 'Карьерный профиль определён';
+    } else {
+      interpretation = 'Топ склонность: ${result.topScales.isNotEmpty ? result.topScales[0] : "не определена"}';
+    }
+
+    return TestResult(
+      testId: CareerCompassConfig.testId,
+      totalScore: totalScore,
+      maxScore: maxScore,
+      interpretation: interpretation,
+      completedAt: DateTime.now(),
+      factorScores: factorScores,
+      scaleScores: psychScaleScores, // Use calculated psychological scale scores
+      userAnswers: userAnswers,
+      questionContributions: questionContributions,
+      version: 2,
+    );
+  }
+
+  /// Calculate question contributions for summary transparency
+  /// Shows which career scales (as "questions") contributed to which psychological scales
+  Map<String, List<QuestionContribution>> _calculateQuestionContributions(
+    CareerCompassResult result,
+    Map<String, int> userAnswers,
+  ) {
+    final contributions = <String, List<QuestionContribution>>{};
+    final scaleWeightTotals = <String, double>{};
+
+    // First pass: calculate total weights for each psychological scale
+    for (final entry in userAnswers.entries) {
+      final questionKey = 'career_compass_v1:${entry.key}';
+      final questionWeight = CareerCompassWeights.weights[questionKey];
+      if (questionWeight == null) continue;
+
+      questionWeight.axisWeights.forEach((scaleId, weight) {
+        scaleWeightTotals[scaleId] = (scaleWeightTotals[scaleId] ?? 0.0) + weight.abs();
+      });
+    }
+
+    // Second pass: create contributions
+    for (final entry in userAnswers.entries) {
+      final questionKey = 'career_compass_v1:${entry.key}';
+      final questionWeight = CareerCompassWeights.weights[questionKey];
+      if (questionWeight == null) continue;
+
+      final answerScore = entry.value; // 0-4
+      final normalizedAnswer = answerScore / 4.0; // 0-1
+
+      // Get career scale info for question text
+      final careerScaleId = entry.key.replaceFirst('scale_', '');
+      final careerScale = CareerCompassData.getScaleById(careerScaleId);
+      final questionText = careerScale != null
+          ? {
+              'ru': '${careerScale.icon} ${careerScale.name['ru']} - ${careerScale.description['ru']}',
+              'en': '${careerScale.icon} ${careerScale.name['en']} - ${careerScale.description['en']}',
+            }
+          : {'ru': careerScaleId, 'en': careerScaleId};
+
+      // Add contribution to each psychological scale
+      questionWeight.axisWeights.forEach((scaleId, weight) {
+        if (!contributions.containsKey(scaleId)) {
+          contributions[scaleId] = [];
+        }
+
+        final totalWeight = scaleWeightTotals[scaleId] ?? 1.0;
+        // Calculate contribution as percentage of this scale's score
+        final contribution = totalWeight > 0
+            ? (normalizedAnswer * weight.abs() / totalWeight) * 100.0
+            : 0.0;
+
+        contributions[scaleId]!.add(QuestionContribution(
+          questionId: entry.key,
+          questionText: questionText,
+          answerScore: answerScore,
+          maxAnswerScore: 4,
+          weight: weight,
+          normalizedContribution: contribution.clamp(0.0, 100.0),
+        ));
+      });
+    }
+
+    appLogger.d('Career Compass: created contributions for ${contributions.length} psychological scales');
+    return contributions;
+  }
+
+  /// Calculate psychological scale scores from Career Compass weights
+  /// Maps career interest scales to 195 psychological scales
+  Map<String, double> _calculatePsychologicalScaleScores(
+    CareerCompassResult result,
+    Map<String, int> userAnswers,
+  ) {
+    final scaleAccumulator = <String, double>{};
+    final scaleWeightTotals = <String, double>{};
+
+    // Process each "question" (career scale) through the weights
+    for (final entry in userAnswers.entries) {
+      final questionKey = 'career_compass_v1:${entry.key}';
+      final questionWeight = CareerCompassWeights.weights[questionKey];
+
+      if (questionWeight == null) {
+        continue;
+      }
+
+      // Answer score is 0-4
+      final answerScore = entry.value;
+      final normalizedAnswer = answerScore / 4.0; // 0-1 range
+
+      // Apply weights to each psychological scale
+      questionWeight.axisWeights.forEach((scaleId, weight) {
+        final weightedContribution = normalizedAnswer * weight.abs() * 100; // Scale to 0-100
+
+        scaleAccumulator[scaleId] = (scaleAccumulator[scaleId] ?? 0.0) + weightedContribution;
+        scaleWeightTotals[scaleId] = (scaleWeightTotals[scaleId] ?? 0.0) + weight.abs();
+      });
+    }
+
+    // Normalize scores to 0-100
+    final normalizedScores = <String, double>{};
+    scaleAccumulator.forEach((scaleId, score) {
+      final totalWeight = scaleWeightTotals[scaleId] ?? 1.0;
+      if (totalWeight > 0) {
+        normalizedScores[scaleId] = (score / totalWeight).clamp(0.0, 100.0);
+      }
+    });
+
+    appLogger.d('Career Compass: calculated ${normalizedScores.length} psychological scale scores');
+    return normalizedScores;
+  }
 
   @override
   Widget build(BuildContext context) {
     final isRussian = context.watch<LocaleProvider>().isRussian;
+    final result = widget.result;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(isRussian ? 'Результаты теста' : 'Test Results'),
         leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+          icon: Icon(widget.fromHistory ? Icons.arrow_back : Icons.close),
+          onPressed: () {
+            if (widget.fromHistory) {
+              Navigator.of(context).pop(); // Return to results screen
+            } else {
+              Navigator.of(context).popUntil((route) => route.isFirst); // Return to home
+            }
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -71,14 +307,23 @@ class CareerCompassResultScreen extends StatelessWidget {
             _buildStatsSection(context, isRussian),
             const SizedBox(height: 24),
 
-            // Кнопка завершения
+            // Кнопка навигации
             SizedBox(
               width: double.infinity,
               height: 56,
-              child: ElevatedButton(
-                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                child: Text(
-                  isRussian ? 'Завершить' : 'Finish',
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  if (widget.fromHistory) {
+                    Navigator.of(context).pop(); // Return to results screen
+                  } else {
+                    Navigator.of(context).popUntil((route) => route.isFirst); // Return to home
+                  }
+                },
+                icon: Icon(widget.fromHistory ? Icons.arrow_back : Icons.home),
+                label: Text(
+                  widget.fromHistory
+                      ? (isRussian ? 'Вернуться назад' : 'Go Back')
+                      : (isRussian ? 'На главную' : 'To Home'),
                   style: const TextStyle(fontSize: 18),
                 ),
               ),
@@ -142,7 +387,7 @@ class CareerCompassResultScreen extends StatelessWidget {
               height: 300,
               child: CustomPaint(
                 painter: RadarChartPainter(
-                  scores: result.scalePercentages,
+                  scores: widget.result.scalePercentages,
                   scales: CareerCompassData.scales,
                   isRussian: isRussian,
                 ),
@@ -173,12 +418,12 @@ class CareerCompassResultScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            ...result.topScales.asMap().entries.map((entry) {
+            ...widget.result.topScales.asMap().entries.map((entry) {
               final index = entry.key;
               final scaleId = entry.value;
               final scale = CareerCompassData.getScaleById(scaleId);
-              final score = result.scaleScores[scaleId] ?? 0;
-              final percentage = result.scalePercentages[scaleId] ?? 0;
+              final score = widget.result.scaleScores[scaleId] ?? 0;
+              final percentage = widget.result.scalePercentages[scaleId] ?? 0;
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
@@ -289,7 +534,7 @@ class CareerCompassResultScreen extends StatelessWidget {
   }
 
   Widget _buildProfileSection(BuildContext context, bool isRussian) {
-    final profile = CareerCompassData.getProfileById(result.profileId!);
+    final profile = CareerCompassData.getProfileById(widget.result.profileId!);
     if (profile == null) return const SizedBox();
 
     return Card(
@@ -432,8 +677,8 @@ class CareerCompassResultScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ...CareerCompassData.scales.map((scale) {
-              final score = result.scaleScores[scale.id] ?? 0;
-              final percentage = result.scalePercentages[scale.id] ?? 0;
+              final score = widget.result.scaleScores[scale.id] ?? 0;
+              final percentage = widget.result.scalePercentages[scale.id] ?? 0;
               final color = Color(int.parse(scale.color.replaceFirst('#', '0xFF')));
 
               return Padding(
@@ -506,7 +751,7 @@ class CareerCompassResultScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            ...result.recommendations.map((rec) {
+            ...widget.result.recommendations.map((rec) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: Row(
@@ -548,19 +793,19 @@ class CareerCompassResultScreen extends StatelessWidget {
                 _buildStatItem(
                   context,
                   Icons.timer,
-                  '${(result.totalTimeMs / 1000 / 60).toStringAsFixed(1)} ${isRussian ? 'мин' : 'min'}',
+                  '${(widget.result.totalTimeMs / 1000 / 60).toStringAsFixed(1)} ${isRussian ? 'мин' : 'min'}',
                   isRussian ? 'Общее время' : 'Total Time',
                 ),
                 _buildStatItem(
                   context,
                   Icons.speed,
-                  '${(result.averageResponseTimeMs / 1000).toStringAsFixed(1)} ${isRussian ? 'сек' : 'sec'}',
+                  '${(widget.result.averageResponseTimeMs / 1000).toStringAsFixed(1)} ${isRussian ? 'сек' : 'sec'}',
                   isRussian ? 'Среднее время' : 'Avg. Time',
                 ),
                 _buildStatItem(
                   context,
                   Icons.quiz,
-                  '${result.answers.length}',
+                  '${widget.result.answers.length}',
                   isRussian ? 'Ответов' : 'Answers',
                 ),
               ],
