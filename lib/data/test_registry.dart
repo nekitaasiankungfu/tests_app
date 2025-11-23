@@ -14,6 +14,7 @@ import 'tests/holland_code_test.dart';
 import 'tests/love_languages_test.dart';
 import 'tests/color_psychology_test.dart';
 import 'tests/anxiety_symptoms_inventory_test.dart';
+import 'tests/career_compass_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -57,6 +58,7 @@ class TestRegistry {
 
     // Career/Vocational
     HollandCodeTest(),
+    CareerCompassTest(), // Special forced_choice test
 
     // Emotional/Wellbeing
     ColorPsychologyTest(), // Special color-based test

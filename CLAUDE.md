@@ -20,16 +20,16 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **15 psychological tests organized in 5 categories:**
+- **16 psychological tests organized in 5 categories:**
   - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
   - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
   - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q)
-  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q) ⭐ NEW
-  - 💼 **Карьера:** Holland Code RIASEC (60 q)
+  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q)
+  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice)
 - **Category-based test grouping** with collapsible sections
 - **Two test architectures:**
   - Standard tests (14) - questionnaires with Likert scales
-  - Special tests (1) - visual/interactive with custom UI
+  - Special tests (2) - visual/interactive with custom UI (Color Psychology, Career Compass)
 - Multilingual support (Russian/English)
 - Daily mood tracking
 - Result history and archive
@@ -37,12 +37,19 @@ A mobile application providing professional psychological tests for self-assessm
 - **Cross-test personality type calculation** - all tests contribute to personality type
 - **Automatic direction detection** - negative weights auto-invert scale values
 - **Answer text display** - shows actual answer text in summary (e.g., "2/4 (Иногда)")
-- **Color Psychology Test features:** ⭐ NEW
+- **Color Psychology Test features:**
   - 6 interactive stages (12-15 minutes)
   - 34+ unique interactions
   - Drag-and-drop, paired comparisons, emotional associations
   - Consistency metrics across stages
   - 12 psychological scales
+- **Career Compass Test features:** ⭐ NEW
+  - 56 forced_choice questions (paired comparisons)
+  - 8 career interest scales (people, analysis, creation, technology, business, nature, order, care)
+  - Ipsative scoring (points distributed between scales)
+  - Radar chart visualization
+  - Career profile matching with recommendations
+  - ~15 minutes completion time
 - Theme customization (6 pastel colors + dark mode)
 - Onboarding experience for new users
 - Offline-first architecture with local persistence
@@ -217,12 +224,12 @@ Data & Config Layer (Test Data, Storage)
 │   ├── DEPLOYMENT.md
 │   ├── PERFORMANCE.md
 │   └── adding-new-test/           # Test creation guides ⭐ UPDATED
-│       ├── ADDING_NEW_TEST_INDEX.md       # Main index (v3.1.0)
+│       ├── ADDING_NEW_TEST_INDEX.md       # Main index (v3.2.0)
 │       ├── ADDING_TEST_CHECKLIST.md       # 65-point checklist
 │       ├── ADDING_TEST_RULES.md           # 8 critical rules
 │       ├── ADDING_TEST_ERRORS.md          # 14 common errors
 │       ├── ADDING_TEST_EXAMPLES.md        # Code templates
-│       └── ADDING_SPECIAL_TESTS.md        # Special tests guide (v1.1.0) ⭐ NEW
+│       └── ADDING_SPECIAL_TESTS.md        # Special tests guide (v1.2.0) - Color + Career Compass
 ├── android/                       # Android platform
 ├── ios/                           # iOS platform
 ├── pubspec.yaml                   # Dependencies
@@ -231,8 +238,8 @@ Data & Config Layer (Test Data, Storage)
 └── README.md                      # Project overview (Russian)
 ```
 
-**Total Growth:** 10,347 → 40,000+ lines (+287%)
-**Latest Addition:** Color Psychology Test - 6 stages, 7 widgets, 12 scales, 1150-line results screen
+**Total Growth:** 10,347 → 42,000+ lines (+305%)
+**Latest Addition:** Career Compass Test - 56 forced_choice questions, 8 career scales, radar chart, ipsative scoring
 
 ---
 
@@ -398,6 +405,14 @@ SummaryData? calculateSummary(List<TestResult> results) {
 | `lib/widgets/color_emotional_associations_widget.dart` | 220 | Stage 4: Emotional associations |
 | `lib/widgets/color_life_domains_widget.dart` | 260 | Stage 5: Life domains + situations |
 | `lib/widgets/color_temporal_perspective_widget.dart` | 230 | Stage 6: Temporal perspective |
+| **Career Compass Test (Special)** ||| ⭐ NEW
+| `lib/models/career_compass_model.dart` | 210 | Career test models (ForcedChoice, Config) |
+| `lib/data/career_compass_data.dart` | 700 | 56 questions, 8 scales, profiles, interpretations |
+| `lib/screens/career_compass_test_screen.dart` | 410 | Main test screen (intro + questions) |
+| `lib/screens/career_compass_result_screen.dart` | 700 | Results with radar chart, profiles |
+| `lib/services/career_compass_service.dart` | 200 | Ipsative scoring, profile matching |
+| `lib/widgets/career_compass_question_widget.dart` | 300 | Forced choice UI (A vs B cards) |
+| `lib/data/tests/career_compass_test.dart` | 145 | Test stub (questions: []) |
 
 ---
 
@@ -416,18 +431,20 @@ All comprehensive documentation is in the `docs/` directory:
 
 ### 🎨 Adding New Tests Documentation ⭐ UPDATED
 
-Comprehensive modular guide for adding psychological tests (v3.1.0):
+Comprehensive modular guide for adding psychological tests (v3.2.0):
 
 - **[Main Index](docs/adding-new-test/ADDING_NEW_TEST_INDEX.md)** - Navigation hub, quick start guide
 - **[65-Point Checklist](docs/adding-new-test/ADDING_TEST_CHECKLIST.md)** - Complete implementation checklist
 - **[8 Critical Rules](docs/adding-new-test/ADDING_TEST_RULES.md)** - Must-follow rules to avoid bugs
 - **[14 Common Errors](docs/adding-new-test/ADDING_TEST_ERRORS.md)** - Typical mistakes and solutions
 - **[Code Templates](docs/adding-new-test/ADDING_TEST_EXAMPLES.md)** - Ready-to-use code examples
-- **[Special Tests Guide](docs/adding-new-test/ADDING_SPECIAL_TESTS.md)** ⭐ NEW - Visual/interactive tests
+- **[Special Tests Guide](docs/adding-new-test/ADDING_SPECIAL_TESTS.md)** (v1.2.0) - Visual/interactive tests
   - When to use special architecture vs standard
-  - 9-step implementation guide with full templates
-  - Color Psychology Test as reference (6 stages, 1150-line results screen)
-  - Complete widget examples (drag-and-drop, paired comparisons, etc.)
+  - **Two types of special tests:**
+    - Visual tests (Color Psychology - 6 stages, drag-and-drop)
+    - **Forced Choice tests (Career Compass - 56 paired comparisons)** ⭐ NEW
+  - Critical `maxScaleScore` calculation formula
+  - Complete widget examples and checklists
 
 ### 📄 Other Documentation
 
@@ -468,7 +485,9 @@ Comprehensive modular guide for adding psychological tests (v3.1.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.15.0 | 2025-11-23 | Claude Code | **Merge: Anxiety Symptoms Inventory + Career Compass** ⭐<br>- **Объединение двух тестов из параллельных веток**<br>- **Anxiety Symptoms Inventory:** 24 вопроса, 4 фактора (somatic, cognitive, affective, behavioral), 4-point intensity scale (0-3)<br>- **Career Compass:** 56 forced_choice вопросов, 8 шкал, ipsative scoring<br>- **Всего тестов:** 16 (14 стандартных + 2 специальных)<br>- **Test Architecture:** 14 Legacy Dart + 2 Special = 16 total tests |
 | 3.14.0 | 2025-11-23 | Claude Code | **Anxiety Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Anxiety Symptoms Inventory (24 вопроса, 4 фактора, 5 минут)<br>- **4 Factors:** somatic (телесные), cognitive (когнитивные), affective (эмоциональные), behavioral (поведенческие)<br>- **4-point intensity scale:** scores 0-3 (Совсем нет / Слегка / Умеренно / Сильно)<br>- **Interpretation levels:** minimal (0-20%), mild (21-42%), moderate (43-69%), severe (70-100%)<br>- **Created 3 files:**<br>  • Test stub: `anxiety_symptoms_inventory_test.dart` (90 lines)<br>  • Data file: `anxiety_symptoms_inventory_data.dart` (500 lines, bilingual ru/en)<br>  • Weights: `anxiety_symptoms_inventory_weights.dart` (430 lines, ~30 scales)<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Scales mapped:** anxiety, panic_tendency, stress_tolerance, emotional_resilience, worry_tendency, attention_control, calmness, composure, vulnerability, neuroticism, and more<br>- **Note:** Does NOT affect 4 bipolar personality type scales (E/I, S/N, T/F, J/P) - тест измеряет симптоматику, а не когнитивные предпочтения<br>- **Всего тестов:** 15 (14 стандартных + 1 специальный)<br>- **Test Architecture:** 14 Legacy Dart + 1 Special = 15 total tests |
+| 3.14.0-career | 2025-01-23 | Claude Code | **Career Compass Test Added** ⭐ NEW<br>- **Новый тест:** Career Compass (56 forced_choice вопросов, 8 шкал, ~15 минут)<br>- **Второй специальный тест** - использует парные сравнения (A vs B)<br>- **8 Career Interest Scales:** people, analysis, creation, technology, business, nature, order, care<br>- **Ipsative Scoring:** очки распределяются между выбранными шкалами<br>- **Created 7 files:**<br>  • Models: `career_compass_model.dart` (210 lines)<br>  • Data: `career_compass_data.dart` (700 lines, 56 questions, 8 profiles)<br>  • Widget: `career_compass_question_widget.dart` (300 lines, VS cards)<br>  • Service: `career_compass_service.dart` (200 lines, ipsative scoring)<br>  • Main screen: `career_compass_test_screen.dart` (410 lines)<br>  • Results: `career_compass_result_screen.dart` (700 lines, radar chart)<br>  • Test stub: `career_compass_test.dart` (145 lines)<br>- **Bug fix:** maxScaleScore исправлен с 7 на 14 (формула: questions×2/scales)<br>- **Documentation updated:**<br>  • `ADDING_SPECIAL_TESTS.md` v1.2.0 - добавлен Forced Choice раздел<br>  • `ADDING_NEW_TEST_INDEX.md` v3.2.0 - Career Compass в примерах<br>- **Всего тестов:** 15 (13 стандартных + 2 специальных)<br>- **Test Architecture:** 13 Legacy Dart + 2 Special = 15 total tests |
 | 3.13.0 | 2025-01-18 | Claude Code | **Color Psychology Test + Special Tests Architecture** ⭐ MAJOR<br>- **Новый тест:** Color Psychology (6 этапов, 12-15 минут, 34+ взаимодействий)<br>- **Первый тест со специальной архитектурой** - не использует стандартный вопрос-ответ формат<br>- **6 Interactive Stages:**<br>  1. Быстрый выбор (30 сек, 3+3 цвета)<br>  2. Ранжирование (60 сек, drag-and-drop всех 10 цветов)<br>  3. Парные сравнения (2 мин, 20 пар из 45)<br>  4. Эмоциональные ассоциации (8 базовых эмоций → цвета)<br>  5. Жизненные сферы (6 сфер + 4 ситуации → цвета)<br>  6. Временная перспектива (прошлое/настоящее/будущее/идеал/страх)<br>- **Created 13 files:**<br>  • Models: `color_psychology_model.dart` (280 lines, 6 result types)<br>  • Data: `color_psychology_data.dart` (450 lines, 10 colors, 8 emotions, 12 scales)<br>  • 7 Widgets: selection, ranking, paired_comparisons, emotional_associations, life_domains, temporal_perspective, association (200-280 lines each)<br>  • Main screen: `color_psychology_test_screen.dart` (495 lines, stage management)<br>  • Results screen: `color_psychology_result_screen.dart` (1,150 lines, all 6 stages display) ⭐<br>  • Service: `color_psychology_service.dart` (850 lines, 12 scales + consistency metrics)<br>  • Test stub: `color_psychology_test.dart` (empty questions list)<br>- **Results screen features:** 12 scales, 6 stage results, consistency metrics, patterns, recommendations<br>- **Documentation updated:**<br>  • `ADDING_NEW_TEST_INDEX.md` v3.1.0 - added special tests section<br>  • `ADDING_SPECIAL_TESTS.md` v1.1.0 created - comprehensive guide (1900+ lines)<br>  • ЭТАП 9 added: Creating results screen (400+ lines of templates and examples)<br>- **Всего тестов:** 14 (13 стандартных + 1 специальный)<br>- **Test Architecture:** 13 Legacy Dart + 1 Special = 14 total tests<br>- **Codebase growth:** 38,000 → 40,000+ lines (+287% с v1.0.0) |
 | 3.12.0 | 2025-01-16 | Claude Code | **Love Languages Test Added** ⭐<br>- **Новый тест:** Love Languages (30 вопросов, 5 языков любви, 8 минут)<br>- **5 Love Languages:** Words of Affirmation (💬), Quality Time (⏰), Receiving Gifts (🎁), Acts of Service (🤝), Physical Touch (🤗)<br>- Created: test stub, data file (bilingual), weights file (41 scales: 37 unipolar + 4 bipolar)<br>- Integrated in 7 points: test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Fixed:** Ошибка #14 - использование `testResult.testId` вместо `test.id` в test_service.dart<br>- **Обновлена документация:** ADDING_TEST_ERRORS.md теперь содержит 14 ошибок (было 13)<br>- **Всего тестов:** 13 (5 категорий, 616 вопросов)<br>- **Test Architecture:** 11 Legacy Dart + 2 JSON = 13 total tests |
 | 3.11.0 | 2025-01-16 | Claude Code | **Holland Code Test + Documentation Fix** ⭐<br>- **Добавлен тест:** Holland Code RIASEC (60 вопросов, 6 факторов)<br>- **Новая категория:** 'career' для профориентационных тестов<br>- **Исправлена ошибка:** Weights не отображались в результатах<br>- **Обновлена документация:** Добавлена Ошибка #13 про summary_config._weights<br>- **Всего тестов:** 12 (5 категорий)<br>- **Codebase:** 37,000+ строк (+257% с v1.0.0) |
@@ -491,18 +510,20 @@ Comprehensive modular guide for adding psychological tests (v3.1.0):
 ---
 
 **Last Updated:** 2025-11-23
-**Document Version:** 3.14.0
-**Codebase State:** ~41,000+ lines across 80+ files (+296% growth since v1.0.0)
+**Document Version:** 3.15.0
+**Codebase State:** ~43,000+ lines across 87+ files (+315% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 15 tests across 5 categories
-  - 14 standard tests (640 questions total)
-  - 1 special test (6 interactive stages, 34+ interactions)
+**Psychological Tests:** 16 tests across 5 categories
+  - 14 standard tests (664 questions total)
+  - 2 special tests:
+    - Color Psychology (6 interactive stages, 34+ interactions)
+    - Career Compass (56 forced_choice questions, 8 career scales)
 **Architecture Status:** Production-ready with dual architecture support
-**Test Architecture:** 14 Legacy Dart + 1 Special = 15 total tests
+**Test Architecture:** 14 Legacy Dart + 2 Special = 16 total tests
 **Recent Updates:**
-- Anxiety Symptoms Inventory добавлен (v3.14.0) ⭐ NEW - тест тревоги (24 вопроса, 4 фактора)
-- 3 новых файла: test stub, data file (bilingual), weights (~30 scales)
-- Интеграция в 7 файлов: test_registry, test_loader_service, test_service, summary_service, summary_screen, summary_config
+- Merge: Anxiety Symptoms Inventory + Career Compass (v3.15.0)
+- Anxiety Symptoms Inventory: 24 вопроса, 4 фактора, 4-point intensity scale
+- Career Compass: 56 forced_choice вопросов, 8 career scales, ipsative scoring
 
 ---
 
