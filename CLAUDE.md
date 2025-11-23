@@ -20,17 +20,17 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **22 psychological tests organized in 5 categories:**
+- **24 psychological tests organized in 5 categories:**
   - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
   - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
-  - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q), Romantic Potential (36 q)
+  - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q), Romantic Potential (36 q), Relationship Compatibility (24 q), Friendship Psychology (24 q)
   - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q), Depression Symptoms Inventory (27 q), Self Confidence Multiscale (36 q)
-  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice), Digital Career Fit (18 q), Cognitive Ability (60 q) ⭐ NEW
+  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice), Digital Career Fit (18 q), Cognitive Ability (60 q)
 - **Category-based test grouping** with collapsible sections
 - **Three test architectures:**
-  - Standard tests (19) - questionnaires with Likert scales
+  - Standard tests (21) - questionnaires with Likert scales
   - Special tests (2) - visual/interactive with custom UI (Color Psychology, Career Compass)
-  - Profile tests (2) - multi-choice with 7-section result structure (Digital Career Fit, Romantic Potential)
+  - Profile tests (4) - multi-choice with 7-section result structure (Digital Career Fit, Romantic Potential, Relationship Compatibility, Friendship Psychology)
 - Multilingual support (Russian/English)
 - Daily mood tracking
 - Result history and archive
@@ -73,7 +73,23 @@ A mobile application providing professional psychological tests for self-assessm
   - 3 romantic profiles: Secure Romantic, Mixed Romantic, Romantic Challenges
   - 12 reversed questions with proper handling
   - ~8 minutes completion time
-- **Cognitive Ability Test features:** ⭐ NEW
+- **Relationship Compatibility Test features:**
+  - 24 questions with 5-point Likert scale (0-4)
+  - 6 factors: emotional_connection, communication_style, values_alignment, relationship_expectations, conflict_management, intimacy_and_romance
+  - 3 compatibility profiles: Perfect Match (75-100%), Good Potential (45-74%), Needs Alignment (0-44%)
+  - 7-section result structure
+  - ~7 minutes completion time
+- **Friendship Psychology Test features:**
+  - 24 questions with 5-point Likert scale (0-4)
+  - 6 factors: emotional_closeness, communication_style, trust_and_loyalty, boundaries_and_space, supportive_behavior, friendship_expectations
+  - **12 friendship profiles + 1 mixed:**
+    - Deep Intimate, Loyal Classic, Social Butterfly, Free Independent
+    - Support Giver, Activity Partner, Mentor Guide, Equal Balance
+    - Cautious Observer, Crisis Helper, Emotional Anchor, Growth Partner
+  - 7-section result structure with vulnerabilities section
+  - Profile determination based on factor combinations
+  - ~7 minutes completion time
+- **Cognitive Ability Test features:**
   - 60 questions (20 logical + 20 numerical + 20 verbal)
   - 3 factors: logical_reasoning, numerical_ability, verbal_ability
   - Binary scoring (0 = incorrect, 1 = correct)
@@ -454,7 +470,15 @@ SummaryData? calculateSummary(List<TestResult> results) {
 | `lib/data/tests/romantic_potential_test.dart` | 90 | Test stub with metadata |
 | `lib/data/romantic_potential_data.dart` | 850 | 36 questions, 3 profiles, 7-section structure |
 | `lib/config/summary/question_weights/romantic_potential_weights.dart` | 750 | Weights for ~60 scales |
-| **Cognitive Ability Test** ||| ⭐ NEW
+| **Relationship Compatibility Test (Profile)** |||
+| `lib/data/tests/relationship_compatibility_test.dart` | 95 | Test stub with metadata |
+| `lib/data/relationship_compatibility_data.dart` | 750 | 24 questions, 3 profiles, CompatibilityProfile model |
+| `lib/config/summary/question_weights/relationship_compatibility_weights.dart` | 450 | Weights mapping (~47 scales) |
+| **Friendship Psychology Test (Profile)** |||
+| `lib/data/tests/friendship_psychology_test.dart` | 95 | Test stub with metadata |
+| `lib/data/friendship_psychology_data.dart` | 900 | 24 questions, 13 profiles, FriendshipProfile model |
+| `lib/config/summary/question_weights/friendship_psychology_weights.dart` | 400 | Weights mapping (~40 scales) |
+| **Cognitive Ability Test** |||
 | `lib/data/tests/cognitive_ability_test.dart` | 57 | Test stub with metadata |
 | `lib/data/cognitive_ability_data.dart` | ~900 | 60 questions (bilingual), 3 factors, binary scoring |
 | `lib/config/summary/question_weights/cognitive_ability_weights.dart` | 1115 | Weights for ~15 scales per question |
@@ -535,8 +559,11 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 3.20.0 | 2025-11-23 | Claude Code | **Cognitive Ability Test Added** ⭐ NEW<br>- **Новый тест:** Cognitive Ability Test (60 вопросов, 3 фактора, ~30 минут)<br>- **3 Factors:** logical_reasoning (Q1-20), numerical_ability (Q21-40), verbal_ability (Q41-60)<br>- **Binary scoring:** 0 = incorrect, 1 = correct (IQ-style test)<br>- **Time-limited:** 10 minutes per section<br>- **Created 3 files:**<br>  • Test stub: `cognitive_ability_test.dart` (57 lines)<br>  • Data file: `cognitive_ability_data.dart` (60 questions, bilingual ru/en)<br>  • Weights: `cognitive_ability_weights.dart` (1115 lines, ~15 scales per question)<br>- **Scales mapped:** analytical_thinking, abstract_reasoning, problem_solving, critical_thinking, learning_ability, attention_control, cognitive_flexibility, working_memory, numerical_ability, verbal_intelligence, openness, conscientiousness, achievement_orientation, intellectual_curiosity, intuition_pole, thinking_pole<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service, summary_screen (2 switches), summary_config<br>- **Всего тестов:** 22 (19 стандартных + 2 специальных + 1 profile)<br>- **Test Architecture:** 19 Legacy Dart + 2 Special + 1 Profile = 22 total tests |
-| 3.19.0 | 2025-11-23 | Claude Code | **Romantic Potential Test Added**<br>- **Новый тест:** Romantic Potential and Love Beliefs (36 вопросов, 3 фактора, ~8 минут)<br>- **3 Factors:** romantic_potential, love_attitudes, love_stories<br>- **3 Profiles:** Secure Romantic, Mixed Romantic, Romantic Challenges<br>- **7-section result structure** (same as Digital Career Fit)<br>- **Created 3 files:** test stub, data file (850 lines), weights file (750 lines, ~60 scales)<br>- **Integrated in 9 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (3 switches), summary_config, test_result_screen<br>- **12 reversed questions** with proper handling<br>- **Всего тестов:** 21 (18 стандартных + 2 специальных + 1 profile)<br>- **Test Architecture:** 18 Legacy Dart + 2 Special + 1 Profile = 21 total tests |
+| 3.21.0 | 2025-11-23 | Claude Code | **Merge: Cognitive Ability + Romantic Potential + Relationship Compatibility + Friendship Psychology** ⭐<br>- **Объединение 4 тестов из параллельных веток**<br>- **Cognitive Ability:** 60 вопросов, 3 фактора, binary scoring (IQ-style)<br>- **Romantic Potential:** 36 вопросов, 3 фактора, 7-секционная структура<br>- **Relationship Compatibility:** 24 вопроса, 6 факторов, 3 профиля совместимости<br>- **Friendship Psychology:** 24 вопроса, 6 факторов, 13 профилей дружбы<br>- **Всего тестов:** 24 (21 стандартных + 2 специальных + 4 profile)<br>- **Test Architecture:** 22 Legacy Dart + 2 Special = 24 total tests |
+| 3.20.0 | 2025-11-23 | Claude Code | **Cognitive Ability Test Added**<br>- **Новый тест:** Cognitive Ability Test (60 вопросов, 3 фактора, ~30 минут)<br>- **3 Factors:** logical_reasoning (Q1-20), numerical_ability (Q21-40), verbal_ability (Q41-60)<br>- **Binary scoring:** 0 = incorrect, 1 = correct (IQ-style test) |
+| 3.19.0-a | 2025-11-23 | Claude Code | **Romantic Potential Test Added**<br>- **Новый тест:** Romantic Potential and Love Beliefs (36 вопросов, 3 фактора, ~8 минут)<br>- **3 Profiles:** Secure Romantic, Mixed Romantic, Romantic Challenges |
+| 3.19.0-b | 2025-11-23 | Claude Code | **Relationship Compatibility Test Added**<br>- **Новый тест:** Relationship Compatibility (24 вопроса, 6 факторов, ~7 минут)<br>- **3 Compatibility Profiles:** Perfect Match, Good Potential, Needs Alignment |
+| 3.19.0-c | 2025-11-23 | Claude Code | **Friendship Psychology Test Added**<br>- **Новый тест:** Friendship Psychology (24 вопроса, 6 факторов, ~7 минут)<br>- **12 Friendship Profiles + 1 Mixed** |
 | 3.18.0 | 2025-11-23 | Claude Code | **Merge: Digital Career Fit + Depression Symptoms + Self Confidence** ⭐<br>- **Объединение тестов из параллельных веток**<br>- **Digital Career Fit:** 18 вопросов, 6 направлений, 7-секционная структура результатов<br>- **Depression Symptoms Inventory:** 27 вопросов, 5 факторов<br>- **Self Confidence Multiscale:** 36 вопросов (из remote)<br>- **Documentation v3.3.0:** ADDING_TEST_RESULTS.md, 75-point checklist<br>- **Всего тестов:** 20 (18 стандартных + 2 специальных)<br>- **Test Architecture:** 18 Legacy Dart + 2 Special = 20 total tests |
 | 3.17.0 | 2025-11-23 | Claude Code | **Digital Career Fit Test + 7-Section Results Documentation** ⭐<br>- **Новый тест:** Digital Career Fit (18 вопросов, 6 карьерных направлений, ~5 минут)<br>- **6 Career Directions:** product_thinking, data_analytics, design_ux, content_marketing, management_communication, tech_development<br>- **7 Career Profiles:** Product Manager, Data Analyst, UX Designer, Content Marketer, Project Manager, Developer, Mixed<br>- **7-Section Result Structure**<br>- **Documentation v3.3.0:** ADDING_TEST_RESULTS.md (NEW) |
 | 3.16.0 | 2025-11-23 | Claude Code | **Depression Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Depression Symptoms Inventory (27 вопросов, 5 факторов, 7 минут)<br>- **5 Factors:** emotional, cognitive, motivational, somatic, social<br>- **4-point frequency scale:** scores 0-3 |
@@ -565,24 +592,29 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 ---
 
 **Last Updated:** 2025-11-23
-**Document Version:** 3.20.0
+**Document Version:** 3.21.0
 **Codebase State:** ~50,000+ lines across 100+ files (+380% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 22 tests across 5 categories
-  - 19 standard tests (871 questions total)
+**Psychological Tests:** 24 tests across 5 categories
+  - 18 standard tests (907 questions total)
   - 2 special tests:
     - Color Psychology (6 interactive stages, 34+ interactions)
     - Career Compass (56 forced_choice questions, 8 career scales)
-  - 1 profile test:
+  - 4 profile tests:
     - Digital Career Fit (18 questions, 7-section result structure)
+    - Romantic Potential (36 questions, 3 profiles, 7-section result structure)
+    - Relationship Compatibility (24 questions, 3 profiles, 7-section result structure)
+    - Friendship Psychology (24 questions, 13 profiles, 7-section result structure)
 **Architecture Status:** Production-ready with triple architecture support
-**Test Architecture:** 19 Legacy Dart + 2 Special + 1 Profile = 22 total tests
+**Test Architecture:** 18 Legacy Dart + 2 Special + 4 Profile = 24 total tests
 **Recent Updates:**
-- Cognitive Ability Test: 60 вопросов (IQ-style), 3 фактора, binary scoring (v3.20.0) ⭐ NEW
-- Romantic Potential: 36 вопросов, 3 фактора, 7-секционная структура (v3.19.0)
+- Merge: 4 new tests from parallel branches (v3.21.0) ⭐ NEW
+  - Cognitive Ability Test: 60 вопросов (IQ-style), 3 фактора, binary scoring
+  - Romantic Potential: 36 вопросов, 3 фактора, 7-секционная структура
+  - Relationship Compatibility: 24 вопроса, 6 факторов, 3 профиля совместимости
+  - Friendship Psychology: 24 вопроса, 6 факторов, 13 профилей дружбы
 - Merge: Digital Career Fit + Self Confidence Multiscale (v3.18.0)
 - Digital Career Fit: 18 вопросов, 6 направлений, 7-секционная структура (v3.17.0)
-- Depression Symptoms Inventory: 27 вопросов, 5 факторов (v3.16.0 remote)
 
 ---
 

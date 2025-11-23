@@ -21,6 +21,8 @@ import 'tests/digital_career_fit_test.dart';
 import 'tests/self_confidence_multiscale_test.dart';
 import 'tests/romantic_potential_test.dart';
 import 'tests/cognitive_ability_test.dart';
+import 'tests/relationship_compatibility_test.dart';
+import 'tests/friendship_psychology_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -56,6 +58,8 @@ class TestRegistry {
     LoveProfileTest(),
     LoveLanguagesTest(),
     RomanticPotentialTest(), // Romantic beliefs and potential assessment
+    RelationshipCompatibilityTest(), // Relationship compatibility assessment
+    FriendshipPsychologyTest(), // Friendship style and depth assessment
 
     // Temperament/Personality
     DISCPersonalityTest(),

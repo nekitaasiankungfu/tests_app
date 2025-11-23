@@ -21,6 +21,8 @@ import 'summary/question_weights/digital_career_fit_weights.dart';
 import 'summary/question_weights/self_confidence_multiscale_weights.dart';
 import 'summary/question_weights/romantic_potential_weights.dart';
 import 'summary/question_weights/cognitive_ability_weights.dart';
+import 'summary/question_weights/relationship_compatibility_weights.dart';
+import 'summary/question_weights/friendship_psychology_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2321,6 +2323,8 @@ class QuestionWeightsConfig {
     ...SelfConfidenceMultiscaleWeights.weights,
     ...RomanticPotentialWeights.weights,
     ...CognitiveAbilityWeights.weights,
+    ...RelationshipCompatibilityWeights.weights,
+    ...FriendshipPsychologyWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

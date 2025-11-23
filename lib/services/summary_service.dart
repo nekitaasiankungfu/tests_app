@@ -23,6 +23,8 @@ import '../config/summary/question_weights/digital_career_fit_weights.dart';
 import '../config/summary/question_weights/self_confidence_multiscale_weights.dart';
 import '../config/summary/question_weights/romantic_potential_weights.dart';
 import '../config/summary/question_weights/cognitive_ability_weights.dart';
+import '../config/summary/question_weights/relationship_compatibility_weights.dart';
+import '../config/summary/question_weights/friendship_psychology_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -143,6 +145,8 @@ class SummaryService {
       ...SelfConfidenceMultiscaleWeights.weights,
       ...RomanticPotentialWeights.weights,
       ...CognitiveAbilityWeights.weights,
+      ...RelationshipCompatibilityWeights.weights,
+      ...FriendshipPsychologyWeights.weights,
     };
 
     // 8 personality type scales
@@ -540,6 +544,8 @@ class SummaryService {
       ...SelfConfidenceMultiscaleWeights.weights,
       ...RomanticPotentialWeights.weights,
       ...CognitiveAbilityWeights.weights,
+      ...RelationshipCompatibilityWeights.weights,
+      ...FriendshipPsychologyWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

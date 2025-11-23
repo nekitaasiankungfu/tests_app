@@ -8,6 +8,8 @@ import '../data/ipip_big_five_data.dart';
 import '../data/love_profile_data.dart';
 import '../data/digital_career_fit_data.dart';
 import '../data/romantic_potential_data.dart';
+import '../data/relationship_compatibility_data.dart';
+import '../data/friendship_psychology_data.dart';
 import '../utils/theme_utils.dart';
 import '../constants/color_constants.dart';
 import '../config/summary_config.dart';
@@ -94,6 +96,12 @@ class _TestResultScreenState extends State<TestResultScreen> {
                       ] else if (widget.result.testId == 'romantic_potential_v1') ...[
                         // Romantic Potential - показываем карточку профиля
                         _buildRomanticProfileCard(widget.result, languageCode, themeColor, isDark),
+                      ] else if (widget.result.testId == 'relationship_compatibility_v1') ...[
+                        // Relationship Compatibility - показываем карточку профиля совместимости
+                        _buildRelationshipCompatibilityProfileCard(widget.result, languageCode, themeColor, isDark),
+                      ] else if (widget.result.testId == 'friendship_psychology_v1') ...[
+                        // Friendship Psychology - показываем карточку профиля дружбы
+                        _buildFriendshipPsychologyProfileCard(widget.result, languageCode, themeColor, isDark),
                       ] else
                         _buildResultCard(widget.result, languageCode, themeColor, isDark),
                       const SizedBox(height: 30),
@@ -114,6 +122,16 @@ class _TestResultScreenState extends State<TestResultScreen> {
                         if (widget.result.testId == 'romantic_potential_v1') ...[
                           const SizedBox(height: 30),
                           _buildRomanticExtendedSection(widget.result, languageCode, themeColor, isDark),
+                        ],
+                        // Расширенный профиль для Relationship Compatibility
+                        if (widget.result.testId == 'relationship_compatibility_v1') ...[
+                          const SizedBox(height: 30),
+                          _buildRelationshipCompatibilityExtendedSection(widget.result, languageCode, themeColor, isDark),
+                        ],
+                        // Расширенный профиль для Friendship Psychology
+                        if (widget.result.testId == 'friendship_psychology_v1') ...[
+                          const SizedBox(height: 30),
+                          _buildFriendshipPsychologyExtendedSection(widget.result, languageCode, themeColor, isDark),
                         ],
                       ] else
                         ...[
@@ -1228,65 +1246,344 @@ class _TestResultScreenState extends State<TestResultScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Секция 3: Сильные стороны (characteristics)
-        _buildSectionCard(
-          title: languageCode == 'ru' ? 'Ваши сильные стороны' : 'Your Strengths',
-          icon: Icons.star_outline,
-          items: profile.getCharacteristics(languageCode),
-          themeColor: themeColor,
-          isDark: isDark,
+        // Секция 3: Характеристики
+        _buildRomanticSection(
+          languageCode == 'ru' ? '💪 Ваши характеристики' : '💪 Your Characteristics',
+          profile.getCharacteristics(languageCode),
+          themeColor,
+          isDark,
         ),
         const SizedBox(height: 20),
-        // Секция 4: Подходящие направления (suitableRoles)
-        _buildSectionCard(
-          title: languageCode == 'ru' ? 'Что подходит именно вам' : 'What Suits You',
-          icon: Icons.lightbulb_outline,
-          items: profile.getSuitableRoles(languageCode),
-          themeColor: themeColor,
-          isDark: isDark,
+        // Секция 4: Подходящие роли
+        _buildRomanticSection(
+          languageCode == 'ru' ? '💼 Подходящие роли' : '💼 Suitable Roles',
+          profile.getSuitableRoles(languageCode),
+          themeColor,
+          isDark,
         ),
         const SizedBox(height: 20),
-        // Секция 5: Рекомендации по развитию
-        _buildSectionCard(
-          title: languageCode == 'ru' ? 'Рекомендации по развитию' : 'Development Recommendations',
-          icon: Icons.trending_up,
-          items: profile.getRecommendations(languageCode),
-          themeColor: themeColor,
-          isDark: isDark,
+        // Секция 5: Рекомендации
+        _buildRomanticSection(
+          languageCode == 'ru' ? '📚 Рекомендации' : '📚 Recommendations',
+          profile.getRecommendations(languageCode),
+          themeColor,
+          isDark,
         ),
         const SizedBox(height: 20),
-        // Секция 6: Что попробовать сегодня (tryToday)
-        _buildTryTodayCard(
-          title: languageCode == 'ru' ? 'Что попробовать сегодня' : 'Try Today',
-          content: profile.getTryToday(languageCode),
-          themeColor: themeColor,
-          isDark: isDark,
+        // Секция 6: Что попробовать сегодня
+        Container(
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkCard : Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
+              width: 1,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                languageCode == 'ru' ? '🎯 Что попробовать сегодня' : '🎯 What to Try Today',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : themeColor,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                profile.getTryToday(languageCode),
+                style: TextStyle(
+                  fontSize: 14,
+                  height: 1.4,
+                  color: isDark ? Colors.grey[300] : Colors.grey[700],
+                ),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 20),
-        // Секция 7: Вдохновляющий вывод (inspiringMessage)
-        _buildInspiringCard(
-          content: profile.getInspiringMessage(languageCode),
-          themeColor: themeColor,
-          isDark: isDark,
+        // Секция 7: Вдохновляющий вывод
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: themeColor.withOpacity(isDark ? 0.2 : 0.1),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Text(
+            profile.getInspiringMessage(languageCode),
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.5,
+              fontStyle: FontStyle.italic,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ],
     );
   }
 
-  /// Карточка "Что попробовать сегодня" - одиночный текст
-  Widget _buildTryTodayCard({
-    required String title,
-    required String content,
-    required Color themeColor,
-    required bool isDark,
-  }) {
+  Widget _buildRomanticSection(String title, List<String> items, Color themeColor, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : themeColor,
+            ),
+          ),
+          const SizedBox(height: 10),
+          ...items.map((item) => Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.check_circle_outline,
+                  size: 18,
+                  color: themeColor,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    item,
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.4,
+                      color: isDark ? Colors.grey[300] : Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================================
+  // RELATIONSHIP COMPATIBILITY - Карточка профиля совместимости
+  // ============================================================================
+
+  Widget _buildRelationshipCompatibilityProfileCard(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = RelationshipCompatibilityData.determineProfile(percentages);
+    final profile = RelationshipCompatibilityData.getProfile(profileId);
+
+    if (profile == null) {
+      return _buildResultCard(result, languageCode, themeColor, isDark);
+    }
+
+    // Определяем цвет профиля
+    final profileColor = _getRelationshipProfileColor(profileId);
+
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            AppColors.darkCard,
+            AppColors.darkSurfaceHigh,
+          ] : [
+            profileColor.withOpacity(0.15),
+            profileColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : profileColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          // Иконка профиля
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: profileColor.withOpacity(isDark ? 0.3 : 0.2),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              _getRelationshipProfileIcon(profileId),
+              size: 50,
+              color: isDark ? Colors.white : profileColor,
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Название профиля
+          Text(
+            languageCode == 'ru' ? 'Ваш профиль совместимости' : 'Your Compatibility Profile',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            profile.getName(languageCode),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : profileColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          // Описание профиля
+          Text(
+            profile.getDescription(languageCode),
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData _getRelationshipProfileIcon(String profileId) {
+    switch (profileId) {
+      case 'profile_perfect_match':
+        return Icons.favorite;
+      case 'profile_good_potential':
+        return Icons.thumb_up_outlined;
+      case 'profile_needs_alignment':
+        return Icons.sync_problem_outlined;
+      default:
+        return Icons.favorite_border;
+    }
+  }
+
+  Color _getRelationshipProfileColor(String profileId) {
+    switch (profileId) {
+      case 'profile_perfect_match':
+        return Colors.green;
+      case 'profile_good_potential':
+        return Colors.blue;
+      case 'profile_needs_alignment':
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  Widget _buildRelationshipCompatibilityExtendedSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = RelationshipCompatibilityData.determineProfile(percentages);
+    final profile = RelationshipCompatibilityData.getProfile(profileId);
+
+    if (profile == null) {
+      return const SizedBox.shrink();
+    }
+
+    final profileColor = _getRelationshipProfileColor(profileId);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Сильные стороны (характеристики)
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Ваши сильные стороны' : 'Your Strengths',
+          icon: Icons.star_outline,
+          items: profile.getCharacteristics(languageCode),
+          themeColor: profileColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Подходящие типы отношений (роли)
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Подходящие типы отношений' : 'Suitable Relationship Types',
+          icon: Icons.favorite_outline,
+          items: profile.getSuitableRoles(languageCode),
+          themeColor: profileColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Рекомендации по развитию
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Рекомендации по развитию' : 'Development Recommendations',
+          icon: Icons.trending_up,
+          items: profile.getRecommendations(languageCode),
+          themeColor: profileColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Что попробовать сегодня
+        _buildTryTodayCard(
+          profile.getTryToday(languageCode),
+          profileColor,
+          isDark,
+          languageCode,
+        ),
+        const SizedBox(height: 20),
+        // Вдохновляющее сообщение
+        _buildInspiringMessageCard(
+          profile.getInspiringMessage(languageCode),
+          profileColor,
+          isDark,
+          languageCode,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTryTodayCard(String text, Color themeColor, bool isDark, String languageCode) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.darkCard : Colors.amber.withOpacity(0.1),
+        color: isDark ? AppColors.darkCard : themeColor.withOpacity(0.08),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? Colors.amber.withOpacity(0.3) : Colors.amber.withOpacity(0.5),
+          color: isDark ? Colors.grey[700]! : themeColor.withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -1297,17 +1594,17 @@ class _TestResultScreenState extends State<TestResultScreen> {
             children: [
               Icon(
                 Icons.today,
-                color: isDark ? Colors.amber[300] : Colors.amber[700],
+                color: themeColor,
                 size: 24,
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  title,
+                  languageCode == 'ru' ? 'Попробуйте сегодня' : 'Try Today',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.amber[300] : Colors.amber[800],
+                    color: isDark ? Colors.white : Colors.grey[800],
                   ),
                 ),
               ),
@@ -1315,10 +1612,10 @@ class _TestResultScreenState extends State<TestResultScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            content,
+            text,
             style: TextStyle(
               fontSize: 15,
-              height: 1.6,
+              height: 1.5,
               color: isDark ? Colors.grey[300] : Colors.grey[700],
             ),
           ),
@@ -1327,12 +1624,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
     );
   }
 
-  /// Карточка вдохновляющего сообщения
-  Widget _buildInspiringCard({
-    required String content,
-    required Color themeColor,
-    required bool isDark,
-  }) {
+  Widget _buildInspiringMessageCard(String text, Color themeColor, bool isDark, String languageCode) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -1349,30 +1641,295 @@ class _TestResultScreenState extends State<TestResultScreen> {
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? themeColor.withOpacity(0.3) : themeColor.withOpacity(0.4),
+          color: themeColor.withOpacity(0.3),
           width: 1,
         ),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.auto_awesome,
-            color: isDark ? Colors.white : themeColor,
-            size: 32,
+          Row(
+            children: [
+              Icon(
+                Icons.auto_awesome,
+                color: themeColor,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  languageCode == 'ru' ? 'Вдохновляющая мысль' : 'Inspiring Thought',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : Colors.grey[800],
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           Text(
-            content,
+            text,
             style: TextStyle(
               fontSize: 16,
-              height: 1.6,
               fontStyle: FontStyle.italic,
-              color: isDark ? Colors.white : Colors.grey[800],
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
             ),
             textAlign: TextAlign.center,
           ),
         ],
       ),
+    );
+  }
+
+  // ============================================================================
+  // FRIENDSHIP PSYCHOLOGY - Карточка профиля дружбы
+  // ============================================================================
+
+  Widget _buildFriendshipPsychologyProfileCard(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = FriendshipPsychologyData.determineProfile(percentages);
+    final profile = FriendshipPsychologyData.profiles[profileId];
+
+    if (profile == null) {
+      return _buildResultCard(result, languageCode, themeColor, isDark);
+    }
+
+    // Определяем цвет профиля
+    final profileColor = _getFriendshipProfileColor(profileId);
+
+    return Container(
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            AppColors.darkCard,
+            AppColors.darkSurfaceHigh,
+          ] : [
+            profileColor.withOpacity(0.15),
+            profileColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : profileColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          // Иконка профиля
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: profileColor.withOpacity(isDark ? 0.3 : 0.2),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              _getFriendshipProfileIcon(profileId),
+              size: 50,
+              color: isDark ? Colors.white : profileColor,
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Название профиля
+          Text(
+            languageCode == 'ru' ? 'Ваш стиль дружбы' : 'Your Friendship Style',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            profile.getName(languageCode),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : profileColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          // Описание профиля
+          Text(
+            profile.getDescription(languageCode),
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData _getFriendshipProfileIcon(String profileId) {
+    switch (profileId) {
+      case 'profile_deep_intimate':
+        return Icons.favorite;
+      case 'profile_loyal_classic':
+        return Icons.handshake;
+      case 'profile_social_butterfly':
+        return Icons.groups;
+      case 'profile_free_independent':
+        return Icons.directions_run;
+      case 'profile_support_giver':
+        return Icons.volunteer_activism;
+      case 'profile_activity_partner':
+        return Icons.sports_tennis;
+      case 'profile_mentor_guide':
+        return Icons.school;
+      case 'profile_equal_balance':
+        return Icons.balance;
+      case 'profile_cautious_observer':
+        return Icons.visibility;
+      case 'profile_crisis_helper':
+        return Icons.local_hospital;
+      case 'profile_emotional_anchor':
+        return Icons.anchor;
+      case 'profile_growth_partner':
+        return Icons.trending_up;
+      case 'profile_mixed':
+        return Icons.diversity_3;
+      default:
+        return Icons.people_outline;
+    }
+  }
+
+  Color _getFriendshipProfileColor(String profileId) {
+    switch (profileId) {
+      case 'profile_deep_intimate':
+        return Colors.pink;
+      case 'profile_loyal_classic':
+        return Colors.blue;
+      case 'profile_social_butterfly':
+        return Colors.orange;
+      case 'profile_free_independent':
+        return Colors.teal;
+      case 'profile_support_giver':
+        return Colors.green;
+      case 'profile_activity_partner':
+        return Colors.amber;
+      case 'profile_mentor_guide':
+        return Colors.purple;
+      case 'profile_equal_balance':
+        return Colors.indigo;
+      case 'profile_cautious_observer':
+        return Colors.blueGrey;
+      case 'profile_crisis_helper':
+        return Colors.red;
+      case 'profile_emotional_anchor':
+        return Colors.cyan;
+      case 'profile_growth_partner':
+        return Colors.lime;
+      case 'profile_mixed':
+        return Colors.grey;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  Widget _buildFriendshipPsychologyExtendedSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Вычисляем проценты по шкалам
+    final percentages = <String, double>{};
+    if (result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        final factor = entry.value;
+        final percentage = factor.maxScore > 0
+            ? (factor.score / factor.maxScore) * 100
+            : 0.0;
+        percentages[entry.key] = percentage;
+      }
+    }
+
+    // Определяем профиль
+    final profileId = FriendshipPsychologyData.determineProfile(percentages);
+    final profile = FriendshipPsychologyData.profiles[profileId];
+
+    if (profile == null) {
+      return const SizedBox.shrink();
+    }
+
+    final profileColor = _getFriendshipProfileColor(profileId);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Сильные стороны (характеристики)
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Ваши сильные стороны в дружбе' : 'Your Friendship Strengths',
+          icon: Icons.star_outline,
+          items: profile.getCharacteristics(languageCode),
+          themeColor: profileColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Уязвимости (если есть)
+        if (profile.vulnerabilities != null && profile.vulnerabilities!.isNotEmpty)
+          ...[
+            _buildSectionCard(
+              title: languageCode == 'ru' ? 'На что обратить внимание' : 'Areas to Watch',
+              icon: Icons.warning_amber_outlined,
+              items: profile.getVulnerabilities(languageCode),
+              themeColor: Colors.orange,
+              isDark: isDark,
+            ),
+            const SizedBox(height: 20),
+          ],
+        // Подходящие роли в дружбе
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Подходящие роли в дружбе' : 'Suitable Friendship Roles',
+          icon: Icons.people_outline,
+          items: profile.getSuitableRoles(languageCode),
+          themeColor: profileColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Рекомендации по развитию
+        _buildSectionCard(
+          title: languageCode == 'ru' ? 'Рекомендации по развитию' : 'Development Recommendations',
+          icon: Icons.trending_up,
+          items: profile.getRecommendations(languageCode),
+          themeColor: profileColor,
+          isDark: isDark,
+        ),
+        const SizedBox(height: 20),
+        // Что попробовать сегодня
+        _buildTryTodayCard(
+          profile.getTryToday(languageCode),
+          profileColor,
+          isDark,
+          languageCode,
+        ),
+        const SizedBox(height: 20),
+        // Вдохновляющее сообщение
+        _buildInspiringMessageCard(
+          profile.getInspiringMessage(languageCode),
+          profileColor,
+          isDark,
+          languageCode,
+        ),
+      ],
     );
   }
 }

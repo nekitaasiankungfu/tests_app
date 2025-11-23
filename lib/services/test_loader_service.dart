@@ -25,6 +25,8 @@ import '../data/digital_career_fit_data.dart';
 import '../data/self_confidence_multiscale_data.dart';
 import '../data/romantic_potential_data.dart';
 import '../data/cognitive_ability_data.dart';
+import '../data/relationship_compatibility_data.dart';
+import '../data/friendship_psychology_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -166,6 +168,12 @@ class TestLoaderService {
         break;
       case 'cognitive_ability_v1':
         test = CognitiveAbilityData.getCognitiveAbilityTest();
+        break;
+      case 'relationship_compatibility_v1':
+        test = RelationshipCompatibilityData.getRelationshipCompatibilityTest();
+        break;
+      case 'friendship_psychology_v1':
+        test = FriendshipPsychologyData.getFriendshipPsychologyTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');
