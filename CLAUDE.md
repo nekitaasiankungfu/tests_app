@@ -20,17 +20,17 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **18 psychological tests organized in 5 categories:**
+- **20 psychological tests organized in 5 categories:**
   - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
   - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
   - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q)
-  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q), Wellbeing Happiness Inventory (30 q)
-  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice), **Digital Career Fit (18 q)** ⭐ NEW
+  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q), Depression Symptoms Inventory (27 q), Self Confidence Multiscale (36 q)
+  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice), Digital Career Fit (18 q)
 - **Category-based test grouping** with collapsible sections
 - **Three test architectures:**
-  - Standard tests (15) - questionnaires with Likert scales
+  - Standard tests (17) - questionnaires with Likert scales
   - Special tests (2) - visual/interactive with custom UI (Color Psychology, Career Compass)
-  - **Profile tests (1)** - multi-choice with 7-section result structure (Digital Career Fit) ⭐ NEW
+  - Profile tests (1) - multi-choice with 7-section result structure (Digital Career Fit)
 - Multilingual support (Russian/English)
 - Daily mood tracking
 - Result history and archive
@@ -512,8 +512,9 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 3.17.0 | 2025-11-23 | Claude Code | **Digital Career Fit Test + 7-Section Results Documentation** ⭐<br>- **Новый тест:** Digital Career Fit (18 вопросов, 6 карьерных направлений, ~5 минут)<br>- **6 Career Directions:** product_thinking, data_analytics, design_ux, content_marketing, management_communication, tech_development<br>- **7 Career Profiles:** Product Manager, Data Analyst, UX Designer, Content Marketer, Project Manager, Developer, Mixed<br>- **7-Section Result Structure:**<br>  1. Ваш цифровой профиль<br>  2. Почему именно он<br>  3. Ваши сильные стороны<br>  4. Подходящие направления<br>  5. Рекомендации по развитию<br>  6. Что попробовать сегодня<br>  7. Вдохновляющий вывод<br>- **Profile Determination:** Dominant scale algorithm with 10% gap threshold<br>- **Bipolar Scales:** Added weights for E/I, S/N, T/F, J/P to all 18 questions<br>- **Documentation v3.3.0:**<br>  • `ADDING_TEST_RESULTS.md` (NEW) - 7-section result structure templates<br>  • `ADDING_TEST_CHECKLIST.md` - 65→75 points (ФАЗА 6 added)<br>  • `ADDING_TEST_EXAMPLES.md` - Profile templates added<br>  • `ADDING_NEW_TEST_INDEX.md` - v3.3.0 with results section<br>- **Всего тестов:** 18 (16 стандартных + 2 специальных)<br>- **Test Architecture:** 16 Legacy Dart + 2 Special = 18 total tests |
-| 3.16.0 | 2025-11-23 | Claude Code | **Wellbeing Happiness Inventory Test Added** ⭐<br>- **Новый тест:** Wellbeing Happiness Inventory (30 вопросов, 6 факторов PERMA+, 8 минут)<br>- **PERMA Model (Seligman):** Positive Emotions, Engagement, Relationships, Meaning, Accomplishment + Life Satisfaction<br>- **6-point Likert scale:** scores 0-5 (Совершенно не согласен → Полностью согласен)<br>- **Created 3 files:**<br>  • Test stub: `wellbeing_happiness_inventory_test.dart` (109 lines)<br>  • Data file: `wellbeing_happiness_inventory_data.dart` (590 lines, bilingual ru/en, 5-level interpretations)<br>  • Weights: `wellbeing_happiness_inventory_weights.dart` (~600 lines, ~50 scales)<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (3 places), summary_screen (2 switches), summary_config<br>- **Documentation updated:**<br>  • `ADDING_TEST_RULES.md` - ПРАВИЛО #1 расширено для 6-point Likert (0-5), ПРАВИЛО #8 обновлено<br>  • `ADDING_TEST_ERRORS.md` - Добавлена Ошибка #15 (проценты >100% из-за scores 1-N вместо 0-N)<br>- **Bug fix:** Scores изменены с 1-6 на 0-5 для корректной нормализации (иначе 6/5 = 120%!)<br>- **Всего тестов:** 17 (15 стандартных + 2 специальных)<br>- **Test Architecture:** 15 Legacy Dart + 2 Special = 17 total tests |
+| 3.18.0 | 2025-11-23 | Claude Code | **Merge: Digital Career Fit + Depression Symptoms + Self Confidence** ⭐<br>- **Объединение тестов из параллельных веток**<br>- **Digital Career Fit:** 18 вопросов, 6 направлений, 7-секционная структура результатов<br>- **Depression Symptoms Inventory:** 27 вопросов, 5 факторов<br>- **Self Confidence Multiscale:** 36 вопросов (из remote)<br>- **Documentation v3.3.0:** ADDING_TEST_RESULTS.md, 75-point checklist<br>- **Всего тестов:** 20 (18 стандартных + 2 специальных)<br>- **Test Architecture:** 18 Legacy Dart + 2 Special = 20 total tests |
+| 3.17.0 | 2025-11-23 | Claude Code | **Digital Career Fit Test + 7-Section Results Documentation** ⭐<br>- **Новый тест:** Digital Career Fit (18 вопросов, 6 карьерных направлений, ~5 минут)<br>- **6 Career Directions:** product_thinking, data_analytics, design_ux, content_marketing, management_communication, tech_development<br>- **7 Career Profiles:** Product Manager, Data Analyst, UX Designer, Content Marketer, Project Manager, Developer, Mixed<br>- **7-Section Result Structure**<br>- **Documentation v3.3.0:** ADDING_TEST_RESULTS.md (NEW) |
+| 3.16.0 | 2025-11-23 | Claude Code | **Depression Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Depression Symptoms Inventory (27 вопросов, 5 факторов, 7 минут)<br>- **5 Factors:** emotional, cognitive, motivational, somatic, social<br>- **4-point frequency scale:** scores 0-3 |
 | 3.15.0 | 2025-11-23 | Claude Code | **Merge: Anxiety Symptoms Inventory + Career Compass** ⭐<br>- **Объединение двух тестов из параллельных веток**<br>- **Anxiety Symptoms Inventory:** 24 вопроса, 4 фактора (somatic, cognitive, affective, behavioral), 4-point intensity scale (0-3)<br>- **Career Compass:** 56 forced_choice вопросов, 8 шкал, ipsative scoring<br>- **Всего тестов:** 16 (14 стандартных + 2 специальных)<br>- **Test Architecture:** 14 Legacy Dart + 2 Special = 16 total tests |
 | 3.14.0 | 2025-11-23 | Claude Code | **Anxiety Symptoms Inventory Test Added** ⭐<br>- **Новый тест:** Anxiety Symptoms Inventory (24 вопроса, 4 фактора, 5 минут)<br>- **4 Factors:** somatic (телесные), cognitive (когнитивные), affective (эмоциональные), behavioral (поведенческие)<br>- **4-point intensity scale:** scores 0-3 (Совсем нет / Слегка / Умеренно / Сильно)<br>- **Interpretation levels:** minimal (0-20%), mild (21-42%), moderate (43-69%), severe (70-100%)<br>- **Created 3 files:**<br>  • Test stub: `anxiety_symptoms_inventory_test.dart` (90 lines)<br>  • Data file: `anxiety_symptoms_inventory_data.dart` (500 lines, bilingual ru/en)<br>  • Weights: `anxiety_symptoms_inventory_weights.dart` (430 lines, ~30 scales)<br>- **Integrated in 7 files:** test_registry, test_loader_service, test_service (3 blocks), summary_service (2 places), summary_screen (2 switches), summary_config<br>- **Scales mapped:** anxiety, panic_tendency, stress_tolerance, emotional_resilience, worry_tendency, attention_control, calmness, composure, vulnerability, neuroticism, and more<br>- **Note:** Does NOT affect 4 bipolar personality type scales (E/I, S/N, T/F, J/P) - тест измеряет симптоматику, а не когнитивные предпочтения<br>- **Всего тестов:** 15 (14 стандартных + 1 специальный)<br>- **Test Architecture:** 14 Legacy Dart + 1 Special = 15 total tests |
 | 3.14.0-career | 2025-01-23 | Claude Code | **Career Compass Test Added** ⭐ NEW<br>- **Новый тест:** Career Compass (56 forced_choice вопросов, 8 шкал, ~15 минут)<br>- **Второй специальный тест** - использует парные сравнения (A vs B)<br>- **8 Career Interest Scales:** people, analysis, creation, technology, business, nature, order, care<br>- **Ipsative Scoring:** очки распределяются между выбранными шкалами<br>- **Created 7 files:**<br>  • Models: `career_compass_model.dart` (210 lines)<br>  • Data: `career_compass_data.dart` (700 lines, 56 questions, 8 profiles)<br>  • Widget: `career_compass_question_widget.dart` (300 lines, VS cards)<br>  • Service: `career_compass_service.dart` (200 lines, ipsative scoring)<br>  • Main screen: `career_compass_test_screen.dart` (410 lines)<br>  • Results: `career_compass_result_screen.dart` (700 lines, radar chart)<br>  • Test stub: `career_compass_test.dart` (145 lines)<br>- **Bug fix:** maxScaleScore исправлен с 7 на 14 (формула: questions×2/scales)<br>- **Documentation updated:**<br>  • `ADDING_SPECIAL_TESTS.md` v1.2.0 - добавлен Forced Choice раздел<br>  • `ADDING_NEW_TEST_INDEX.md` v3.2.0 - Career Compass в примерах<br>- **Всего тестов:** 15 (13 стандартных + 2 специальных)<br>- **Test Architecture:** 13 Legacy Dart + 2 Special = 15 total tests |
@@ -539,20 +540,24 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 ---
 
 **Last Updated:** 2025-11-23
-**Document Version:** 3.17.0
-**Codebase State:** ~45,000+ lines across 95+ files (+335% growth since v1.0.0)
+**Document Version:** 3.18.0
+**Codebase State:** ~47,000+ lines across 100+ files (+350% growth since v1.0.0)
 **Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 18 tests across 5 categories
-  - 16 standard tests (712 questions total)
+**Psychological Tests:** 20 tests across 5 categories
+  - 17 standard tests (775 questions total)
   - 2 special tests:
     - Color Psychology (6 interactive stages, 34+ interactions)
     - Career Compass (56 forced_choice questions, 8 career scales)
+  - 1 profile test:
+    - Digital Career Fit (18 questions, 7-section result structure)
 **Architecture Status:** Production-ready with triple architecture support
-**Test Architecture:** 16 Legacy Dart + 2 Special = 18 total tests
+**Test Architecture:** 17 Legacy Dart + 2 Special + 1 Profile = 20 total tests
 **Recent Updates:**
-- Digital Career Fit: 18 вопросов, 6 направлений, 7-секционная структура (v3.17.0) ⭐ NEW
-- Documentation v3.3.0: ADDING_TEST_RESULTS.md + 75-point checklist
-- Wellbeing Happiness Inventory: 30 вопросов, 6 факторов PERMA+ (v3.16.0)
+- Merge: Digital Career Fit + Self Confidence Multiscale (v3.18.0) ⭐ NEW
+- Digital Career Fit: 18 вопросов, 6 направлений, 7-секционная структура (v3.17.0)
+- Self Confidence Multiscale: 36 вопросов, 3 фактора (v3.16.0 remote)
+- Depression Symptoms Inventory: 27 вопросов, 5 факторов (v3.16.0 remote)
+- Wellbeing Happiness Inventory: 30 вопросов, 6 факторов PERMA+ (v3.16.0 local)
 
 ---
 

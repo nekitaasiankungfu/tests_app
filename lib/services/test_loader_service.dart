@@ -18,9 +18,11 @@ import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
 import '../data/tests/color_psychology_test.dart';
 import '../data/anxiety_symptoms_inventory_data.dart';
+import '../data/depression_symptoms_inventory_data.dart';
 import '../data/tests/career_compass_test.dart';
 import '../data/wellbeing_happiness_inventory_data.dart';
 import '../data/digital_career_fit_data.dart';
+import '../data/self_confidence_multiscale_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -142,6 +144,9 @@ class TestLoaderService {
       case 'anxiety_symptoms_inventory_v1':
         test = AnxietySymptomsInventoryData.getAnxietySymptomsInventoryTest();
         break;
+      case 'depression_symptoms_inventory_v1':
+        test = DepressionSymptomsInventoryData.getDepressionSymptomsInventoryTest();
+        break;
       case 'career_compass_v1':
         test = CareerCompassTest.getCareerCompassTest();
         break;
@@ -150,6 +155,9 @@ class TestLoaderService {
         break;
       case 'digital_career_fit_v1':
         test = DigitalCareerFitData.getDigitalCareerFitTest();
+        break;
+      case 'self_confidence_multiscale_v1':
+        test = SelfConfidenceMultiscaleData.getSelfConfidenceMultiscaleTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

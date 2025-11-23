@@ -13,8 +13,10 @@ import '../data/disc_personality_data.dart';
 import '../data/holland_code_data.dart';
 import '../data/love_languages_data.dart';
 import '../data/anxiety_symptoms_inventory_data.dart';
+import '../data/depression_symptoms_inventory_data.dart';
 import '../data/wellbeing_happiness_inventory_data.dart';
 import '../data/digital_career_fit_data.dart' as digital_career;
+import '../data/self_confidence_multiscale_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -98,17 +100,21 @@ class TestService {
         ? 3
         : test.id == 'anxiety_symptoms_inventory_v1'
             ? 3  // Anxiety Symptoms Inventory uses 0-3 scoring (4-point intensity scale)
-            : test.id == 'disc_personality_v1'
-                ? 4  // DISC uses 0-4 scoring
-                : test.id == 'holland_code_v1'
-                    ? 4  // Holland Code uses 0-4 scoring
-                    : test.id == 'love_languages_v1'
-                        ? 4  // Love Languages uses 0-4 scoring
-                        : test.id == 'wellbeing_happiness_inventory_v1'
-                            ? 5  // Wellbeing Happiness Inventory uses 0-5 scoring (6-point Likert)
-                            : test.id == 'digital_career_fit_v1'
-                                ? 5  // Digital Career Fit uses 0-5 scoring (6 career directions)
-                                : 5;
+            : test.id == 'depression_symptoms_inventory_v1'
+                ? 3  // Depression Symptoms Inventory uses 0-3 scoring (4-point frequency scale)
+                : test.id == 'disc_personality_v1'
+                    ? 4  // DISC uses 0-4 scoring
+                    : test.id == 'holland_code_v1'
+                        ? 4  // Holland Code uses 0-4 scoring
+                        : test.id == 'love_languages_v1'
+                            ? 4  // Love Languages uses 0-4 scoring
+                            : test.id == 'self_confidence_multiscale_v1'
+                                ? 4  // Self-Confidence Multiscale uses 0-4 scoring (5-point Likert)
+                                : test.id == 'wellbeing_happiness_inventory_v1'
+                                    ? 5  // Wellbeing Happiness Inventory uses 0-5 scoring (6-point Likert)
+                                    : test.id == 'digital_career_fit_v1'
+                                        ? 5  // Digital Career Fit uses 0-5 scoring (6 career directions)
+                                        : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -265,11 +271,17 @@ class TestService {
     } else if (test.id == 'anxiety_symptoms_inventory_v1') {
       factorNames = AnxietySymptomsInventoryData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'depression_symptoms_inventory_v1') {
+      factorNames = DepressionSymptomsInventoryData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else if (test.id == 'wellbeing_happiness_inventory_v1') {
       factorNames = WellbeingHappinessInventoryData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
     } else if (test.id == 'digital_career_fit_v1') {
       factorNames = digital_career.DigitalCareerFitData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'self_confidence_multiscale_v1') {
+      factorNames = SelfConfidenceMultiscaleData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
@@ -341,6 +353,10 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             AnxietySymptomsInventoryData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'depression_symptoms_inventory_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            DepressionSymptomsInventoryData.getFactorInterpretation(factorId, percentage);
       } else if (test.id == 'wellbeing_happiness_inventory_v1') {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
@@ -349,6 +365,10 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             digital_career.DigitalCareerFitData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'self_confidence_multiscale_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            SelfConfidenceMultiscaleData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }
