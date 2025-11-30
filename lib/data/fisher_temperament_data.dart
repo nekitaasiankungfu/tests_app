@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 class FisherTemperamentData {
   static TestModel getFisherTemperamentTest() {
@@ -896,6 +897,797 @@ You tend to be empathetic, nurturing, and imaginative. You feel emotions deeply,
       },
     };
   }
+
+  /// Определение профиля на основе процентов по факторам
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_balanced';
+
+    final curious = percentages['curious_energetic'] ?? 0;
+    final cautious = percentages['cautious_compliant'] ?? 0;
+    final analytical = percentages['analytical_tough'] ?? 0;
+    final prosocial = percentages['prosocial_empathetic'] ?? 0;
+
+    // Находим доминирующий и вторичный типы
+    final scores = {
+      'curious_energetic': curious,
+      'cautious_compliant': cautious,
+      'analytical_tough': analytical,
+      'prosocial_empathetic': prosocial,
+    };
+
+    final sorted = scores.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
+    final dominant = sorted[0];
+    final secondary = sorted[1];
+
+    // Если разница между первым и вторым < 10%, это комбо-профиль
+    if (dominant.value - secondary.value < 10 && dominant.value > 50) {
+      // Explorer + Builder = Adventurous Stabilizer
+      if ((dominant.key == 'curious_energetic' && secondary.key == 'cautious_compliant') ||
+          (dominant.key == 'cautious_compliant' && secondary.key == 'curious_energetic')) {
+        return 'profile_adventurous_stabilizer';
+      }
+      // Explorer + Director = Visionary Leader
+      if ((dominant.key == 'curious_energetic' && secondary.key == 'analytical_tough') ||
+          (dominant.key == 'analytical_tough' && secondary.key == 'curious_energetic')) {
+        return 'profile_visionary_leader';
+      }
+      // Explorer + Negotiator = Creative Connector
+      if ((dominant.key == 'curious_energetic' && secondary.key == 'prosocial_empathetic') ||
+          (dominant.key == 'prosocial_empathetic' && secondary.key == 'curious_energetic')) {
+        return 'profile_creative_connector';
+      }
+      // Builder + Director = Strategic Executor
+      if ((dominant.key == 'cautious_compliant' && secondary.key == 'analytical_tough') ||
+          (dominant.key == 'analytical_tough' && secondary.key == 'cautious_compliant')) {
+        return 'profile_strategic_executor';
+      }
+      // Builder + Negotiator = Caring Organizer
+      if ((dominant.key == 'cautious_compliant' && secondary.key == 'prosocial_empathetic') ||
+          (dominant.key == 'prosocial_empathetic' && secondary.key == 'cautious_compliant')) {
+        return 'profile_caring_organizer';
+      }
+      // Director + Negotiator = Empathic Analyst
+      if ((dominant.key == 'analytical_tough' && secondary.key == 'prosocial_empathetic') ||
+          (dominant.key == 'prosocial_empathetic' && secondary.key == 'analytical_tough')) {
+        return 'profile_empathic_analyst';
+      }
+    }
+
+    // Чистый доминирующий тип
+    if (dominant.value > 60) {
+      switch (dominant.key) {
+        case 'curious_energetic':
+          return 'profile_explorer';
+        case 'cautious_compliant':
+          return 'profile_builder';
+        case 'analytical_tough':
+          return 'profile_director';
+        case 'prosocial_empathetic':
+          return 'profile_negotiator';
+      }
+    }
+
+    return 'profile_balanced';
+  }
+
+  /// Получение профиля по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  static const Map<String, TestProfile> _profiles = {
+    // ===== ОСНОВНЫЕ ТИПЫ =====
+    'profile_explorer': TestProfile(
+      id: 'profile_explorer',
+      name: {
+        'ru': 'Исследователь',
+        'en': 'Explorer',
+      },
+      description: {
+        'ru': 'Вы — любопытный и энергичный человек, движимый дофамином. Вас влечёт новизна, приключения и творческие идеи. Вы спонтанны, оптимистичны и всегда готовы к новым открытиям.',
+        'en': 'You are a curious and energetic person driven by dopamine. You are attracted to novelty, adventure, and creative ideas. You are spontaneous, optimistic, and always ready for new discoveries.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали высокий уровень любознательности, стремления к новизне и энергичности — ключевые черты Исследователя по системе Хелен Фишер.',
+        'en': 'Your answers showed high levels of curiosity, novelty-seeking, and energy — key traits of the Explorer in Helen Fisher\'s system.',
+      },
+      strengths: {
+        'ru': [
+          'Креативность и нестандартное мышление',
+          'Энергичность и энтузиазм',
+          'Открытость новому опыту',
+          'Оптимизм и позитивный настрой',
+          'Гибкость и адаптивность',
+          'Способность вдохновлять других',
+        ],
+        'en': [
+          'Creativity and unconventional thinking',
+          'Energy and enthusiasm',
+          'Openness to new experiences',
+          'Optimism and positive attitude',
+          'Flexibility and adaptability',
+          'Ability to inspire others',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Склонность к импульсивным решениям',
+          'Трудности с рутиной и долгосрочными обязательствами',
+          'Риск распыления внимания',
+          'Нетерпеливость с медлительными людьми',
+        ],
+        'en': [
+          'Tendency toward impulsive decisions',
+          'Difficulty with routine and long-term commitments',
+          'Risk of scattered attention',
+          'Impatience with slower people',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Найдите работу с разнообразием и возможностью творчества',
+          'Создавайте структуру для важных проектов, но оставляйте пространство для спонтанности',
+          'Практикуйте осознанность для баланса энергии',
+          'В отношениях ищите партнёра, который ценит ваш авантюризм',
+          'Ведите список идей, чтобы не терять ценные мысли',
+        ],
+        'en': [
+          'Find work with variety and creative opportunities',
+          'Create structure for important projects while leaving room for spontaneity',
+          'Practice mindfulness to balance your energy',
+          'In relationships, seek a partner who values your adventurousness',
+          'Keep an idea list so you don\'t lose valuable thoughts',
+        ],
+      },
+      tryToday: {
+        'ru': 'Попробуйте что-то совершенно новое сегодня — это зарядит вас энергией и подтвердит вашу природу Исследователя.',
+        'en': 'Try something completely new today — it will energize you and affirm your Explorer nature.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша любознательность и энергия — дар миру. Продолжайте исследовать, творить и вдохновлять других своим энтузиазмом!',
+        'en': 'Your curiosity and energy are a gift to the world. Keep exploring, creating, and inspiring others with your enthusiasm!',
+      },
+    ),
+
+    'profile_builder': TestProfile(
+      id: 'profile_builder',
+      name: {
+        'ru': 'Строитель',
+        'en': 'Builder',
+      },
+      description: {
+        'ru': 'Вы — надёжный и стабильный человек, руководимый серотонином. Вы цените традиции, порядок и социальные нормы. Вы преданы семье, друзьям и сообществу.',
+        'en': 'You are a reliable and stable person guided by serotonin. You value traditions, order, and social norms. You are devoted to family, friends, and community.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали высокий уровень приверженности традициям, стабильности и следования нормам — ключевые черты Строителя.',
+        'en': 'Your answers showed high levels of commitment to traditions, stability, and following norms — key traits of the Builder.',
+      },
+      strengths: {
+        'ru': [
+          'Надёжность и верность слову',
+          'Организованность и планирование',
+          'Уважение к традициям и институтам',
+          'Лояльность семье и друзьям',
+          'Практичность и реалистичность',
+          'Способность создавать стабильность',
+        ],
+        'en': [
+          'Reliability and keeping your word',
+          'Organization and planning',
+          'Respect for traditions and institutions',
+          'Loyalty to family and friends',
+          'Practicality and realism',
+          'Ability to create stability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сопротивление переменам',
+          'Чрезмерная осторожность',
+          'Трудности с нарушением правил, даже когда это оправдано',
+          'Склонность к ригидности',
+        ],
+        'en': [
+          'Resistance to change',
+          'Excessive caution',
+          'Difficulty breaking rules even when justified',
+          'Tendency toward rigidity',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Находите работу со структурой и чёткими ожиданиями',
+          'Позволяйте себе небольшие спонтанные действия',
+          'Цените свою способность создавать порядок, но учитесь гибкости',
+          'В отношениях ищите партнёра, который разделяет ваши ценности',
+          'Создавайте семейные традиции — это питает вашу душу',
+        ],
+        'en': [
+          'Find work with structure and clear expectations',
+          'Allow yourself small spontaneous actions',
+          'Value your ability to create order but learn flexibility',
+          'In relationships, seek a partner who shares your values',
+          'Create family traditions — this nourishes your soul',
+        ],
+      },
+      tryToday: {
+        'ru': 'Позвоните кому-то из близких, чтобы укрепить связь — это важно для вашего типа.',
+        'en': 'Call someone close to strengthen your bond — this is important for your type.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша надёжность и верность — фундамент, на котором строятся крепкие отношения и сообщества. Вы — опора для многих!',
+        'en': 'Your reliability and loyalty are the foundation on which strong relationships and communities are built. You are a pillar for many!',
+      },
+    ),
+
+    'profile_director': TestProfile(
+      id: 'profile_director',
+      name: {
+        'ru': 'Директор',
+        'en': 'Director',
+      },
+      description: {
+        'ru': 'Вы — аналитический и решительный человек, движимый тестостероном. Вы логичны, прямолинейны и конкурентоспособны. Вы хорошо понимаете системы и стремитесь к достижениям.',
+        'en': 'You are an analytical and decisive person driven by testosterone. You are logical, straightforward, and competitive. You understand systems well and strive for achievement.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали высокий уровень аналитического мышления, прямолинейности и конкурентоспособности — ключевые черты Директора.',
+        'en': 'Your answers showed high levels of analytical thinking, directness, and competitiveness — key traits of the Director.',
+      },
+      strengths: {
+        'ru': [
+          'Логическое и системное мышление',
+          'Решительность и уверенность',
+          'Способность принимать трудные решения',
+          'Стратегическое видение',
+          'Независимость и самодостаточность',
+          'Нацеленность на результат',
+        ],
+        'en': [
+          'Logical and systems thinking',
+          'Decisiveness and confidence',
+          'Ability to make tough decisions',
+          'Strategic vision',
+          'Independence and self-sufficiency',
+          'Results orientation',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Трудности с выражением эмоций',
+          'Нетерпимость к неэффективности',
+          'Склонность к чрезмерной критичности',
+          'Риск пренебрежения эмоциями других',
+        ],
+        'en': [
+          'Difficulty expressing emotions',
+          'Intolerance of inefficiency',
+          'Tendency toward excessive criticism',
+          'Risk of dismissing others\' emotions',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Ищите роли лидера или аналитика',
+          'Практикуйте активное слушание и эмпатию',
+          'Учитесь выражать признательность вербально',
+          'В отношениях выбирайте партнёра, который поможет вам открыться эмоционально',
+          'Помните, что не всё можно решить логикой',
+        ],
+        'en': [
+          'Seek leadership or analyst roles',
+          'Practice active listening and empathy',
+          'Learn to express appreciation verbally',
+          'In relationships, choose a partner who helps you open up emotionally',
+          'Remember that not everything can be solved with logic',
+        ],
+      },
+      tryToday: {
+        'ru': 'Скажите кому-то искренний комплимент без анализа — это хорошая практика эмоционального выражения.',
+        'en': 'Give someone a sincere compliment without analysis — this is good practice for emotional expression.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша аналитическая сила и решительность способны менять мир. Добавьте к ним тепло человеческих связей, и вы станете непобедимы!',
+        'en': 'Your analytical strength and decisiveness can change the world. Add human warmth to them, and you will be unstoppable!',
+      },
+    ),
+
+    'profile_negotiator': TestProfile(
+      id: 'profile_negotiator',
+      name: {
+        'ru': 'Переговорщик',
+        'en': 'Negotiator',
+      },
+      description: {
+        'ru': 'Вы — эмпатичный и интуитивный человек, движимый эстрогеном и окситоцином. Вы глубоко чувствуете эмоции, цените близость и обладаете богатым воображением.',
+        'en': 'You are an empathetic and intuitive person driven by estrogen and oxytocin. You feel emotions deeply, value intimacy, and have a rich imagination.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали высокий уровень эмпатии, эмоциональной глубины и заботы о других — ключевые черты Переговорщика.',
+        'en': 'Your answers showed high levels of empathy, emotional depth, and care for others — key traits of the Negotiator.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокая эмпатия и понимание других',
+          'Интуиция и чувствительность',
+          'Способность видеть общую картину',
+          'Талант к примирению конфликтов',
+          'Богатое воображение и креативность',
+          'Умение создавать эмоциональные связи',
+        ],
+        'en': [
+          'Deep empathy and understanding of others',
+          'Intuition and sensitivity',
+          'Ability to see the big picture',
+          'Talent for conflict resolution',
+          'Rich imagination and creativity',
+          'Ability to create emotional connections',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Склонность к руминации и самокопанию',
+          'Трудности с принятием быстрых решений',
+          'Чувствительность к критике',
+          'Риск потери себя в чужих проблемах',
+        ],
+        'en': [
+          'Tendency toward rumination and overthinking',
+          'Difficulty making quick decisions',
+          'Sensitivity to criticism',
+          'Risk of losing yourself in others\' problems',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Ищите работу, где важны отношения и творчество',
+          'Устанавливайте границы, чтобы защитить свою энергию',
+          'Практикуйте принятие решений с дедлайнами',
+          'В отношениях выбирайте партнёра, который ценит вашу глубину',
+          'Направляйте воображение в творческие проекты',
+        ],
+        'en': [
+          'Seek work where relationships and creativity matter',
+          'Set boundaries to protect your energy',
+          'Practice decision-making with deadlines',
+          'In relationships, choose a partner who values your depth',
+          'Channel imagination into creative projects',
+        ],
+      },
+      tryToday: {
+        'ru': 'Уделите время творческой деятельности — рисованию, письму или музыке. Это питает вашу душу.',
+        'en': 'Spend time on creative activity — drawing, writing, or music. This nourishes your soul.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность чувствовать и понимать других — редкий дар. Вы создаёте мосты между людьми и приносите гармонию!',
+        'en': 'Your ability to feel and understand others is a rare gift. You build bridges between people and bring harmony!',
+      },
+    ),
+
+    // ===== КОМБИНИРОВАННЫЕ ПРОФИЛИ =====
+    'profile_adventurous_stabilizer': TestProfile(
+      id: 'profile_adventurous_stabilizer',
+      name: {
+        'ru': 'Авантюрный Стабилизатор',
+        'en': 'Adventurous Stabilizer',
+      },
+      description: {
+        'ru': 'Вы сочетаете любопытство Исследователя с надёжностью Строителя. Вы любите новое, но умеете создавать стабильность. Вы привносите свежие идеи в традиционные структуры.',
+        'en': 'You combine the Explorer\'s curiosity with the Builder\'s reliability. You love novelty but can create stability. You bring fresh ideas to traditional structures.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали баланс между стремлением к новизне и ценностью стабильности — редкое сочетание Исследователя и Строителя.',
+        'en': 'Your answers showed a balance between novelty-seeking and valuing stability — a rare combination of Explorer and Builder.',
+      },
+      strengths: {
+        'ru': [
+          'Способность внедрять инновации без хаоса',
+          'Креативность в рамках структуры',
+          'Надёжность с гибкостью',
+          'Умение балансировать риск и безопасность',
+        ],
+        'en': [
+          'Ability to innovate without chaos',
+          'Creativity within structure',
+          'Reliability with flexibility',
+          'Ability to balance risk and safety',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Внутренний конфликт между свободой и порядком',
+          'Трудности с выбором между новым и проверенным',
+        ],
+        'en': [
+          'Internal conflict between freedom and order',
+          'Difficulty choosing between new and proven',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Найдите роль, где можно улучшать существующие системы',
+          'Планируйте время для спонтанности',
+          'Цените обе стороны своей природы',
+        ],
+        'en': [
+          'Find a role where you can improve existing systems',
+          'Schedule time for spontaneity',
+          'Value both sides of your nature',
+        ],
+      },
+      tryToday: {
+        'ru': 'Внесите одно небольшое улучшение в привычную рутину.',
+        'en': 'Make one small improvement to your usual routine.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы — мост между инновациями и традициями. Это редкий и ценный дар!',
+        'en': 'You are a bridge between innovation and tradition. This is a rare and valuable gift!',
+      },
+    ),
+
+    'profile_visionary_leader': TestProfile(
+      id: 'profile_visionary_leader',
+      name: {
+        'ru': 'Визионер-Лидер',
+        'en': 'Visionary Leader',
+      },
+      description: {
+        'ru': 'Вы сочетаете энергию Исследователя с аналитической силой Директора. Вы генерируете идеи и умеете их реализовывать. Вы — стратег с креативностью.',
+        'en': 'You combine the Explorer\'s energy with the Director\'s analytical strength. You generate ideas and know how to implement them. You are a strategist with creativity.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали сочетание творческой энергии и аналитического мышления — мощная комбинация для лидерства.',
+        'en': 'Your answers showed a combination of creative energy and analytical thinking — a powerful combination for leadership.',
+      },
+      strengths: {
+        'ru': [
+          'Стратегическое видение с инновациями',
+          'Способность вдохновлять и направлять',
+          'Решительность в реализации идей',
+          'Независимое и оригинальное мышление',
+        ],
+        'en': [
+          'Strategic vision with innovation',
+          'Ability to inspire and guide',
+          'Decisiveness in implementing ideas',
+          'Independent and original thinking',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Нетерпение с медленным прогрессом',
+          'Риск пренебрежения деталями и чувствами других',
+        ],
+        'en': [
+          'Impatience with slow progress',
+          'Risk of neglecting details and others\' feelings',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Ищите роли, где нужны инновации и лидерство',
+          'Окружите себя людьми, которые дополняют вас',
+          'Не забывайте о человеческом факторе',
+        ],
+        'en': [
+          'Seek roles requiring innovation and leadership',
+          'Surround yourself with people who complement you',
+          'Don\'t forget the human factor',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поделитесь одной из своих идей с кем-то и попросите обратную связь.',
+        'en': 'Share one of your ideas with someone and ask for feedback.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы способны не только мечтать, но и воплощать мечты в реальность. Это сила, которая меняет мир!',
+        'en': 'You can not only dream but also turn dreams into reality. This is a world-changing power!',
+      },
+    ),
+
+    'profile_creative_connector': TestProfile(
+      id: 'profile_creative_connector',
+      name: {
+        'ru': 'Творческий Коннектор',
+        'en': 'Creative Connector',
+      },
+      description: {
+        'ru': 'Вы сочетаете любопытство Исследователя с эмпатией Переговорщика. Вы творческий человек с глубоким пониманием людей. Вы вдохновляете и объединяете.',
+        'en': 'You combine the Explorer\'s curiosity with the Negotiator\'s empathy. You are creative with deep understanding of people. You inspire and unite.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали сочетание творческой энергии и эмоциональной глубины — идеально для творческих и социальных ролей.',
+        'en': 'Your answers showed a combination of creative energy and emotional depth — ideal for creative and social roles.',
+      },
+      strengths: {
+        'ru': [
+          'Креативность с эмоциональным интеллектом',
+          'Способность вдохновлять через искусство или идеи',
+          'Глубокие и интересные отношения',
+          'Интуитивное понимание трендов и людей',
+        ],
+        'en': [
+          'Creativity with emotional intelligence',
+          'Ability to inspire through art or ideas',
+          'Deep and interesting relationships',
+          'Intuitive understanding of trends and people',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Эмоциональные американские горки',
+          'Трудности с практическими деталями',
+        ],
+        'en': [
+          'Emotional roller coasters',
+          'Difficulty with practical details',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Найдите творческую работу с человеческим элементом',
+          'Окружите себя людьми, которые заземляют вас',
+          'Направляйте эмоции в творчество',
+        ],
+        'en': [
+          'Find creative work with a human element',
+          'Surround yourself with people who ground you',
+          'Channel emotions into creativity',
+        ],
+      },
+      tryToday: {
+        'ru': 'Создайте что-то творческое вместе с другом или близким человеком.',
+        'en': 'Create something creative together with a friend or loved one.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность творить и соединять сердца — волшебство, которое делает мир прекраснее!',
+        'en': 'Your ability to create and connect hearts is magic that makes the world more beautiful!',
+      },
+    ),
+
+    'profile_strategic_executor': TestProfile(
+      id: 'profile_strategic_executor',
+      name: {
+        'ru': 'Стратегический Исполнитель',
+        'en': 'Strategic Executor',
+      },
+      description: {
+        'ru': 'Вы сочетаете надёжность Строителя с аналитической силой Директора. Вы создаёте эффективные системы и неукоснительно их выполняете.',
+        'en': 'You combine the Builder\'s reliability with the Director\'s analytical strength. You create efficient systems and execute them consistently.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали сочетание организованности и аналитического мышления — идеально для управления и операционной работы.',
+        'en': 'Your answers showed a combination of organization and analytical thinking — ideal for management and operations.',
+      },
+      strengths: {
+        'ru': [
+          'Создание и поддержание эффективных систем',
+          'Надёжность в достижении целей',
+          'Логичный и структурированный подход',
+          'Способность управлять сложными проектами',
+        ],
+        'en': [
+          'Creating and maintaining efficient systems',
+          'Reliability in achieving goals',
+          'Logical and structured approach',
+          'Ability to manage complex projects',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Ригидность и сопротивление переменам',
+          'Недостаток спонтанности и гибкости',
+        ],
+        'en': [
+          'Rigidity and resistance to change',
+          'Lack of spontaneity and flexibility',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Ищите роли в управлении проектами или операциях',
+          'Специально планируйте время для творчества',
+          'Учитесь видеть ценность в хаосе',
+        ],
+        'en': [
+          'Seek roles in project management or operations',
+          'Specifically schedule time for creativity',
+          'Learn to see value in chaos',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сделайте что-то вне своего обычного плана — просто для эксперимента.',
+        'en': 'Do something outside your usual plan — just as an experiment.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность создавать порядок из хаоса — суперсила, которая двигает мир вперёд!',
+        'en': 'Your ability to create order from chaos is a superpower that moves the world forward!',
+      },
+    ),
+
+    'profile_caring_organizer': TestProfile(
+      id: 'profile_caring_organizer',
+      name: {
+        'ru': 'Заботливый Организатор',
+        'en': 'Caring Organizer',
+      },
+      description: {
+        'ru': 'Вы сочетаете надёжность Строителя с эмпатией Переговорщика. Вы создаёте стабильность и заботитесь о людях. Вы — опора для семьи и сообщества.',
+        'en': 'You combine the Builder\'s reliability with the Negotiator\'s empathy. You create stability and care for people. You are a pillar for family and community.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали сочетание организованности и заботы о других — идеально для ролей поддержки и управления людьми.',
+        'en': 'Your answers showed a combination of organization and care for others — ideal for support and people management roles.',
+      },
+      strengths: {
+        'ru': [
+          'Создание стабильной и тёплой среды',
+          'Надёжность с эмоциональной поддержкой',
+          'Умение организовывать и заботиться одновременно',
+          'Лояльность и глубокая привязанность',
+        ],
+        'en': [
+          'Creating a stable and warm environment',
+          'Reliability with emotional support',
+          'Ability to organize and care simultaneously',
+          'Loyalty and deep attachment',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Склонность брать на себя слишком много',
+          'Трудности с установлением границ',
+        ],
+        'en': [
+          'Tendency to take on too much',
+          'Difficulty setting boundaries',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Найдите баланс между заботой о себе и других',
+          'Устанавливайте чёткие границы',
+          'Цените свой вклад, даже если он не виден',
+        ],
+        'en': [
+          'Find balance between self-care and caring for others',
+          'Set clear boundaries',
+          'Value your contribution even if it\'s not visible',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сделайте что-то приятное для себя без чувства вины.',
+        'en': 'Do something nice for yourself without guilt.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность создавать уют и стабильность — бесценный дар для всех, кто рядом с вами!',
+        'en': 'Your ability to create comfort and stability is a priceless gift for everyone around you!',
+      },
+    ),
+
+    'profile_empathic_analyst': TestProfile(
+      id: 'profile_empathic_analyst',
+      name: {
+        'ru': 'Эмпатичный Аналитик',
+        'en': 'Empathic Analyst',
+      },
+      description: {
+        'ru': 'Вы сочетаете аналитическую силу Директора с эмпатией Переговорщика. Вы понимаете и системы, и людей. Это редкий и мощный баланс.',
+        'en': 'You combine the Director\'s analytical strength with the Negotiator\'s empathy. You understand both systems and people. This is a rare and powerful balance.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали сочетание логического мышления и эмоциональной глубины — редкая комбинация для решения сложных человеческих проблем.',
+        'en': 'Your answers showed a combination of logical thinking and emotional depth — a rare combination for solving complex human problems.',
+      },
+      strengths: {
+        'ru': [
+          'Понимание и логики, и эмоций',
+          'Способность решать сложные межличностные проблемы',
+          'Стратегическое мышление с человечностью',
+          'Эффективная коммуникация на разных уровнях',
+        ],
+        'en': [
+          'Understanding both logic and emotions',
+          'Ability to solve complex interpersonal problems',
+          'Strategic thinking with humanity',
+          'Effective communication at different levels',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Внутренний конфликт между головой и сердцем',
+          'Усталость от переключения между режимами',
+        ],
+        'en': [
+          'Internal conflict between head and heart',
+          'Fatigue from switching between modes',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Ищите роли, требующие и анализа, и работы с людьми',
+          'Интегрируйте обе стороны вместо их разделения',
+          'Помните, что ваша уникальность — в балансе',
+        ],
+        'en': [
+          'Seek roles requiring both analysis and people work',
+          'Integrate both sides instead of separating them',
+          'Remember that your uniqueness is in the balance',
+        ],
+      },
+      tryToday: {
+        'ru': 'Используйте логику для решения эмоциональной проблемы или эмпатию для технической.',
+        'en': 'Use logic to solve an emotional problem or empathy for a technical one.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность понимать и системы, и души делает вас незаменимым в сложных ситуациях!',
+        'en': 'Your ability to understand both systems and souls makes you invaluable in complex situations!',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': 'Сбалансированный',
+        'en': 'Balanced',
+      },
+      description: {
+        'ru': 'Вы имеете сбалансированное сочетание всех четырёх темпераментов. Вы адаптивны и можете проявлять разные качества в зависимости от ситуации.',
+        'en': 'You have a balanced combination of all four temperaments. You are adaptive and can display different qualities depending on the situation.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали относительно равномерное распределение по всем четырём системам темперамента.',
+        'en': 'Your answers showed a relatively even distribution across all four temperament systems.',
+      },
+      strengths: {
+        'ru': [
+          'Высокая адаптивность к разным ситуациям',
+          'Способность понимать разных людей',
+          'Гибкость в подходах и решениях',
+          'Отсутствие выраженных слабостей',
+        ],
+        'en': [
+          'High adaptability to different situations',
+          'Ability to understand different people',
+          'Flexibility in approaches and decisions',
+          'No pronounced weaknesses',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможная неопределённость в идентичности',
+          'Трудности с выбором направления',
+        ],
+        'en': [
+          'Possible uncertainty in identity',
+          'Difficulty choosing direction',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Исследуйте разные роли и найдите то, что резонирует',
+          'Используйте свою адаптивность как преимущество',
+          'Не пытайтесь вписаться в один тип',
+        ],
+        'en': [
+          'Explore different roles and find what resonates',
+          'Use your adaptability as an advantage',
+          'Don\'t try to fit into one type',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поэкспериментируйте с разными подходами к одной задаче.',
+        'en': 'Experiment with different approaches to one task.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша уникальность — в универсальности. Вы — хамелеон, способный адаптироваться к любой ситуации!',
+        'en': 'Your uniqueness is in your universality. You are a chameleon capable of adapting to any situation!',
+      },
+    ),
+  };
 }
 
 // Модель тайбрейкера

@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for Digital Detox Test
 /// Legacy Dart implementation (no JSON dependency)
@@ -1247,4 +1248,880 @@ class DigitalDetoxTestData {
       },
     };
   }
+
+  /// Определить профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    final factors = [
+      'dependency_level',
+      'attention_control',
+      'social_impact',
+      'physical_health',
+      'productivity_loss',
+      'emotional_state',
+      'usage_patterns'
+    ];
+
+    double total = 0;
+    int count = 0;
+    for (final factor in factors) {
+      if (percentages.containsKey(factor)) {
+        total += percentages[factor]!;
+        count++;
+      }
+    }
+
+    final averageLevel = count > 0 ? total / count : 0.0;
+
+    if (averageLevel <= 25) {
+      return 'profile_healthy';
+    } else if (averageLevel <= 45) {
+      return 'profile_moderate_use';
+    } else if (averageLevel <= 65) {
+      // Определяем доминирующий фактор
+      String? dominantFactor;
+      double maxValue = 0;
+      for (final factor in factors) {
+        final value = percentages[factor] ?? 0;
+        if (value > maxValue) {
+          maxValue = value;
+          dominantFactor = factor;
+        }
+      }
+
+      switch (dominantFactor) {
+        case 'dependency_level':
+          return 'profile_addiction_focus';
+        case 'attention_control':
+          return 'profile_attention_focus';
+        case 'social_impact':
+          return 'profile_social_focus';
+        case 'physical_health':
+          return 'profile_health_focus';
+        case 'productivity_loss':
+          return 'profile_productivity_focus';
+        case 'emotional_state':
+          return 'profile_emotional_focus';
+        case 'usage_patterns':
+          return 'profile_usage_focus';
+        default:
+          return 'profile_problematic';
+      }
+    } else if (averageLevel <= 80) {
+      return 'profile_severe';
+    } else {
+      return 'profile_critical';
+    }
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  /// Все профили для теста цифрового детокса
+  static final Map<String, TestProfile> _profiles = {
+    'profile_healthy': TestProfile(
+      id: 'profile_healthy',
+      name: {
+        'ru': 'Здоровые отношения с технологиями',
+        'en': 'Healthy Technology Relationship',
+      },
+      description: {
+        'ru': 'У вас здоровые отношения с цифровыми устройствами. Вы контролируете технологии, а не они вас.',
+        'en': 'You have a healthy relationship with digital devices. You control technology, not the other way around.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают низкий уровень зависимости по всем показателям: использование гаджетов, внимание, социальные связи, здоровье и продуктивность в норме.',
+        'en': 'Your answers show low dependency levels across all indicators: device usage, attention, social connections, health and productivity are normal.',
+      },
+      strengths: {
+        'ru': [
+          'Контроль над использованием устройств',
+          'Сохранённое внимание и концентрация',
+          'Здоровые социальные связи оффлайн',
+          'Хороший режим сна и физическое здоровье',
+          'Высокая продуктивность',
+        ],
+        'en': [
+          'Control over device usage',
+          'Preserved attention and concentration',
+          'Healthy offline social connections',
+          'Good sleep and physical health',
+          'High productivity',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможно недооцениваете время в телефоне',
+          'Стресс может повысить использование',
+        ],
+        'en': [
+          'May underestimate phone time',
+          'Stress can increase usage',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Продолжайте практики цифровой гигиены',
+          'Периодически проверяйте экранное время',
+          'Помогайте близким с их цифровыми привычками',
+        ],
+        'en': [
+          'Continue digital hygiene practices',
+          'Periodically check screen time',
+          'Help loved ones with their digital habits',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите один час без телефона, осознанно наслаждаясь моментом.',
+        'en': 'Spend one hour without your phone, consciously enjoying the moment.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваш контроль над технологиями — это суперсила в современном мире. Продолжайте быть хозяином своего внимания!',
+        'en': 'Your control over technology is a superpower in the modern world. Keep being the master of your attention!',
+      },
+    ),
+
+    'profile_moderate_use': TestProfile(
+      id: 'profile_moderate_use',
+      name: {
+        'ru': 'Умеренное использование',
+        'en': 'Moderate Use',
+      },
+      description: {
+        'ru': 'У вас есть некоторые признаки чрезмерного использования технологий, но ситуация управляема. Небольшие изменения могут значительно улучшить качество жизни.',
+        'en': 'You have some signs of excessive technology use, but the situation is manageable. Small changes can significantly improve quality of life.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают умеренное повышение некоторых показателей. Вы ещё контролируете ситуацию, но есть зоны роста.',
+        'en': 'Your answers show moderate elevation in some indicators. You still control the situation, but there are areas for improvement.',
+      },
+      strengths: {
+        'ru': [
+          'Базовый контроль над использованием',
+          'Осознание потенциальных проблем',
+          'Ресурсы для изменений доступны',
+        ],
+        'en': [
+          'Basic control over usage',
+          'Awareness of potential problems',
+          'Resources for change available',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Периодическая потеря времени в телефоне',
+          'Иногда проверяете телефон машинально',
+          'Небольшое влияние на сон или внимание',
+        ],
+        'en': [
+          'Periodic time loss on phone',
+          'Sometimes check phone automatically',
+          'Slight impact on sleep or attention',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Установите лимиты экранного времени (приложения Screen Time, Digital Wellbeing)',
+          'Создайте "зоны без телефона" (спальня, обеденный стол)',
+          'Отключите несрочные уведомления',
+          'Практикуйте "первый час без телефона" утром',
+          'Замените бездумный скроллинг на конкретные активности',
+        ],
+        'en': [
+          'Set screen time limits (Screen Time, Digital Wellbeing apps)',
+          'Create "phone-free zones" (bedroom, dining table)',
+          'Disable non-urgent notifications',
+          'Practice "first hour without phone" in the morning',
+          'Replace mindless scrolling with specific activities',
+        ],
+      },
+      tryToday: {
+        'ru': 'Отключите уведомления от 3 приложений, которые чаще всего отвлекают вас.',
+        'en': 'Disable notifications from 3 apps that distract you most often.',
+      },
+      inspiringConclusion: {
+        'ru': 'Маленькие изменения сейчас предотвратят большие проблемы потом. Вы уже на правильном пути к цифровому балансу!',
+        'en': 'Small changes now will prevent big problems later. You are already on the right path to digital balance!',
+      },
+    ),
+
+    'profile_addiction_focus': TestProfile(
+      id: 'profile_addiction_focus',
+      name: {
+        'ru': 'Зависимость от устройств',
+        'en': 'Device Dependency',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — зависимость от цифровых устройств. Вы испытываете дискомфорт без телефона, постоянно проверяете его, чувствуете тревогу при низком заряде.',
+        'en': 'Your main symptom is digital device dependency. You experience discomfort without your phone, constantly check it, feel anxiety when battery is low.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех показателей у вас доминирует уровень зависимости от устройств.',
+        'en': 'Among all indicators, device dependency level dominates.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание проблемы — первый шаг',
+          'Понимание механизмов зависимости',
+          'Возможность постепенного снижения',
+        ],
+        'en': [
+          'Problem awareness — first step',
+          'Understanding dependency mechanisms',
+          'Possibility of gradual reduction',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Номофобия — страх остаться без телефона',
+          'Постоянная проверка телефона (100+ раз в день)',
+          'Тревога при низком заряде батареи',
+          'Фантомные вибрации',
+        ],
+        'en': [
+          'Nomophobia — fear of being without phone',
+          'Constant phone checking (100+ times a day)',
+          'Anxiety when battery is low',
+          'Phantom vibrations',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте "цифровые паузы" — 1 час без телефона в день',
+          'Используйте физические блокировщики (kSafe) для телефона',
+          'Переведите телефон в чёрно-белый режим (снижает привлекательность)',
+          'Удалите самые "затягивающие" приложения на неделю',
+          'Замените смартфон на простой телефон на выходные',
+          'Носите наручные часы — уберите повод доставать телефон',
+        ],
+        'en': [
+          'Practice "digital pauses" — 1 hour without phone daily',
+          'Use physical blockers (kSafe) for phone',
+          'Switch phone to grayscale mode (reduces attractiveness)',
+          'Delete most addictive apps for a week',
+          'Replace smartphone with basic phone on weekends',
+          'Wear wristwatch — remove reason to take out phone',
+        ],
+      },
+      tryToday: {
+        'ru': 'Оставьте телефон в другой комнате на 2 часа. Заметьте, как часто вы хотите его проверить.',
+        'en': 'Leave your phone in another room for 2 hours. Notice how often you want to check it.',
+      },
+      inspiringConclusion: {
+        'ru': 'Зависимость от телефона — это не слабость, а результат дизайна приложений. Осознав это, вы можете взять контроль в свои руки.',
+        'en': 'Phone addiction is not weakness, but a result of app design. Realizing this, you can take back control.',
+      },
+    ),
+
+    'profile_attention_focus': TestProfile(
+      id: 'profile_attention_focus',
+      name: {
+        'ru': 'Проблемы с вниманием',
+        'en': 'Attention Problems',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — нарушение внимания. Вам сложно концентрироваться, вы постоянно отвлекаетесь на телефон, с трудом читаете длинные тексты.',
+        'en': 'Your main symptom is attention impairment. You have difficulty concentrating, constantly get distracted by phone, struggle to read long texts.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех показателей у вас доминируют проблемы с контролем внимания.',
+        'en': 'Among all indicators, attention control problems dominate.',
+      },
+      strengths: {
+        'ru': [
+          'Способность замечать отвлечения',
+          'Понимание влияния на продуктивность',
+          'Внимание поддаётся тренировке',
+        ],
+        'en': [
+          'Ability to notice distractions',
+          'Understanding impact on productivity',
+          'Attention can be trained',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Фрагментированное внимание',
+          'Трудности с длительной концентрацией',
+          'Постоянные переключения между задачами',
+          '"Мозг гуглера" — неспособность удержать информацию',
+        ],
+        'en': [
+          'Fragmented attention',
+          'Difficulty with sustained concentration',
+          'Constant task switching',
+          '"Google brain" — inability to retain information',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Техника Помодоро: 25 минут работы без телефона, 5 минут перерыв',
+          'Режим "Не беспокоить" во время важных задач',
+          'Читайте бумажные книги по 15 минут в день для тренировки внимания',
+          'Медитация осознанности (10 минут в день) восстанавливает концентрацию',
+          'Уберите телефон из поля зрения во время работы',
+          'Одна задача за раз — никакой многозадачности',
+        ],
+        'en': [
+          'Pomodoro technique: 25 minutes work without phone, 5 minutes break',
+          '"Do Not Disturb" mode during important tasks',
+          'Read paper books for 15 minutes daily to train attention',
+          'Mindfulness meditation (10 minutes daily) restores concentration',
+          'Remove phone from sight during work',
+          'One task at a time — no multitasking',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поработайте 25 минут над одной задачей без телефона рядом. Заметьте, как это влияет на качество работы.',
+        'en': 'Work on one task for 25 minutes without phone nearby. Notice how it affects work quality.',
+      },
+      inspiringConclusion: {
+        'ru': 'Внимание — это мышца, которую можно натренировать. Каждый момент концентрации укрепляет её. Вы можете вернуть контроль над своим разумом.',
+        'en': 'Attention is a muscle that can be trained. Every moment of concentration strengthens it. You can regain control over your mind.',
+      },
+    ),
+
+    'profile_social_focus': TestProfile(
+      id: 'profile_social_focus',
+      name: {
+        'ru': 'Социальное влияние',
+        'en': 'Social Impact',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — влияние технологий на социальные связи. Онлайн-общение заменяет реальное, вы сравниваете себя с другими в соцсетях, чувствуете FOMO.',
+        'en': 'Your main symptom is technology impact on social connections. Online communication replaces real, you compare yourself to others on social media, feel FOMO.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех показателей у вас доминирует социальное влияние технологий.',
+        'en': 'Among all indicators, social impact of technology dominates.',
+      },
+      strengths: {
+        'ru': [
+          'Ценность реальных отношений',
+          'Понимание иллюзорности соцсетей',
+          'Способность к реальным связям',
+        ],
+        'en': [
+          'Value of real relationships',
+          'Understanding illusion of social media',
+          'Capacity for real connections',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'FOMO — страх упустить что-то',
+          'Сравнение себя с "идеальными" жизнями',
+          'Предпочтение онлайн-общения реальному',
+          'Одиночество при наличии 1000 "друзей"',
+        ],
+        'en': [
+          'FOMO — fear of missing out',
+          'Comparing yourself to "perfect" lives',
+          'Preferring online to real communication',
+          'Loneliness despite 1000 "friends"',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Сократите подписки в соцсетях до людей, которых знаете лично',
+          'Отключите ленту новостей в Facebook/Instagram (расширения браузера)',
+          'Замените время в соцсетях на один реальный контакт в день',
+          'Удалите приложения соцсетей — заходите только через браузер',
+          'Помните: в соцсетях люди показывают лучшие моменты, не реальность',
+          'Практикуйте JOMO — радость от пропущенного',
+        ],
+        'en': [
+          'Reduce social media subscriptions to people you know personally',
+          'Disable news feed on Facebook/Instagram (browser extensions)',
+          'Replace social media time with one real contact daily',
+          'Delete social media apps — access only through browser',
+          'Remember: people show best moments on social media, not reality',
+          'Practice JOMO — joy of missing out',
+        ],
+      },
+      tryToday: {
+        'ru': 'Позвоните или встретьтесь с одним человеком вместо лайков и комментариев.',
+        'en': 'Call or meet one person instead of likes and comments.',
+      },
+      inspiringConclusion: {
+        'ru': 'Реальные связи — это то, что делает жизнь осмысленной. Ни один лайк не заменит настоящий разговор. Инвестируйте в реальность!',
+        'en': 'Real connections are what makes life meaningful. No like can replace a real conversation. Invest in reality!',
+      },
+    ),
+
+    'profile_health_focus': TestProfile(
+      id: 'profile_health_focus',
+      name: {
+        'ru': 'Влияние на здоровье',
+        'en': 'Health Impact',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — физическое влияние технологий. Нарушения сна, боли в шее/спине, усталость глаз, малоподвижность.',
+        'en': 'Your main symptom is physical impact of technology. Sleep disturbances, neck/back pain, eye strain, sedentary lifestyle.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех показателей у вас доминирует влияние на физическое здоровье.',
+        'en': 'Among all indicators, physical health impact dominates.',
+      },
+      strengths: {
+        'ru': [
+          'Тело сигнализирует о проблеме',
+          'Конкретные симптомы легче отслеживать',
+          'Физические изменения быстро дают результат',
+        ],
+        'en': [
+          'Body signals the problem',
+          'Specific symptoms easier to track',
+          'Physical changes quickly show results',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Нарушения сна из-за синего света',
+          'Боли в шее и спине ("текстовая шея")',
+          'Синдром сухого глаза, усталость глаз',
+          'Малоподвижный образ жизни',
+        ],
+        'en': [
+          'Sleep disturbances from blue light',
+          'Neck and back pain ("text neck")',
+          'Dry eye syndrome, eye strain',
+          'Sedentary lifestyle',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Никаких экранов за час до сна — синий свет нарушает мелатонин',
+          'Правило 20-20-20: каждые 20 минут смотрите на 20 метров 20 секунд',
+          'Упражнения для шеи и спины каждый час',
+          'Ночной режим на всех устройствах',
+          'Не используйте телефон в постели',
+          'Регулярная физическая активность компенсирует сидение',
+        ],
+        'en': [
+          'No screens an hour before bed — blue light disrupts melatonin',
+          '20-20-20 rule: every 20 minutes look at 20 meters for 20 seconds',
+          'Neck and back exercises every hour',
+          'Night mode on all devices',
+          'Don\'t use phone in bed',
+          'Regular physical activity compensates for sitting',
+        ],
+      },
+      tryToday: {
+        'ru': 'Установите ночной режим на телефоне и не используйте его в постели сегодня вечером.',
+        'en': 'Set night mode on phone and don\'t use it in bed tonight.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше тело — ваш союзник. Слушайте его сигналы, и оно отплатит вам энергией и здоровьем для того, что действительно важно.',
+        'en': 'Your body is your ally. Listen to its signals, and it will reward you with energy and health for what really matters.',
+      },
+    ),
+
+    'profile_productivity_focus': TestProfile(
+      id: 'profile_productivity_focus',
+      name: {
+        'ru': 'Потеря продуктивности',
+        'en': 'Productivity Loss',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — потеря продуктивности из-за технологий. Прокрастинация в телефоне, "кроличьи норы" YouTube, невыполненные задачи.',
+        'en': 'Your main symptom is productivity loss due to technology. Phone procrastination, YouTube rabbit holes, incomplete tasks.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех показателей у вас доминирует влияние на продуктивность.',
+        'en': 'Among all indicators, productivity impact dominates.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание потерянного времени',
+          'Желание быть продуктивным',
+          'Продуктивность восстанавливается быстро',
+        ],
+        'en': [
+          'Awareness of lost time',
+          'Desire to be productive',
+          'Productivity recovers quickly',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Часы теряются в бездумном скроллинге',
+          '"Кроличьи норы" YouTube и соцсетей',
+          'Прокрастинация важных задач',
+          'Переключение между телефоном и работой',
+        ],
+        'en': [
+          'Hours lost in mindless scrolling',
+          'YouTube and social media rabbit holes',
+          'Procrastination of important tasks',
+          'Switching between phone and work',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Блокировщики сайтов и приложений во время работы (Cold Turkey, Freedom)',
+          'Телефон в другой комнате во время важных задач',
+          'Утренняя работа ДО проверки телефона',
+          'Установите конкретное "время для телефона" (например, 12:00 и 18:00)',
+          'Отслеживайте экранное время — осознание уменьшает использование',
+          'Замените "убийцы времени" на полезные приложения (аудиокниги, подкасты)',
+        ],
+        'en': [
+          'Site and app blockers during work (Cold Turkey, Freedom)',
+          'Phone in another room during important tasks',
+          'Morning work BEFORE checking phone',
+          'Set specific "phone time" (e.g., 12:00 and 18:00)',
+          'Track screen time — awareness reduces usage',
+          'Replace "time killers" with useful apps (audiobooks, podcasts)',
+        ],
+      },
+      tryToday: {
+        'ru': 'Установите блокировщик и заблокируйте отвлекающие сайты на 4 рабочих часа.',
+        'en': 'Install a blocker and block distracting sites for 4 work hours.',
+      },
+      inspiringConclusion: {
+        'ru': 'Каждый час, сэкономленный на скроллинге — это час на то, что действительно важно: проекты, отношения, здоровье. Верните себе своё время!',
+        'en': 'Every hour saved from scrolling is an hour for what really matters: projects, relationships, health. Reclaim your time!',
+      },
+    ),
+
+    'profile_emotional_focus': TestProfile(
+      id: 'profile_emotional_focus',
+      name: {
+        'ru': 'Эмоциональное влияние',
+        'en': 'Emotional Impact',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — эмоциональное влияние технологий. Тревога, раздражительность, зависимость от лайков, эмоциональные "качели" от соцсетей.',
+        'en': 'Your main symptom is emotional impact of technology. Anxiety, irritability, like dependency, emotional "swings" from social media.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех показателей у вас доминирует влияние на эмоциональное состояние.',
+        'en': 'Among all indicators, emotional state impact dominates.',
+      },
+      strengths: {
+        'ru': [
+          'Эмоциональная чувствительность',
+          'Способность замечать триггеры',
+          'Эмоции быстро восстанавливаются при детоксе',
+        ],
+        'en': [
+          'Emotional sensitivity',
+          'Ability to notice triggers',
+          'Emotions recover quickly with detox',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Зависимость настроения от лайков и реакций',
+          'Тревога при отключении от сети',
+          'Раздражительность при невозможности проверить телефон',
+          'Эмоциональное "выгорание" от соцсетей',
+        ],
+        'en': [
+          'Mood dependency on likes and reactions',
+          'Anxiety when disconnected',
+          'Irritability when unable to check phone',
+          'Emotional "burnout" from social media',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Осознанное использование: спрашивайте себя "зачем я открываю это приложение?"',
+          'Отключите счётчики лайков (настройки Instagram)',
+          'Практикуйте "эмоциональный детокс" — день без соцсетей',
+          'Ведите дневник настроения до и после использования телефона',
+          'Замените скроллинг на практики саморегуляции (дыхание, прогулка)',
+          'Помните: ваша ценность не измеряется лайками',
+        ],
+        'en': [
+          'Mindful usage: ask yourself "why am I opening this app?"',
+          'Disable like counts (Instagram settings)',
+          'Practice "emotional detox" — a day without social media',
+          'Keep mood diary before and after phone use',
+          'Replace scrolling with self-regulation practices (breathing, walking)',
+          'Remember: your worth is not measured by likes',
+        ],
+      },
+      tryToday: {
+        'ru': 'Перед каждым открытием соцсетей спросите себя: "Что я хочу получить?" Если нет ответа — не открывайте.',
+        'en': 'Before each social media opening ask: "What do I want to get?" If no answer — don\'t open.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваши эмоции принадлежат вам, а не алгоритмам. Освободите их от дофаминовых ловушек, и вы обретёте настоящее эмоциональное благополучие.',
+        'en': 'Your emotions belong to you, not algorithms. Free them from dopamine traps, and you will find true emotional well-being.',
+      },
+    ),
+
+    'profile_usage_focus': TestProfile(
+      id: 'profile_usage_focus',
+      name: {
+        'ru': 'Чрезмерное использование',
+        'en': 'Excessive Usage',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — чрезмерные паттерны использования. Много часов экранного времени, использование в неподходящих местах (постель, туалет, еда).',
+        'en': 'Your main symptom is excessive usage patterns. Many hours of screen time, use in inappropriate places (bed, bathroom, meals).',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех показателей у вас доминируют проблемные паттерны использования устройств.',
+        'en': 'Among all indicators, problematic device usage patterns dominate.',
+      },
+      strengths: {
+        'ru': [
+          'Конкретные паттерны легко изменить',
+          'Осознание количества использования',
+          'Возможность установить чёткие правила',
+        ],
+        'en': [
+          'Specific patterns easy to change',
+          'Awareness of usage amount',
+          'Ability to set clear rules',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Экранное время 6+ часов в день',
+          'Использование телефона в постели',
+          'Телефон первым утром и последним вечером',
+          'Использование во время еды и в туалете',
+        ],
+        'en': [
+          'Screen time 6+ hours daily',
+          'Phone use in bed',
+          'Phone first in morning and last at night',
+          'Use during meals and in bathroom',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Создайте "священные зоны" без телефона: спальня, обеденный стол, туалет',
+          'Купите будильник — уберите телефон из спальни',
+          'Правило "первый час без телефона" утром',
+          'Правило "последний час без телефона" перед сном',
+          'Физические ограничители: оставляйте телефон в определённом месте дома',
+          'Отслеживайте экранное время и ставьте еженедельные цели снижения',
+        ],
+        'en': [
+          'Create "sacred zones" without phone: bedroom, dining table, bathroom',
+          'Buy alarm clock — remove phone from bedroom',
+          '"First hour without phone" rule in morning',
+          '"Last hour without phone" rule before bed',
+          'Physical limiters: leave phone in specific place at home',
+          'Track screen time and set weekly reduction goals',
+        ],
+      },
+      tryToday: {
+        'ru': 'Уберите телефон из спальни на ночь. Используйте обычный будильник.',
+        'en': 'Remove phone from bedroom for the night. Use a regular alarm clock.',
+      },
+      inspiringConclusion: {
+        'ru': 'Паттерны — это привычки, а привычки можно менять. Шаг за шагом вы создадите новые, здоровые привычки использования технологий.',
+        'en': 'Patterns are habits, and habits can be changed. Step by step, you will create new, healthy technology habits.',
+      },
+    ),
+
+    'profile_problematic': TestProfile(
+      id: 'profile_problematic',
+      name: {
+        'ru': 'Проблемное использование',
+        'en': 'Problematic Use',
+      },
+      description: {
+        'ru': 'У вас проблемное использование технологий по нескольким показателям. Это требует комплексного подхода к изменениям.',
+        'en': 'You have problematic technology use across several indicators. This requires a comprehensive approach to change.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают повышение по нескольким компонентам цифровой зависимости.',
+        'en': 'Your answers show elevation across several digital dependency components.',
+      },
+      strengths: {
+        'ru': [
+          'Готовность к изменениям',
+          'Осознание проблемы',
+          'Комплексный подход даёт лучшие результаты',
+        ],
+        'en': [
+          'Readiness for change',
+          'Problem awareness',
+          'Comprehensive approach gives better results',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Множественные симптомы цифровой зависимости',
+          'Влияние на разные сферы жизни',
+          'Риск ухудшения без изменений',
+        ],
+        'en': [
+          'Multiple digital dependency symptoms',
+          'Impact on different life areas',
+          'Risk of worsening without changes',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Начните с 30-дневного цифрового детокса (книга "Digital Minimalism")',
+          'Удалите все соцсети на месяц — оцените, чего вам не хватает',
+          'Установите жёсткие лимиты экранного времени (2-3 часа в день)',
+          'Создайте "день без телефона" раз в неделю',
+          'Найдите оффлайн-хобби, которое заменит время в телефоне',
+          'Рассмотрите консультацию со специалистом по цифровой зависимости',
+        ],
+        'en': [
+          'Start with 30-day digital detox (book "Digital Minimalism")',
+          'Delete all social media for a month — assess what you miss',
+          'Set strict screen time limits (2-3 hours daily)',
+          'Create "phone-free day" once a week',
+          'Find offline hobby to replace phone time',
+          'Consider consultation with digital addiction specialist',
+        ],
+      },
+      tryToday: {
+        'ru': 'Удалите одно приложение, которое больше всего крадёт ваше время. Оцените через неделю.',
+        'en': 'Delete one app that steals most of your time. Evaluate in a week.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы осознали проблему — это уже победа. Комплексные изменения требуют времени, но они возможны. Шаг за шагом вы вернёте контроль над своей жизнью.',
+        'en': 'You recognized the problem — this is already a victory. Comprehensive changes take time, but they are possible. Step by step, you will regain control over your life.',
+      },
+    ),
+
+    'profile_severe': TestProfile(
+      id: 'profile_severe',
+      name: {
+        'ru': 'Серьёзная зависимость',
+        'en': 'Severe Dependency',
+      },
+      description: {
+        'ru': 'У вас серьёзная цифровая зависимость. Технологии значительно влияют на здоровье, отношения и продуктивность. Требуются активные меры.',
+        'en': 'You have serious digital dependency. Technology significantly affects health, relationships and productivity. Active measures required.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают высокий уровень по большинству компонентов цифровой зависимости.',
+        'en': 'Your answers show high levels across most digital dependency components.',
+      },
+      strengths: {
+        'ru': [
+          'Честность с собой о серьёзности',
+          'Готовность к радикальным изменениям',
+          'Даже серьёзная зависимость преодолима',
+        ],
+        'en': [
+          'Honesty with yourself about seriousness',
+          'Readiness for radical changes',
+          'Even serious dependency is overcomable',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Серьёзное влияние на все сферы жизни',
+          'Физические и эмоциональные проблемы',
+          'Нарушенные социальные связи',
+          'Потеря продуктивности',
+        ],
+        'en': [
+          'Serious impact on all life areas',
+          'Physical and emotional problems',
+          'Disrupted social connections',
+          'Lost productivity',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите полный 30-60 дневный детокс от смартфона',
+          'Замените смартфон на простой телефон на 1-2 месяца',
+          'Используйте физические блокировщики (kSafe, router settings)',
+          'Обратитесь к психологу — зависимость требует профессиональной помощи',
+          'Расскажите близким — вам нужна поддержка',
+          'Создайте среду, где технологии физически недоступны',
+        ],
+        'en': [
+          'Consider full 30-60 day smartphone detox',
+          'Replace smartphone with basic phone for 1-2 months',
+          'Use physical blockers (kSafe, router settings)',
+          'See psychologist — addiction requires professional help',
+          'Tell loved ones — you need support',
+          'Create environment where technology is physically unavailable',
+        ],
+      },
+      tryToday: {
+        'ru': 'Попросите близкого человека помочь вам установить ограничения и контролировать их соблюдение.',
+        'en': 'Ask a loved one to help you set limits and monitor compliance.',
+      },
+      inspiringConclusion: {
+        'ru': 'Зависимость — это не приговор. Тысячи людей преодолели её и нашли баланс. С правильной помощью и поддержкой вы тоже сможете.',
+        'en': 'Addiction is not a sentence. Thousands of people have overcome it and found balance. With proper help and support, you can too.',
+      },
+    ),
+
+    'profile_critical': TestProfile(
+      id: 'profile_critical',
+      name: {
+        'ru': 'Критическая зависимость',
+        'en': 'Critical Dependency',
+      },
+      description: {
+        'ru': 'У вас критический уровень цифровой зависимости. Это состояние требует немедленного и серьёзного вмешательства.',
+        'en': 'You have critical level of digital dependency. This condition requires immediate and serious intervention.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают экстремально высокий уровень по большинству или всем компонентам.',
+        'en': 'Your answers show extremely high levels across most or all components.',
+      },
+      strengths: {
+        'ru': [
+          'Вы прошли этот тест — значит, осознаёте проблему',
+          'Даже критическая зависимость преодолима',
+          'Радикальные меры дают быстрый результат',
+        ],
+        'en': [
+          'You took this test — meaning you recognize the problem',
+          'Even critical dependency is overcomable',
+          'Radical measures give quick results',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Критическое влияние на здоровье',
+          'Серьёзные проблемы с отношениями',
+          'Полная потеря продуктивности',
+          'Эмоциональная дисрегуляция',
+        ],
+        'en': [
+          'Critical health impact',
+          'Serious relationship problems',
+          'Complete productivity loss',
+          'Emotional dysregulation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'НЕМЕДЛЕННО: полный отказ от смартфона на 30 дней',
+          'Обратитесь к специалисту по поведенческим зависимостям',
+          'Рассмотрите программы цифрового детокса с проживанием',
+          'Физическая изоляция от устройств (отдайте родственникам)',
+          'Замените все цифровые развлечения на физические активности',
+          'Создайте систему подотчётности с близкими',
+        ],
+        'en': [
+          'IMMEDIATELY: complete smartphone rejection for 30 days',
+          'See behavioral addiction specialist',
+          'Consider residential digital detox programs',
+          'Physical isolation from devices (give to relatives)',
+          'Replace all digital entertainment with physical activities',
+          'Create accountability system with loved ones',
+        ],
+      },
+      tryToday: {
+        'ru': 'Отдайте смартфон родственнику или другу на хранение. Используйте простой телефон для звонков.',
+        'en': 'Give smartphone to relative or friend for safekeeping. Use basic phone for calls.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы в точке, где изменения необходимы. Но каждый день без зависимости — это шаг к свободе. Вы заслуживаете жизнь, где вы управляете технологиями, а не они вами.',
+        'en': 'You are at a point where change is necessary. But every day without addiction is a step toward freedom. You deserve a life where you control technology, not vice versa.',
+      },
+    ),
+  };
 }

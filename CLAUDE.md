@@ -20,9 +20,10 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **24 psychological tests in 5 categories** (21 standard + 2 special + 4 profile tests)
+- **24 psychological tests in 5 categories** (21 standard + 2 special + 1 profile test)
 - **195 psychological scales** for aggregate personality analysis
-- **Three test architectures:** Standard (Likert), Special (visual/interactive), Profile (7-section results)
+- **Universal profile system** - 21 tests with 7-section detailed profiles ⭐ NEW
+- **ProfileService** - Automatic profile display in results ⭐ NEW
 - **Multilingual support** (Russian/English)
 - **Daily mood tracking** and result history
 - **Cross-test personality type calculation**
@@ -131,7 +132,13 @@ Data & Config Layer (Test Data, Storage)
   - `SummaryProvider` - Aggregate analysis
   - `CategoryProvider` - Category grouping ⭐ NEW
 - **Services** (`lib/services/`) - Business logic
-- **Models** (`lib/models/`) - Data structures (including TestCategory ⭐ NEW)
+  - `ProfileService` - Universal profile system ⭐ NEW
+  - `SummaryService` - Cross-test analysis
+  - `ColorPsychologyService` - Special test logic
+- **Models** (`lib/models/`) - Data structures
+  - `TestProfile` - Universal profile model ⭐ NEW
+  - `TestCategory` - Category grouping
+  - `TestModel`, `QuestionModel`, `AnswerModel`
 - **Utils** (`lib/utils/`) - Shared utilities ⭐ NEW
 - **Constants** (`lib/constants/`) - Centralized constants ⭐ NEW
 - **Data** (`lib/data/`) - Test content
@@ -301,7 +308,7 @@ SummaryData? calculateSummary(List<TestResult> results) {
 
 ## Current TODO List
 
-### ✅ Completed (18 major items)
+### ✅ Completed (20 major items)
 
 1. ✅ **Logging System** - Centralized logging with `logger` package
 2. ✅ **Hardcoded Constants** - Extracted to `constants/` directory
@@ -313,7 +320,7 @@ SummaryData? calculateSummary(List<TestResult> results) {
 8. ✅ **Personality Type Cross-Test Questions** - Summary screen shows questions from ALL tests
 9. ✅ **Question Text Display** - Real question/answer texts with percentage influence
 10. ✅ **Test Categorization** - 5 categories with collapsible sections, state persistence
-11. ✅ **Legacy Dart Architecture** - All tests use Legacy Dart (13/14) except 1 special test
+11. ✅ **Legacy Dart Architecture** - All tests use Legacy Dart (22/24) except 2 special tests
 12. ✅ **Digital Detox Test** - Technology addiction diagnostic (50 questions, 7 factors)
 13. ✅ **Burnout Diagnostic Test** - Professional burnout assessment (54 questions, 7 factors)
 14. ✅ **DISC Personality Test** - Behavioral assessment (56 questions, 4 factors)
@@ -321,31 +328,33 @@ SummaryData? calculateSummary(List<TestResult> results) {
 16. ✅ **Holland Code Test** - Career interests RIASEC (60 questions, 6 factors)
 17. ✅ **Love Languages Test** - Five love languages (30 questions, 5 languages)
 18. ✅ **Color Psychology Test** - Visual projective test (6 stages, 12 scales, 34+ interactions)
-19. ✅ **Anxiety Symptoms Inventory** - Anxiety assessment (24 questions, 4 factors, 5 minutes) ⭐ NEW
+19. ✅ **Anxiety Symptoms Inventory** - Anxiety assessment (24 questions, 4 factors, 5 minutes)
+20. ✅ **Universal Profile System** - ProfileService with 21 tests supporting 7-section profiles ⭐ NEW
 
 ### 🔄 In Progress
 
-20. 🔄 **Large File Refactoring** - Services extracted, data files remain
-21. 🔄 **Documentation Coverage** - 5-7% (target: 60%+) - improved with special tests guide
-22. 🔄 **Test Coverage** - 3,989 lines, ~35 tests (target: 60% of codebase)
+21. 🔄 **Large File Refactoring** - Services extracted, data files remain
+22. 🔄 **Documentation Coverage** - 8-10% (target: 60%+) - improved with profile system docs
+23. 🔄 **Test Coverage** - 3,989 lines, ~35 tests (target: 60% of codebase)
 
 ### 🔴 High Priority
 
-23. 🔴 **Encrypted Storage** - Migrate to `flutter_secure_storage` (4-6 hours)
-24. 🔴 **Incomplete TODOs** - Resolve remaining TODO items in code (3-4 hours)
+24. 🔴 **Encrypted Storage** - Migrate to `flutter_secure_storage` (4-6 hours)
+25. 🔴 **Incomplete TODOs** - Resolve remaining TODO items in code (3-4 hours)
 
 ### 🟢 Low Priority
 
-25. 🟢 **i18n Enhancement** - ARB-based internationalization (10 hours)
-26. 🟢 **Analytics** - Firebase Analytics integration (4 hours)
-27. 🟢 **Accessibility** - Screen reader support (8 hours)
-28. ~~🟢 **JSON Test Data** - Extract to JSON files~~ **CANCELLED** - Using Legacy Dart + Special architecture
+26. 🟢 **i18n Enhancement** - ARB-based internationalization (10 hours)
+27. 🟢 **Analytics** - Firebase Analytics integration (4 hours)
+28. 🟢 **Accessibility** - Screen reader support (8 hours)
+29. ~~🟢 **JSON Test Data** - Extract to JSON files~~ **CANCELLED** - Using Legacy Dart + Special architecture
 
-**📊 Progress:** 19 critical items completed, 3 in progress, 2 high-priority remaining
+**📊 Progress:** 20 critical items completed, 3 in progress, 2 high-priority remaining
 
 **📌 Architecture Decisions:**
 - Legacy Dart chosen for standard tests (scalability, performance, type safety)
 - Special architecture for visual/interactive tests (Color Psychology as reference)
+- Universal ProfileService for all tests (automatic 7-section profile display)
 
 ---
 
@@ -360,9 +369,11 @@ SummaryData? calculateSummary(List<TestResult> results) {
 | **Entry** | `lib/main.dart` | App initialization |
 | **Home** | `lib/screens/home_screen.dart` | Test selection |
 | **Testing** | `lib/screens/test_screen.dart` | Standard test interface |
-| **Results** | `lib/screens/test_result_screen.dart` | Result display |
+| **Results** | `lib/screens/test_result_screen.dart` | Result display + profiles ⭐ |
 | **Summary** | `lib/screens/summary_screen.dart` | Personality analysis |
 | **Scales** | `lib/config/summary/hierarchical_scales.dart` | 195 scales definition |
+| **ProfileService** | `lib/services/profile_service.dart` | Universal profile system ⭐ |
+| **TestProfile** | `lib/models/test_profile_model.dart` | Profile model ⭐ |
 | **Service** | `lib/services/test_service.dart` | Test logic |
 | **Registry** | `lib/data/test_registry.dart` | All tests list |
 
@@ -381,14 +392,15 @@ All comprehensive documentation is in the `docs/` directory:
 - **[Deployment Guide](docs/DEPLOYMENT.md)** - Build configuration, release checklist
 - **[Performance Guide](docs/PERFORMANCE.md)** - Performance metrics, optimization opportunities
 
-### 🎨 Adding New Tests Documentation ⭐ UPDATED
+### 🎨 Adding New Tests Documentation ⭐ UPDATED v3.4.0
 
-Comprehensive modular guide for adding psychological tests (v3.3.0):
+Comprehensive modular guide for adding psychological tests (v3.4.0):
 
 - **[Main Index](docs/adding-new-test/ADDING_NEW_TEST_INDEX.md)** - Navigation hub, quick start guide
-- **[75-Point Checklist](docs/adding-new-test/ADDING_TEST_CHECKLIST.md)** - Complete implementation checklist (was 65)
+- **[78-Point Checklist](docs/adding-new-test/ADDING_TEST_CHECKLIST.md)** - Complete implementation checklist + **ФАЗА 6: Профили** ⭐
 - **[8 Critical Rules](docs/adding-new-test/ADDING_TEST_RULES.md)** - Must-follow rules to avoid bugs
 - **[15 Common Errors](docs/adding-new-test/ADDING_TEST_ERRORS.md)** - Typical mistakes and solutions
+- **[Profiles Summary](docs/PROFILES_SUMMARY.md)** - 21 tests with profiles reference ⭐ NEW
 - **[Code Templates](docs/adding-new-test/ADDING_TEST_EXAMPLES.md)** - Ready-to-use code examples + profile templates
 - **[7-Section Results](docs/adding-new-test/ADDING_TEST_RESULTS.md)** ⭐ NEW - Enhanced result structure
   - Profile determination algorithm
@@ -442,6 +454,7 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.22.0 | 2025-11-30 | Claude Code | **Universal Profile System Implementation** ⭐ MAJOR<br>- **ProfileService:** Универсальная система профилей для всех тестов<br>- **21 тест с профилями:** автоматическое отображение 7-секционных профилей<br>- **7 секций профиля:** название, обоснование, сильные стороны, уязвимости, рекомендации, действие, вывод<br>- **TestProfile модель:** стандартизированная структура для всех профилей<br>- **Автоматическое отображение:** профили показываются в `test_result_screen.dart` без дополнительного кода<br>- **Добавлен wellbeing_happiness_inventory:** 5 профилей благополучия (Flourishing, Moderately Happy, Languishing, Struggling, Developing)<br>- **Обновлена документация v3.4.0:**<br>  • ADDING_TEST_CHECKLIST.md → 78 пунктов (была 75) + ФАЗА 6: Профили<br>  • ADDING_NEW_TEST_INDEX.md → v3.4.0 с секцией профилей<br>  • PROFILES_SUMMARY.md (NEW) - справочник всех 21 теста с профилями<br>- **Всего тестов:** 24 (21 std + 2 special + 1 profile) с профилями в 21 тесте<br>- **Codebase growth:** ~50,000 → ~53,000+ lines |
 | 3.21.0 | 2025-11-23 | Claude Code | **Merge: Cognitive Ability + Romantic Potential + Relationship Compatibility + Friendship Psychology** ⭐<br>- **Объединение 4 тестов из параллельных веток**<br>- **Cognitive Ability:** 60 вопросов, 3 фактора, binary scoring (IQ-style)<br>- **Romantic Potential:** 36 вопросов, 3 фактора, 7-секционная структура<br>- **Relationship Compatibility:** 24 вопроса, 6 факторов, 3 профиля совместимости<br>- **Friendship Psychology:** 24 вопроса, 6 факторов, 13 профилей дружбы<br>- **Всего тестов:** 24 (21 стандартных + 2 специальных + 4 profile)<br>- **Test Architecture:** 22 Legacy Dart + 2 Special = 24 total tests |
 | 3.20.0 | 2025-11-23 | Claude Code | **Cognitive Ability Test Added**<br>- **Новый тест:** Cognitive Ability Test (60 вопросов, 3 фактора, ~30 минут)<br>- **3 Factors:** logical_reasoning (Q1-20), numerical_ability (Q21-40), verbal_ability (Q41-60)<br>- **Binary scoring:** 0 = incorrect, 1 = correct (IQ-style test) |
 | 3.19.0-a | 2025-11-23 | Claude Code | **Romantic Potential Test Added**<br>- **Новый тест:** Romantic Potential and Love Beliefs (36 вопросов, 3 фактора, ~8 минут)<br>- **3 Profiles:** Secure Romantic, Mixed Romantic, Romantic Challenges |

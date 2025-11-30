@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for DISC Personality Test
 /// Legacy Dart implementation (no JSON dependency)
@@ -891,4 +892,801 @@ class DISCPersonalityData {
       },
     };
   }
+
+  /// Определить профиль на основе процентов по шкалам DISC
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_balanced';
+
+    final d = percentages['dominance'] ?? 0;
+    final i = percentages['influence'] ?? 0;
+    final s = percentages['steadiness'] ?? 0;
+    final c = percentages['conscientiousness'] ?? 0;
+
+    // Определяем доминирующий и вторичный факторы
+    final scores = {'D': d, 'I': i, 'S': s, 'C': c};
+    final sorted = scores.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
+    final primary = sorted[0].key;
+    final secondary = sorted[1].key;
+    final primaryScore = sorted[0].value;
+    final secondaryScore = sorted[1].value;
+
+    // Если все показатели близки — balanced
+    final range = sorted[0].value - sorted[3].value;
+    if (range < 20) {
+      return 'profile_balanced';
+    }
+
+    // Если один явно доминирует (разница > 15 с вторичным)
+    if (primaryScore - secondaryScore > 15) {
+      switch (primary) {
+        case 'D':
+          return 'profile_d_dominant';
+        case 'I':
+          return 'profile_i_dominant';
+        case 'S':
+          return 'profile_s_dominant';
+        case 'C':
+          return 'profile_c_dominant';
+      }
+    }
+
+    // Комбинированные профили
+    final combo = '$primary$secondary';
+    switch (combo) {
+      case 'DI':
+      case 'ID':
+        return 'profile_di_inspirational';
+      case 'DC':
+      case 'CD':
+        return 'profile_dc_challenger';
+      case 'DS':
+      case 'SD':
+        return 'profile_ds_driver';
+      case 'IS':
+      case 'SI':
+        return 'profile_is_supporter';
+      case 'IC':
+      case 'CI':
+        return 'profile_ic_assessor';
+      case 'SC':
+      case 'CS':
+        return 'profile_sc_coordinator';
+      default:
+        return 'profile_balanced';
+    }
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  /// Все доступные профили DISC
+  static const Map<String, TestProfile> _profiles = {
+    'profile_d_dominant': TestProfile(
+      id: 'profile_d_dominant',
+      name: {
+        'ru': 'Лидер (высокий D)',
+        'en': 'Leader (High D)',
+      },
+      description: {
+        'ru': 'Вы прямолинейны, решительны и ориентированы на результат. Вы естественный лидер, который берёт на себя ответственность.',
+        'en': 'You are direct, decisive, and results-oriented. You are a natural leader who takes charge.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Доминирования значительно выше других факторов DISC.',
+        'en': 'Your Dominance score is significantly higher than other DISC factors.',
+      },
+      strengths: {
+        'ru': [
+          'Быстрое принятие решений',
+          'Способность брать на себя ответственность',
+          'Ориентация на достижение целей',
+          'Умение преодолевать препятствия',
+          'Эффективность под давлением',
+        ],
+        'en': [
+          'Quick decision making',
+          'Ability to take charge',
+          'Goal achievement orientation',
+          'Ability to overcome obstacles',
+          'Effectiveness under pressure',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Нетерпимость к медлительности',
+          'Риск авторитарности',
+          'Недостаточное внимание к чувствам других',
+          'Склонность к конфликтам',
+        ],
+        'en': [
+          'Impatience with slowness',
+          'Risk of being authoritarian',
+          'Insufficient attention to others\' feelings',
+          'Tendency towards conflicts',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте активное слушание',
+          'Давайте другим время на размышление',
+          'Развивайте эмпатию',
+          'Учитесь делегировать',
+          'Цените вклад команды',
+        ],
+        'en': [
+          'Practice active listening',
+          'Give others time to think',
+          'Develop empathy',
+          'Learn to delegate',
+          'Value team contributions',
+        ],
+      },
+      tryToday: {
+        'ru': 'Спросите мнение коллеги перед принятием решения и выслушайте до конца.',
+        'en': 'Ask a colleague\'s opinion before making a decision and listen completely.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша решительность — это сила! Направьте её на вдохновение команды, а не только на достижение целей.',
+        'en': 'Your decisiveness is a strength! Channel it to inspire the team, not just achieve goals.',
+      },
+    ),
+
+    'profile_i_dominant': TestProfile(
+      id: 'profile_i_dominant',
+      name: {
+        'ru': 'Вдохновитель (высокий I)',
+        'en': 'Inspirer (High I)',
+      },
+      description: {
+        'ru': 'Вы общительны, оптимистичны и умеете влиять на людей. Вы создаёте позитивную атмосферу вокруг себя.',
+        'en': 'You are sociable, optimistic, and know how to influence people. You create a positive atmosphere around you.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Влияния значительно выше других факторов DISC.',
+        'en': 'Your Influence score is significantly higher than other DISC factors.',
+      },
+      strengths: {
+        'ru': [
+          'Коммуникативные навыки',
+          'Способность мотивировать других',
+          'Позитивное мышление',
+          'Креативность',
+          'Умение налаживать связи',
+        ],
+        'en': [
+          'Communication skills',
+          'Ability to motivate others',
+          'Positive thinking',
+          'Creativity',
+          'Networking ability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Недостаточное внимание к деталям',
+          'Трудности с дисциплиной',
+          'Избегание конфликтов',
+          'Потребность в одобрении',
+        ],
+        'en': [
+          'Insufficient attention to details',
+          'Difficulty with discipline',
+          'Conflict avoidance',
+          'Need for approval',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте навыки планирования',
+          'Уделяйте внимание деталям',
+          'Учитесь говорить "нет"',
+          'Практикуйте завершение начатого',
+          'Балансируйте энтузиазм с реализмом',
+        ],
+        'en': [
+          'Develop planning skills',
+          'Pay attention to details',
+          'Learn to say "no"',
+          'Practice completing what you start',
+          'Balance enthusiasm with realism',
+        ],
+      },
+      tryToday: {
+        'ru': 'Доведите до конца одну задачу, прежде чем начинать новую.',
+        'en': 'Complete one task before starting a new one.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша энергия заразительна! Используйте её для вдохновения, но не забывайте о последовательности.',
+        'en': 'Your energy is contagious! Use it for inspiration, but don\'t forget about consistency.',
+      },
+    ),
+
+    'profile_s_dominant': TestProfile(
+      id: 'profile_s_dominant',
+      name: {
+        'ru': 'Стабилизатор (высокий S)',
+        'en': 'Stabilizer (High S)',
+      },
+      description: {
+        'ru': 'Вы терпеливы, лояльны и ориентированы на команду. Вы создаёте стабильность и гармонию.',
+        'en': 'You are patient, loyal, and team-oriented. You create stability and harmony.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Стабильности значительно выше других факторов DISC.',
+        'en': 'Your Steadiness score is significantly higher than other DISC factors.',
+      },
+      strengths: {
+        'ru': [
+          'Надёжность и последовательность',
+          'Умение слушать',
+          'Терпение',
+          'Командная работа',
+          'Поддержка других',
+        ],
+        'en': [
+          'Reliability and consistency',
+          'Listening skills',
+          'Patience',
+          'Teamwork',
+          'Supporting others',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сопротивление изменениям',
+          'Трудности с инициативой',
+          'Избегание конфронтации',
+          'Чрезмерная уступчивость',
+        ],
+        'en': [
+          'Resistance to change',
+          'Difficulty with initiative',
+          'Confrontation avoidance',
+          'Excessive accommodation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Учитесь выражать своё мнение',
+          'Практикуйте адаптацию к изменениям',
+          'Берите на себя инициативу в маленьких вещах',
+          'Устанавливайте личные границы',
+          'Принимайте здоровые риски',
+        ],
+        'en': [
+          'Learn to express your opinion',
+          'Practice adapting to change',
+          'Take initiative in small things',
+          'Set personal boundaries',
+          'Take healthy risks',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выскажите своё мнение по рабочему вопросу, даже если оно отличается от мнения группы.',
+        'en': 'Express your opinion on a work issue, even if it differs from the group\'s.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша стабильность — фундамент команды! Добавьте немного гибкости для ещё большего роста.',
+        'en': 'Your stability is the team\'s foundation! Add some flexibility for even more growth.',
+      },
+    ),
+
+    'profile_c_dominant': TestProfile(
+      id: 'profile_c_dominant',
+      name: {
+        'ru': 'Аналитик (высокий C)',
+        'en': 'Analyst (High C)',
+      },
+      description: {
+        'ru': 'Вы точны, систематичны и ориентированы на качество. Вы обеспечиваете точность и надёжность.',
+        'en': 'You are precise, systematic, and quality-oriented. You ensure accuracy and reliability.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Сознательности значительно выше других факторов DISC.',
+        'en': 'Your Conscientiousness score is significantly higher than other DISC factors.',
+      },
+      strengths: {
+        'ru': [
+          'Внимание к деталям',
+          'Аналитическое мышление',
+          'Высокие стандарты качества',
+          'Организованность',
+          'Объективность',
+        ],
+        'en': [
+          'Attention to detail',
+          'Analytical thinking',
+          'High quality standards',
+          'Organization',
+          'Objectivity',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Перфекционизм',
+          'Медленное принятие решений',
+          'Критичность к себе и другим',
+          'Трудности с неопределённостью',
+        ],
+        'en': [
+          'Perfectionism',
+          'Slow decision making',
+          'Critical of self and others',
+          'Difficulty with uncertainty',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Учитесь принимать "достаточно хорошо"',
+          'Практикуйте быстрые решения',
+          'Развивайте толерантность к ошибкам',
+          'Доверяйте интуиции иногда',
+          'Выражайте чувства открыто',
+        ],
+        'en': [
+          'Learn to accept "good enough"',
+          'Practice quick decisions',
+          'Develop tolerance for mistakes',
+          'Trust intuition sometimes',
+          'Express feelings openly',
+        ],
+      },
+      tryToday: {
+        'ru': 'Примите одно решение за 60 секунд без дополнительного анализа.',
+        'en': 'Make one decision in 60 seconds without additional analysis.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша точность бесценна! Помните, что иногда прогресс важнее совершенства.',
+        'en': 'Your precision is priceless! Remember that sometimes progress is more important than perfection.',
+      },
+    ),
+
+    'profile_di_inspirational': TestProfile(
+      id: 'profile_di_inspirational',
+      name: {
+        'ru': 'Вдохновляющий лидер (DI)',
+        'en': 'Inspirational Leader (DI)',
+      },
+      description: {
+        'ru': 'Вы сочетаете решительность с обаянием. Вы ведёте людей к целям, вдохновляя их.',
+        'en': 'You combine decisiveness with charisma. You lead people to goals by inspiring them.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Доминирования и Влияния.',
+        'en': 'You have high Dominance and Influence scores.',
+      },
+      strengths: {
+        'ru': [
+          'Харизматичное лидерство',
+          'Способность убеждать',
+          'Энергичность',
+          'Умение создавать видение',
+          'Эффективная коммуникация',
+        ],
+        'en': [
+          'Charismatic leadership',
+          'Persuasion ability',
+          'Energy',
+          'Vision creation',
+          'Effective communication',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Нетерпение к медленным процессам',
+          'Риск переоценки возможностей',
+          'Недостаточное внимание к деталям',
+        ],
+        'en': [
+          'Impatience with slow processes',
+          'Risk of overestimating capabilities',
+          'Insufficient attention to details',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Окружайте себя людьми с высоким C и S',
+          'Проверяйте идеи на реалистичность',
+          'Слушайте критику конструктивно',
+        ],
+        'en': [
+          'Surround yourself with high C and S people',
+          'Check ideas for realism',
+          'Listen to criticism constructively',
+        ],
+      },
+      tryToday: {
+        'ru': 'Попросите кого-то из команды проверить вашу идею на практичность.',
+        'en': 'Ask someone on the team to check your idea for practicality.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы создаёте будущее! Добавьте терпения — и станете ещё эффективнее.',
+        'en': 'You create the future! Add patience and become even more effective.',
+      },
+    ),
+
+    'profile_dc_challenger': TestProfile(
+      id: 'profile_dc_challenger',
+      name: {
+        'ru': 'Бросающий вызов (DC)',
+        'en': 'Challenger (DC)',
+      },
+      description: {
+        'ru': 'Вы сочетаете решительность с точностью. Вы достигаете результатов через систематичность.',
+        'en': 'You combine decisiveness with precision. You achieve results through systematic approach.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Доминирования и Сознательности.',
+        'en': 'You have high Dominance and Conscientiousness scores.',
+      },
+      strengths: {
+        'ru': [
+          'Стратегическое мышление',
+          'Высокие стандарты',
+          'Эффективность',
+          'Способность решать сложные проблемы',
+          'Независимость',
+        ],
+        'en': [
+          'Strategic thinking',
+          'High standards',
+          'Efficiency',
+          'Ability to solve complex problems',
+          'Independence',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Критичность к другим',
+          'Перфекционизм',
+          'Трудности с делегированием',
+        ],
+        'en': [
+          'Critical of others',
+          'Perfectionism',
+          'Difficulty delegating',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте терпимость к ошибкам других',
+          'Учитесь хвалить',
+          'Делегируйте больше',
+        ],
+        'en': [
+          'Develop tolerance for others\' mistakes',
+          'Learn to praise',
+          'Delegate more',
+        ],
+      },
+      tryToday: {
+        'ru': 'Похвалите коллегу за хорошую работу без указания на недостатки.',
+        'en': 'Praise a colleague for good work without pointing out flaws.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша требовательность ведёт к совершенству! Смягчите её добротой.',
+        'en': 'Your demanding nature leads to excellence! Soften it with kindness.',
+      },
+    ),
+
+    'profile_ds_driver': TestProfile(
+      id: 'profile_ds_driver',
+      name: {
+        'ru': 'Драйвер (DS)',
+        'en': 'Driver (DS)',
+      },
+      description: {
+        'ru': 'Вы сочетаете решительность со стабильностью. Вы достигаете целей методично.',
+        'en': 'You combine decisiveness with stability. You achieve goals methodically.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Доминирования и Стабильности.',
+        'en': 'You have high Dominance and Steadiness scores.',
+      },
+      strengths: {
+        'ru': [
+          'Надёжное лидерство',
+          'Методичный подход к целям',
+          'Стабильность под давлением',
+          'Умение завершать начатое',
+        ],
+        'en': [
+          'Reliable leadership',
+          'Methodical approach to goals',
+          'Stability under pressure',
+          'Ability to complete what you start',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Упрямство',
+          'Сопротивление новым методам',
+          'Трудности с изменением курса',
+        ],
+        'en': [
+          'Stubbornness',
+          'Resistance to new methods',
+          'Difficulty changing course',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Оставайтесь открытыми новым подходам',
+          'Иногда позволяйте другим вести',
+          'Практикуйте гибкость',
+        ],
+        'en': [
+          'Stay open to new approaches',
+          'Sometimes let others lead',
+          'Practice flexibility',
+        ],
+      },
+      tryToday: {
+        'ru': 'Попробуйте новый способ выполнить привычную задачу.',
+        'en': 'Try a new way to complete a familiar task.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы — надёжный капитан! Добавьте немного гибкости в ваш курс.',
+        'en': 'You are a reliable captain! Add some flexibility to your course.',
+      },
+    ),
+
+    'profile_is_supporter': TestProfile(
+      id: 'profile_is_supporter',
+      name: {
+        'ru': 'Поддерживающий (IS)',
+        'en': 'Supporter (IS)',
+      },
+      description: {
+        'ru': 'Вы сочетаете общительность с заботой. Вы создаёте тёплую атмосферу в команде.',
+        'en': 'You combine sociability with care. You create a warm atmosphere in the team.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Влияния и Стабильности.',
+        'en': 'You have high Influence and Steadiness scores.',
+      },
+      strengths: {
+        'ru': [
+          'Отличные навыки взаимоотношений',
+          'Умение создавать гармонию',
+          'Лояльность',
+          'Эмпатия',
+          'Командная работа',
+        ],
+        'en': [
+          'Excellent relationship skills',
+          'Harmony creation',
+          'Loyalty',
+          'Empathy',
+          'Teamwork',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Трудности с принятием непопулярных решений',
+          'Избегание конфликтов',
+          'Чрезмерная уступчивость',
+        ],
+        'en': [
+          'Difficulty making unpopular decisions',
+          'Conflict avoidance',
+          'Excessive accommodation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Учитесь отстаивать своё мнение',
+          'Практикуйте конструктивную конфронтацию',
+          'Устанавливайте границы',
+        ],
+        'en': [
+          'Learn to defend your opinion',
+          'Practice constructive confrontation',
+          'Set boundaries',
+        ],
+      },
+      tryToday: {
+        'ru': 'Скажите "нет" одной просьбе, которая не соответствует вашим приоритетам.',
+        'en': 'Say "no" to one request that doesn\'t align with your priorities.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша забота объединяет людей! Добавьте твёрдости для баланса.',
+        'en': 'Your care unites people! Add firmness for balance.',
+      },
+    ),
+
+    'profile_ic_assessor': TestProfile(
+      id: 'profile_ic_assessor',
+      name: {
+        'ru': 'Оценщик (IC)',
+        'en': 'Assessor (IC)',
+      },
+      description: {
+        'ru': 'Вы сочетаете обаяние с точностью. Вы убеждаете людей с помощью фактов.',
+        'en': 'You combine charm with precision. You persuade people with facts.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Влияния и Сознательности.',
+        'en': 'You have high Influence and Conscientiousness scores.',
+      },
+      strengths: {
+        'ru': [
+          'Убедительная аргументация',
+          'Внимание к деталям при общении',
+          'Способность объяснять сложное просто',
+          'Качественные презентации',
+        ],
+        'en': [
+          'Persuasive argumentation',
+          'Attention to detail in communication',
+          'Ability to explain complex simply',
+          'Quality presentations',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможное противоречие между желанием нравиться и быть точным',
+          'Чрезмерная самокритика',
+        ],
+        'en': [
+          'Possible conflict between wanting to please and being accurate',
+          'Excessive self-criticism',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Балансируйте между энтузиазмом и точностью',
+          'Принимайте несовершенство',
+          'Доверяйте интуиции',
+        ],
+        'en': [
+          'Balance enthusiasm and precision',
+          'Accept imperfection',
+          'Trust intuition',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поделитесь идеей, не проверяя её дважды.',
+        'en': 'Share an idea without double-checking it.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы умеете убеждать с точностью! Доверяйте себе больше.',
+        'en': 'You know how to persuade with precision! Trust yourself more.',
+      },
+    ),
+
+    'profile_sc_coordinator': TestProfile(
+      id: 'profile_sc_coordinator',
+      name: {
+        'ru': 'Координатор (SC)',
+        'en': 'Coordinator (SC)',
+      },
+      description: {
+        'ru': 'Вы сочетаете стабильность с точностью. Вы обеспечиваете надёжную работу систем.',
+        'en': 'You combine stability with precision. You ensure reliable system operation.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Стабильности и Сознательности.',
+        'en': 'You have high Steadiness and Conscientiousness scores.',
+      },
+      strengths: {
+        'ru': [
+          'Надёжность и последовательность',
+          'Внимание к процессам',
+          'Качественная работа',
+          'Умение поддерживать системы',
+          'Терпение с деталями',
+        ],
+        'en': [
+          'Reliability and consistency',
+          'Process attention',
+          'Quality work',
+          'Ability to maintain systems',
+          'Patience with details',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сопротивление изменениям',
+          'Медлительность в новых ситуациях',
+          'Трудности с лидерством',
+        ],
+        'en': [
+          'Resistance to change',
+          'Slowness in new situations',
+          'Leadership difficulties',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте адаптацию к изменениям',
+          'Берите инициативу в знакомых областях',
+          'Выражайте мнение активнее',
+        ],
+        'en': [
+          'Practice adapting to change',
+          'Take initiative in familiar areas',
+          'Express opinions more actively',
+        ],
+      },
+      tryToday: {
+        'ru': 'Предложите улучшение знакомого процесса.',
+        'en': 'Suggest an improvement to a familiar process.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы — фундамент надёжности! Добавьте инициативы для роста.',
+        'en': 'You are the foundation of reliability! Add initiative for growth.',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': 'Сбалансированный профиль',
+        'en': 'Balanced Profile',
+      },
+      description: {
+        'ru': 'У вас гармоничное сочетание всех четырёх факторов DISC. Вы адаптивны в разных ситуациях.',
+        'en': 'You have a harmonious combination of all four DISC factors. You are adaptive in different situations.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели по всем четырём факторам DISC близки друг к другу.',
+        'en': 'Your scores across all four DISC factors are close to each other.',
+      },
+      strengths: {
+        'ru': [
+          'Высокая адаптивность',
+          'Понимание разных стилей',
+          'Гибкость в общении',
+          'Способность работать с разными людьми',
+          'Универсальность',
+        ],
+        'en': [
+          'High adaptability',
+          'Understanding different styles',
+          'Communication flexibility',
+          'Ability to work with different people',
+          'Versatility',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможные трудности с самоидентификацией',
+          'Риск размытия сильных сторон',
+          'Сложность в определении предпочтений',
+        ],
+        'en': [
+          'Possible self-identification difficulties',
+          'Risk of diluting strengths',
+          'Difficulty determining preferences',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Определите свои ключевые ценности',
+          'Развивайте осознанность своих предпочтений',
+          'Используйте адаптивность стратегически',
+          'Найдите роли, требующие универсальности',
+        ],
+        'en': [
+          'Define your key values',
+          'Develop awareness of your preferences',
+          'Use adaptability strategically',
+          'Find roles requiring versatility',
+        ],
+      },
+      tryToday: {
+        'ru': 'Отметьте, в каких ситуациях вы чувствуете себя наиболее естественно.',
+        'en': 'Note in which situations you feel most natural.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша универсальность — редкий дар! Используйте её для создания мостов между людьми.',
+        'en': 'Your versatility is a rare gift! Use it to build bridges between people.',
+      },
+    ),
+  };
 }

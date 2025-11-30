@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Данные теста "Индекс субъективного благополучия"
 ///
@@ -586,4 +587,363 @@ class WellbeingHappinessInventoryData {
       'en': 'Interpretation not available',
     };
   }
+
+  /// Определяет профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_developing';
+
+    // Средний процент по всем факторам
+    final avgPercentage = percentages.values.reduce((a, b) => a + b) / percentages.length;
+
+    // Находим самый высокий и низкий факторы
+    String? highestFactor;
+    String? lowestFactor;
+    double highestValue = 0;
+    double lowestValue = 100;
+
+    for (final entry in percentages.entries) {
+      if (entry.value > highestValue) {
+        highestValue = entry.value;
+        highestFactor = entry.key;
+      }
+      if (entry.value < lowestValue) {
+        lowestValue = entry.value;
+        lowestFactor = entry.key;
+      }
+    }
+
+    // Проверяем высокий уровень (>=70% по всем)
+    if (avgPercentage >= 70) return 'profile_flourishing';
+
+    // Проверяем средний уровень (>=50% по всем)
+    if (avgPercentage >= 50) return 'profile_moderately_happy';
+
+    // Проверяем низкий уровень
+    if (avgPercentage >= 30) return 'profile_languishing';
+
+    return 'profile_struggling';
+  }
+
+  /// Возвращает профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  static final Map<String, TestProfile> _profiles = {
+    'profile_flourishing': TestProfile(
+      id: 'profile_flourishing',
+      name: {
+        'ru': 'Процветающий',
+        'en': 'Flourishing',
+      },
+      description: {
+        'ru': 'Вы демонстрируете высокий уровень благополучия по всем компонентам модели PERMA. Вы испытываете много позитивных эмоций, увлечены своей жизнью, имеете крепкие отношения, живёте осмысленно и достигаете целей.',
+        'en': 'You demonstrate high levels of wellbeing across all PERMA components. You experience many positive emotions, are engaged in life, have strong relationships, live meaningfully and achieve your goals.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели выше 70% по большинству факторов благополучия.',
+        'en': 'Your scores are above 70% across most wellbeing factors.',
+      },
+      strengths: {
+        'ru': [
+          'Высокий уровень позитивных эмоций',
+          'Способность к глубокой вовлечённости',
+          'Крепкие социальные связи',
+          'Ясное ощущение смысла жизни',
+          'Регулярное достижение целей',
+        ],
+        'en': [
+          'High level of positive emotions',
+          'Ability for deep engagement',
+          'Strong social connections',
+          'Clear sense of life meaning',
+          'Regular goal achievement',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск выгорания от чрезмерной активности',
+          'Возможное игнорирование негативных эмоций',
+        ],
+        'en': [
+          'Risk of burnout from excessive activity',
+          'Possible ignoring of negative emotions',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Продолжайте практики, поддерживающие благополучие',
+          'Делитесь опытом счастья с другими',
+          'Балансируйте активность с отдыхом',
+          'Развивайте осознанность к своим эмоциям',
+        ],
+        'en': [
+          'Continue practices that support wellbeing',
+          'Share your happiness experience with others',
+          'Balance activity with rest',
+          'Develop awareness of your emotions',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поблагодарите кого-то за вклад в вашу счастливую жизнь.',
+        'en': 'Thank someone for their contribution to your happy life.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы — пример того, что счастье достижимо. Продолжайте светить!',
+        'en': 'You are an example that happiness is achievable. Keep shining!',
+      },
+    ),
+
+    'profile_moderately_happy': TestProfile(
+      id: 'profile_moderately_happy',
+      name: {
+        'ru': 'Умеренно счастливый',
+        'en': 'Moderately Happy',
+      },
+      description: {
+        'ru': 'У вас хороший базовый уровень благополучия с потенциалом для роста. Вы функционируете нормально, но есть области, которые можно развить.',
+        'en': 'You have a good baseline level of wellbeing with growth potential. You function normally, but there are areas that can be developed.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели находятся в среднем диапазоне (50-70%).',
+        'en': 'Your scores are in the middle range (50-70%).',
+      },
+      strengths: {
+        'ru': [
+          'Стабильный эмоциональный фон',
+          'Базовые навыки благополучия',
+          'Готовность к развитию',
+          'Способность справляться с трудностями',
+        ],
+        'en': [
+          'Stable emotional background',
+          'Basic wellbeing skills',
+          'Readiness for development',
+          'Ability to cope with difficulties',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Недостаточная глубина в некоторых областях',
+          'Возможная зона комфорта без развития',
+        ],
+        'en': [
+          'Insufficient depth in some areas',
+          'Possible comfort zone without growth',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Определите 1-2 области PERMA для целенаправленного развития',
+          'Практикуйте благодарность ежедневно',
+          'Ищите занятия, которые вызывают состояние потока',
+          'Инвестируйте время в отношения',
+        ],
+        'en': [
+          'Identify 1-2 PERMA areas for targeted development',
+          'Practice gratitude daily',
+          'Look for activities that create flow state',
+          'Invest time in relationships',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишите 3 вещи, за которые вы благодарны сегодня.',
+        'en': 'Write down 3 things you are grateful for today.',
+      },
+      inspiringConclusion: {
+        'ru': 'У вас есть всё необходимое для большего счастья. Каждый маленький шаг приближает вас к процветанию.',
+        'en': 'You have everything needed for greater happiness. Every small step brings you closer to flourishing.',
+      },
+    ),
+
+    'profile_languishing': TestProfile(
+      id: 'profile_languishing',
+      name: {
+        'ru': 'В поиске смысла',
+        'en': 'Languishing',
+      },
+      description: {
+        'ru': 'Вы находитесь в состоянии "ни то, ни сё" — не депрессия, но и не процветание. Жизнь кажется серой, и вам не хватает энтузиазма.',
+        'en': 'You are in a "neither here nor there" state — not depression, but not flourishing either. Life seems gray, and you lack enthusiasm.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели ниже среднего (30-50%), что указывает на состояние "languishing".',
+        'en': 'Your scores are below average (30-50%), indicating a "languishing" state.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание необходимости изменений',
+          'Стабильность (не в кризисе)',
+          'Потенциал для роста',
+        ],
+        'en': [
+          'Awareness of need for change',
+          'Stability (not in crisis)',
+          'Potential for growth',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск скатывания в депрессию',
+          'Эмоциональное онемение',
+          'Отсутствие мотивации',
+          'Чувство бессмысленности',
+        ],
+        'en': [
+          'Risk of sliding into depression',
+          'Emotional numbness',
+          'Lack of motivation',
+          'Sense of meaninglessness',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Создайте ежедневную структуру с маленькими радостями',
+          'Восстановите социальные связи',
+          'Найдите одно занятие, которое по-настоящему захватывает',
+          'Рассмотрите работу с психологом',
+          'Практикуйте физическую активность',
+        ],
+        'en': [
+          'Create daily structure with small pleasures',
+          'Restore social connections',
+          'Find one activity that truly captivates you',
+          'Consider working with a therapist',
+          'Practice physical activity',
+        ],
+      },
+      tryToday: {
+        'ru': 'Позвоните другу или близкому человеку просто чтобы поговорить.',
+        'en': 'Call a friend or loved one just to chat.',
+      },
+      inspiringConclusion: {
+        'ru': 'Languishing — это не конечная станция. Это сигнал, что пора начать движение к лучшей жизни.',
+        'en': 'Languishing is not a final destination. It is a signal that it is time to start moving toward a better life.',
+      },
+    ),
+
+    'profile_struggling': TestProfile(
+      id: 'profile_struggling',
+      name: {
+        'ru': 'В трудный период',
+        'en': 'Struggling',
+      },
+      description: {
+        'ru': 'Сейчас вам тяжело. Низкие показатели по нескольким областям указывают на серьёзные трудности с благополучием. Это не приговор — это точка, с которой можно начать путь к восстановлению.',
+        'en': 'You are going through a difficult time. Low scores in several areas indicate serious wellbeing challenges. This is not a verdict — it is a starting point for recovery.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели ниже 30%, что указывает на значительные трудности.',
+        'en': 'Your scores are below 30%, indicating significant difficulties.',
+      },
+      strengths: {
+        'ru': [
+          'Честность в оценке своего состояния',
+          'Готовность искать помощь (прохождение теста)',
+          'Потенциал для восстановления',
+        ],
+        'en': [
+          'Honesty in assessing your condition',
+          'Willingness to seek help (taking this test)',
+          'Potential for recovery',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск депрессии или тревоги',
+          'Социальная изоляция',
+          'Физическое истощение',
+          'Потеря смысла',
+        ],
+        'en': [
+          'Risk of depression or anxiety',
+          'Social isolation',
+          'Physical exhaustion',
+          'Loss of meaning',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Обратитесь к специалисту (психолог, терапевт)',
+          'Не оставайтесь в одиночестве — расскажите близким',
+          'Фокусируйтесь на базовых потребностях: сон, еда, движение',
+          'Начните с самых маленьких шагов',
+          'Помните: это временное состояние',
+        ],
+        'en': [
+          'Seek professional help (psychologist, therapist)',
+          'Don\'t stay alone — tell loved ones',
+          'Focus on basic needs: sleep, food, movement',
+          'Start with the smallest steps',
+          'Remember: this is a temporary state',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сделайте одно доброе дело для себя: прогулку, тёплую ванну, любимую еду.',
+        'en': 'Do one kind thing for yourself: a walk, a warm bath, favorite food.',
+      },
+      inspiringConclusion: {
+        'ru': 'Самые тёмные ночи предшествуют рассвету. Вы уже сделали первый шаг, признав ситуацию. Помощь доступна.',
+        'en': 'The darkest nights precede dawn. You have already taken the first step by acknowledging the situation. Help is available.',
+      },
+    ),
+
+    'profile_developing': TestProfile(
+      id: 'profile_developing',
+      name: {
+        'ru': 'Развивающийся',
+        'en': 'Developing',
+      },
+      description: {
+        'ru': 'Вы находитесь на пути развития благополучия. Есть области для роста и укрепления.',
+        'en': 'You are on the path of developing wellbeing. There are areas for growth and strengthening.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши результаты показывают смешанную картину благополучия.',
+        'en': 'Your results show a mixed picture of wellbeing.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание важности благополучия',
+          'Готовность к развитию',
+          'Способность к самоанализу',
+        ],
+        'en': [
+          'Awareness of importance of wellbeing',
+          'Readiness for development',
+          'Capacity for self-analysis',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Неравномерное развитие разных областей',
+          'Возможная неустойчивость состояния',
+        ],
+        'en': [
+          'Uneven development across areas',
+          'Possible instability of state',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Определите свои сильные и слабые области',
+          'Создайте план развития благополучия',
+          'Практикуйте PERMA ежедневно',
+        ],
+        'en': [
+          'Identify your strong and weak areas',
+          'Create a wellbeing development plan',
+          'Practice PERMA daily',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одну область PERMA и сделайте один шаг для её улучшения.',
+        'en': 'Choose one PERMA area and take one step to improve it.',
+      },
+      inspiringConclusion: {
+        'ru': 'Каждый день — возможность для роста. Вы на правильном пути!',
+        'en': 'Every day is an opportunity for growth. You are on the right path!',
+      },
+    ),
+  };
 }

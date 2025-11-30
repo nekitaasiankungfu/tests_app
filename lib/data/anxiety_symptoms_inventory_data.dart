@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for Anxiety Symptoms Inventory
 /// Legacy Dart implementation (no JSON dependency)
@@ -644,4 +645,592 @@ class AnxietySymptomsInventoryData {
       },
     };
   }
+
+  // ============================================================================
+  // ПРОФИЛИ РЕЗУЛЬТАТОВ
+  // ============================================================================
+
+  /// Определить профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_balanced';
+
+    // Вычисляем средний процент тревоги
+    double avgAnxiety = 0;
+    for (final value in percentages.values) {
+      avgAnxiety += value;
+    }
+    avgAnxiety /= percentages.length;
+
+    // Определяем доминирующий компонент
+    final sortedScales = percentages.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    final topScale = sortedScales.isNotEmpty ? sortedScales[0].key : '';
+
+    // Минимальная тревога
+    if (avgAnxiety < 25) {
+      return 'profile_minimal';
+    }
+
+    // Лёгкая тревога
+    if (avgAnxiety < 45) {
+      return 'profile_mild';
+    }
+
+    // Умеренная тревога - определяем по доминирующему компоненту
+    if (avgAnxiety < 70) {
+      switch (topScale) {
+        case 'somatic':
+          return 'profile_somatic_focus';
+        case 'cognitive':
+          return 'profile_cognitive_focus';
+        case 'affective':
+          return 'profile_affective_focus';
+        case 'behavioral':
+          return 'profile_behavioral_focus';
+        default:
+          return 'profile_moderate';
+      }
+    }
+
+    // Выраженная тревога
+    return 'profile_severe';
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return profiles[profileId];
+  }
+
+  /// Все профили
+  static final Map<String, TestProfile> profiles = {
+    'profile_minimal': TestProfile(
+      id: 'profile_minimal',
+      name: {
+        'ru': 'Спокойное состояние',
+        'en': 'Calm State',
+      },
+      description: {
+        'ru': 'Ваш уровень тревоги находится в пределах нормы. Вы хорошо справляетесь со стрессом и сохраняете эмоциональное равновесие.',
+        'en': 'Your anxiety level is within normal limits. You cope well with stress and maintain emotional balance.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают минимальную выраженность симптомов тревоги по всем четырём компонентам.',
+        'en': 'Your answers show minimal severity of anxiety symptoms across all four components.',
+      },
+      strengths: {
+        'ru': [
+          'Хорошая стрессоустойчивость',
+          'Эмоциональная стабильность',
+          'Способность расслабляться',
+          'Уверенность в себе',
+        ],
+        'en': [
+          'Good stress tolerance',
+          'Emotional stability',
+          'Ability to relax',
+          'Self-confidence',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Следите за балансом работы и отдыха',
+          'Не игнорируйте сигналы усталости',
+        ],
+        'en': [
+          'Monitor work-life balance',
+          'Don\'t ignore fatigue signals',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Продолжайте поддерживать текущий образ жизни',
+          'Практикуйте регулярную физическую активность',
+          'Сохраняйте здоровый режим сна',
+          'Поддерживайте социальные связи',
+        ],
+        'en': [
+          'Continue maintaining your current lifestyle',
+          'Practice regular physical activity',
+          'Maintain healthy sleep patterns',
+          'Maintain social connections',
+        ],
+      },
+      tryToday: {
+        'ru': 'Уделите 10 минут приятной прогулке на свежем воздухе.',
+        'en': 'Spend 10 minutes on a pleasant walk outside.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше эмоциональное здоровье — это ценный ресурс. Продолжайте заботиться о себе!',
+        'en': 'Your emotional health is a valuable resource. Keep taking care of yourself!',
+      },
+    ),
+
+    'profile_mild': TestProfile(
+      id: 'profile_mild',
+      name: {
+        'ru': 'Лёгкое напряжение',
+        'en': 'Mild Tension',
+      },
+      description: {
+        'ru': 'У вас присутствуют лёгкие признаки тревоги. Это нормальная реакция на жизненные ситуации, но стоит обратить внимание на техники самопомощи.',
+        'en': 'You have mild signs of anxiety. This is a normal response to life situations, but it\'s worth paying attention to self-help techniques.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши баллы указывают на умеренную выраженность некоторых симптомов тревоги.',
+        'en': 'Your scores indicate moderate severity of some anxiety symptoms.',
+      },
+      strengths: {
+        'ru': [
+          'Осознаёте своё состояние',
+          'Способны адаптироваться к стрессу',
+          'Сохраняете функциональность',
+        ],
+        'en': [
+          'Aware of your state',
+          'Able to adapt to stress',
+          'Maintain functionality',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Склонность к беспокойству',
+          'Периодическое физическое напряжение',
+        ],
+        'en': [
+          'Tendency to worry',
+          'Periodic physical tension',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Освойте технику глубокого дыхания',
+          'Практикуйте регулярные перерывы в работе',
+          'Ограничьте употребление кофеина',
+          'Попробуйте медитацию или йогу',
+        ],
+        'en': [
+          'Learn deep breathing techniques',
+          'Practice regular work breaks',
+          'Limit caffeine intake',
+          'Try meditation or yoga',
+        ],
+      },
+      tryToday: {
+        'ru': 'Попробуйте дыхательное упражнение 4-7-8: вдох на 4 счёта, задержка на 7, выдох на 8.',
+        'en': 'Try the 4-7-8 breathing exercise: inhale for 4 counts, hold for 7, exhale for 8.',
+      },
+      inspiringConclusion: {
+        'ru': 'Небольшая тревога — это сигнал, что пора позаботиться о себе. Вы на правильном пути!',
+        'en': 'A little anxiety is a signal that it\'s time to take care of yourself. You\'re on the right track!',
+      },
+    ),
+
+    'profile_somatic_focus': TestProfile(
+      id: 'profile_somatic_focus',
+      name: {
+        'ru': 'Телесная тревога',
+        'en': 'Somatic Anxiety',
+      },
+      description: {
+        'ru': 'Тревога проявляется преимущественно через телесные ощущения: напряжение мышц, учащённое сердцебиение, дискомфорт в теле.',
+        'en': 'Anxiety manifests primarily through physical sensations: muscle tension, rapid heartbeat, body discomfort.',
+      },
+      whyThisProfile: {
+        'ru': 'Соматический компонент тревоги выражен наиболее сильно по сравнению с другими.',
+        'en': 'The somatic component of anxiety is most pronounced compared to others.',
+      },
+      strengths: {
+        'ru': [
+          'Хорошая связь с телом',
+          'Замечаете физические сигналы',
+          'Можете использовать тело для снятия стресса',
+        ],
+        'en': [
+          'Good body connection',
+          'Notice physical signals',
+          'Can use body for stress relief',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Мышечное напряжение',
+          'Физический дискомфорт при стрессе',
+          'Возможные проблемы со сном',
+        ],
+        'en': [
+          'Muscle tension',
+          'Physical discomfort during stress',
+          'Possible sleep issues',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте прогрессивную мышечную релаксацию',
+          'Занимайтесь регулярной физической активностью',
+          'Попробуйте массаж или самомассаж',
+          'Обратите внимание на позу и осанку',
+        ],
+        'en': [
+          'Practice progressive muscle relaxation',
+          'Engage in regular physical activity',
+          'Try massage or self-massage',
+          'Pay attention to posture',
+        ],
+      },
+      tryToday: {
+        'ru': 'Напрягите и расслабьте мышцы плеч 5 раз, задерживая напряжение на 5 секунд.',
+        'en': 'Tense and relax shoulder muscles 5 times, holding tension for 5 seconds.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше тело — ваш союзник. Научившись расслаблять его, вы обретёте спокойствие.',
+        'en': 'Your body is your ally. By learning to relax it, you will find peace.',
+      },
+    ),
+
+    'profile_cognitive_focus': TestProfile(
+      id: 'profile_cognitive_focus',
+      name: {
+        'ru': 'Когнитивная тревога',
+        'en': 'Cognitive Anxiety',
+      },
+      description: {
+        'ru': 'Тревога выражается через навязчивые мысли, беспокойство о будущем, трудности с концентрацией.',
+        'en': 'Anxiety is expressed through intrusive thoughts, worry about the future, difficulty concentrating.',
+      },
+      whyThisProfile: {
+        'ru': 'Когнитивный компонент тревоги выражен наиболее сильно — преобладают тревожные мысли.',
+        'en': 'The cognitive component of anxiety is most pronounced — anxious thoughts predominate.',
+      },
+      strengths: {
+        'ru': [
+          'Аналитический склад ума',
+          'Способность к планированию',
+          'Предвидение возможных проблем',
+        ],
+        'en': [
+          'Analytical mindset',
+          'Planning ability',
+          'Anticipating potential problems',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Склонность к руминации',
+          'Катастрофизация',
+          'Трудности с остановкой мыслей',
+        ],
+        'en': [
+          'Tendency to rumination',
+          'Catastrophizing',
+          'Difficulty stopping thoughts',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте осознанность (mindfulness)',
+          'Ведите дневник тревожных мыслей',
+          'Используйте технику "СТОП" для прерывания руминации',
+          'Планируйте "время для беспокойства" — 15 минут в день',
+        ],
+        'en': [
+          'Practice mindfulness',
+          'Keep an anxiety thought journal',
+          'Use the "STOP" technique to interrupt rumination',
+          'Schedule "worry time" — 15 minutes a day',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишите 3 тревожных мысли и спросите себя: "Насколько это вероятно?"',
+        'en': 'Write down 3 anxious thoughts and ask yourself: "How likely is this?"',
+      },
+      inspiringConclusion: {
+        'ru': 'Мысли — это не факты. Вы можете научиться наблюдать их, не растворяясь в них.',
+        'en': 'Thoughts are not facts. You can learn to observe them without getting lost in them.',
+      },
+    ),
+
+    'profile_affective_focus': TestProfile(
+      id: 'profile_affective_focus',
+      name: {
+        'ru': 'Эмоциональная тревога',
+        'en': 'Affective Anxiety',
+      },
+      description: {
+        'ru': 'Тревога проявляется через интенсивные эмоции: страх, беспокойство, раздражительность, эмоциональную нестабильность.',
+        'en': 'Anxiety manifests through intense emotions: fear, worry, irritability, emotional instability.',
+      },
+      whyThisProfile: {
+        'ru': 'Аффективный компонент тревоги выражен наиболее сильно — преобладает эмоциональное напряжение.',
+        'en': 'The affective component of anxiety is most pronounced — emotional tension predominates.',
+      },
+      strengths: {
+        'ru': [
+          'Эмоциональная чувствительность',
+          'Эмпатия к другим',
+          'Глубина переживаний',
+        ],
+        'en': [
+          'Emotional sensitivity',
+          'Empathy for others',
+          'Depth of experience',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Эмоциональная перегрузка',
+          'Раздражительность',
+          'Чувство подавленности',
+        ],
+        'en': [
+          'Emotional overload',
+          'Irritability',
+          'Feeling overwhelmed',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Называйте свои эмоции вслух',
+          'Практикуйте самосострадание',
+          'Создайте "эмоциональный термометр"',
+          'Найдите творческий выход для эмоций',
+        ],
+        'en': [
+          'Name your emotions out loud',
+          'Practice self-compassion',
+          'Create an "emotional thermometer"',
+          'Find creative outlet for emotions',
+        ],
+      },
+      tryToday: {
+        'ru': 'Положите руку на сердце и скажите себе: "Это трудный момент, но я справлюсь".',
+        'en': 'Place your hand on your heart and say: "This is a difficult moment, but I will cope."',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваши эмоции — это компас, а не приговор. Они помогают понять, что для вас важно.',
+        'en': 'Your emotions are a compass, not a sentence. They help understand what matters to you.',
+      },
+    ),
+
+    'profile_behavioral_focus': TestProfile(
+      id: 'profile_behavioral_focus',
+      name: {
+        'ru': 'Поведенческая тревога',
+        'en': 'Behavioral Anxiety',
+      },
+      description: {
+        'ru': 'Тревога проявляется через избегающее поведение, нарушения сна, трудности с расслаблением.',
+        'en': 'Anxiety manifests through avoidant behavior, sleep disturbances, difficulty relaxing.',
+      },
+      whyThisProfile: {
+        'ru': 'Поведенческий компонент тревоги выражен наиболее сильно — преобладает избегание и двигательное беспокойство.',
+        'en': 'The behavioral component of anxiety is most pronounced — avoidance and motor restlessness predominate.',
+      },
+      strengths: {
+        'ru': [
+          'Осторожность',
+          'Способность замечать опасность',
+          'Энергичность',
+        ],
+        'en': [
+          'Caution',
+          'Ability to notice danger',
+          'Energy',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Избегание важных ситуаций',
+          'Проблемы со сном',
+          'Трудности с отдыхом',
+        ],
+        'en': [
+          'Avoiding important situations',
+          'Sleep problems',
+          'Difficulty resting',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Составьте список избегаемых ситуаций',
+          'Практикуйте постепенное приближение к страхам',
+          'Установите чёткий режим сна',
+          'Создайте ритуал расслабления перед сном',
+        ],
+        'en': [
+          'Make a list of avoided situations',
+          'Practice gradual exposure to fears',
+          'Establish a clear sleep schedule',
+          'Create a relaxation ritual before bed',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сделайте одно маленькое действие, которое обычно избегаете.',
+        'en': 'Do one small thing you usually avoid.',
+      },
+      inspiringConclusion: {
+        'ru': 'Каждый шаг навстречу страху делает вас сильнее. Вы способны на больше, чем думаете!',
+        'en': 'Every step towards fear makes you stronger. You are capable of more than you think!',
+      },
+    ),
+
+    'profile_moderate': TestProfile(
+      id: 'profile_moderate',
+      name: {
+        'ru': 'Умеренная тревога',
+        'en': 'Moderate Anxiety',
+      },
+      description: {
+        'ru': 'Тревога проявляется равномерно по всем компонентам и требует внимания. Рекомендуется освоить комплексные методы саморегуляции.',
+        'en': 'Anxiety manifests evenly across all components and requires attention. It is recommended to learn comprehensive self-regulation methods.',
+      },
+      whyThisProfile: {
+        'ru': 'Все компоненты тревоги выражены умеренно без явного преобладания одного из них.',
+        'en': 'All anxiety components are moderately expressed without a clear predominance of one.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание проблемы',
+          'Готовность к изменениям',
+          'Сохранение функционирования',
+        ],
+        'en': [
+          'Problem awareness',
+          'Readiness for change',
+          'Maintaining functioning',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Комплексное проявление тревоги',
+          'Влияние на качество жизни',
+          'Риск усиления симптомов',
+        ],
+        'en': [
+          'Complex anxiety manifestation',
+          'Impact on quality of life',
+          'Risk of symptom escalation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Начните вести дневник тревоги',
+          'Освойте несколько техник релаксации',
+          'Рассмотрите консультацию со специалистом',
+          'Создайте поддерживающее окружение',
+        ],
+        'en': [
+          'Start keeping an anxiety journal',
+          'Learn several relaxation techniques',
+          'Consider consulting a specialist',
+          'Create a supportive environment',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одну технику релаксации и практикуйте её 5 минут.',
+        'en': 'Choose one relaxation technique and practice it for 5 minutes.',
+      },
+      inspiringConclusion: {
+        'ru': 'Признание тревоги — первый шаг к её преодолению. Вы уже на пути к переменам!',
+        'en': 'Acknowledging anxiety is the first step to overcoming it. You are already on the path to change!',
+      },
+    ),
+
+    'profile_severe': TestProfile(
+      id: 'profile_severe',
+      name: {
+        'ru': 'Выраженная тревога',
+        'en': 'Severe Anxiety',
+      },
+      description: {
+        'ru': 'Уровень тревоги значительно повышен. Настоятельно рекомендуется обратиться к специалисту (психологу, психотерапевту) для получения профессиональной помощи.',
+        'en': 'Anxiety level is significantly elevated. It is strongly recommended to consult a specialist (psychologist, psychotherapist) for professional help.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши баллы указывают на выраженные симптомы тревоги, которые могут влиять на повседневную жизнь.',
+        'en': 'Your scores indicate pronounced anxiety symptoms that may affect daily life.',
+      },
+      strengths: {
+        'ru': [
+          'Мужество обратиться к проблеме',
+          'Способность пройти тест',
+          'Готовность к пониманию себя',
+        ],
+        'en': [
+          'Courage to address the problem',
+          'Ability to complete the test',
+          'Willingness to understand yourself',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Интенсивные симптомы тревоги',
+          'Влияние на все сферы жизни',
+          'Необходимость профессиональной поддержки',
+        ],
+        'en': [
+          'Intense anxiety symptoms',
+          'Impact on all areas of life',
+          'Need for professional support',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Обратитесь к психологу или психотерапевту',
+          'Расскажите близким о своём состоянии',
+          'Избегайте алкоголя и стимуляторов',
+          'Практикуйте базовые техники дыхания ежедневно',
+        ],
+        'en': [
+          'Consult a psychologist or psychotherapist',
+          'Tell loved ones about your condition',
+          'Avoid alcohol and stimulants',
+          'Practice basic breathing techniques daily',
+        ],
+      },
+      tryToday: {
+        'ru': 'Найдите контакты психолога в вашем городе или онлайн.',
+        'en': 'Find a psychologist\'s contacts in your city or online.',
+      },
+      inspiringConclusion: {
+        'ru': 'Просить о помощи — это признак силы, а не слабости. Вы заслуживаете поддержки и можете чувствовать себя лучше.',
+        'en': 'Asking for help is a sign of strength, not weakness. You deserve support and can feel better.',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': 'Сбалансированное состояние',
+        'en': 'Balanced State',
+      },
+      description: {
+        'ru': 'Недостаточно данных для определения профиля. Пожалуйста, убедитесь, что вы ответили на все вопросы.',
+        'en': 'Insufficient data to determine profile. Please make sure you answered all questions.',
+      },
+      whyThisProfile: {
+        'ru': 'Результаты теста не позволяют определить конкретный профиль.',
+        'en': 'Test results do not allow determining a specific profile.',
+      },
+      strengths: {
+        'ru': ['Прохождение теста'],
+        'en': ['Completing the test'],
+      },
+      vulnerabilities: {
+        'ru': ['Требуется повторное прохождение'],
+        'en': ['Re-testing required'],
+      },
+      recommendations: {
+        'ru': ['Пройдите тест повторно, отвечая на все вопросы'],
+        'en': ['Retake the test, answering all questions'],
+      },
+      tryToday: {
+        'ru': 'Пройдите тест ещё раз.',
+        'en': 'Take the test again.',
+      },
+      inspiringConclusion: {
+        'ru': 'Самопознание — важный путь к благополучию.',
+        'en': 'Self-knowledge is an important path to well-being.',
+      },
+    ),
+  };
 }

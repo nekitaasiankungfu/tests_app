@@ -23,6 +23,7 @@ import 'tests/romantic_potential_test.dart';
 import 'tests/cognitive_ability_test.dart';
 import 'tests/relationship_compatibility_test.dart';
 import 'tests/friendship_psychology_test.dart';
+import 'tests/adhd_attention_profile_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -81,6 +82,7 @@ class TestRegistry {
     DepressionSymptomsInventoryTest(), // Depression assessment
     WellbeingHappinessInventoryTest(), // PERMA wellbeing assessment
     SelfConfidenceMultiscaleTest(), // Self-confidence assessment
+    ADHDAttentionProfileTest(), // ADHD attention and self-regulation profile
 
     // Quick assessments
     StressTest(),

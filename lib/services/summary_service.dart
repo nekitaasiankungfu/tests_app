@@ -25,6 +25,7 @@ import '../config/summary/question_weights/romantic_potential_weights.dart';
 import '../config/summary/question_weights/cognitive_ability_weights.dart';
 import '../config/summary/question_weights/relationship_compatibility_weights.dart';
 import '../config/summary/question_weights/friendship_psychology_weights.dart';
+import '../config/summary/question_weights/adhd_attention_profile_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -147,6 +148,7 @@ class SummaryService {
       ...CognitiveAbilityWeights.weights,
       ...RelationshipCompatibilityWeights.weights,
       ...FriendshipPsychologyWeights.weights,
+      ...ADHDAttentionProfileWeights.weights,
     };
 
     // 8 personality type scales
@@ -330,6 +332,7 @@ class SummaryService {
       'color_psychology_v1': {'ru': 'Психология цвета', 'en': 'Color Psychology'},
       'wellbeing_happiness_inventory_v1': {'ru': 'Индекс субъективного благополучия', 'en': 'Wellbeing Happiness Inventory'},
       'digital_career_fit_v1': {'ru': 'Какая цифровая профессия вам подходит?', 'en': 'Digital Career Fit'},
+      'adhd_attention_profile_v2': {'ru': 'Профиль внимания СДВГ', 'en': 'ADHD Attention Profile'},
     };
 
     return testNames[testId]?[languageCode] ?? testId;
@@ -546,6 +549,7 @@ class SummaryService {
       ...CognitiveAbilityWeights.weights,
       ...RelationshipCompatibilityWeights.weights,
       ...FriendshipPsychologyWeights.weights,
+      ...ADHDAttentionProfileWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

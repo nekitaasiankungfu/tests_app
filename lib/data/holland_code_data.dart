@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for Holland Code Career Test
 /// Legacy Dart implementation (no JSON dependency)
@@ -1005,4 +1006,895 @@ class HollandCodeData {
       },
     };
   }
+
+  /// Определить профиль на основе процентов по шкалам Holland Code (RIASEC)
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_balanced';
+
+    final r = percentages['realistic'] ?? 0;
+    final i = percentages['investigative'] ?? 0;
+    final a = percentages['artistic'] ?? 0;
+    final s = percentages['social'] ?? 0;
+    final e = percentages['enterprising'] ?? 0;
+    final c = percentages['conventional'] ?? 0;
+
+    // Сортируем по убыванию
+    final scores = {'R': r, 'I': i, 'A': a, 'S': s, 'E': e, 'C': c};
+    final sorted = scores.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
+    final primary = sorted[0].key;
+    final secondary = sorted[1].key;
+    final primaryScore = sorted[0].value;
+    final secondaryScore = sorted[1].value;
+
+    // Если все показатели близки — balanced
+    final range = sorted[0].value - sorted[5].value;
+    if (range < 20) {
+      return 'profile_balanced';
+    }
+
+    // Если один явно доминирует
+    if (primaryScore - secondaryScore > 15) {
+      switch (primary) {
+        case 'R':
+          return 'profile_realistic';
+        case 'I':
+          return 'profile_investigative';
+        case 'A':
+          return 'profile_artistic';
+        case 'S':
+          return 'profile_social';
+        case 'E':
+          return 'profile_enterprising';
+        case 'C':
+          return 'profile_conventional';
+      }
+    }
+
+    // Комбинированные профили (топ-2)
+    final combo = '$primary$secondary';
+    switch (combo) {
+      case 'RI':
+      case 'IR':
+        return 'profile_ri_technical';
+      case 'IA':
+      case 'AI':
+        return 'profile_ia_creative_research';
+      case 'AS':
+      case 'SA':
+        return 'profile_as_helping_arts';
+      case 'SE':
+      case 'ES':
+        return 'profile_se_social_leader';
+      case 'EC':
+      case 'CE':
+        return 'profile_ec_business';
+      case 'RC':
+      case 'CR':
+        return 'profile_rc_technical_admin';
+      default:
+        // Возвращаем профиль по первому типу
+        switch (primary) {
+          case 'R':
+            return 'profile_realistic';
+          case 'I':
+            return 'profile_investigative';
+          case 'A':
+            return 'profile_artistic';
+          case 'S':
+            return 'profile_social';
+          case 'E':
+            return 'profile_enterprising';
+          case 'C':
+            return 'profile_conventional';
+          default:
+            return 'profile_balanced';
+        }
+    }
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  /// Все доступные профили Holland Code
+  static const Map<String, TestProfile> _profiles = {
+    'profile_realistic': TestProfile(
+      id: 'profile_realistic',
+      name: {
+        'ru': 'Реалист (R)',
+        'en': 'Realistic (R)',
+      },
+      description: {
+        'ru': 'Вы практичный человек, который любит работать руками и с механизмами. Вам нравится физическая активность и конкретные результаты.',
+        'en': 'You are a practical person who likes to work with hands and machines. You enjoy physical activity and tangible results.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Реалистичного типа значительно выше других в модели RIASEC.',
+        'en': 'Your Realistic type score is significantly higher than others in the RIASEC model.',
+      },
+      strengths: {
+        'ru': [
+          'Практические навыки',
+          'Работа с инструментами и механизмами',
+          'Физическая выносливость',
+          'Решение конкретных проблем',
+          'Техническое мышление',
+        ],
+        'en': [
+          'Practical skills',
+          'Working with tools and machines',
+          'Physical endurance',
+          'Solving concrete problems',
+          'Technical thinking',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Могут быть трудности с абстрактным мышлением',
+          'Дискомфорт в социальных ситуациях',
+          'Предпочтение действий разговорам',
+        ],
+        'en': [
+          'May have difficulties with abstract thinking',
+          'Discomfort in social situations',
+          'Preference for action over talk',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: инженер, механик, электрик, строитель',
+          'Развивайте навыки работы с технологиями',
+          'Ищите работу с конкретными, измеримыми результатами',
+          'Обучайтесь новым техническим навыкам',
+        ],
+        'en': [
+          'Consider careers: engineer, mechanic, electrician, builder',
+          'Develop technology skills',
+          'Seek work with concrete, measurable results',
+          'Learn new technical skills',
+        ],
+      },
+      tryToday: {
+        'ru': 'Изучите вакансии в технических специальностях, которые вас интересуют.',
+        'en': 'Explore job openings in technical specialties that interest you.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваши практические навыки создают реальные вещи! Мир нуждается в людях, которые умеют делать.',
+        'en': 'Your practical skills create real things! The world needs people who can do.',
+      },
+    ),
+
+    'profile_investigative': TestProfile(
+      id: 'profile_investigative',
+      name: {
+        'ru': 'Исследователь (I)',
+        'en': 'Investigative (I)',
+      },
+      description: {
+        'ru': 'Вы любознательный аналитик, который стремится понять, как устроен мир. Исследования и анализ данных — ваша стихия.',
+        'en': 'You are a curious analyst who seeks to understand how the world works. Research and data analysis are your forte.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Исследовательского типа значительно выше других в модели RIASEC.',
+        'en': 'Your Investigative type score is significantly higher than others in the RIASEC model.',
+      },
+      strengths: {
+        'ru': [
+          'Аналитическое мышление',
+          'Научный подход',
+          'Интеллектуальная любознательность',
+          'Способность решать сложные задачи',
+          'Независимость мышления',
+        ],
+        'en': [
+          'Analytical thinking',
+          'Scientific approach',
+          'Intellectual curiosity',
+          'Ability to solve complex problems',
+          'Independent thinking',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно работать в команде',
+          'Иногда слишком погружён в детали',
+          'Может откладывать действия ради анализа',
+        ],
+        'en': [
+          'May find it difficult to work in teams',
+          'Sometimes too focused on details',
+          'May delay action for analysis',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: учёный, аналитик, программист, врач',
+          'Продолжайте образование в интересующей области',
+          'Ищите работу с интеллектуальными вызовами',
+          'Развивайте навыки коммуникации результатов',
+        ],
+        'en': [
+          'Consider careers: scientist, analyst, programmer, doctor',
+          'Continue education in your area of interest',
+          'Seek work with intellectual challenges',
+          'Develop skills in communicating results',
+        ],
+      },
+      tryToday: {
+        'ru': 'Начните небольшой исследовательский проект в интересующей вас области.',
+        'en': 'Start a small research project in an area that interests you.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше стремление к знаниям двигает науку и прогресс! Продолжайте исследовать.',
+        'en': 'Your quest for knowledge drives science and progress! Keep exploring.',
+      },
+    ),
+
+    'profile_artistic': TestProfile(
+      id: 'profile_artistic',
+      name: {
+        'ru': 'Художник (A)',
+        'en': 'Artistic (A)',
+      },
+      description: {
+        'ru': 'Вы творческая личность, которая ценит самовыражение и оригинальность. Искусство и креативность — ваш язык.',
+        'en': 'You are a creative person who values self-expression and originality. Art and creativity are your language.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Артистичного типа значительно выше других в модели RIASEC.',
+        'en': 'Your Artistic type score is significantly higher than others in the RIASEC model.',
+      },
+      strengths: {
+        'ru': [
+          'Креативность и воображение',
+          'Эстетическое чутьё',
+          'Оригинальность мышления',
+          'Способность к самовыражению',
+          'Эмоциональная глубина',
+        ],
+        'en': [
+          'Creativity and imagination',
+          'Aesthetic sense',
+          'Originality of thought',
+          'Ability for self-expression',
+          'Emotional depth',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно с рутинной работой',
+          'Иногда трудности со структурой',
+          'Чувствительность к критике',
+        ],
+        'en': [
+          'May struggle with routine work',
+          'Sometimes difficulties with structure',
+          'Sensitivity to criticism',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: дизайнер, писатель, музыкант, художник',
+          'Развивайте свой творческий стиль',
+          'Ищите работу с творческой свободой',
+          'Создавайте портфолио своих работ',
+        ],
+        'en': [
+          'Consider careers: designer, writer, musician, artist',
+          'Develop your creative style',
+          'Seek work with creative freedom',
+          'Build a portfolio of your work',
+        ],
+      },
+      tryToday: {
+        'ru': 'Посвятите час творческому проекту — без критики, только создание.',
+        'en': 'Dedicate an hour to a creative project — no criticism, just creation.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша креативность делает мир красивее и интереснее! Творите!',
+        'en': 'Your creativity makes the world more beautiful and interesting! Create!',
+      },
+    ),
+
+    'profile_social': TestProfile(
+      id: 'profile_social',
+      name: {
+        'ru': 'Социальный (S)',
+        'en': 'Social (S)',
+      },
+      description: {
+        'ru': 'Вы человек, ориентированный на людей. Помощь другим и социальное взаимодействие приносят вам удовлетворение.',
+        'en': 'You are a people-oriented person. Helping others and social interaction bring you satisfaction.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Социального типа значительно выше других в модели RIASEC.',
+        'en': 'Your Social type score is significantly higher than others in the RIASEC model.',
+      },
+      strengths: {
+        'ru': [
+          'Эмпатия и понимание людей',
+          'Коммуникативные навыки',
+          'Желание помогать',
+          'Умение работать в команде',
+          'Создание позитивной атмосферы',
+        ],
+        'en': [
+          'Empathy and understanding people',
+          'Communication skills',
+          'Desire to help',
+          'Ability to work in teams',
+          'Creating positive atmosphere',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно говорить "нет"',
+          'Риск эмоционального выгорания',
+          'Иногда пренебрежение собственными потребностями',
+        ],
+        'en': [
+          'May find it difficult to say "no"',
+          'Risk of emotional burnout',
+          'Sometimes neglecting own needs',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: учитель, психолог, врач, социальный работник',
+          'Развивайте навыки самозаботы',
+          'Устанавливайте здоровые границы',
+          'Ищите работу с командной атмосферой',
+        ],
+        'en': [
+          'Consider careers: teacher, psychologist, doctor, social worker',
+          'Develop self-care skills',
+          'Establish healthy boundaries',
+          'Seek work with team atmosphere',
+        ],
+      },
+      tryToday: {
+        'ru': 'Помогите кому-то, но также выделите время для себя.',
+        'en': 'Help someone, but also set aside time for yourself.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша забота о людях делает мир добрее! Не забывайте заботиться и о себе.',
+        'en': 'Your care for people makes the world kinder! Don\'t forget to take care of yourself too.',
+      },
+    ),
+
+    'profile_enterprising': TestProfile(
+      id: 'profile_enterprising',
+      name: {
+        'ru': 'Предприниматель (E)',
+        'en': 'Enterprising (E)',
+      },
+      description: {
+        'ru': 'Вы лидер и организатор. Управление, влияние и достижение целей — ваши главные мотиваторы.',
+        'en': 'You are a leader and organizer. Management, influence, and achieving goals are your main motivators.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Предпринимательского типа значительно выше других в модели RIASEC.',
+        'en': 'Your Enterprising type score is significantly higher than others in the RIASEC model.',
+      },
+      strengths: {
+        'ru': [
+          'Лидерские качества',
+          'Убедительность и влияние',
+          'Амбициозность',
+          'Способность принимать решения',
+          'Энергичность',
+        ],
+        'en': [
+          'Leadership qualities',
+          'Persuasiveness and influence',
+          'Ambition',
+          'Decision-making ability',
+          'Energy',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть нетерпелив',
+          'Риск слишком высоких амбиций',
+          'Иногда пренебрежение деталями',
+        ],
+        'en': [
+          'May be impatient',
+          'Risk of too high ambitions',
+          'Sometimes neglecting details',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: менеджер, предприниматель, продавец, юрист',
+          'Развивайте навыки делегирования',
+          'Окружайте себя людьми с дополняющими навыками',
+          'Учитесь слушать и учитывать мнение других',
+        ],
+        'en': [
+          'Consider careers: manager, entrepreneur, salesperson, lawyer',
+          'Develop delegation skills',
+          'Surround yourself with people with complementary skills',
+          'Learn to listen and consider others\' opinions',
+        ],
+      },
+      tryToday: {
+        'ru': 'Определите одну бизнес-идею, которую можно развить.',
+        'en': 'Identify one business idea that can be developed.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше лидерство создаёт возможности! Ведите с мудростью и эмпатией.',
+        'en': 'Your leadership creates opportunities! Lead with wisdom and empathy.',
+      },
+    ),
+
+    'profile_conventional': TestProfile(
+      id: 'profile_conventional',
+      name: {
+        'ru': 'Конвенционал (C)',
+        'en': 'Conventional (C)',
+      },
+      description: {
+        'ru': 'Вы цените порядок, точность и организованность. Структурированная работа и следование процедурам — ваш стиль.',
+        'en': 'You value order, accuracy, and organization. Structured work and following procedures are your style.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш показатель Конвенционального типа значительно выше других в модели RIASEC.',
+        'en': 'Your Conventional type score is significantly higher than others in the RIASEC model.',
+      },
+      strengths: {
+        'ru': [
+          'Организованность и точность',
+          'Внимание к деталям',
+          'Надёжность',
+          'Умение работать с данными',
+          'Следование правилам',
+        ],
+        'en': [
+          'Organization and accuracy',
+          'Attention to detail',
+          'Reliability',
+          'Ability to work with data',
+          'Following rules',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно с неопределённостью',
+          'Иногда недостаточная гибкость',
+          'Дискомфорт с быстрыми изменениями',
+        ],
+        'en': [
+          'May struggle with uncertainty',
+          'Sometimes insufficient flexibility',
+          'Discomfort with rapid changes',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: бухгалтер, администратор, банкир, аудитор',
+          'Развивайте навыки работы с программами и системами',
+          'Ищите работу со стабильной средой',
+          'Практикуйте гибкость в новых ситуациях',
+        ],
+        'en': [
+          'Consider careers: accountant, administrator, banker, auditor',
+          'Develop software and systems skills',
+          'Seek work with stable environment',
+          'Practice flexibility in new situations',
+        ],
+      },
+      tryToday: {
+        'ru': 'Организуйте что-то, что давно требовало порядка.',
+        'en': 'Organize something that has long needed order.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша организованность создаёт порядок из хаоса! Это бесценный навык.',
+        'en': 'Your organization creates order from chaos! This is an invaluable skill.',
+      },
+    ),
+
+    'profile_ri_technical': TestProfile(
+      id: 'profile_ri_technical',
+      name: {
+        'ru': 'Технический исследователь (RI)',
+        'en': 'Technical Researcher (RI)',
+      },
+      description: {
+        'ru': 'Вы сочетаете практические навыки с аналитическим мышлением. Инженерия и прикладная наука — ваша сфера.',
+        'en': 'You combine practical skills with analytical thinking. Engineering and applied science are your domain.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Реалистичного и Исследовательского типов.',
+        'en': 'You have high scores in Realistic and Investigative types.',
+      },
+      strengths: {
+        'ru': [
+          'Сочетание теории и практики',
+          'Техническое и аналитическое мышление',
+          'Решение прикладных задач',
+        ],
+        'en': [
+          'Combination of theory and practice',
+          'Technical and analytical thinking',
+          'Solving applied problems',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно с социальными аспектами',
+          'Иногда слишком погружён в технические детали',
+        ],
+        'en': [
+          'May struggle with social aspects',
+          'Sometimes too focused on technical details',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: инженер-исследователь, разработчик, техноло́г',
+          'Участвуйте в R&D проектах',
+        ],
+        'en': [
+          'Consider careers: research engineer, developer, technologist',
+          'Participate in R&D projects',
+        ],
+      },
+      tryToday: {
+        'ru': 'Найдите техническую проблему и предложите исследовательское решение.',
+        'en': 'Find a technical problem and propose a research-based solution.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы создаёте мосты между наукой и практикой! Это редкий и ценный навык.',
+        'en': 'You build bridges between science and practice! This is a rare and valuable skill.',
+      },
+    ),
+
+    'profile_ia_creative_research': TestProfile(
+      id: 'profile_ia_creative_research',
+      name: {
+        'ru': 'Креативный исследователь (IA)',
+        'en': 'Creative Researcher (IA)',
+      },
+      description: {
+        'ru': 'Вы сочетаете аналитический ум с творческим видением. Инновации и нестандартные решения — ваша сила.',
+        'en': 'You combine analytical mind with creative vision. Innovation and unconventional solutions are your strength.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Исследовательского и Артистичного типов.',
+        'en': 'You have high scores in Investigative and Artistic types.',
+      },
+      strengths: {
+        'ru': [
+          'Творческий подход к исследованиям',
+          'Инновационное мышление',
+          'Способность видеть нестандартные решения',
+        ],
+        'en': [
+          'Creative approach to research',
+          'Innovative thinking',
+          'Ability to see unconventional solutions',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно с рутиной',
+          'Иногда слишком много идей',
+        ],
+        'en': [
+          'May struggle with routine',
+          'Sometimes too many ideas',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: UX-исследователь, архитектор, научный писатель',
+          'Ищите инновационные проекты',
+        ],
+        'en': [
+          'Consider careers: UX researcher, architect, science writer',
+          'Seek innovative projects',
+        ],
+      },
+      tryToday: {
+        'ru': 'Примените креативный подход к научной или аналитической задаче.',
+        'en': 'Apply a creative approach to a scientific or analytical task.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше сочетание логики и творчества рождает инновации!',
+        'en': 'Your combination of logic and creativity breeds innovation!',
+      },
+    ),
+
+    'profile_as_helping_arts': TestProfile(
+      id: 'profile_as_helping_arts',
+      name: {
+        'ru': 'Помогающий художник (AS)',
+        'en': 'Helping Artist (AS)',
+      },
+      description: {
+        'ru': 'Вы сочетаете творчество с желанием помогать людям. Арт-терапия и социальное искусство — ваша сфера.',
+        'en': 'You combine creativity with a desire to help people. Art therapy and social art are your domain.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Артистичного и Социального типов.',
+        'en': 'You have high scores in Artistic and Social types.',
+      },
+      strengths: {
+        'ru': [
+          'Использование творчества для помощи',
+          'Эмоциональная глубина',
+          'Способность вдохновлять других',
+        ],
+        'en': [
+          'Using creativity to help',
+          'Emotional depth',
+          'Ability to inspire others',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск эмоционального выгорания',
+          'Может быть сложно с бизнес-аспектами',
+        ],
+        'en': [
+          'Risk of emotional burnout',
+          'May struggle with business aspects',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: арт-терапевт, преподаватель искусств, социальный художник',
+          'Используйте искусство для социального воздействия',
+        ],
+        'en': [
+          'Consider careers: art therapist, arts educator, social artist',
+          'Use art for social impact',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите творческое занятие для кого-то, кому это нужно.',
+        'en': 'Lead a creative session for someone who needs it.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше творчество исцеляет и вдохновляет!',
+        'en': 'Your creativity heals and inspires!',
+      },
+    ),
+
+    'profile_se_social_leader': TestProfile(
+      id: 'profile_se_social_leader',
+      name: {
+        'ru': 'Социальный лидер (SE)',
+        'en': 'Social Leader (SE)',
+      },
+      description: {
+        'ru': 'Вы сочетаете лидерские качества с заботой о людях. Управление с человеческим лицом — ваш стиль.',
+        'en': 'You combine leadership qualities with care for people. Human-centered management is your style.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Социального и Предпринимательского типов.',
+        'en': 'You have high scores in Social and Enterprising types.',
+      },
+      strengths: {
+        'ru': [
+          'Лидерство с эмпатией',
+          'Умение мотивировать команды',
+          'Создание позитивной рабочей культуры',
+        ],
+        'en': [
+          'Leadership with empathy',
+          'Ability to motivate teams',
+          'Creating positive work culture',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сложность с непопулярными решениями',
+          'Баланс между заботой и результатами',
+        ],
+        'en': [
+          'Difficulty with unpopular decisions',
+          'Balance between care and results',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: HR-менеджер, директор школы, руководитель НКО',
+          'Развивайте навыки сложных разговоров',
+        ],
+        'en': [
+          'Consider careers: HR manager, school principal, NGO leader',
+          'Develop difficult conversation skills',
+        ],
+      },
+      tryToday: {
+        'ru': 'Возьмите на себя лидерство в социальном проекте.',
+        'en': 'Take leadership in a social project.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы лидер, который заботится о людях — это редкое сочетание!',
+        'en': 'You are a leader who cares about people — a rare combination!',
+      },
+    ),
+
+    'profile_ec_business': TestProfile(
+      id: 'profile_ec_business',
+      name: {
+        'ru': 'Бизнес-организатор (EC)',
+        'en': 'Business Organizer (EC)',
+      },
+      description: {
+        'ru': 'Вы сочетаете предпринимательство с организованностью. Бизнес-администрирование — ваша сила.',
+        'en': 'You combine entrepreneurship with organization. Business administration is your strength.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Предпринимательского и Конвенционального типов.',
+        'en': 'You have high scores in Enterprising and Conventional types.',
+      },
+      strengths: {
+        'ru': [
+          'Организованное управление',
+          'Внимание к финансам и процессам',
+          'Способность масштабировать',
+        ],
+        'en': [
+          'Organized management',
+          'Attention to finances and processes',
+          'Ability to scale',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть слишком сфокусирован на процессах',
+          'Иногда недостаточно творчества',
+        ],
+        'en': [
+          'May be too focused on processes',
+          'Sometimes insufficient creativity',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: финансовый директор, операционный менеджер, аудитор',
+          'Балансируйте стратегию и исполнение',
+        ],
+        'en': [
+          'Consider careers: CFO, operations manager, auditor',
+          'Balance strategy and execution',
+        ],
+      },
+      tryToday: {
+        'ru': 'Оптимизируйте один бизнес-процесс.',
+        'en': 'Optimize one business process.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы создаёте устойчивые бизнес-системы!',
+        'en': 'You create sustainable business systems!',
+      },
+    ),
+
+    'profile_rc_technical_admin': TestProfile(
+      id: 'profile_rc_technical_admin',
+      name: {
+        'ru': 'Технический администратор (RC)',
+        'en': 'Technical Administrator (RC)',
+      },
+      description: {
+        'ru': 'Вы сочетаете практические навыки с организованностью. Техническое администрирование — ваша сфера.',
+        'en': 'You combine practical skills with organization. Technical administration is your domain.',
+      },
+      whyThisProfile: {
+        'ru': 'У вас высокие показатели Реалистичного и Конвенционального типов.',
+        'en': 'You have high scores in Realistic and Conventional types.',
+      },
+      strengths: {
+        'ru': [
+          'Практичность и организованность',
+          'Умение поддерживать технические системы',
+          'Надёжность',
+        ],
+        'en': [
+          'Practicality and organization',
+          'Ability to maintain technical systems',
+          'Reliability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно с абстрактными задачами',
+          'Иногда сопротивление изменениям',
+        ],
+        'en': [
+          'May struggle with abstract tasks',
+          'Sometimes resistance to change',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите карьеры: системный администратор, техник, логист',
+          'Развивайте навыки новых технологий',
+        ],
+        'en': [
+          'Consider careers: system administrator, technician, logistician',
+          'Develop new technology skills',
+        ],
+      },
+      tryToday: {
+        'ru': 'Настройте и оптимизируйте техническую систему.',
+        'en': 'Set up and optimize a technical system.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы поддерживаете технические системы в работе — это фундамент современного мира!',
+        'en': 'You keep technical systems running — the foundation of the modern world!',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': 'Универсальный профиль',
+        'en': 'Universal Profile',
+      },
+      description: {
+        'ru': 'У вас сбалансированные интересы по всем шести направлениям RIASEC. Вы универсальны и адаптивны.',
+        'en': 'You have balanced interests across all six RIASEC directions. You are versatile and adaptive.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели по всем шести типам Holland Code близки друг к другу.',
+        'en': 'Your scores across all six Holland Code types are close to each other.',
+      },
+      strengths: {
+        'ru': [
+          'Универсальность',
+          'Способность работать в разных областях',
+          'Гибкость карьерного выбора',
+          'Понимание разных профессий',
+        ],
+        'en': [
+          'Versatility',
+          'Ability to work in different fields',
+          'Career choice flexibility',
+          'Understanding different professions',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно определить приоритеты',
+          'Риск "распыления" интересов',
+          'Трудности с выбором специализации',
+        ],
+        'en': [
+          'May find it difficult to set priorities',
+          'Risk of spreading interests too thin',
+          'Difficulties choosing specialization',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Экспериментируйте с разными областями',
+          'Ищите роли, требующие универсальности',
+          'Рассмотрите проектную работу или консалтинг',
+          'Развивайте T-shaped навыки (глубина + ширина)',
+        ],
+        'en': [
+          'Experiment with different fields',
+          'Seek roles requiring versatility',
+          'Consider project work or consulting',
+          'Develop T-shaped skills (depth + breadth)',
+        ],
+      },
+      tryToday: {
+        'ru': 'Попробуйте что-то новое в области, которую ещё не исследовали.',
+        'en': 'Try something new in an area you haven\'t explored yet.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша универсальность — уникальное преимущество в меняющемся мире!',
+        'en': 'Your versatility is a unique advantage in a changing world!',
+      },
+    ),
+  };
 }

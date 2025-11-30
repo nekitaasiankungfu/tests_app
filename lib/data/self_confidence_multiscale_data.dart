@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for Self-Confidence Multiscale Test
 /// Legacy Dart implementation (no JSON dependency)
@@ -914,4 +915,954 @@ class SelfConfidenceMultiscaleData {
       },
     };
   }
+
+  /// Определить профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_balanced';
+
+    // Вычисляем средний процент
+    final avgPercentage =
+        percentages.values.reduce((a, b) => a + b) / percentages.length;
+
+    // Определяем общий уровень уверенности
+    if (avgPercentage >= 80) {
+      return 'profile_high_confidence';
+    } else if (avgPercentage >= 60) {
+      // Проверяем доминирующий фактор
+      final sorted = percentages.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+      final dominant = sorted.first;
+      final range = sorted.first.value - sorted.last.value;
+
+      // Если есть выраженный доминирующий фактор
+      if (range > 20) {
+        switch (dominant.key) {
+          case 'general_self_belief':
+            return 'profile_self_believer';
+          case 'social_assertiveness':
+            return 'profile_social_confident';
+          case 'self_acceptance':
+            return 'profile_self_accepting';
+          case 'initiative_resilience':
+            return 'profile_resilient';
+        }
+      }
+      return 'profile_confident';
+    } else if (avgPercentage >= 40) {
+      // Средний уровень — проверяем слабые места
+      final sorted = percentages.entries.toList()
+        ..sort((a, b) => a.value.compareTo(b.value));
+      final weakest = sorted.first;
+
+      // Если есть выраженная слабость
+      if (weakest.value < 35) {
+        switch (weakest.key) {
+          case 'general_self_belief':
+            return 'profile_doubter';
+          case 'social_assertiveness':
+            return 'profile_shy';
+          case 'self_acceptance':
+            return 'profile_self_critical';
+          case 'initiative_resilience':
+            return 'profile_cautious';
+        }
+      }
+      return 'profile_developing';
+    } else if (avgPercentage >= 20) {
+      return 'profile_low_confidence';
+    } else {
+      return 'profile_struggling';
+    }
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  static const Map<String, TestProfile> _profiles = {
+    // === Высокий уровень уверенности ===
+    'profile_high_confidence': TestProfile(
+      id: 'profile_high_confidence',
+      name: {
+        'ru': '🌟 Уверенный Лидер',
+        'en': '🌟 Confident Leader',
+      },
+      description: {
+        'ru': 'Вы обладаете высоким уровнем уверенности в себе во всех измеряемых областях. Это позволяет вам эффективно действовать и достигать целей.',
+        'en': 'You have a high level of self-confidence in all measured areas. This allows you to act effectively and achieve goals.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали высокие баллы по всем четырём факторам уверенности.',
+        'en': 'Your answers showed high scores across all four confidence factors.',
+      },
+      strengths: {
+        'ru': [
+          'Верите в свои способности',
+          'Уверенно ведёте себя в социальных ситуациях',
+          'Принимаете себя таким, какой вы есть',
+          'Устойчивы к неудачам и готовы действовать',
+          'Вдохновляете других своей уверенностью',
+        ],
+        'en': [
+          'Believe in your abilities',
+          'Confident in social situations',
+          'Accept yourself as you are',
+          'Resilient to failures and ready to act',
+          'Inspire others with your confidence',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск переоценки своих возможностей',
+          'Можете не замечать зоны для роста',
+          'Возможна негибкость при обратной связи',
+        ],
+        'en': [
+          'Risk of overestimating your capabilities',
+          'May overlook areas for growth',
+          'Possible inflexibility when receiving feedback',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Сохраняйте открытость к обратной связи',
+          'Помогайте другим развивать уверенность',
+          'Периодически проводите честную самооценку',
+          'Используйте уверенность для амбициозных целей',
+          'Помните о балансе уверенности и скромности',
+        ],
+        'en': [
+          'Stay open to feedback',
+          'Help others develop confidence',
+          'Periodically conduct honest self-assessment',
+          'Use confidence for ambitious goals',
+          'Remember the balance of confidence and humility',
+        ],
+      },
+      tryToday: {
+        'ru': 'Найдите человека, которому можете помочь поверить в себя, и поддержите его',
+        'en': 'Find someone you can help believe in themselves and support them',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша уверенность — это сила. Используйте её, чтобы достигать целей и помогать другим!',
+        'en': 'Your confidence is a strength. Use it to achieve goals and help others!',
+      },
+    ),
+
+    'profile_confident': TestProfile(
+      id: 'profile_confident',
+      name: {
+        'ru': '💪 Уверенный в себе',
+        'en': '💪 Self-Confident',
+      },
+      description: {
+        'ru': 'Вы обладаете хорошим уровнем уверенности в себе со сбалансированным профилем. Ваша уверенность стабильна и реалистична.',
+        'en': 'You have a good level of self-confidence with a balanced profile. Your confidence is stable and realistic.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали сбалансированно высокие баллы по всем факторам.',
+        'en': 'Your answers showed balanced high scores across all factors.',
+      },
+      strengths: {
+        'ru': [
+          'Сбалансированная уверенность',
+          'Реалистичная самооценка',
+          'Способность к здоровой саморефлексии',
+          'Устойчивость в сложных ситуациях',
+        ],
+        'en': [
+          'Balanced confidence',
+          'Realistic self-assessment',
+          'Ability for healthy self-reflection',
+          'Resilience in difficult situations',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Уверенность может колебаться в стрессе',
+          'Есть пространство для дальнейшего роста',
+        ],
+        'en': [
+          'Confidence may fluctuate under stress',
+          'Room for further growth',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Продолжайте укреплять уверенность через действия',
+          'Отмечайте свои достижения',
+          'Работайте над областями с меньшими баллами',
+          'Поддерживайте привычки, укрепляющие самооценку',
+        ],
+        'en': [
+          'Continue building confidence through action',
+          'Acknowledge your achievements',
+          'Work on areas with lower scores',
+          'Maintain habits that strengthen self-esteem',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишите 5 вещей, которыми вы гордитесь в себе, и перечитайте их вечером',
+        'en': 'Write down 5 things you are proud of about yourself and reread them tonight',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша уверенность — отличная основа. Продолжайте расти!',
+        'en': 'Your confidence is an excellent foundation. Keep growing!',
+      },
+    ),
+
+    // === Профили с доминирующим фактором ===
+    'profile_self_believer': TestProfile(
+      id: 'profile_self_believer',
+      name: {
+        'ru': '🎯 Верящий в себя',
+        'en': '🎯 Self-Believer',
+      },
+      description: {
+        'ru': 'Ваша главная сила — глубокая вера в собственные способности. Вы знаете, что можете справиться с задачами, которые перед собой ставите.',
+        'en': 'Your main strength is deep belief in your own abilities. You know you can handle the tasks you set for yourself.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали особенно высокие баллы по фактору "Общая вера в себя".',
+        'en': 'Your answers showed particularly high scores on the "General Self-Belief" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Сильная вера в свои способности',
+          'Готовность браться за сложные задачи',
+          'Настойчивость в достижении целей',
+          'Внутренний локус контроля',
+        ],
+        'en': [
+          'Strong belief in your abilities',
+          'Willingness to take on difficult tasks',
+          'Persistence in achieving goals',
+          'Internal locus of control',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Социальные ситуации могут вызывать дискомфорт',
+          'Внутренняя вера не всегда видна снаружи',
+        ],
+        'en': [
+          'Social situations may cause discomfort',
+          'Internal belief is not always visible outside',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте навыки социальной уверенности',
+          'Учитесь демонстрировать уверенность внешне',
+          'Используйте веру в себя для новых социальных вызовов',
+        ],
+        'en': [
+          'Develop social assertiveness skills',
+          'Learn to demonstrate confidence externally',
+          'Use self-belief for new social challenges',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выступите с идеей или мнением в группе — дайте другим увидеть вашу уверенность',
+        'en': 'Share an idea or opinion in a group — let others see your confidence',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша вера в себя — мощный двигатель. Позвольте ей сиять!',
+        'en': 'Your self-belief is a powerful engine. Let it shine!',
+      },
+    ),
+
+    'profile_social_confident': TestProfile(
+      id: 'profile_social_confident',
+      name: {
+        'ru': '🗣️ Социально уверенный',
+        'en': '🗣️ Socially Confident',
+      },
+      description: {
+        'ru': 'Ваша главная сила — уверенность в социальных ситуациях. Вы легко общаетесь, отстаиваете своё мнение и комфортно чувствуете себя с людьми.',
+        'en': 'Your main strength is confidence in social situations. You communicate easily, defend your opinions, and feel comfortable with people.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали особенно высокие баллы по фактору "Социальная уверенность".',
+        'en': 'Your answers showed particularly high scores on the "Social Assertiveness" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Легко устанавливаете контакт с людьми',
+          'Уверенно отстаиваете своё мнение',
+          'Комфортно себя чувствуете в группах',
+          'Эффективны в переговорах и презентациях',
+        ],
+        'en': [
+          'Easily connect with people',
+          'Confidently defend your opinions',
+          'Feel comfortable in groups',
+          'Effective in negotiations and presentations',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Внутренняя самооценка может быть нестабильной',
+          'Социальная уверенность может маскировать сомнения',
+        ],
+        'en': [
+          'Internal self-esteem may be unstable',
+          'Social confidence may mask doubts',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Укрепляйте внутреннюю веру в себя',
+          'Работайте над самопринятием',
+          'Используйте социальные навыки для роста других областей',
+        ],
+        'en': [
+          'Strengthen your internal self-belief',
+          'Work on self-acceptance',
+          'Use social skills to grow other areas',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите 10 минут в тишине, отмечая свои внутренние качества, а не только социальные успехи',
+        'en': 'Spend 10 minutes in silence noting your internal qualities, not just social successes',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваши социальные навыки открывают двери. Укрепляйте и внутренний фундамент!',
+        'en': 'Your social skills open doors. Strengthen your inner foundation too!',
+      },
+    ),
+
+    'profile_self_accepting': TestProfile(
+      id: 'profile_self_accepting',
+      name: {
+        'ru': '🤗 Принимающий себя',
+        'en': '🤗 Self-Accepting',
+      },
+      description: {
+        'ru': 'Ваша главная сила — здоровое самопринятие. Вы относитесь к себе с пониманием, принимаете свои недостатки и не казните себя за ошибки.',
+        'en': 'Your main strength is healthy self-acceptance. You treat yourself with understanding, accept your flaws, and don\'t punish yourself for mistakes.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали особенно высокие баллы по фактору "Самопринятие".',
+        'en': 'Your answers showed particularly high scores on the "Self-Acceptance" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Здоровое отношение к своим недостаткам',
+          'Способность прощать себя за ошибки',
+          'Эмоциональная стабильность',
+          'Реалистичная самооценка',
+        ],
+        'en': [
+          'Healthy attitude toward your flaws',
+          'Ability to forgive yourself for mistakes',
+          'Emotional stability',
+          'Realistic self-assessment',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Принятие может снижать мотивацию к изменениям',
+          'Социальная уверенность может отставать',
+        ],
+        'en': [
+          'Acceptance may reduce motivation for change',
+          'Social confidence may lag behind',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Сочетайте принятие с ростом',
+          'Развивайте активную веру в свои способности',
+          'Используйте самопринятие как основу для смелых действий',
+        ],
+        'en': [
+          'Combine acceptance with growth',
+          'Develop active belief in your abilities',
+          'Use self-acceptance as a foundation for bold actions',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поставьте себе небольшой вызов в области, где чувствуете неуверенность',
+        'en': 'Set a small challenge for yourself in an area where you feel uncertain',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше самопринятие — редкий дар. Оно позволяет расти без самобичевания!',
+        'en': 'Your self-acceptance is a rare gift. It allows growth without self-punishment!',
+      },
+    ),
+
+    'profile_resilient': TestProfile(
+      id: 'profile_resilient',
+      name: {
+        'ru': '🔥 Устойчивый',
+        'en': '🔥 Resilient',
+      },
+      description: {
+        'ru': 'Ваша главная сила — инициативность и устойчивость к неудачам. Вы не боитесь пробовать новое и быстро восстанавливаетесь после неудач.',
+        'en': 'Your main strength is initiative and resilience to failure. You\'re not afraid to try new things and recover quickly from setbacks.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали особенно высокие баллы по фактору "Инициативность и устойчивость".',
+        'en': 'Your answers showed particularly high scores on the "Initiative and Resilience" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Готовность пробовать новое',
+          'Быстрое восстановление после неудач',
+          'Восприятие ошибок как обучения',
+          'Действие несмотря на страх',
+        ],
+        'en': [
+          'Willingness to try new things',
+          'Quick recovery from failures',
+          'Perceiving mistakes as learning',
+          'Action despite fear',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может недоставать глубинной веры в себя',
+          'Активность может маскировать неуверенность',
+        ],
+        'en': [
+          'May lack deep self-belief',
+          'Activity may mask insecurity',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Укрепляйте веру в себя, а не только действия',
+          'Отмечайте успехи, чтобы строить уверенность',
+          'Работайте над принятием себя в моменты покоя',
+        ],
+        'en': [
+          'Strengthen self-belief, not just action',
+          'Acknowledge successes to build confidence',
+          'Work on self-acceptance in moments of rest',
+        ],
+      },
+      tryToday: {
+        'ru': 'После активного дня проведите вечер в размышлениях о том, кто вы есть, а не только что вы делаете',
+        'en': 'After an active day, spend the evening reflecting on who you are, not just what you do',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша устойчивость — это суперсила. Она позволяет идти вперёд несмотря ни на что!',
+        'en': 'Your resilience is a superpower. It allows you to move forward no matter what!',
+      },
+    ),
+
+    // === Профили со слабыми местами ===
+    'profile_doubter': TestProfile(
+      id: 'profile_doubter',
+      name: {
+        'ru': '🤔 Сомневающийся',
+        'en': '🤔 Doubter',
+      },
+      description: {
+        'ru': 'Ваш средний уровень уверенности сочетается с тенденцией сомневаться в своих способностях. Это может сдерживать ваш потенциал.',
+        'en': 'Your moderate confidence level is combined with a tendency to doubt your abilities. This may hold back your potential.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали относительно низкие баллы по фактору "Общая вера в себя".',
+        'en': 'Your answers showed relatively low scores on the "General Self-Belief" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Способность к самокритике',
+          'Реалистичная оценка рисков',
+          'Тщательность в подготовке',
+        ],
+        'en': [
+          'Ability for self-criticism',
+          'Realistic risk assessment',
+          'Thoroughness in preparation',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Излишние сомнения в своих способностях',
+          'Прокрастинация из-за неуверенности',
+          'Упускание возможностей',
+        ],
+        'en': [
+          'Excessive doubts about your abilities',
+          'Procrastination due to insecurity',
+          'Missing opportunities',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Ведите "дневник успехов" — записывайте достижения',
+          'Бросайте себе маленькие вызовы и отмечайте победы',
+          'Замечайте, когда сомнения необоснованны',
+          'Помните прошлые успехи при новых вызовах',
+          'Работайте с психологом, если сомнения мешают жить',
+        ],
+        'en': [
+          'Keep a "success journal" — record achievements',
+          'Challenge yourself with small tasks and celebrate wins',
+          'Notice when doubts are unfounded',
+          'Remember past successes when facing new challenges',
+          'Work with a psychologist if doubts interfere with life',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишите 3 ситуации из прошлого, когда вы справились лучше, чем ожидали',
+        'en': 'Write down 3 situations from the past when you did better than expected',
+      },
+      inspiringConclusion: {
+        'ru': 'Сомнения — это не правда о вас. Ваши способности больше, чем вы думаете!',
+        'en': 'Doubts are not the truth about you. Your abilities are greater than you think!',
+      },
+    ),
+
+    'profile_shy': TestProfile(
+      id: 'profile_shy',
+      name: {
+        'ru': '🌸 Застенчивый',
+        'en': '🌸 Shy',
+      },
+      description: {
+        'ru': 'У вас есть внутренняя уверенность, но она может не проявляться в социальных ситуациях. Застенчивость маскирует ваши сильные стороны.',
+        'en': 'You have inner confidence, but it may not show in social situations. Shyness masks your strengths.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали относительно низкие баллы по фактору "Социальная уверенность".',
+        'en': 'Your answers showed relatively low scores on the "Social Assertiveness" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Внутренняя уверенность в своих способностях',
+          'Глубина мышления',
+          'Наблюдательность',
+          'Умение слушать',
+        ],
+        'en': [
+          'Inner confidence in your abilities',
+          'Depth of thinking',
+          'Observational skills',
+          'Ability to listen',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Трудности в отстаивании своего мнения',
+          'Дискомфорт в группах',
+          'Недооценка окружающими',
+        ],
+        'en': [
+          'Difficulty defending your opinions',
+          'Discomfort in groups',
+          'Being underestimated by others',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте социальные навыки в безопасной среде',
+          'Начинайте с малых шагов — один комментарий на встрече',
+          'Готовьтесь к социальным ситуациям заранее',
+          'Помните: ваше мнение важно и заслуживает быть услышанным',
+          'Найдите союзников, которые поддержат вас',
+        ],
+        'en': [
+          'Practice social skills in a safe environment',
+          'Start small — one comment in a meeting',
+          'Prepare for social situations in advance',
+          'Remember: your opinion matters and deserves to be heard',
+          'Find allies who will support you',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выскажите одно мнение или идею в разговоре, даже если это некомфортно',
+        'en': 'Express one opinion or idea in a conversation, even if it feels uncomfortable',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша застенчивость не определяет вашу ценность. Мир заслуживает услышать ваш голос!',
+        'en': 'Your shyness doesn\'t define your worth. The world deserves to hear your voice!',
+      },
+    ),
+
+    'profile_self_critical': TestProfile(
+      id: 'profile_self_critical',
+      name: {
+        'ru': '🪞 Самокритичный',
+        'en': '🪞 Self-Critical',
+      },
+      description: {
+        'ru': 'Вы можете быть слишком строги к себе. Внутренний критик мешает вам видеть свои достоинства и праздновать успехи.',
+        'en': 'You may be too hard on yourself. Your inner critic prevents you from seeing your virtues and celebrating successes.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали относительно низкие баллы по фактору "Самопринятие".',
+        'en': 'Your answers showed relatively low scores on the "Self-Acceptance" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Высокие стандарты',
+          'Стремление к совершенствованию',
+          'Способность к глубокой рефлексии',
+        ],
+        'en': [
+          'High standards',
+          'Desire for improvement',
+          'Capacity for deep reflection',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Чрезмерная самокритика',
+          'Трудности с принятием комплиментов',
+          'Фокус на недостатках вместо достоинств',
+        ],
+        'en': [
+          'Excessive self-criticism',
+          'Difficulty accepting compliments',
+          'Focus on flaws instead of virtues',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте самосострадание — говорите с собой как с другом',
+          'Замечайте внутреннего критика и отвечайте ему мягко',
+          'Празднуйте маленькие победы',
+          'Работайте над принятием несовершенства как части жизни',
+          'Рассмотрите терапию для работы с самокритикой',
+        ],
+        'en': [
+          'Practice self-compassion — talk to yourself as a friend',
+          'Notice your inner critic and respond gently',
+          'Celebrate small victories',
+          'Work on accepting imperfection as part of life',
+          'Consider therapy for working with self-criticism',
+        ],
+      },
+      tryToday: {
+        'ru': 'Когда поймаете себя на самокритике, спросите: "Что бы я сказал другу в этой ситуации?"',
+        'en': 'When you catch yourself being self-critical, ask: "What would I say to a friend in this situation?"',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы заслуживаете той же доброты, которую дарите другим. Учитесь быть другом самому себе!',
+        'en': 'You deserve the same kindness you give others. Learn to be a friend to yourself!',
+      },
+    ),
+
+    'profile_cautious': TestProfile(
+      id: 'profile_cautious',
+      name: {
+        'ru': '🐢 Осторожный',
+        'en': '🐢 Cautious',
+      },
+      description: {
+        'ru': 'Вы склонны к осторожности и можете избегать рисков. Неудачи переживаются тяжело, что снижает готовность пробовать новое.',
+        'en': 'You tend to be cautious and may avoid risks. Failures are hard to handle, which reduces willingness to try new things.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали относительно низкие баллы по фактору "Инициативность и устойчивость".',
+        'en': 'Your answers showed relatively low scores on the "Initiative and Resilience" factor.',
+      },
+      strengths: {
+        'ru': [
+          'Тщательное обдумывание решений',
+          'Минимизация рисков',
+          'Стабильность и надёжность',
+        ],
+        'en': [
+          'Thorough decision-making',
+          'Risk minimization',
+          'Stability and reliability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Избегание новых возможностей',
+          'Длительное восстановление после неудач',
+          'Стагнация из-за страха ошибок',
+        ],
+        'en': [
+          'Avoiding new opportunities',
+          'Long recovery from failures',
+          'Stagnation due to fear of mistakes',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте маленькие "неудачи" в безопасной среде',
+          'Переосмыслите неудачи как обучение',
+          'Ставьте маленькие цели для развития инициативы',
+          'Отмечайте каждую попытку, не только результат',
+          'Помните: бездействие — тоже риск',
+        ],
+        'en': [
+          'Practice small "failures" in a safe environment',
+          'Reframe failures as learning',
+          'Set small goals to develop initiative',
+          'Celebrate every attempt, not just results',
+          'Remember: inaction is also a risk',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сделайте одну маленькую вещь, которую обычно откладываете из страха неудачи',
+        'en': 'Do one small thing you usually postpone out of fear of failure',
+      },
+      inspiringConclusion: {
+        'ru': 'Каждая попытка — это победа, независимо от результата. Начните действовать!',
+        'en': 'Every attempt is a victory, regardless of outcome. Start taking action!',
+      },
+    ),
+
+    // === Общие профили по уровню ===
+    'profile_developing': TestProfile(
+      id: 'profile_developing',
+      name: {
+        'ru': '🌱 Развивающийся',
+        'en': '🌱 Developing',
+      },
+      description: {
+        'ru': 'У вас средний уровень уверенности в себе с потенциалом для роста. Вы на пути к более сильной самооценке.',
+        'en': 'You have a moderate level of self-confidence with potential for growth. You are on your way to stronger self-esteem.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали средние баллы по большинству факторов уверенности.',
+        'en': 'Your answers showed moderate scores across most confidence factors.',
+      },
+      strengths: {
+        'ru': [
+          'Реалистичная самооценка',
+          'Потенциал для роста',
+          'Способность к саморефлексии',
+          'Открытость к развитию',
+        ],
+        'en': [
+          'Realistic self-assessment',
+          'Potential for growth',
+          'Capacity for self-reflection',
+          'Openness to development',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Уверенность может колебаться',
+          'Есть области для улучшения',
+        ],
+        'en': [
+          'Confidence may fluctuate',
+          'Areas for improvement exist',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Определите одну область для фокуса',
+          'Ставьте достижимые цели',
+          'Отмечайте прогресс',
+          'Окружите себя поддерживающими людьми',
+          'Будьте терпеливы к себе',
+        ],
+        'en': [
+          'Identify one area to focus on',
+          'Set achievable goals',
+          'Track progress',
+          'Surround yourself with supportive people',
+          'Be patient with yourself',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите один аспект уверенности для работы на этой неделе и сделайте первый шаг',
+        'en': 'Choose one aspect of confidence to work on this week and take the first step',
+      },
+      inspiringConclusion: {
+        'ru': 'Уверенность растёт с каждым шагом. Вы уже на правильном пути!',
+        'en': 'Confidence grows with every step. You are already on the right path!',
+      },
+    ),
+
+    'profile_low_confidence': TestProfile(
+      id: 'profile_low_confidence',
+      name: {
+        'ru': '🌧️ Неуверенный',
+        'en': '🌧️ Lacking Confidence',
+      },
+      description: {
+        'ru': 'Сейчас вы испытываете сложности с уверенностью в себе. Это может быть временным состоянием, связанным с обстоятельствами.',
+        'en': 'You are currently experiencing difficulties with self-confidence. This may be a temporary state related to circumstances.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали низкие баллы по нескольким факторам уверенности.',
+        'en': 'Your answers showed low scores across several confidence factors.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание проблемы — первый шаг',
+          'Готовность к работе над собой',
+          'Способность к честной самооценке',
+        ],
+        'en': [
+          'Awareness of the problem is the first step',
+          'Willingness to work on yourself',
+          'Ability for honest self-assessment',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Низкая уверенность влияет на многие области',
+          'Возможен негативный внутренний диалог',
+          'Риск избегания и изоляции',
+        ],
+        'en': [
+          'Low confidence affects many areas',
+          'Possible negative inner dialogue',
+          'Risk of avoidance and isolation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Обратитесь к психологу или психотерапевту',
+          'Начните с очень маленьких целей',
+          'Практикуйте самосострадание',
+          'Избегайте сравнения с другими',
+          'Фокусируйтесь на процессе, не на результате',
+          'Помните: уверенность можно развить',
+        ],
+        'en': [
+          'Consult a psychologist or therapist',
+          'Start with very small goals',
+          'Practice self-compassion',
+          'Avoid comparing yourself to others',
+          'Focus on the process, not the result',
+          'Remember: confidence can be developed',
+        ],
+      },
+      tryToday: {
+        'ru': 'Напишите себе письмо поддержки от лица друга, который верит в вас',
+        'en': 'Write yourself a supportive letter from a friend who believes in you',
+      },
+      inspiringConclusion: {
+        'ru': 'Уверенность — это навык, а не врождённое качество. Вы можете это развить!',
+        'en': 'Confidence is a skill, not an innate quality. You can develop it!',
+      },
+    ),
+
+    'profile_struggling': TestProfile(
+      id: 'profile_struggling',
+      name: {
+        'ru': '💙 Нуждающийся в поддержке',
+        'en': '💙 Needing Support',
+      },
+      description: {
+        'ru': 'Вы переживаете сложный период с очень низкой уверенностью в себе. Профессиональная поддержка может значительно помочь.',
+        'en': 'You are going through a difficult period with very low self-confidence. Professional support can significantly help.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали очень низкие баллы по всем факторам уверенности.',
+        'en': 'Your answers showed very low scores across all confidence factors.',
+      },
+      strengths: {
+        'ru': [
+          'Честность с собой о текущем состоянии',
+          'Прохождение теста — шаг к изменениям',
+          'Способность просить о помощи',
+        ],
+        'en': [
+          'Honesty with yourself about current state',
+          'Taking this test is a step toward change',
+          'Ability to ask for help',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Серьёзные трудности с самооценкой',
+          'Возможное влияние на качество жизни',
+          'Риск депрессии или тревоги',
+        ],
+        'en': [
+          'Serious difficulties with self-esteem',
+          'Possible impact on quality of life',
+          'Risk of depression or anxiety',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Обязательно обратитесь к специалисту (психолог, психотерапевт)',
+          'Не изолируйтесь — поддерживайте связь с близкими',
+          'Будьте максимально добры к себе',
+          'Один маленький шаг в день — это достаточно',
+          'Помните: обращение за помощью — это сила, не слабость',
+        ],
+        'en': [
+          'Definitely consult a specialist (psychologist, therapist)',
+          'Don\'t isolate — maintain contact with loved ones',
+          'Be as kind to yourself as possible',
+          'One small step a day is enough',
+          'Remember: seeking help is strength, not weakness',
+        ],
+      },
+      tryToday: {
+        'ru': 'Позвоните или напишите одному близкому человеку, просто чтобы поговорить',
+        'en': 'Call or text one close person, just to talk',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы не одиноки, и помощь доступна. Каждый заслуживает поддержки в трудные времена.',
+        'en': 'You are not alone, and help is available. Everyone deserves support during hard times.',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': '⚖️ Сбалансированный',
+        'en': '⚖️ Balanced',
+      },
+      description: {
+        'ru': 'У вас сбалансированный профиль уверенности без выраженных пиков или провалов. Это хорошая основа для дальнейшего развития.',
+        'en': 'You have a balanced confidence profile without pronounced peaks or dips. This is a good foundation for further development.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показали равномерно распределённые баллы по всем факторам.',
+        'en': 'Your answers showed evenly distributed scores across all factors.',
+      },
+      strengths: {
+        'ru': [
+          'Равномерное развитие',
+          'Нет критических слабых мест',
+          'Стабильная самооценка',
+        ],
+        'en': [
+          'Even development',
+          'No critical weak points',
+          'Stable self-esteem',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может не быть выраженных сильных сторон',
+          'Потенциал для роста во всех областях',
+        ],
+        'en': [
+          'May lack pronounced strengths',
+          'Potential for growth in all areas',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Выберите область для целенаправленного развития',
+          'Укрепляйте уверенность через действие',
+          'Отмечайте свои успехи',
+        ],
+        'en': [
+          'Choose an area for focused development',
+          'Build confidence through action',
+          'Acknowledge your successes',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите один аспект уверенности и запланируйте конкретное действие для его развития',
+        'en': 'Choose one aspect of confidence and plan a specific action to develop it',
+      },
+      inspiringConclusion: {
+        'ru': 'Баланс — отличная точка старта. Теперь выберите направление для роста!',
+        'en': 'Balance is a great starting point. Now choose a direction for growth!',
+      },
+    ),
+  };
 }

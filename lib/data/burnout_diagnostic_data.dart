@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for Burnout Diagnostic Test
 /// Legacy Dart implementation (no JSON dependency)
@@ -1298,4 +1299,911 @@ class BurnoutDiagnosticData {
       },
     };
   }
+
+  /// Определить профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    // Вычисляем средний уровень выгорания
+    final factors = [
+      'emotional_exhaustion',
+      'depersonalization',
+      'reduced_efficacy',
+      'physical_symptoms',
+      'cognitive_impairment',
+      'motivation_loss',
+      'work_environment'
+    ];
+
+    double total = 0;
+    int count = 0;
+    for (final factor in factors) {
+      if (percentages.containsKey(factor)) {
+        total += percentages[factor]!;
+        count++;
+      }
+    }
+
+    final averageLevel = count > 0 ? total / count : 0.0;
+
+    // Определяем профиль на основе среднего уровня и доминирующего фактора
+    if (averageLevel <= 25) {
+      return 'profile_minimal';
+    } else if (averageLevel <= 40) {
+      return 'profile_mild';
+    } else if (averageLevel <= 60) {
+      // Умеренное выгорание - определяем доминирующий фактор
+      String? dominantFactor;
+      double maxValue = 0;
+      for (final factor in factors) {
+        final value = percentages[factor] ?? 0;
+        if (value > maxValue) {
+          maxValue = value;
+          dominantFactor = factor;
+        }
+      }
+
+      // Профили по доминирующему компоненту
+      switch (dominantFactor) {
+        case 'emotional_exhaustion':
+          return 'profile_emotional_exhaustion';
+        case 'depersonalization':
+          return 'profile_cynicism';
+        case 'reduced_efficacy':
+          return 'profile_inefficacy';
+        case 'physical_symptoms':
+          return 'profile_somatic';
+        case 'cognitive_impairment':
+          return 'profile_cognitive';
+        case 'motivation_loss':
+          return 'profile_demotivation';
+        case 'work_environment':
+          return 'profile_work_overload';
+        default:
+          return 'profile_moderate';
+      }
+    } else if (averageLevel <= 75) {
+      return 'profile_severe';
+    } else {
+      return 'profile_critical';
+    }
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  /// Все профили для теста выгорания
+  static final Map<String, TestProfile> _profiles = {
+    'profile_minimal': TestProfile(
+      id: 'profile_minimal',
+      name: {
+        'ru': 'Устойчивый профессионал',
+        'en': 'Resilient Professional',
+      },
+      description: {
+        'ru': 'У вас минимальные признаки профессионального выгорания. Вы эффективно справляетесь со стрессом и сохраняете баланс между работой и личной жизнью.',
+        'en': 'You show minimal signs of professional burnout. You effectively manage stress and maintain work-life balance.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают низкий уровень по всем компонентам выгорания: эмоциональное истощение, цинизм, снижение эффективности и физические симптомы находятся в норме.',
+        'en': 'Your answers show low levels across all burnout components: emotional exhaustion, cynicism, reduced efficacy, and physical symptoms are within normal range.',
+      },
+      strengths: {
+        'ru': [
+          'Эффективное управление стрессом',
+          'Здоровые границы между работой и личной жизнью',
+          'Сохранение эмпатии и вовлечённости',
+          'Хорошее физическое и ментальное здоровье',
+          'Чёткое понимание профессионального смысла',
+        ],
+        'en': [
+          'Effective stress management',
+          'Healthy work-life boundaries',
+          'Preserved empathy and engagement',
+          'Good physical and mental health',
+          'Clear understanding of professional meaning',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможна недооценка начальных признаков стресса',
+          'Риск "выгорания помощника" при заботе о других',
+        ],
+        'en': [
+          'Possible underestimation of initial stress signs',
+          'Risk of "helper burnout" when caring for others',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Продолжайте практики восстановления, которые работают для вас',
+          'Сохраняйте здоровые границы с работой',
+          'Регулярно проходите самодиагностику (раз в 3-6 месяцев)',
+          'Поддерживайте коллег, которые могут испытывать выгорание',
+          'Инвестируйте в профилактику: отдых, хобби, социальные связи',
+        ],
+        'en': [
+          'Continue recovery practices that work for you',
+          'Maintain healthy work boundaries',
+          'Regularly self-assess (every 3-6 months)',
+          'Support colleagues who may be experiencing burnout',
+          'Invest in prevention: rest, hobbies, social connections',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поблагодарите себя за поддержание здорового баланса и подумайте, как вы можете помочь коллегам сохранить их ресурсы.',
+        'en': 'Thank yourself for maintaining healthy balance and think about how you can help colleagues preserve their resources.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша профессиональная устойчивость — это ценный ресурс. Продолжайте заботиться о себе, и вы сможете долго и эффективно работать в своей сфере.',
+        'en': 'Your professional resilience is a valuable resource. Continue caring for yourself, and you will be able to work effectively in your field for a long time.',
+      },
+    ),
+
+    'profile_mild': TestProfile(
+      id: 'profile_mild',
+      name: {
+        'ru': 'Начальный стресс',
+        'en': 'Initial Stress',
+      },
+      description: {
+        'ru': 'У вас есть начальные признаки профессионального стресса. Это нормальная реакция на рабочие требования, но важно обратить внимание на восстановление.',
+        'en': 'You have initial signs of professional stress. This is a normal response to work demands, but it is important to focus on recovery.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают умеренное повышение некоторых показателей выгорания, но в целом уровень остаётся управляемым.',
+        'en': 'Your answers show moderate elevation of some burnout indicators, but overall the level remains manageable.',
+      },
+      strengths: {
+        'ru': [
+          'Сохранение профессиональной мотивации',
+          'Способность распознавать стресс',
+          'Ресурсы для восстановления ещё доступны',
+          'Профессиональная эффективность сохранена',
+        ],
+        'en': [
+          'Preserved professional motivation',
+          'Ability to recognize stress',
+          'Recovery resources still available',
+          'Professional effectiveness preserved',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Периодическая усталость к концу недели',
+          'Временное снижение энтузиазма',
+          'Начальные нарушения сна или аппетита',
+        ],
+        'en': [
+          'Periodic fatigue by end of week',
+          'Temporary decrease in enthusiasm',
+          'Initial sleep or appetite disturbances',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Уделите особое внимание качеству сна (7-9 часов)',
+          'Введите регулярные перерывы в рабочий день (каждые 50 минут)',
+          'Практикуйте технику "отключения" от работы после рабочего дня',
+          'Увеличьте физическую активность — минимум 30 минут 5 раз в неделю',
+          'Обсудите нагрузку с руководством, если она чрезмерна',
+        ],
+        'en': [
+          'Pay special attention to sleep quality (7-9 hours)',
+          'Introduce regular breaks during workday (every 50 minutes)',
+          'Practice "disconnecting" from work after hours',
+          'Increase physical activity — at least 30 minutes 5 times a week',
+          'Discuss workload with management if excessive',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сегодня вечером полностью отключитесь от рабочих коммуникаций. Посвятите время тому, что вас восстанавливает: прогулка, хобби, общение с близкими.',
+        'en': 'Tonight, completely disconnect from work communications. Spend time on what restores you: a walk, a hobby, time with loved ones.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы вовремя заметили сигналы стресса. Небольшие изменения сейчас предотвратят серьёзные проблемы в будущем. У вас есть все ресурсы для восстановления!',
+        'en': 'You noticed stress signals in time. Small changes now will prevent serious problems in the future. You have all the resources for recovery!',
+      },
+    ),
+
+    'profile_emotional_exhaustion': TestProfile(
+      id: 'profile_emotional_exhaustion',
+      name: {
+        'ru': 'Эмоциональное истощение',
+        'en': 'Emotional Exhaustion',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — эмоциональное истощение. Вы чувствуете себя опустошённым, эмоции "выгорели", и восстановление даётся с трудом.',
+        'en': 'Your main symptom is emotional exhaustion. You feel drained, emotions are "burned out", and recovery is difficult.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех компонентов выгорания у вас доминирует эмоциональное истощение. Это часто бывает у людей помогающих профессий и тех, кто много работает с людьми.',
+        'en': 'Among all burnout components, emotional exhaustion dominates. This is common in helping professions and those who work extensively with people.',
+      },
+      strengths: {
+        'ru': [
+          'Способность осознавать своё состояние',
+          'Сохранение профессиональных навыков',
+          'Понимание ценности эмоционального здоровья',
+        ],
+        'en': [
+          'Ability to recognize your condition',
+          'Preserved professional skills',
+          'Understanding the value of emotional health',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Чувство опустошённости после работы',
+          'Трудности с эмоциональным восстановлением',
+          'Страх или тревога перед рабочим днём',
+          'Ощущение "эмоционального онемения"',
+        ],
+        'en': [
+          'Feeling of emptiness after work',
+          'Difficulty with emotional recovery',
+          'Fear or anxiety before workday',
+          'Feeling of "emotional numbness"',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Техники эмоциональной саморегуляции: дыхательные практики, медитация осознанности',
+          'Установите чёткие эмоциональные границы: научитесь говорить "нет"',
+          'Снизьте эмоциональную нагрузку на работе — обсудите с руководством',
+          'Обязательный отдых: выходные без работы, полноценный отпуск',
+          'Рассмотрите работу с психологом или психотерапевтом',
+          'Для помогающих профессий: супервизия обязательна',
+        ],
+        'en': [
+          'Emotional self-regulation techniques: breathing practices, mindfulness meditation',
+          'Set clear emotional boundaries: learn to say "no"',
+          'Reduce emotional load at work — discuss with management',
+          'Mandatory rest: weekends without work, proper vacation',
+          'Consider working with a psychologist or psychotherapist',
+          'For helping professions: supervision is mandatory',
+        ],
+      },
+      tryToday: {
+        'ru': 'Практикуйте 10-минутную медитацию или дыхательное упражнение 4-7-8 (вдох 4 секунды, задержка 7, выдох 8). Это поможет "разрядить" эмоциональное напряжение.',
+        'en': 'Practice 10-minute meditation or 4-7-8 breathing exercise (inhale 4 seconds, hold 7, exhale 8). This will help "discharge" emotional tension.',
+      },
+      inspiringConclusion: {
+        'ru': 'Эмоциональное истощение — это сигнал, что вы много отдавали другим. Теперь пришло время позаботиться о себе. Ваши эмоции восстановятся, когда вы дадите себе на это право.',
+        'en': 'Emotional exhaustion is a signal that you have given a lot to others. Now it is time to take care of yourself. Your emotions will recover when you give yourself permission to do so.',
+      },
+    ),
+
+    'profile_cynicism': TestProfile(
+      id: 'profile_cynicism',
+      name: {
+        'ru': 'Деперсонализация и цинизм',
+        'en': 'Depersonalization and Cynicism',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — деперсонализация и цинизм. Вы стали более отстранённым, равнодушным, люди воспринимаются как "объекты" или источники проблем.',
+        'en': 'Your main symptom is depersonalization and cynicism. You have become more detached, indifferent, people are perceived as "objects" or sources of problems.',
+      },
+      whyThisProfile: {
+        'ru': 'Деперсонализация — это защитный механизм психики от эмоциональной перегрузки. Но она разрушает профессиональные отношения и вашу идентичность.',
+        'en': 'Depersonalization is a psychological defense mechanism against emotional overload. But it destroys professional relationships and your identity.',
+      },
+      strengths: {
+        'ru': [
+          'Сохранение профессиональной дистанции (в умеренной форме)',
+          'Защита от эмоционального выгорания (частично)',
+          'Способность видеть ситуацию со стороны',
+        ],
+        'en': [
+          'Maintaining professional distance (in moderate form)',
+          'Protection from emotional burnout (partial)',
+          'Ability to see situation from outside',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Эмоциональная отстранённость от коллег и клиентов',
+          'Цинизм и сарказм в общении',
+          'Восприятие людей как "случаев" или "проблем"',
+          'Риск профессиональных ошибок из-за равнодушия',
+        ],
+        'en': [
+          'Emotional detachment from colleagues and clients',
+          'Cynicism and sarcasm in communication',
+          'Perceiving people as "cases" or "problems"',
+          'Risk of professional errors due to indifference',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практики развития эмпатии: представляйте ситуацию глазами другого человека',
+          'Напоминайте себе о ценности каждого человека',
+          'Группы поддержки с коллегами — вы не одиноки',
+          'Профессиональная супервизия для восстановления идентичности',
+          'Ограничьте контакт с наиболее сложными людьми, если возможно',
+          'Честно спросите себя: может ли вы продолжать без вреда себе и другим?',
+        ],
+        'en': [
+          'Empathy development practices: imagine situation through another person\'s eyes',
+          'Remind yourself of each person\'s value',
+          'Support groups with colleagues — you are not alone',
+          'Professional supervision to restore identity',
+          'Limit contact with most difficult people if possible',
+          'Honestly ask yourself: can you continue without harm to yourself and others?',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одного человека на работе и попробуйте увидеть его как личность: что его волнует? какие у него мечты? чем он уникален? Это первый шаг к восстановлению эмпатии.',
+        'en': 'Choose one person at work and try to see them as a person: what worries them? what are their dreams? what makes them unique? This is the first step to restoring empathy.',
+      },
+      inspiringConclusion: {
+        'ru': 'Цинизм — это не ваша истинная природа, а защитная реакция. За этой стеной по-прежнему живёт человек, который выбрал свою профессию с добрыми намерениями. Его можно вернуть.',
+        'en': 'Cynicism is not your true nature, but a defensive reaction. Behind this wall still lives a person who chose their profession with good intentions. They can be brought back.',
+      },
+    ),
+
+    'profile_inefficacy': TestProfile(
+      id: 'profile_inefficacy',
+      name: {
+        'ru': 'Снижение эффективности',
+        'en': 'Reduced Efficacy',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — ощущение профессиональной несостоятельности. Вы сомневаетесь в своей компетентности, чувствуете, что не справляетесь с работой.',
+        'en': 'Your main symptom is feeling of professional inadequacy. You doubt your competence, feel that you are not coping with work.',
+      },
+      whyThisProfile: {
+        'ru': 'Снижение профессиональной эффективности может быть как результатом выгорания (искажённое восприятие), так и реальным следствием хронического стресса.',
+        'en': 'Reduced professional efficacy can be either a result of burnout (distorted perception) or a real consequence of chronic stress.',
+      },
+      strengths: {
+        'ru': [
+          'Высокие стандарты качества работы',
+          'Критическое мышление и самооценка',
+          'Стремление к профессиональному росту',
+        ],
+        'en': [
+          'High work quality standards',
+          'Critical thinking and self-assessment',
+          'Desire for professional growth',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Синдром самозванца',
+          'Перфекционизм и самокритика',
+          'Сомнения в ценности своей работы',
+          'Увеличение количества ошибок',
+        ],
+        'en': [
+          'Impostor syndrome',
+          'Perfectionism and self-criticism',
+          'Doubts about work value',
+          'Increased number of errors',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'КПТ для работы с убеждениями о некомпетентности',
+          'Ведите дневник достижений — записывайте ежедневные успехи',
+          'Объективная оценка: это реальное снижение или искажённое восприятие?',
+          'Снижение нагрузки для восстановления качества работы',
+          'Менторство или профессиональный коучинг',
+          'Если снижение реальное — возможно дополнительное обучение',
+        ],
+        'en': [
+          'CBT for working with incompetence beliefs',
+          'Keep achievement journal — record daily successes',
+          'Objective assessment: is this real decline or distorted perception?',
+          'Reduce workload to restore work quality',
+          'Mentorship or professional coaching',
+          'If decline is real — additional training may be needed',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишите три профессиональных достижения за последний месяц. Даже маленькие победы считаются! Это поможет восстановить реалистичное восприятие себя.',
+        'en': 'Write down three professional achievements from the last month. Even small wins count! This will help restore realistic self-perception.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше чувство несостоятельности — это не правда о вас, а симптом выгорания. За усталостью скрывается компетентный профессионал. Отдых и поддержка помогут ему снова проявиться.',
+        'en': 'Your feeling of inadequacy is not the truth about you, but a symptom of burnout. Behind the fatigue hides a competent professional. Rest and support will help them reappear.',
+      },
+    ),
+
+    'profile_somatic': TestProfile(
+      id: 'profile_somatic',
+      name: {
+        'ru': 'Физические симптомы',
+        'en': 'Physical Symptoms',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — физические проявления стресса. Хроническая усталость, боли, нарушения сна, проблемы с иммунитетом сигнализируют о перегрузке организма.',
+        'en': 'Your main symptom is physical manifestations of stress. Chronic fatigue, pain, sleep disturbances, immune problems signal body overload.',
+      },
+      whyThisProfile: {
+        'ru': 'Тело часто "говорит" о выгорании раньше, чем психика. Физические симптомы — это SOS-сигнал вашего организма.',
+        'en': 'The body often "speaks" about burnout before the psyche. Physical symptoms are an SOS signal from your body.',
+      },
+      strengths: {
+        'ru': [
+          'Связь с телесными ощущениями',
+          'Способность распознавать физические сигналы',
+          'Понимание необходимости заботы о здоровье',
+        ],
+        'en': [
+          'Connection with bodily sensations',
+          'Ability to recognize physical signals',
+          'Understanding the need for health care',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Хроническая усталость, не проходящая после отдыха',
+          'Головные боли, боли в спине и шее',
+          'Нарушения сна: бессонница или гиперсомния',
+          'Частые простуды, сниженный иммунитет',
+          'Проблемы с ЖКТ, изменения аппетита',
+        ],
+        'en': [
+          'Chronic fatigue that does not go away after rest',
+          'Headaches, back and neck pain',
+          'Sleep disturbances: insomnia or hypersomnia',
+          'Frequent colds, reduced immunity',
+          'Digestive problems, appetite changes',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'ОБЯЗАТЕЛЬНО: пройдите полное медицинское обследование',
+          'Улучшите гигиену сна: режим, темнота, прохлада, никаких экранов',
+          'Физическая активность: 30 минут умеренной нагрузки 5 раз в неделю',
+          'Эргономика рабочего места: осанка, освещение, перерывы',
+          'Техники телесной релаксации: прогрессивная мышечная релаксация',
+          'Массаж, физиотерапия, ЛФК по назначению врача',
+        ],
+        'en': [
+          'MANDATORY: get a complete medical examination',
+          'Improve sleep hygiene: routine, darkness, coolness, no screens',
+          'Physical activity: 30 minutes of moderate load 5 times a week',
+          'Workplace ergonomics: posture, lighting, breaks',
+          'Body relaxation techniques: progressive muscle relaxation',
+          'Massage, physiotherapy, exercise therapy as prescribed by doctor',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите сканирование тела: лягте удобно, закройте глаза и медленно "пройдитесь" вниманием от макушки до пальцев ног. Отметьте зоны напряжения и попробуйте их расслабить.',
+        'en': 'Do a body scan: lie down comfortably, close your eyes, and slowly "walk" attention from crown to toes. Note tension areas and try to relax them.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше тело — ваш союзник. Оно честно сигнализирует о перегрузке. Слушайте его, заботьтесь о нём, и оно восстановит силы для того, что для вас действительно важно.',
+        'en': 'Your body is your ally. It honestly signals overload. Listen to it, take care of it, and it will restore strength for what really matters to you.',
+      },
+    ),
+
+    'profile_cognitive': TestProfile(
+      id: 'profile_cognitive',
+      name: {
+        'ru': 'Когнитивные нарушения',
+        'en': 'Cognitive Impairment',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — когнитивные нарушения. Проблемы с концентрацией, памятью, принятием решений — результат хронического стресса.',
+        'en': 'Your main symptom is cognitive impairment. Problems with concentration, memory, decision-making — result of chronic stress.',
+      },
+      whyThisProfile: {
+        'ru': 'Когнитивные функции очень чувствительны к стрессу. Хроническая перегрузка истощает ресурсы мозга для высших психических функций.',
+        'en': 'Cognitive functions are very sensitive to stress. Chronic overload depletes brain resources for higher mental functions.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание когнитивных изменений',
+          'Сохранение базовых профессиональных навыков',
+          'Понимание связи стресса и мышления',
+        ],
+        'en': [
+          'Awareness of cognitive changes',
+          'Preservation of basic professional skills',
+          'Understanding stress-thinking connection',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Трудности с концентрацией и вниманием',
+          'Забывчивость, проблемы с рабочей памятью',
+          'Сложности с принятием решений',
+          'Увеличение количества ошибок',
+          'Трудности с многозадачностью',
+        ],
+        'en': [
+          'Difficulty with concentration and attention',
+          'Forgetfulness, working memory problems',
+          'Decision-making difficulties',
+          'Increased number of errors',
+          'Difficulty with multitasking',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'КРИТИЧЕСКИ ВАЖНО: улучшите качество сна — это основа когнитивного здоровья',
+          'Снизьте многозадачность: одна задача за раз',
+          'Используйте внешние инструменты: списки, напоминания, структурирование',
+          'Перерывы каждые 50 минут работы',
+          'Ограничьте информационный поток: меньше новостей, соцсетей',
+          'Когнитивные упражнения после восстановления',
+          'Если не улучшается — консультация невролога',
+        ],
+        'en': [
+          'CRITICALLY IMPORTANT: improve sleep quality — this is the foundation of cognitive health',
+          'Reduce multitasking: one task at a time',
+          'Use external tools: lists, reminders, structuring',
+          'Breaks every 50 minutes of work',
+          'Limit information flow: less news, social media',
+          'Cognitive exercises after recovery',
+          'If no improvement — neurologist consultation',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одну важную задачу и посвятите ей 25 минут без отвлечений (техника Помодоро). Отключите уведомления. Это тренирует фокусировку внимания.',
+        'en': 'Choose one important task and dedicate 25 minutes to it without distractions (Pomodoro technique). Turn off notifications. This trains focus.',
+      },
+      inspiringConclusion: {
+        'ru': 'Когнитивные функции восстанавливаются! Ваш мозг обладает нейропластичностью. Дайте ему отдых, качественный сон и снижение нагрузки — и ясность мышления вернётся.',
+        'en': 'Cognitive functions recover! Your brain has neuroplasticity. Give it rest, quality sleep, and reduced load — and clarity of thinking will return.',
+      },
+    ),
+
+    'profile_demotivation': TestProfile(
+      id: 'profile_demotivation',
+      name: {
+        'ru': 'Потеря мотивации и смысла',
+        'en': 'Loss of Motivation and Meaning',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — потеря профессионального смысла. Вы не понимаете, зачем делаете свою работу, энтузиазм исчез, мысли об увольнении становятся навязчивыми.',
+        'en': 'Your main symptom is loss of professional meaning. You do not understand why you do your work, enthusiasm is gone, thoughts of quitting become obsessive.',
+      },
+      whyThisProfile: {
+        'ru': 'Потеря смысла — это экзистенциальный компонент выгорания. Когда работа перестаёт отвечать на вопрос "зачем?", мотивация исчезает.',
+        'en': 'Loss of meaning is the existential component of burnout. When work stops answering the question "why?", motivation disappears.',
+      },
+      strengths: {
+        'ru': [
+          'Способность задавать глубокие вопросы о смысле',
+          'Честность с собой о своих чувствах',
+          'Готовность к изменениям',
+        ],
+        'en': [
+          'Ability to ask deep questions about meaning',
+          'Honesty with yourself about your feelings',
+          'Readiness for change',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Экзистенциальный вакуум: "зачем я это делаю?"',
+          'Прокрастинация и откладывание задач',
+          'Мечты об увольнении или смене профессии',
+          'Ощущение "хождения по кругу"',
+        ],
+        'en': [
+          'Existential vacuum: "why am I doing this?"',
+          'Procrastination and task postponement',
+          'Dreams of quitting or changing profession',
+          'Feeling of "going in circles"',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Вспомните, что изначально привлекло вас в профессию',
+          'Пересмотрите цели: возможно, нужны новые вызовы',
+          'Смена специализации внутри профессии может помочь',
+          'Поиск смысла вне работы: волонтёрство, хобби, творчество',
+          'Экзистенциальная терапия или логотерапия',
+          'Sabbatical (длительный отпуск) для переосмысления',
+          'Если ничего не помогает — смена профессии — это не поражение, а акт самопознания',
+        ],
+        'en': [
+          'Remember what initially attracted you to the profession',
+          'Review goals: perhaps new challenges are needed',
+          'Changing specialization within profession may help',
+          'Search for meaning outside work: volunteering, hobbies, creativity',
+          'Existential therapy or logotherapy',
+          'Sabbatical (long leave) for rethinking',
+          'If nothing helps — career change is not defeat, but act of self-knowledge',
+        ],
+      },
+      tryToday: {
+        'ru': 'Напишите три вещи, которые вы цените в своей работе, даже если сейчас они кажутся незначительными. Это начало восстановления связи со смыслом.',
+        'en': 'Write down three things you value in your work, even if they seem insignificant now. This is the beginning of reconnecting with meaning.',
+      },
+      inspiringConclusion: {
+        'ru': 'Потеря смысла — это приглашение к трансформации. За этим кризисом может скрываться новая версия вас — более осознанная, более верная себе. Дайте себе время найти свой путь.',
+        'en': 'Loss of meaning is an invitation to transformation. Behind this crisis may hide a new version of you — more conscious, more true to yourself. Give yourself time to find your way.',
+      },
+    ),
+
+    'profile_work_overload': TestProfile(
+      id: 'profile_work_overload',
+      name: {
+        'ru': 'Рабочая перегрузка',
+        'en': 'Work Overload',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — токсичная рабочая среда. Чрезмерная нагрузка, недостаток ресурсов, работа в выходные, отсутствие поддержки — проблема в организации, а не в вас.',
+        'en': 'Your main symptom is toxic work environment. Excessive workload, lack of resources, weekend work, lack of support — the problem is in organization, not in you.',
+      },
+      whyThisProfile: {
+        'ru': 'Рабочая среда — один из ключевых факторов выгорания. Даже устойчивый человек выгорит в токсичной организации.',
+        'en': 'Work environment is one of the key factors of burnout. Even a resilient person will burn out in a toxic organization.',
+      },
+      strengths: {
+        'ru': [
+          'Понимание, что проблема не только в вас',
+          'Способность анализировать рабочую среду',
+          'Готовность защищать свои границы',
+        ],
+        'en': [
+          'Understanding that the problem is not just you',
+          'Ability to analyze work environment',
+          'Willingness to protect your boundaries',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Работа более 50 часов в неделю',
+          'Регулярная работа в выходные',
+          'Недостаток ресурсов для выполнения задач',
+          'Отсутствие поддержки от руководства',
+          'Несоответствие работы вашим ценностям',
+        ],
+        'en': [
+          'Working more than 50 hours per week',
+          'Regular weekend work',
+          'Lack of resources to complete tasks',
+          'Lack of support from management',
+          'Work not matching your values',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Переговоры с руководством о снижении нагрузки — с конкретными данными',
+          'Установление жёстких границ: отказ от работы в выходные',
+          'Делегирование там, где возможно',
+          'Документирование проблем для HR',
+          'Объединение с коллегами — вы не одиноки',
+          'ЧЕСТНО ОСОЗНАЙТЕ: вы не можете "перебороть" токсичную организацию',
+          'Если руководство не реагирует — активный поиск новой работы',
+        ],
+        'en': [
+          'Negotiate with management about reducing workload — with specific data',
+          'Set firm boundaries: refuse weekend work',
+          'Delegate where possible',
+          'Document problems for HR',
+          'Unite with colleagues — you are not alone',
+          'HONESTLY REALIZE: you cannot "overcome" a toxic organization',
+          'If management does not respond — active job search',
+        ],
+      },
+      tryToday: {
+        'ru': 'Определите одну рабочую задачу, которую вы можете делегировать или отложить. Освободите себе хотя бы один час для восстановления.',
+        'en': 'Identify one work task you can delegate or postpone. Free up at least one hour for recovery.',
+      },
+      inspiringConclusion: {
+        'ru': 'Токсичная рабочая среда — не ваша вина. Вы заслуживаете работу, где вас ценят, поддерживают и где вы можете расти. Такая работа существует — и вы её найдёте.',
+        'en': 'Toxic work environment is not your fault. You deserve a job where you are valued, supported, and where you can grow. Such a job exists — and you will find it.',
+      },
+    ),
+
+    'profile_moderate': TestProfile(
+      id: 'profile_moderate',
+      name: {
+        'ru': 'Умеренное выгорание',
+        'en': 'Moderate Burnout',
+      },
+      description: {
+        'ru': 'У вас умеренный уровень выгорания со сбалансированным проявлением разных симптомов. Это серьёзный сигнал, требующий внимания.',
+        'en': 'You have a moderate level of burnout with balanced manifestation of different symptoms. This is a serious signal requiring attention.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают повышение по нескольким компонентам выгорания без явного доминирования одного из них.',
+        'en': 'Your answers show elevation across several burnout components without clear dominance of any one.',
+      },
+      strengths: {
+        'ru': [
+          'Ещё сохраняются ресурсы для восстановления',
+          'Способность распознать проблему',
+          'Готовность к изменениям',
+        ],
+        'en': [
+          'Resources for recovery are still preserved',
+          'Ability to recognize the problem',
+          'Readiness for change',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Периодическое эмоциональное истощение',
+          'Снижение мотивации и энтузиазма',
+          'Физические симптомы стресса',
+          'Трудности с концентрацией',
+        ],
+        'en': [
+          'Periodic emotional exhaustion',
+          'Decreased motivation and enthusiasm',
+          'Physical symptoms of stress',
+          'Difficulty concentrating',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Возьмите отпуск минимум на неделю для восстановления',
+          'Пересмотрите рабочую нагрузку с руководством',
+          'Введите регулярные практики восстановления: сон, спорт, хобби',
+          'Установите чёткие границы рабочего времени',
+          'Рассмотрите работу с психологом',
+          'Определите главный источник стресса и начните с него',
+        ],
+        'en': [
+          'Take at least a week vacation for recovery',
+          'Review workload with management',
+          'Introduce regular recovery practices: sleep, exercise, hobbies',
+          'Set clear work hours boundaries',
+          'Consider working with a psychologist',
+          'Identify the main source of stress and start with it',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одну область восстановления (сон, движение, отдых) и сделайте один конкретный шаг к улучшению именно сегодня.',
+        'en': 'Choose one area of recovery (sleep, movement, rest) and take one specific step toward improvement today.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы поймали выгорание на той стадии, когда восстановление ещё возможно без радикальных мер. Действуйте сейчас — и через несколько месяцев вы будете благодарны себе.',
+        'en': 'You caught burnout at a stage when recovery is still possible without radical measures. Act now — and in a few months you will thank yourself.',
+      },
+    ),
+
+    'profile_severe': TestProfile(
+      id: 'profile_severe',
+      name: {
+        'ru': 'Серьёзное выгорание',
+        'en': 'Severe Burnout',
+      },
+      description: {
+        'ru': 'У вас серьёзный уровень профессионального выгорания. Это состояние требует немедленного внимания и активных мер по восстановлению.',
+        'en': 'You have a serious level of professional burnout. This condition requires immediate attention and active recovery measures.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают высокий уровень по большинству компонентов выгорания. Это хроническое состояние, которое влияет на здоровье.',
+        'en': 'Your answers show high levels across most burnout components. This is a chronic condition affecting health.',
+      },
+      strengths: {
+        'ru': [
+          'Честность с собой о серьёзности ситуации',
+          'Готовность искать помощь',
+          'Сохранение минимальных ресурсов',
+        ],
+        'en': [
+          'Honesty with yourself about the seriousness of the situation',
+          'Willingness to seek help',
+          'Preservation of minimal resources',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Хроническое эмоциональное и физическое истощение',
+          'Серьёзные проблемы со здоровьем',
+          'Глубокий цинизм и отстранённость',
+          'Сомнения в профессиональной компетентности',
+          'Потеря смысла работы',
+        ],
+        'en': [
+          'Chronic emotional and physical exhaustion',
+          'Serious health problems',
+          'Deep cynicism and detachment',
+          'Doubts about professional competence',
+          'Loss of work meaning',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'СРОЧНО: возьмите отпуск минимум 2-3 недели',
+          'Обязательная психотерапия — КПТ или схема-терапия',
+          'Полное медицинское обследование',
+          'Обсуждение с врачом возможной медикаментозной поддержки',
+          'Радикальное снижение рабочей нагрузки после отпуска',
+          'Если работодатель не идёт навстречу — серьёзно рассмотрите смену работы',
+          'Практики глубокого восстановления: ретрит, санаторий',
+        ],
+        'en': [
+          'URGENT: take at least 2-3 weeks vacation',
+          'Mandatory psychotherapy — CBT or schema therapy',
+          'Complete medical examination',
+          'Discuss possible medication support with doctor',
+          'Radical workload reduction after vacation',
+          'If employer does not cooperate — seriously consider changing jobs',
+          'Deep recovery practices: retreat, sanatorium',
+        ],
+      },
+      tryToday: {
+        'ru': 'Позвоните близкому человеку и честно расскажите, как вы себя чувствуете. Вам нужна поддержка, и вы заслуживаете её получить.',
+        'en': 'Call a loved one and honestly tell them how you feel. You need support, and you deserve to receive it.',
+      },
+      inspiringConclusion: {
+        'ru': 'Выгорание — это не ваша слабость. Это сигнал, что система перегружена. Восстановление возможно, но требует времени и профессиональной помощи. Вы не одиноки в этом.',
+        'en': 'Burnout is not your weakness. It is a signal that the system is overloaded. Recovery is possible but requires time and professional help. You are not alone in this.',
+      },
+    ),
+
+    'profile_critical': TestProfile(
+      id: 'profile_critical',
+      name: {
+        'ru': 'Критическое выгорание',
+        'en': 'Critical Burnout',
+      },
+      description: {
+        'ru': 'У вас критический уровень профессионального выгорания. Это состояние, угрожающее вашему физическому и психическому здоровью. Требуются немедленные меры.',
+        'en': 'You have a critical level of professional burnout. This condition threatens your physical and mental health. Immediate action is required.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают экстремально высокий уровень по большинству или всем компонентам выгорания. Это кризисное состояние.',
+        'en': 'Your answers show extremely high levels across most or all burnout components. This is a crisis state.',
+      },
+      strengths: {
+        'ru': [
+          'Вы прошли этот тест — значит, ищете выход',
+          'Осознание критичности ситуации — первый шаг',
+          'Готовность к радикальным изменениям',
+        ],
+        'en': [
+          'You took this test — meaning you are looking for a way out',
+          'Awareness of the critical situation — first step',
+          'Readiness for radical changes',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Полное эмоциональное и физическое истощение',
+          'Серьёзные риски для здоровья',
+          'Глубокий экзистенциальный кризис',
+          'Возможная депрессия или тревожное расстройство',
+          'Риск необратимых последствий без вмешательства',
+        ],
+        'en': [
+          'Complete emotional and physical exhaustion',
+          'Serious health risks',
+          'Deep existential crisis',
+          'Possible depression or anxiety disorder',
+          'Risk of irreversible consequences without intervention',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'НЕМЕДЛЕННО: обратитесь к врачу — терапевту, психиатру, психотерапевту',
+          'Рассмотрите возможность больничного листа',
+          'Категорически противопоказано "перетерпеть"',
+          'Возможна необходимость медикаментозной поддержки',
+          'Длительный отпуск или sabbatical минимум месяц',
+          'После восстановления: серьёзный пересмотр карьеры и образа жизни',
+          'Помните: ваше здоровье важнее любой работы',
+        ],
+        'en': [
+          'IMMEDIATELY: see a doctor — general practitioner, psychiatrist, psychotherapist',
+          'Consider sick leave',
+          'Categorically contraindicated to "push through"',
+          'Medication support may be necessary',
+          'Long vacation or sabbatical for at least a month',
+          'After recovery: serious career and lifestyle review',
+          'Remember: your health is more important than any job',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишитесь на приём к врачу (терапевт, психотерапевт или психиатр). Это самое важное, что вы можете сделать прямо сейчас.',
+        'en': 'Make an appointment with a doctor (general practitioner, psychotherapist, or psychiatrist). This is the most important thing you can do right now.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы дошли до точки, где продолжать без изменений невозможно. Но это не конец — это поворотная точка. Тысячи людей прошли через критическое выгорание и нашли новую, более здоровую жизнь. Вы тоже сможете.',
+        'en': 'You have reached a point where continuing without change is impossible. But this is not the end — it is a turning point. Thousands of people have gone through critical burnout and found a new, healthier life. You can too.',
+      },
+    ),
+  };
 }

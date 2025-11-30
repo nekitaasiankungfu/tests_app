@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for Social Battery Test
 /// ⚠️ IMPORTANT: Class name is SocialBatteryData (WITHOUT "Test" suffix)
@@ -1060,4 +1061,839 @@ class SocialBatteryData {
       ),
     ];
   }
+
+  /// Определить профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_balanced';
+
+    // Вычисляем средний процент
+    final avgPercentage = percentages.values.reduce((a, b) => a + b) / percentages.length;
+
+    // Определяем доминирующий фактор
+    String? dominantFactor;
+    double maxValue = 0;
+    for (final entry in percentages.entries) {
+      if (entry.value > maxValue) {
+        maxValue = entry.value;
+        dominantFactor = entry.key;
+      }
+    }
+
+    // Профили на основе уровней
+    if (avgPercentage <= 25) {
+      return 'profile_extrovert';
+    } else if (avgPercentage <= 40) {
+      // Смешанный профиль - смотрим доминанту
+      if (dominantFactor == 'recharge_method') {
+        return 'profile_social_recharger';
+      } else if (dominantFactor == 'interaction_preference') {
+        return 'profile_group_lover';
+      }
+      return 'profile_ambivert_social';
+    } else if (avgPercentage <= 60) {
+      // Сбалансированный профиль
+      if (dominantFactor == 'capacity_flexibility' && maxValue > 60) {
+        return 'profile_adaptive';
+      } else if (dominantFactor == 'social_anxiety' && maxValue > 60) {
+        return 'profile_social_anxious';
+      }
+      return 'profile_balanced';
+    } else if (avgPercentage <= 75) {
+      // Интровертные тенденции
+      if (dominantFactor == 'solitude_need') {
+        return 'profile_solitude_seeker';
+      } else if (dominantFactor == 'depletion_rate') {
+        return 'profile_quick_drainer';
+      }
+      return 'profile_ambivert_introvert';
+    } else if (avgPercentage <= 85) {
+      return 'profile_introvert';
+    } else {
+      return 'profile_deep_introvert';
+    }
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  /// Все доступные профили
+  static const Map<String, TestProfile> _profiles = {
+    'profile_extrovert': TestProfile(
+      id: 'profile_extrovert',
+      name: {
+        'ru': 'Социальный экстраверт',
+        'en': 'Social Extrovert',
+      },
+      description: {
+        'ru': 'Вы черпаете энергию из социального взаимодействия. Общение заряжает вашу батарею, а не истощает её.',
+        'en': 'You draw energy from social interaction. Socializing charges your battery rather than draining it.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают низкую скорость социального истощения, предпочтение групповой активности и быстрое восстановление через общение.',
+        'en': 'Your answers show low social depletion rate, preference for group activities, and quick recharge through socializing.',
+      },
+      strengths: {
+        'ru': [
+          'Естественная лёгкость в общении',
+          'Способность работать в команде',
+          'Быстрое установление контактов',
+          'Высокая социальная выносливость',
+          'Умение создавать атмосферу',
+        ],
+        'en': [
+          'Natural ease in communication',
+          'Ability to work in teams',
+          'Quick rapport building',
+          'High social endurance',
+          'Creating welcoming atmosphere',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Дискомфорт в одиночестве',
+          'Риск зависимости от внешней стимуляции',
+          'Возможные поверхностные связи',
+          'Трудности с глубокой рефлексией',
+        ],
+        'en': [
+          'Discomfort when alone',
+          'Risk of dependence on external stimulation',
+          'Potentially superficial connections',
+          'Difficulty with deep reflection',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте осознанное одиночество 15-30 минут в день',
+          'Развивайте глубокие связи, а не только широкие',
+          'Уважайте границы интровертов вокруг вас',
+          'Учитесь находить удовольствие в тишине',
+          'Планируйте время для саморефлексии',
+        ],
+        'en': [
+          'Practice mindful solitude 15-30 minutes daily',
+          'Develop deep connections, not just wide ones',
+          'Respect boundaries of introverts around you',
+          'Learn to enjoy silence',
+          'Schedule time for self-reflection',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите 20 минут в тишине без гаджетов — просто побудьте наедине со своими мыслями.',
+        'en': 'Spend 20 minutes in silence without gadgets — just be alone with your thoughts.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша социальная энергия — это дар! Используйте её для создания связей, но не забывайте, что глубина важнее ширины.',
+        'en': 'Your social energy is a gift! Use it to create connections, but remember that depth matters more than breadth.',
+      },
+    ),
+
+    'profile_social_recharger': TestProfile(
+      id: 'profile_social_recharger',
+      name: {
+        'ru': 'Социальный подзарядчик',
+        'en': 'Social Recharger',
+      },
+      description: {
+        'ru': 'Вы восстанавливаете энергию через социальное взаимодействие. Правильные люди — ваша энергостанция.',
+        'en': 'You recharge through social interaction. The right people are your power station.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш способ восстановления — общение с правильными людьми, а не одиночество.',
+        'en': 'Your recharge method is socializing with the right people, not solitude.',
+      },
+      strengths: {
+        'ru': [
+          'Ценная способность "питаться" энергией людей',
+          'Умение выбирать качественное окружение',
+          'Высокая социальная адаптивность',
+          'Способность быстро восстанавливаться',
+        ],
+        'en': [
+          'Valuable ability to draw energy from people',
+          'Skill in choosing quality environment',
+          'High social adaptability',
+          'Quick recovery ability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Зависимость от социальной среды',
+          'Трудности в изоляции',
+          'Риск истощения от неправильных людей',
+        ],
+        'en': [
+          'Dependence on social environment',
+          'Difficulties in isolation',
+          'Risk of depletion from wrong people',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Определите своих "энергетических доноров"',
+          'Избегайте людей, которые вас истощают',
+          'Создайте резервный способ восстановления для изоляции',
+          'Инвестируйте в качественные отношения',
+        ],
+        'en': [
+          'Identify your "energy donors"',
+          'Avoid people who drain you',
+          'Create backup recharge method for isolation',
+          'Invest in quality relationships',
+        ],
+      },
+      tryToday: {
+        'ru': 'Позвоните человеку, который обычно поднимает вам настроение.',
+        'en': 'Call someone who usually lifts your mood.',
+      },
+      inspiringConclusion: {
+        'ru': 'Правильные люди — это лучшая инвестиция в вашу энергию!',
+        'en': 'The right people are the best investment in your energy!',
+      },
+    ),
+
+    'profile_group_lover': TestProfile(
+      id: 'profile_group_lover',
+      name: {
+        'ru': 'Командный игрок',
+        'en': 'Group Lover',
+      },
+      description: {
+        'ru': 'Вы предпочитаете групповое общение индивидуальному. В команде вы расцветаете.',
+        'en': 'You prefer group interaction to one-on-one. You thrive in teams.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши предпочтения указывают на комфорт в групповых ситуациях.',
+        'en': 'Your preferences indicate comfort in group situations.',
+      },
+      strengths: {
+        'ru': [
+          'Умение работать в команде',
+          'Навык управления групповой динамикой',
+          'Способность объединять людей',
+          'Комфорт в публичных выступлениях',
+        ],
+        'en': [
+          'Team collaboration skills',
+          'Group dynamics management',
+          'Ability to unite people',
+          'Comfort in public speaking',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможная потеря глубины связей',
+          'Дискомфорт в интимных беседах',
+          'Риск "растворения" в группе',
+        ],
+        'en': [
+          'Possible loss of connection depth',
+          'Discomfort in intimate conversations',
+          'Risk of getting lost in the group',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте глубокие разговоры один на один',
+          'Развивайте индивидуальные связи',
+          'Сохраняйте свою идентичность в группе',
+        ],
+        'en': [
+          'Practice deep one-on-one conversations',
+          'Develop individual connections',
+          'Maintain your identity in the group',
+        ],
+      },
+      tryToday: {
+        'ru': 'Назначьте встречу один на один с близким другом.',
+        'en': 'Schedule a one-on-one meeting with a close friend.',
+      },
+      inspiringConclusion: {
+        'ru': 'Команда — это сила, но глубокие связи — это фундамент!',
+        'en': 'Team is power, but deep connections are the foundation!',
+      },
+    ),
+
+    'profile_ambivert_social': TestProfile(
+      id: 'profile_ambivert_social',
+      name: {
+        'ru': 'Социальный амбиверт',
+        'en': 'Social Ambivert',
+      },
+      description: {
+        'ru': 'Вы амбиверт с социальным уклоном. Легко общаетесь, но цените и личное время.',
+        'en': 'You\'re an ambivert with a social lean. You socialize easily but also value personal time.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши результаты показывают баланс с небольшим уклоном к экстраверсии.',
+        'en': 'Your results show balance with a slight lean toward extroversion.',
+      },
+      strengths: {
+        'ru': [
+          'Гибкость в социальных ситуациях',
+          'Способность адаптироваться к разным форматам',
+          'Баланс между активностью и отдыхом',
+          'Понимание обеих сторон',
+        ],
+        'en': [
+          'Flexibility in social situations',
+          'Ability to adapt to different formats',
+          'Balance between activity and rest',
+          'Understanding both sides',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Иногда трудно понять свои истинные потребности',
+          'Риск переоценить свою выносливость',
+        ],
+        'en': [
+          'Sometimes hard to understand true needs',
+          'Risk of overestimating endurance',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Следите за сигналами усталости',
+          'Не бойтесь отказываться от мероприятий',
+          'Используйте свою гибкость осознанно',
+        ],
+        'en': [
+          'Watch for fatigue signals',
+          'Don\'t be afraid to decline events',
+          'Use your flexibility mindfully',
+        ],
+      },
+      tryToday: {
+        'ru': 'Прислушайтесь к себе: чего вам сейчас хочется — общения или тишины?',
+        'en': 'Listen to yourself: what do you want now — socializing or quiet?',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша гибкость — суперсила! Используйте её мудро.',
+        'en': 'Your flexibility is a superpower! Use it wisely.',
+      },
+    ),
+
+    'profile_adaptive': TestProfile(
+      id: 'profile_adaptive',
+      name: {
+        'ru': 'Адаптивный социализатор',
+        'en': 'Adaptive Socializer',
+      },
+      description: {
+        'ru': 'У вас высокая гибкость социальной батареи. Вы можете адаптироваться к разным ситуациям.',
+        'en': 'You have high social battery flexibility. You can adapt to various situations.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваша высокая гибкость батареи позволяет эффективно функционировать в разных социальных контекстах.',
+        'en': 'Your high battery flexibility allows effective functioning in different social contexts.',
+      },
+      strengths: {
+        'ru': [
+          'Способность подстраиваться под обстоятельства',
+          'Умение находить баланс в любой ситуации',
+          'Высокая социальная осознанность',
+          'Эффективное управление энергией',
+        ],
+        'en': [
+          'Ability to adjust to circumstances',
+          'Finding balance in any situation',
+          'High social awareness',
+          'Effective energy management',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск чрезмерной адаптации под других',
+          'Возможная потеря собственных предпочтений',
+        ],
+        'en': [
+          'Risk of over-adapting to others',
+          'Possible loss of own preferences',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Сохраняйте свои базовые потребности',
+          'Не забывайте о себе, помогая другим',
+          'Используйте адаптивность стратегически',
+        ],
+        'en': [
+          'Maintain your basic needs',
+          'Don\'t forget yourself while helping others',
+          'Use adaptability strategically',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишите 3 свои истинные социальные предпочтения.',
+        'en': 'Write down 3 of your true social preferences.',
+      },
+      inspiringConclusion: {
+        'ru': 'Адаптивность — это искусство! Не теряйте себя в процессе.',
+        'en': 'Adaptability is an art! Don\'t lose yourself in the process.',
+      },
+    ),
+
+    'profile_social_anxious': TestProfile(
+      id: 'profile_social_anxious',
+      name: {
+        'ru': 'Социально тревожный',
+        'en': 'Socially Anxious',
+      },
+      description: {
+        'ru': 'Социальная тревожность влияет на вашу энергию. Общение вызывает напряжение.',
+        'en': 'Social anxiety affects your energy. Socializing causes tension.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокий уровень социальной тревожности истощает вашу батарею быстрее.',
+        'en': 'High social anxiety depletes your battery faster.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокая эмпатия',
+          'Внимательность к деталям',
+          'Способность к глубоким связям',
+          'Осторожность в отношениях',
+        ],
+        'en': [
+          'Deep empathy',
+          'Attention to details',
+          'Capacity for deep connections',
+          'Caution in relationships',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Избегание социальных ситуаций',
+          'Чрезмерный самоанализ',
+          'Истощение от волнения',
+          'Трудности с новыми знакомствами',
+        ],
+        'en': [
+          'Avoidance of social situations',
+          'Excessive self-analysis',
+          'Depletion from worry',
+          'Difficulty with new acquaintances',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте техники релаксации перед событиями',
+          'Начинайте с небольших групп',
+          'Работайте с терапевтом при необходимости',
+          'Создавайте "зону комфорта" на мероприятиях',
+          'Фокусируйтесь на других, а не на себе',
+        ],
+        'en': [
+          'Practice relaxation techniques before events',
+          'Start with small groups',
+          'Work with a therapist if needed',
+          'Create a comfort zone at events',
+          'Focus on others, not yourself',
+        ],
+      },
+      tryToday: {
+        'ru': 'Попробуйте технику 4-7-8: вдох 4 сек, задержка 7 сек, выдох 8 сек.',
+        'en': 'Try the 4-7-8 technique: inhale 4 sec, hold 7 sec, exhale 8 sec.',
+      },
+      inspiringConclusion: {
+        'ru': 'Тревога — не приговор. Она может стать вашим учителем на пути к уверенности.',
+        'en': 'Anxiety is not a sentence. It can become your teacher on the path to confidence.',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': 'Сбалансированный амбиверт',
+        'en': 'Balanced Ambivert',
+      },
+      description: {
+        'ru': 'У вас идеальный баланс между потребностью в общении и одиночестве.',
+        'en': 'You have an ideal balance between need for socializing and solitude.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши результаты показывают равномерное распределение по всем шкалам.',
+        'en': 'Your results show even distribution across all scales.',
+      },
+      strengths: {
+        'ru': [
+          'Естественный баланс социальной энергии',
+          'Способность понимать разные типы людей',
+          'Гибкость без потери идентичности',
+          'Умение отдыхать по-разному',
+        ],
+        'en': [
+          'Natural social energy balance',
+          'Ability to understand different types of people',
+          'Flexibility without losing identity',
+          'Ability to rest in different ways',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Иногда трудно определить приоритеты',
+          'Риск распыления между режимами',
+        ],
+        'en': [
+          'Sometimes hard to determine priorities',
+          'Risk of spreading between modes',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Доверяйте своим инстинктам',
+          'Экспериментируйте с разными режимами',
+          'Помогайте другим находить баланс',
+        ],
+        'en': [
+          'Trust your instincts',
+          'Experiment with different modes',
+          'Help others find balance',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите то, что интуитивно кажется правильным — общение или тишину.',
+        'en': 'Choose what feels intuitively right — socializing or quiet.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваш баланс — редкий дар! Цените его и помогайте другим найти свой.',
+        'en': 'Your balance is a rare gift! Cherish it and help others find theirs.',
+      },
+    ),
+
+    'profile_solitude_seeker': TestProfile(
+      id: 'profile_solitude_seeker',
+      name: {
+        'ru': 'Искатель одиночества',
+        'en': 'Solitude Seeker',
+      },
+      description: {
+        'ru': 'Вы находите силу в одиночестве. Тишина — ваш лучший друг для восстановления.',
+        'en': 'You find strength in solitude. Quiet is your best friend for recovery.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокая потребность в одиночестве — ключевая характеристика вашего профиля.',
+        'en': 'High need for solitude is a key characteristic of your profile.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокая саморефлексия',
+          'Независимость',
+          'Способность к концентрации',
+          'Богатый внутренний мир',
+          'Креативность',
+        ],
+        'en': [
+          'Deep self-reflection',
+          'Independence',
+          'Ability to concentrate',
+          'Rich inner world',
+          'Creativity',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск изоляции',
+          'Возможные трудности с командой',
+          'Дискомфорт в шумных компаниях',
+        ],
+        'en': [
+          'Risk of isolation',
+          'Possible team difficulties',
+          'Discomfort in noisy groups',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Поддерживайте несколько близких связей',
+          'Не изолируйтесь полностью',
+          'Найдите работу с автономией',
+          'Создайте комфортное личное пространство',
+        ],
+        'en': [
+          'Maintain several close connections',
+          'Don\'t isolate completely',
+          'Find work with autonomy',
+          'Create comfortable personal space',
+        ],
+      },
+      tryToday: {
+        'ru': 'Напишите сообщение близкому другу — даже интровертам нужны связи.',
+        'en': 'Text a close friend — even introverts need connections.',
+      },
+      inspiringConclusion: {
+        'ru': 'Одиночество — ваша суперсила для восстановления. Используйте её мудро!',
+        'en': 'Solitude is your superpower for recovery. Use it wisely!',
+      },
+    ),
+
+    'profile_quick_drainer': TestProfile(
+      id: 'profile_quick_drainer',
+      name: {
+        'ru': 'Быстро истощающийся',
+        'en': 'Quick Drainer',
+      },
+      description: {
+        'ru': 'Ваша социальная батарея истощается быстро. Нужны частые перерывы и стратегия.',
+        'en': 'Your social battery drains quickly. You need frequent breaks and strategy.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокая скорость истощения — главный фактор вашего социального профиля.',
+        'en': 'High depletion rate is the main factor of your social profile.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокое погружение в разговоры',
+          'Качество общения важнее количества',
+          'Осознанный выбор социальных событий',
+          'Ценность личного времени',
+        ],
+        'en': [
+          'Deep immersion in conversations',
+          'Quality over quantity in socializing',
+          'Conscious choice of social events',
+          'Value of personal time',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Трудности с длинными мероприятиями',
+          'Риск пропускать важные события',
+          'Потенциальное непонимание от других',
+        ],
+        'en': [
+          'Difficulty with long events',
+          'Risk of missing important events',
+          'Potential misunderstanding from others',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Планируйте перерывы заранее',
+          'Всегда имейте запасной план ухода',
+          'Объясняйте близким свои потребности',
+          'Выбирайте качество, а не количество',
+          'Используйте стратегию "прийти раньше — уйти раньше"',
+        ],
+        'en': [
+          'Plan breaks in advance',
+          'Always have an exit strategy',
+          'Explain your needs to close ones',
+          'Choose quality over quantity',
+          'Use "arrive early — leave early" strategy',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запланируйте следующее мероприятие с чётким временем ухода.',
+        'en': 'Plan your next event with a clear exit time.',
+      },
+      inspiringConclusion: {
+        'ru': 'Быстрое истощение — не слабость, а особенность. Управляйте ею стратегически!',
+        'en': 'Quick drainage is not a weakness but a feature. Manage it strategically!',
+      },
+    ),
+
+    'profile_ambivert_introvert': TestProfile(
+      id: 'profile_ambivert_introvert',
+      name: {
+        'ru': 'Интровертный амбиверт',
+        'en': 'Introverted Ambivert',
+      },
+      description: {
+        'ru': 'Вы амбиверт с интровертным уклоном. Общаться умеете, но предпочитаете тишину.',
+        'en': 'You\'re an ambivert with an introvert lean. You can socialize but prefer quiet.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши результаты показывают баланс с уклоном к интроверсии.',
+        'en': 'Your results show balance with a lean toward introversion.',
+      },
+      strengths: {
+        'ru': [
+          'Выборочная социализация',
+          'Глубокие связи',
+          'Способность быть одному и с другими',
+          'Хорошее понимание границ',
+        ],
+        'en': [
+          'Selective socializing',
+          'Deep connections',
+          'Ability to be alone and with others',
+          'Good understanding of boundaries',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Иногда недооценка социальной потребности',
+          'Риск излишней изоляции',
+        ],
+        'en': [
+          'Sometimes underestimating social need',
+          'Risk of excessive isolation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Планируйте социальные события заранее',
+          'Не отменяйте планы в последний момент',
+          'Находите комфортные форматы общения',
+        ],
+        'en': [
+          'Plan social events in advance',
+          'Don\'t cancel plans at the last moment',
+          'Find comfortable communication formats',
+        ],
+      },
+      tryToday: {
+        'ru': 'Согласитесь на одно приглашение, которое хотели отклонить.',
+        'en': 'Accept one invitation you wanted to decline.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваш интровертный баланс даёт глубину. Не забывайте иногда выходить на свет!',
+        'en': 'Your introverted balance gives depth. Don\'t forget to come into the light sometimes!',
+      },
+    ),
+
+    'profile_introvert': TestProfile(
+      id: 'profile_introvert',
+      name: {
+        'ru': 'Классический интроверт',
+        'en': 'Classic Introvert',
+      },
+      description: {
+        'ru': 'Вы восстанавливаетесь в одиночестве. Социальная батарея требует времени для перезарядки.',
+        'en': 'You recover in solitude. Your social battery needs time to recharge.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокие показатели по истощению, потребности в одиночестве и предпочтению малых групп.',
+        'en': 'High scores in depletion, solitude need, and preference for small groups.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокое мышление',
+          'Сильная концентрация',
+          'Качественные глубокие связи',
+          'Независимость',
+          'Творческие способности',
+        ],
+        'en': [
+          'Deep thinking',
+          'Strong concentration',
+          'Quality deep connections',
+          'Independence',
+          'Creative abilities',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Трудности с networking',
+          'Дискомфорт в больших группах',
+          'Возможная недооценка окружающими',
+          'Риск упустить возможности',
+        ],
+        'en': [
+          'Networking difficulties',
+          'Discomfort in large groups',
+          'Possible underestimation by others',
+          'Risk of missing opportunities',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Создайте комфортную среду для работы',
+          'Выбирайте камерные мероприятия',
+          'Готовьтесь к социальным событиям заранее',
+          'Найдите свой оптимальный режим общения',
+          'Защищайте своё время для восстановления',
+        ],
+        'en': [
+          'Create comfortable work environment',
+          'Choose intimate events',
+          'Prepare for social events in advance',
+          'Find your optimal communication mode',
+          'Protect your recovery time',
+        ],
+      },
+      tryToday: {
+        'ru': 'Создайте ритуал восстановления после социальных событий.',
+        'en': 'Create a recovery ritual after social events.',
+      },
+      inspiringConclusion: {
+        'ru': 'Интроверсия — это не слабость, а источник глубины и силы. Гордитесь собой!',
+        'en': 'Introversion is not a weakness but a source of depth and strength. Be proud!',
+      },
+    ),
+
+    'profile_deep_introvert': TestProfile(
+      id: 'profile_deep_introvert',
+      name: {
+        'ru': 'Глубокий интроверт',
+        'en': 'Deep Introvert',
+      },
+      description: {
+        'ru': 'Ваша социальная батарея очень чувствительна. Вам нужно значительное время в тишине.',
+        'en': 'Your social battery is very sensitive. You need significant quiet time.',
+      },
+      whyThisProfile: {
+        'ru': 'Очень высокие показатели по всем интровертным шкалам.',
+        'en': 'Very high scores across all introvert scales.',
+      },
+      strengths: {
+        'ru': [
+          'Глубочайшая рефлексия',
+          'Сильнейшая концентрация',
+          'Редкие, но очень глубокие связи',
+          'Полная независимость',
+          'Богатый внутренний мир',
+        ],
+        'en': [
+          'Deepest reflection',
+          'Strongest concentration',
+          'Rare but very deep connections',
+          'Complete independence',
+          'Rich inner world',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Высокий риск изоляции',
+          'Трудности в современном социальном мире',
+          'Потенциальное одиночество',
+          'Возможные проблемы с карьерой',
+        ],
+        'en': [
+          'High isolation risk',
+          'Difficulties in modern social world',
+          'Potential loneliness',
+          'Possible career challenges',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Обязательно поддерживайте хотя бы 2-3 близких связи',
+          'Найдите удалённую работу или автономную роль',
+          'Используйте асинхронное общение (письма, сообщения)',
+          'Планируйте минимально необходимые социальные контакты',
+          'Рассмотрите консультацию психолога для баланса',
+        ],
+        'en': [
+          'Definitely maintain at least 2-3 close connections',
+          'Find remote work or autonomous role',
+          'Use asynchronous communication (emails, messages)',
+          'Plan minimally necessary social contacts',
+          'Consider therapy for balance',
+        ],
+      },
+      tryToday: {
+        'ru': 'Отправьте голосовое сообщение близкому человеку вместо текста.',
+        'en': 'Send a voice message to a close person instead of text.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша глубина — редкий дар. Не теряйте связь с миром, оставаясь верным себе.',
+        'en': 'Your depth is a rare gift. Don\'t lose connection with the world while staying true to yourself.',
+      },
+    ),
+  };
 }

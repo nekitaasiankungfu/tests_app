@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 class LoveProfileData {
   static TestModel getLoveProfileTest() {
@@ -938,6 +939,1129 @@ class LoveProfileData {
 
     return descriptions[factorId]?[languageCode] ?? '';
   }
+
+  /// Определяет профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_developing';
+
+    // Находим средний процент
+    final avgPercentage = percentages.values.reduce((a, b) => a + b) / percentages.length;
+
+    // Находим самый высокий и низкий факторы
+    String? highestFactor;
+    String? lowestFactor;
+    double highestValue = 0;
+    double lowestValue = 100;
+
+    for (final entry in percentages.entries) {
+      if (entry.value > highestValue) {
+        highestValue = entry.value;
+        highestFactor = entry.key;
+      }
+      if (entry.value < lowestValue) {
+        lowestValue = entry.value;
+        lowestFactor = entry.key;
+      }
+    }
+
+    // Проверяем гармоничный профиль (все факторы >= 70%)
+    final allHigh = percentages.values.every((v) => v >= 70);
+    if (allHigh) return 'profile_harmonious';
+
+    // Проверяем сбалансированный профиль (все факторы 50-70%)
+    final allBalanced = percentages.values.every((v) => v >= 50 && v < 70);
+    if (allBalanced) return 'profile_balanced';
+
+    // Определяем профиль по доминирующему фактору
+    if (highestValue >= 70 && highestFactor != null) {
+      switch (highestFactor) {
+        case 'BP':
+          return 'profile_secure_base';
+        case 'IU':
+          return 'profile_deep_connector';
+        case 'ST':
+          return 'profile_passionate_lover';
+        case 'OG':
+          return 'profile_committed_partner';
+        case 'DR':
+          return 'profile_trustful_soul';
+        case 'KK':
+          return 'profile_skilled_communicator';
+      }
+    }
+
+    // Определяем профиль по слабому месту
+    if (lowestValue < 40 && lowestFactor != null) {
+      switch (lowestFactor) {
+        case 'BP':
+          return 'profile_attachment_seeker';
+        case 'IU':
+          return 'profile_guarded_heart';
+        case 'ST':
+          return 'profile_intimacy_shy';
+        case 'OG':
+          return 'profile_freedom_lover';
+        case 'DR':
+          return 'profile_trust_builder';
+        case 'KK':
+          return 'profile_conflict_avoider';
+      }
+    }
+
+    // По среднему уровню
+    if (avgPercentage >= 60) return 'profile_growing';
+    if (avgPercentage >= 40) return 'profile_developing';
+    return 'profile_early_stage';
+  }
+
+  /// Возвращает профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  static final Map<String, TestProfile> _profiles = {
+    // === Гармоничные профили ===
+    'profile_harmonious': TestProfile(
+      id: 'profile_harmonious',
+      name: {
+        'ru': 'Гармоничный партнёр',
+        'en': 'Harmonious Partner',
+      },
+      description: {
+        'ru': 'Вы демонстрируете высокий уровень развития во всех аспектах отношений. Ваша способность сочетать близость, страсть, доверие и коммуникацию создаёт прочный фундамент для счастливых отношений.',
+        'en': 'You demonstrate a high level of development in all aspects of relationships. Your ability to combine intimacy, passion, trust, and communication creates a solid foundation for happy relationships.',
+      },
+      whyThisProfile: {
+        'ru': 'Все ваши показатели находятся на высоком уровне (70%+), что говорит о зрелом подходе к отношениям.',
+        'en': 'All your scores are at a high level (70%+), indicating a mature approach to relationships.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокое понимание себя и партнёра',
+          'Умение создавать безопасное пространство',
+          'Баланс между близостью и автономией',
+          'Эффективное разрешение конфликтов',
+          'Поддержание страсти в долгосрочных отношениях',
+        ],
+        'en': [
+          'Deep understanding of self and partner',
+          'Ability to create safe space',
+          'Balance between closeness and autonomy',
+          'Effective conflict resolution',
+          'Maintaining passion in long-term relationships',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Высокие ожидания от партнёра',
+          'Риск идеализации отношений',
+        ],
+        'en': [
+          'High expectations of partner',
+          'Risk of idealizing relationships',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Продолжайте развивать осознанность в отношениях',
+          'Делитесь опытом с другими парами',
+          'Поддерживайте баланс между "мы" и "я"',
+          'Регулярно обновляйте совместные цели',
+        ],
+        'en': [
+          'Continue developing relationship awareness',
+          'Share experience with other couples',
+          'Maintain balance between "we" and "I"',
+          'Regularly update shared goals',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поблагодарите партнёра за конкретный вклад в ваши отношения.',
+        'en': 'Thank your partner for a specific contribution to your relationship.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность любить — это дар, который вы можете передавать дальше. Вы вдохновляете других своим примером.',
+        'en': 'Your ability to love is a gift you can pass on. You inspire others by your example.',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': 'Сбалансированный партнёр',
+        'en': 'Balanced Partner',
+      },
+      description: {
+        'ru': 'У вас хороший баланс между различными аспектами отношений. Вы демонстрируете стабильность и есть потенциал для дальнейшего роста.',
+        'en': 'You have a good balance between different aspects of relationships. You demonstrate stability with potential for further growth.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели находятся в среднем диапазоне (50-70%), что указывает на стабильную базу.',
+        'en': 'Your scores are in the middle range (50-70%), indicating a stable foundation.',
+      },
+      strengths: {
+        'ru': [
+          'Стабильный эмоциональный фон',
+          'Готовность к развитию',
+          'Здоровые базовые навыки общения',
+          'Способность к компромиссам',
+        ],
+        'en': [
+          'Stable emotional background',
+          'Readiness for development',
+          'Healthy basic communication skills',
+          'Ability to compromise',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможна зона комфорта без развития',
+          'Недостаточная глубина в некоторых аспектах',
+        ],
+        'en': [
+          'Possible comfort zone without growth',
+          'Insufficient depth in some aspects',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Определите области для целенаправленного развития',
+          'Практикуйте более глубокое эмоциональное раскрытие',
+          'Экспериментируйте с новыми формами близости',
+          'Регулярно обсуждайте состояние отношений',
+        ],
+        'en': [
+          'Identify areas for targeted development',
+          'Practice deeper emotional disclosure',
+          'Experiment with new forms of intimacy',
+          'Regularly discuss relationship status',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите один аспект отношений и уделите ему особое внимание сегодня.',
+        'en': 'Choose one aspect of relationships and give it special attention today.',
+      },
+      inspiringConclusion: {
+        'ru': 'У вас есть всё необходимое для глубоких, счастливых отношений. Каждый шаг к осознанности делает вас ближе к партнёру.',
+        'en': 'You have everything needed for deep, happy relationships. Every step toward awareness brings you closer to your partner.',
+      },
+    ),
+
+    // === Профили по доминирующему фактору ===
+    'profile_secure_base': TestProfile(
+      id: 'profile_secure_base',
+      name: {
+        'ru': 'Надёжная опора',
+        'en': 'Secure Base',
+      },
+      description: {
+        'ru': 'Ваша сила — в способности создавать чувство безопасности и стабильности. Вы умеете быть рядом, не теряя себя, и поддерживать партнёра без созависимости.',
+        'en': 'Your strength lies in the ability to create a sense of safety and stability. You can be close without losing yourself and support your partner without codependency.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокий показатель безопасной привязанности выделяет вас как надёжного партнёра.',
+        'en': 'High secure attachment score makes you stand out as a reliable partner.',
+      },
+      strengths: {
+        'ru': [
+          'Эмоциональная устойчивость',
+          'Умение давать пространство',
+          'Спокойствие в конфликтах',
+          'Здоровая самооценка',
+        ],
+        'en': [
+          'Emotional stability',
+          'Ability to give space',
+          'Calmness in conflicts',
+          'Healthy self-esteem',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может казаться эмоционально отстранённым',
+          'Риск недооценивать потребности партнёра в близости',
+        ],
+        'en': [
+          'May seem emotionally distant',
+          'Risk of underestimating partner\'s intimacy needs',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Активнее проявляйте тёплые эмоции',
+          'Инициируйте разговоры о чувствах',
+          'Показывайте уязвимость партнёру',
+        ],
+        'en': [
+          'More actively express warm emotions',
+          'Initiate conversations about feelings',
+          'Show vulnerability to your partner',
+        ],
+      },
+      tryToday: {
+        'ru': 'Расскажите партнёру о своих переживаниях — даже если они кажутся незначительными.',
+        'en': 'Tell your partner about your feelings — even if they seem insignificant.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша внутренняя стабильность — это дар для любых отношений. Не бойтесь открываться глубже.',
+        'en': 'Your inner stability is a gift for any relationship. Don\'t be afraid to open up deeper.',
+      },
+    ),
+
+    'profile_deep_connector': TestProfile(
+      id: 'profile_deep_connector',
+      name: {
+        'ru': 'Глубокий соединитель',
+        'en': 'Deep Connector',
+      },
+      description: {
+        'ru': 'Вы обладаете даром глубокой эмоциональной связи. Ваша открытость и способность делиться уязвимостью создают особенную близость в отношениях.',
+        'en': 'You have the gift of deep emotional connection. Your openness and ability to share vulnerability create special intimacy in relationships.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокий показатель интимности и уязвимости указывает на вашу эмоциональную зрелость.',
+        'en': 'High intimacy and vulnerability score indicates your emotional maturity.',
+      },
+      strengths: {
+        'ru': [
+          'Эмоциональная открытость',
+          'Глубокое понимание чувств',
+          'Способность слушать и сопереживать',
+          'Аутентичность в общении',
+        ],
+        'en': [
+          'Emotional openness',
+          'Deep understanding of feelings',
+          'Ability to listen and empathize',
+          'Authenticity in communication',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Чувствительность к отвержению',
+          'Риск эмоционального истощения',
+        ],
+        'en': [
+          'Sensitivity to rejection',
+          'Risk of emotional exhaustion',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте навыки эмоциональной саморегуляции',
+          'Учитесь восстанавливаться после глубоких разговоров',
+          'Балансируйте открытость с самозащитой',
+        ],
+        'en': [
+          'Develop emotional self-regulation skills',
+          'Learn to recover after deep conversations',
+          'Balance openness with self-protection',
+        ],
+      },
+      tryToday: {
+        'ru': 'Практикуйте технику "контейнирования" — примите эмоции партнёра, не неся их как свои.',
+        'en': 'Practice the "containing" technique — accept your partner\'s emotions without carrying them as your own.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность к глубокой связи — редкий дар. Берегите себя, продолжая дарить близость.',
+        'en': 'Your ability for deep connection is a rare gift. Take care of yourself while continuing to offer intimacy.',
+      },
+    ),
+
+    'profile_passionate_lover': TestProfile(
+      id: 'profile_passionate_lover',
+      name: {
+        'ru': 'Страстный любовник',
+        'en': 'Passionate Lover',
+      },
+      description: {
+        'ru': 'Ваша сила — в способности поддерживать огонь страсти и физической близости. Вы умеете выражать желания и создавать атмосферу игры и флирта.',
+        'en': 'Your strength lies in the ability to keep the fire of passion and physical intimacy alive. You can express desires and create an atmosphere of play and flirtation.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокий показатель страсти и телесности выделяет вас как чувственного партнёра.',
+        'en': 'High passion and physicality score makes you stand out as a sensual partner.',
+      },
+      strengths: {
+        'ru': [
+          'Телесная осознанность',
+          'Способность поддерживать влечение',
+          'Спонтанность и игривость',
+          'Открытость к экспериментам',
+        ],
+        'en': [
+          'Body awareness',
+          'Ability to maintain attraction',
+          'Spontaneity and playfulness',
+          'Openness to experiments',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может недооценивать эмоциональную близость',
+          'Риск фокусироваться только на физическом',
+        ],
+        'en': [
+          'May underestimate emotional intimacy',
+          'Risk of focusing only on physical aspects',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Интегрируйте эмоциональную близость с физической',
+          'Практикуйте разговоры о чувствах вне спальни',
+          'Развивайте другие формы близости',
+        ],
+        'en': [
+          'Integrate emotional intimacy with physical',
+          'Practice talking about feelings outside the bedroom',
+          'Develop other forms of intimacy',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите вечер нежности без секса — массаж, объятия, разговоры.',
+        'en': 'Spend an evening of tenderness without sex — massage, hugging, talking.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша страсть — это энергия любви. Направляйте её во все аспекты отношений.',
+        'en': 'Your passion is the energy of love. Direct it into all aspects of your relationship.',
+      },
+    ),
+
+    'profile_committed_partner': TestProfile(
+      id: 'profile_committed_partner',
+      name: {
+        'ru': 'Преданный партнёр',
+        'en': 'Committed Partner',
+      },
+      description: {
+        'ru': 'Ваша сила — в надёжности и способности строить долгосрочные планы. Вы умеете держать слово и вкладываться в будущее отношений.',
+        'en': 'Your strength lies in reliability and the ability to build long-term plans. You know how to keep your word and invest in the future of the relationship.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокий показатель обязательств и совместных целей выделяет вас как надёжного партнёра.',
+        'en': 'High commitment and shared goals score makes you stand out as a reliable partner.',
+      },
+      strengths: {
+        'ru': [
+          'Надёжность и последовательность',
+          'Умение планировать вместе',
+          'Ответственность за обещания',
+          'Видение долгосрочной перспективы',
+        ],
+        'en': [
+          'Reliability and consistency',
+          'Ability to plan together',
+          'Responsibility for promises',
+          'Long-term perspective vision',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск жёсткости в планах',
+          'Может упускать момент "здесь и сейчас"',
+        ],
+        'en': [
+          'Risk of rigidity in plans',
+          'May miss the "here and now" moment',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте спонтанность в отношениях',
+          'Оставляйте пространство для импровизации',
+          'Балансируйте планирование с гибкостью',
+        ],
+        'en': [
+          'Practice spontaneity in relationships',
+          'Leave room for improvisation',
+          'Balance planning with flexibility',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сделайте что-то спонтанное для партнёра — без планирования.',
+        'en': 'Do something spontaneous for your partner — without planning.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша преданность — фундамент крепких отношений. Добавьте немного игривости, и баланс будет идеальным.',
+        'en': 'Your dedication is the foundation of strong relationships. Add a bit of playfulness, and the balance will be perfect.',
+      },
+    ),
+
+    'profile_trustful_soul': TestProfile(
+      id: 'profile_trustful_soul',
+      name: {
+        'ru': 'Доверяющая душа',
+        'en': 'Trustful Soul',
+      },
+      description: {
+        'ru': 'Ваша сила — в способности доверять и уважать границы. Вы не испытываете навязчивой ревности и умеете давать партнёру свободу.',
+        'en': 'Your strength lies in the ability to trust and respect boundaries. You don\'t experience obsessive jealousy and can give your partner freedom.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокий показатель доверия выделяет вас как эмоционально зрелого партнёра.',
+        'en': 'High trust score makes you stand out as an emotionally mature partner.',
+      },
+      strengths: {
+        'ru': [
+          'Базовое доверие к партнёру',
+          'Уважение личного пространства',
+          'Эмоциональная зрелость',
+          'Способность к самоуспокоению',
+        ],
+        'en': [
+          'Basic trust in partner',
+          'Respect for personal space',
+          'Emotional maturity',
+          'Self-soothing ability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск не замечать реальные проблемы',
+          'Может избегать необходимых разговоров',
+        ],
+        'en': [
+          'Risk of not noticing real problems',
+          'May avoid necessary conversations',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте навыки конструктивного диалога',
+          'Не путайте доверие с избеганием',
+          'Обсуждайте беспокойства открыто',
+        ],
+        'en': [
+          'Develop constructive dialogue skills',
+          'Don\'t confuse trust with avoidance',
+          'Discuss concerns openly',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поделитесь с партнёром одним беспокойством — даже если оно кажется незначительным.',
+        'en': 'Share one concern with your partner — even if it seems insignificant.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше доверие — драгоценный дар. Оно создаёт пространство, где любовь может расцветать.',
+        'en': 'Your trust is a precious gift. It creates space where love can flourish.',
+      },
+    ),
+
+    'profile_skilled_communicator': TestProfile(
+      id: 'profile_skilled_communicator',
+      name: {
+        'ru': 'Мастер общения',
+        'en': 'Skilled Communicator',
+      },
+      description: {
+        'ru': 'Ваша сила — в способности эффективно общаться и разрешать конфликты. Вы используете "Я-сообщения", умеете слушать и находить компромиссы.',
+        'en': 'Your strength lies in the ability to communicate effectively and resolve conflicts. You use "I-messages", know how to listen and find compromises.',
+      },
+      whyThisProfile: {
+        'ru': 'Высокий показатель коммуникации выделяет вас как человека с развитыми навыками общения.',
+        'en': 'High communication score makes you stand out as a person with developed communication skills.',
+      },
+      strengths: {
+        'ru': [
+          'Эффективное выражение потребностей',
+          'Активное слушание',
+          'Умение разрешать конфликты',
+          'Конструктивная обратная связь',
+        ],
+        'en': [
+          'Effective expression of needs',
+          'Active listening',
+          'Conflict resolution skills',
+          'Constructive feedback',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск чрезмерного анализа',
+          'Может уставать от постоянного "проговаривания"',
+        ],
+        'en': [
+          'Risk of over-analysis',
+          'May get tired of constant "talking through"',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Балансируйте разговоры с действиями',
+          'Давайте место невербальному общению',
+          'Практикуйте тишину как форму близости',
+        ],
+        'en': [
+          'Balance talking with actions',
+          'Make room for non-verbal communication',
+          'Practice silence as a form of intimacy',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите час в молчании с партнёром — просто будьте рядом.',
+        'en': 'Spend an hour in silence with your partner — just be together.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше умение общаться — ключ к пониманию. Помните: иногда молчание говорит громче слов.',
+        'en': 'Your communication skills are the key to understanding. Remember: sometimes silence speaks louder than words.',
+      },
+    ),
+
+    // === Профили по слабому месту ===
+    'profile_attachment_seeker': TestProfile(
+      id: 'profile_attachment_seeker',
+      name: {
+        'ru': 'Ищущий привязанность',
+        'en': 'Attachment Seeker',
+      },
+      description: {
+        'ru': 'Вам важно чувствовать безопасность в отношениях. Работа над внутренней опорой поможет вам строить более спокойные и удовлетворяющие связи.',
+        'en': 'It\'s important for you to feel safe in relationships. Working on inner support will help you build calmer and more satisfying connections.',
+      },
+      whyThisProfile: {
+        'ru': 'Показатель безопасной привязанности указывает на зону развития.',
+        'en': 'Secure attachment score indicates an area for development.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокое желание близости',
+          'Чувствительность к партнёру',
+          'Готовность работать над отношениями',
+        ],
+        'en': [
+          'Deep desire for closeness',
+          'Sensitivity to partner',
+          'Readiness to work on relationships',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Тревога в отношениях',
+          'Страх потери партнёра',
+          'Зависимость от подтверждения',
+        ],
+        'en': [
+          'Relationship anxiety',
+          'Fear of losing partner',
+          'Dependence on confirmation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте техники заземления',
+          'Работайте с терапевтом над привязанностью',
+          'Развивайте внутреннюю опору через самопомощь',
+          'Ведите дневник позитивных моментов в отношениях',
+        ],
+        'en': [
+          'Practice grounding techniques',
+          'Work with a therapist on attachment',
+          'Develop inner support through self-help',
+          'Keep a journal of positive relationship moments',
+        ],
+      },
+      tryToday: {
+        'ru': 'Назовите три вещи, которые вы цените в себе — независимо от отношений.',
+        'en': 'Name three things you value about yourself — regardless of relationships.',
+      },
+      inspiringConclusion: {
+        'ru': 'Безопасность начинается внутри. Каждый шаг к себе — это шаг к более здоровой любви.',
+        'en': 'Security starts within. Every step toward yourself is a step toward healthier love.',
+      },
+    ),
+
+    'profile_guarded_heart': TestProfile(
+      id: 'profile_guarded_heart',
+      name: {
+        'ru': 'Охраняющий сердце',
+        'en': 'Guarded Heart',
+      },
+      description: {
+        'ru': 'Эмоциональная открытость — ваша зона роста. Научившись быть уязвимым, вы откроете доступ к более глубоким отношениям.',
+        'en': 'Emotional openness is your growth area. Learning to be vulnerable will open access to deeper relationships.',
+      },
+      whyThisProfile: {
+        'ru': 'Показатель интимности указывает на защитную позицию в эмоциях.',
+        'en': 'Intimacy score indicates a defensive position in emotions.',
+      },
+      strengths: {
+        'ru': [
+          'Самодостаточность',
+          'Эмоциональная независимость',
+          'Способность справляться самостоятельно',
+        ],
+        'en': [
+          'Self-sufficiency',
+          'Emotional independence',
+          'Ability to cope independently',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сложности с раскрытием',
+          'Избегание глубоких разговоров',
+          'Страх уязвимости',
+        ],
+        'en': [
+          'Difficulty opening up',
+          'Avoiding deep conversations',
+          'Fear of vulnerability',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Начните с маленьких актов открытости',
+          'Практикуйте называние эмоций',
+          'Ищите безопасное пространство для раскрытия',
+          'Работайте с терапевтом над страхом близости',
+        ],
+        'en': [
+          'Start with small acts of openness',
+          'Practice naming emotions',
+          'Find a safe space to open up',
+          'Work with a therapist on fear of intimacy',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поделитесь с партнёром одним переживанием, которое обычно держите в себе.',
+        'en': 'Share with your partner one feeling you usually keep to yourself.',
+      },
+      inspiringConclusion: {
+        'ru': 'За каждой защитой скрывается способность любить. Маленькие шаги открытости ведут к большой близости.',
+        'en': 'Behind every defense hides the ability to love. Small steps of openness lead to great intimacy.',
+      },
+    ),
+
+    'profile_intimacy_shy': TestProfile(
+      id: 'profile_intimacy_shy',
+      name: {
+        'ru': 'Застенчивый в близости',
+        'en': 'Intimacy Shy',
+      },
+      description: {
+        'ru': 'Физическая близость и страсть — ваша зона развития. Исследуя эту область, вы можете обогатить отношения.',
+        'en': 'Physical intimacy and passion is your development area. Exploring this area can enrich your relationships.',
+      },
+      whyThisProfile: {
+        'ru': 'Показатель страсти указывает на дискомфорт с телесностью.',
+        'en': 'Passion score indicates discomfort with physicality.',
+      },
+      strengths: {
+        'ru': [
+          'Уважение к границам',
+          'Развитые другие формы близости',
+          'Осторожность в отношениях',
+        ],
+        'en': [
+          'Respect for boundaries',
+          'Developed other forms of intimacy',
+          'Caution in relationships',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Избегание темы секса',
+          'Стыд вокруг желаний',
+          'Сложности с инициативой',
+        ],
+        'en': [
+          'Avoiding the topic of sex',
+          'Shame around desires',
+          'Difficulty with initiative',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Изучите свою телесность через танец или йогу',
+          'Обсудите с партнёром желания в безопасной обстановке',
+          'Работайте со стыдом через терапию',
+          'Начните с несексуальных прикосновений',
+        ],
+        'en': [
+          'Explore your physicality through dance or yoga',
+          'Discuss desires with your partner in a safe setting',
+          'Work on shame through therapy',
+          'Start with non-sexual touch',
+        ],
+      },
+      tryToday: {
+        'ru': 'Практикуйте 10 минут осознанного прикосновения с партнёром.',
+        'en': 'Practice 10 minutes of mindful touch with your partner.',
+      },
+      inspiringConclusion: {
+        'ru': 'Тело — это инструмент любви. Постепенно знакомясь с ним, вы открываете новые грани близости.',
+        'en': 'The body is an instrument of love. Gradually getting to know it, you discover new facets of intimacy.',
+      },
+    ),
+
+    'profile_freedom_lover': TestProfile(
+      id: 'profile_freedom_lover',
+      name: {
+        'ru': 'Любитель свободы',
+        'en': 'Freedom Lover',
+      },
+      description: {
+        'ru': 'Обязательства — ваша зона развития. Научившись брать на себя долгосрочные обязательства, вы откроете новый уровень отношений.',
+        'en': 'Commitment is your development area. Learning to take on long-term commitments will open a new level of relationships.',
+      },
+      whyThisProfile: {
+        'ru': 'Показатель обязательств указывает на предпочтение гибкости.',
+        'en': 'Commitment score indicates a preference for flexibility.',
+      },
+      strengths: {
+        'ru': [
+          'Гибкость и адаптивность',
+          'Ценность личной свободы',
+          'Способность жить в моменте',
+        ],
+        'en': [
+          'Flexibility and adaptability',
+          'Value of personal freedom',
+          'Ability to live in the moment',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сложности с планированием будущего',
+          'Избегание определённости',
+          'Откладывание важных решений',
+        ],
+        'en': [
+          'Difficulty planning for the future',
+          'Avoiding certainty',
+          'Postponing important decisions',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте маленькие обязательства и выполняйте их',
+          'Обсудите страхи вокруг обязательств',
+          'Найдите баланс свободы и стабильности',
+          'Создайте один совместный ритуал',
+        ],
+        'en': [
+          'Practice small commitments and follow through',
+          'Discuss fears around commitment',
+          'Find a balance of freedom and stability',
+          'Create one shared ritual',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запланируйте что-то с партнёром на месяц вперёд — и держите слово.',
+        'en': 'Plan something with your partner a month ahead — and keep your word.',
+      },
+      inspiringConclusion: {
+        'ru': 'Свобода и обязательства не противоречат друг другу. Настоящая свобода — это выбор быть рядом.',
+        'en': 'Freedom and commitment don\'t contradict each other. True freedom is choosing to be together.',
+      },
+    ),
+
+    'profile_trust_builder': TestProfile(
+      id: 'profile_trust_builder',
+      name: {
+        'ru': 'Строитель доверия',
+        'en': 'Trust Builder',
+      },
+      description: {
+        'ru': 'Доверие — ваша зона развития. Работая над своими страхами и контролем, вы сможете строить более свободные отношения.',
+        'en': 'Trust is your development area. Working on your fears and control, you can build freer relationships.',
+      },
+      whyThisProfile: {
+        'ru': 'Показатель доверия указывает на тревогу в отношениях.',
+        'en': 'Trust score indicates relationship anxiety.',
+      },
+      strengths: {
+        'ru': [
+          'Внимательность к деталям',
+          'Желание защитить отношения',
+          'Готовность работать над проблемами',
+        ],
+        'en': [
+          'Attention to details',
+          'Desire to protect relationships',
+          'Readiness to work on problems',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Ревность и подозрительность',
+          'Потребность в контроле',
+          'Сложности с самоуспокоением',
+        ],
+        'en': [
+          'Jealousy and suspiciousness',
+          'Need for control',
+          'Difficulty self-soothing',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте различение фактов и интерпретаций',
+          'Работайте с терапевтом над ревностью',
+          'Развивайте навыки саморегуляции',
+          'Создайте договор о прозрачности с партнёром',
+        ],
+        'en': [
+          'Practice distinguishing facts from interpretations',
+          'Work with a therapist on jealousy',
+          'Develop self-regulation skills',
+          'Create a transparency agreement with your partner',
+        ],
+      },
+      tryToday: {
+        'ru': 'Когда возникнет триггер ревности, сделайте паузу и спросите себя: "Это факт или моя интерпретация?"',
+        'en': 'When a jealousy trigger arises, pause and ask yourself: "Is this a fact or my interpretation?"',
+      },
+      inspiringConclusion: {
+        'ru': 'Доверие строится постепенно. Каждый шаг к внутреннему спокойствию — это шаг к свободным отношениям.',
+        'en': 'Trust is built gradually. Every step toward inner peace is a step toward free relationships.',
+      },
+    ),
+
+    'profile_conflict_avoider': TestProfile(
+      id: 'profile_conflict_avoider',
+      name: {
+        'ru': 'Избегающий конфликтов',
+        'en': 'Conflict Avoider',
+      },
+      description: {
+        'ru': 'Коммуникация в конфликтах — ваша зона развития. Научившись выражать недовольство конструктивно, вы углубите отношения.',
+        'en': 'Communication in conflicts is your development area. Learning to express dissatisfaction constructively will deepen your relationships.',
+      },
+      whyThisProfile: {
+        'ru': 'Показатель коммуникации указывает на сложности с конфликтами.',
+        'en': 'Communication score indicates difficulty with conflicts.',
+      },
+      strengths: {
+        'ru': [
+          'Желание гармонии',
+          'Терпимость',
+          'Способность адаптироваться',
+        ],
+        'en': [
+          'Desire for harmony',
+          'Tolerance',
+          'Ability to adapt',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Накопление обид',
+          'Пассивная агрессия',
+          'Взрывы после долгого молчания',
+        ],
+        'en': [
+          'Accumulation of grievances',
+          'Passive aggression',
+          'Explosions after long silence',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте "Я-сообщения" ежедневно',
+          'Выражайте маленькие недовольства сразу',
+          'Изучите техники ненасильного общения',
+          'Используйте правило "не ложиться спать в ссоре"',
+        ],
+        'en': [
+          'Practice "I-messages" daily',
+          'Express small dissatisfactions immediately',
+          'Study non-violent communication techniques',
+          'Use the rule "don\'t go to bed angry"',
+        ],
+      },
+      tryToday: {
+        'ru': 'Скажите партнёру о чём-то, что вас беспокоит — используя "Я чувствую... когда..."',
+        'en': 'Tell your partner about something that bothers you — using "I feel... when..."',
+      },
+      inspiringConclusion: {
+        'ru': 'Конфликты — это возможность для роста. Каждый честный разговор делает отношения крепче.',
+        'en': 'Conflicts are an opportunity for growth. Every honest conversation makes relationships stronger.',
+      },
+    ),
+
+    // === Профили по уровню развития ===
+    'profile_growing': TestProfile(
+      id: 'profile_growing',
+      name: {
+        'ru': 'Растущий в любви',
+        'en': 'Growing in Love',
+      },
+      description: {
+        'ru': 'Вы на хорошем пути развития в отношениях. Есть области для роста, но фундамент уже заложен.',
+        'en': 'You\'re on a good path of relationship development. There are areas for growth, but the foundation is already laid.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш средний показатель (60-70%) указывает на стабильное развитие.',
+        'en': 'Your average score (60-70%) indicates stable development.',
+      },
+      strengths: {
+        'ru': [
+          'Хорошая база для развития',
+          'Осознанность в отношениях',
+          'Готовность к росту',
+        ],
+        'en': [
+          'Good foundation for development',
+          'Relationship awareness',
+          'Readiness for growth',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможна неравномерность развития',
+          'Есть зоны для углубления',
+        ],
+        'en': [
+          'Possible uneven development',
+          'Areas for deepening exist',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Определите 1-2 области для фокуса',
+          'Регулярно обсуждайте отношения с партнёром',
+          'Празднуйте маленькие победы',
+        ],
+        'en': [
+          'Identify 1-2 areas to focus on',
+          'Regularly discuss the relationship with your partner',
+          'Celebrate small victories',
+        ],
+      },
+      tryToday: {
+        'ru': 'Спросите партнёра: "Что я могу сделать, чтобы наши отношения стали ещё лучше?"',
+        'en': 'Ask your partner: "What can I do to make our relationship even better?"',
+      },
+      inspiringConclusion: {
+        'ru': 'Рост в любви — это путешествие. Каждый день предлагает возможности стать ближе.',
+        'en': 'Growing in love is a journey. Every day offers opportunities to become closer.',
+      },
+    ),
+
+    'profile_developing': TestProfile(
+      id: 'profile_developing',
+      name: {
+        'ru': 'Развивающийся партнёр',
+        'en': 'Developing Partner',
+      },
+      description: {
+        'ru': 'Вы в процессе развития навыков отношений. Это требует времени и практики, но результаты того стоят.',
+        'en': 'You\'re in the process of developing relationship skills. This takes time and practice, but the results are worth it.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш средний показатель (40-60%) указывает на активную фазу развития.',
+        'en': 'Your average score (40-60%) indicates an active development phase.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание необходимости роста',
+          'Потенциал для развития',
+          'Открытость к изменениям',
+        ],
+        'en': [
+          'Awareness of need for growth',
+          'Potential for development',
+          'Openness to change',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Недостаток навыков в некоторых областях',
+          'Возможные паттерны из прошлого',
+        ],
+        'en': [
+          'Lack of skills in some areas',
+          'Possible patterns from the past',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рассмотрите работу с терапевтом',
+          'Читайте книги об отношениях',
+          'Практикуйте новые навыки постепенно',
+          'Будьте терпеливы к себе',
+        ],
+        'en': [
+          'Consider working with a therapist',
+          'Read books about relationships',
+          'Practice new skills gradually',
+          'Be patient with yourself',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одну рекомендацию из теста и начните применять её сегодня.',
+        'en': 'Choose one recommendation from the test and start applying it today.',
+      },
+      inspiringConclusion: {
+        'ru': 'Каждый эксперт когда-то был новичком. Ваше желание расти — уже половина успеха.',
+        'en': 'Every expert was once a beginner. Your desire to grow is already half the success.',
+      },
+    ),
+
+    'profile_early_stage': TestProfile(
+      id: 'profile_early_stage',
+      name: {
+        'ru': 'На ранней стадии',
+        'en': 'Early Stage',
+      },
+      description: {
+        'ru': 'Навыки отношений находятся на начальной стадии развития. Это не приговор — это начало пути.',
+        'en': 'Relationship skills are at an early stage of development. This is not a verdict — it\'s the beginning of a journey.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши показатели указывают на необходимость целенаправленной работы.',
+        'en': 'Your scores indicate the need for targeted work.',
+      },
+      strengths: {
+        'ru': [
+          'Честность в оценке себя',
+          'Потенциал для трансформации',
+          'Возможность начать с чистого листа',
+        ],
+        'en': [
+          'Honesty in self-assessment',
+          'Potential for transformation',
+          'Opportunity to start fresh',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Возможные травмы привязанности',
+          'Недостаток опыта здоровых отношений',
+          'Паттерны избегания или тревоги',
+        ],
+        'en': [
+          'Possible attachment trauma',
+          'Lack of healthy relationship experience',
+          'Avoidance or anxiety patterns',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Настоятельно рекомендуется терапия',
+          'Работайте над собой до/параллельно с отношениями',
+          'Изучайте теорию привязанности',
+          'Практикуйте самосострадание',
+        ],
+        'en': [
+          'Therapy is strongly recommended',
+          'Work on yourself before/alongside relationships',
+          'Study attachment theory',
+          'Practice self-compassion',
+        ],
+      },
+      tryToday: {
+        'ru': 'Напишите себе письмо поддержки — как бы вы поддержали друга в такой ситуации?',
+        'en': 'Write yourself a support letter — how would you support a friend in this situation?',
+      },
+      inspiringConclusion: {
+        'ru': 'Исцеление возможно. Тысячи людей прошли этот путь. Первый шаг — признание, и вы его уже сделали.',
+        'en': 'Healing is possible. Thousands of people have walked this path. The first step is recognition, and you\'ve already taken it.',
+      },
+    ),
+  };
 
   static String calculateLoveIndex(Map<String, FactorScore> factorScores, String languageCode) {
     double totalPercentage = 0;

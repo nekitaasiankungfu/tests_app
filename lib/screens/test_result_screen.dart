@@ -13,6 +13,8 @@ import '../data/friendship_psychology_data.dart';
 import '../utils/theme_utils.dart';
 import '../constants/color_constants.dart';
 import '../config/summary_config.dart';
+import '../services/profile_service.dart';
+import '../models/test_profile_model.dart';
 
 class TestResultScreen extends StatefulWidget {
   final TestResult result;
@@ -140,6 +142,11 @@ class _TestResultScreenState extends State<TestResultScreen> {
                           _buildInterpretationCard(widget.result, languageCode, isDark),
                         ],
                       const SizedBox(height: 30),
+                      // Универсальная секция профиля для тестов, которые поддерживают ProfileService
+                      // (кроме тех, у которых уже есть специальная визуализация выше)
+                      if (_shouldShowUniversalProfile(widget.result.testId))
+                        _buildUniversalProfileSection(widget.result, languageCode, themeColor, isDark),
+                      const SizedBox(height: 30),
                       // Показываем информацию о шкалах
                       _buildAffectedScalesSection(widget.result.testId, languageCode, themeColor, isDark),
                       const SizedBox(height: 30),
@@ -151,6 +158,377 @@ class _TestResultScreenState extends State<TestResultScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// Проверяет, нужно ли показывать универсальную секцию профиля
+  /// Исключаем тесты, у которых уже есть специальная визуализация
+  bool _shouldShowUniversalProfile(String testId) {
+    // Тесты со специальной визуализацией (уже обрабатываются выше)
+    const specialTests = {
+      'love_profile',
+      'digital_career_fit_v1',
+      'romantic_potential_v1',
+      'relationship_compatibility_v1',
+      'friendship_psychology_v1',
+    };
+
+    if (specialTests.contains(testId)) {
+      return false;
+    }
+
+    // Показываем только если тест поддерживает профили
+    return ProfileService.supportsProfiles(testId);
+  }
+
+  /// Универсальная секция профиля для всех тестов с поддержкой ProfileService
+  Widget _buildUniversalProfileSection(TestResult result, String languageCode, Color themeColor, bool isDark) {
+    // Определяем профиль
+    final profileId = ProfileService.determineProfileId(result);
+    if (profileId == null) {
+      return const SizedBox.shrink();
+    }
+
+    // Получаем профиль
+    final profile = ProfileService.getProfile(result.testId, profileId);
+    if (profile == null) {
+      return const SizedBox.shrink();
+    }
+
+    // Получаем иконку для профиля
+    final profileIcon = ProfileService.getProfileIcon(result.testId, profileId);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Заголовок секции профиля
+        _buildProfileHeader(profile, profileIcon, languageCode, themeColor, isDark),
+        const SizedBox(height: 20),
+
+        // Секция 2: Почему этот профиль
+        if (profile.whyThisProfile[languageCode]?.isNotEmpty == true)
+          _buildProfileInfoCard(
+            title: languageCode == 'ru' ? '🎯 Почему этот профиль' : '🎯 Why This Profile',
+            content: profile.whyThisProfile[languageCode]!,
+            themeColor: themeColor,
+            isDark: isDark,
+          ),
+
+        // Секция 3: Сильные стороны
+        if (profile.strengths[languageCode]?.isNotEmpty == true) ...[
+          const SizedBox(height: 16),
+          _buildProfileListCard(
+            title: languageCode == 'ru' ? '💪 Сильные стороны' : '💪 Strengths',
+            items: profile.strengths[languageCode]!,
+            icon: Icons.star_outline,
+            themeColor: themeColor,
+            isDark: isDark,
+          ),
+        ],
+
+        // Секция 4: Уязвимости (если есть)
+        if (profile.vulnerabilities[languageCode]?.isNotEmpty == true) ...[
+          const SizedBox(height: 16),
+          _buildProfileListCard(
+            title: languageCode == 'ru' ? '⚠️ На что обратить внимание' : '⚠️ Areas to Watch',
+            items: profile.vulnerabilities[languageCode]!,
+            icon: Icons.warning_amber_outlined,
+            themeColor: Colors.orange,
+            isDark: isDark,
+          ),
+        ],
+
+        // Секция 5: Рекомендации
+        if (profile.recommendations[languageCode]?.isNotEmpty == true) ...[
+          const SizedBox(height: 16),
+          _buildProfileListCard(
+            title: languageCode == 'ru' ? '📚 Рекомендации' : '📚 Recommendations',
+            items: profile.recommendations[languageCode]!,
+            icon: Icons.lightbulb_outline,
+            themeColor: themeColor,
+            isDark: isDark,
+          ),
+        ],
+
+        // Секция 6: Что попробовать сегодня
+        if (profile.tryToday[languageCode]?.isNotEmpty == true) ...[
+          const SizedBox(height: 16),
+          _buildProfileInfoCard(
+            title: languageCode == 'ru' ? '🎯 Попробуйте сегодня' : '🎯 Try Today',
+            content: profile.tryToday[languageCode]!,
+            themeColor: themeColor,
+            isDark: isDark,
+            icon: Icons.today,
+          ),
+        ],
+
+        // Секция 7: Вдохновляющий вывод
+        if (profile.inspiringConclusion[languageCode]?.isNotEmpty == true) ...[
+          const SizedBox(height: 16),
+          _buildInspiringCard(
+            profile.inspiringConclusion[languageCode]!,
+            themeColor,
+            isDark,
+          ),
+        ],
+      ],
+    );
+  }
+
+  /// Заголовок профиля с иконкой и названием
+  Widget _buildProfileHeader(TestProfile profile, IconData icon, String languageCode, Color themeColor, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            themeColor.withOpacity(0.2),
+            themeColor.withOpacity(0.1),
+          ] : [
+            themeColor.withOpacity(0.15),
+            themeColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: themeColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          // Иконка
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: themeColor.withOpacity(isDark ? 0.3 : 0.2),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              icon,
+              size: 40,
+              color: isDark ? Colors.white : themeColor,
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Подзаголовок
+          Text(
+            languageCode == 'ru' ? 'Ваш профиль' : 'Your Profile',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Название профиля
+          Text(
+            profile.name[languageCode] ?? '',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : themeColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 12),
+          // Описание
+          Text(
+            profile.description[languageCode] ?? '',
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Карточка с текстовой информацией
+  Widget _buildProfileInfoCard({
+    required String title,
+    required String content,
+    required Color themeColor,
+    required bool isDark,
+    IconData? icon,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
+          width: 1,
+        ),
+        boxShadow: isDark ? null : [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (icon != null) ...[
+                Icon(icon, color: themeColor, size: 20),
+                const SizedBox(width: 8),
+              ],
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : themeColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 14,
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Карточка со списком элементов
+  Widget _buildProfileListCard({
+    required String title,
+    required List<String> items,
+    required IconData icon,
+    required Color themeColor,
+    required bool isDark,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
+          width: 1,
+        ),
+        boxShadow: isDark ? null : [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: themeColor, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : themeColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...items.map((item) => Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 6),
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: themeColor,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    item,
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.5,
+                      color: isDark ? Colors.grey[300] : Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )),
+        ],
+      ),
+    );
+  }
+
+  /// Вдохновляющая карточка
+  Widget _buildInspiringCard(String text, Color themeColor, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark ? [
+            themeColor.withOpacity(0.15),
+            themeColor.withOpacity(0.08),
+          ] : [
+            themeColor.withOpacity(0.1),
+            themeColor.withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: themeColor.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.auto_awesome,
+            color: themeColor,
+            size: 28,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 15,
+              fontStyle: FontStyle.italic,
+              height: 1.5,
+              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

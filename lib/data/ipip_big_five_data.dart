@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 class IPIPBigFiveData {
   // Общие варианты ответов для всех вопросов IPIP теста
@@ -913,5 +914,1118 @@ However, it is important to note that excessively high levels of openness to exp
         return {'ru': 'Описание недоступно', 'en': 'Description not available'};
     }
   }
+
+  /// Определить профиль на основе процентов по шкалам Big Five
+  static String determineProfile(Map<String, double> percentages) {
+    if (percentages.isEmpty) return 'profile_balanced';
+
+    // Получаем значения по всем 5 факторам
+    final e = percentages['extraversion'] ?? 50.0;
+    final a = percentages['agreeableness'] ?? 50.0;
+    final c = percentages['conscientiousness'] ?? 50.0;
+    final es = percentages['emotional_stability'] ?? 50.0;
+    final i = percentages['intellect'] ?? 50.0;
+
+    // Средний балл
+    final avg = (e + a + c + es + i) / 5;
+
+    // Определяем профиль на основе комбинации факторов
+    // Высокие пороги: >70, низкие <30
+
+    // Лидерские профили
+    if (e > 70 && c > 60 && es > 60) {
+      return 'profile_leader';
+    }
+
+    // Социальные профили
+    if (e > 70 && a > 70) {
+      return 'profile_social_butterfly';
+    }
+
+    // Творческие профили
+    if (i > 70 && e < 50) {
+      return 'profile_creative_thinker';
+    }
+
+    if (i > 70 && e > 60) {
+      return 'profile_innovator';
+    }
+
+    // Надёжные профили
+    if (c > 70 && a > 60) {
+      return 'profile_reliable_helper';
+    }
+
+    if (c > 70 && es > 60) {
+      return 'profile_achiever';
+    }
+
+    // Чувствительные профили
+    if (es < 30 && a > 60) {
+      return 'profile_sensitive_soul';
+    }
+
+    if (es < 30 && e < 40) {
+      return 'profile_introspective';
+    }
+
+    // Интровертные профили
+    if (e < 30 && c > 60) {
+      return 'profile_quiet_achiever';
+    }
+
+    if (e < 30 && i > 60) {
+      return 'profile_deep_thinker';
+    }
+
+    // Общительные профили
+    if (e > 70) {
+      return 'profile_extrovert';
+    }
+
+    if (e < 30) {
+      return 'profile_introvert';
+    }
+
+    // По доминирующему фактору
+    final sorted = [
+      MapEntry('extraversion', e),
+      MapEntry('agreeableness', a),
+      MapEntry('conscientiousness', c),
+      MapEntry('emotional_stability', es),
+      MapEntry('intellect', i),
+    ]..sort((x, y) => y.value.compareTo(x.value));
+
+    final dominant = sorted.first;
+    if (dominant.value > 65) {
+      switch (dominant.key) {
+        case 'extraversion':
+          return 'profile_extrovert';
+        case 'agreeableness':
+          return 'profile_peacemaker';
+        case 'conscientiousness':
+          return 'profile_achiever';
+        case 'emotional_stability':
+          return 'profile_steady';
+        case 'intellect':
+          return 'profile_explorer';
+      }
+    }
+
+    return 'profile_balanced';
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  static const Map<String, TestProfile> _profiles = {
+    'profile_leader': TestProfile(
+      id: 'profile_leader',
+      name: {
+        'ru': '👑 Прирождённый Лидер',
+        'en': '👑 Natural Leader',
+      },
+      description: {
+        'ru': 'Вы сочетаете энергичность, организованность и эмоциональную устойчивость — идеальный набор для руководства и влияния на других.',
+        'en': 'You combine energy, organization, and emotional stability — the ideal set for leadership and influencing others.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши высокие баллы по Экстраверсии, Добросовестности и Эмоциональной стабильности характеризуют вас как лидера.',
+        'en': 'Your high scores in Extraversion, Conscientiousness, and Emotional Stability characterize you as a leader.',
+      },
+      strengths: {
+        'ru': [
+          'Способность вдохновлять и мотивировать других',
+          'Организованность и ответственность',
+          'Спокойствие под давлением',
+          'Уверенное принятие решений',
+          'Способность видеть и цели, и людей',
+        ],
+        'en': [
+          'Ability to inspire and motivate others',
+          'Organization and responsibility',
+          'Calmness under pressure',
+          'Confident decision-making',
+          'Ability to see both goals and people',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск взять на себя слишком много',
+          'Возможная нетерпимость к медлительности',
+          'Трудности с делегированием',
+        ],
+        'en': [
+          'Risk of taking on too much',
+          'Possible intolerance of slowness',
+          'Difficulty delegating',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте умение слушать и делегировать',
+          'Помните о потребностях команды',
+          'Находите время для отдыха и восстановления',
+          'Используйте лидерские качества для служения другим',
+        ],
+        'en': [
+          'Develop listening and delegation skills',
+          'Remember team needs',
+          'Find time for rest and recovery',
+          'Use leadership qualities to serve others',
+        ],
+      },
+      tryToday: {
+        'ru': 'Спросите кого-то из команды, чем вы можете им помочь, вместо того чтобы давать указания',
+        'en': 'Ask someone on your team how you can help them instead of giving directions',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваш лидерский потенциал — это дар. Используйте его, чтобы поднимать других!',
+        'en': 'Your leadership potential is a gift. Use it to lift others up!',
+      },
+    ),
+
+    'profile_social_butterfly': TestProfile(
+      id: 'profile_social_butterfly',
+      name: {
+        'ru': '🦋 Социальная Бабочка',
+        'en': '🦋 Social Butterfly',
+      },
+      description: {
+        'ru': 'Вы энергичны, общительны и доброжелательны. Люди тянутся к вам, и вы легко создаёте тёплые связи.',
+        'en': 'You are energetic, sociable, and friendly. People are drawn to you, and you easily create warm connections.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши высокие баллы по Экстраверсии и Доброжелательности делают вас душой компании.',
+        'en': 'Your high scores in Extraversion and Agreeableness make you the life of the party.',
+      },
+      strengths: {
+        'ru': [
+          'Легко заводите друзей',
+          'Создаёте позитивную атмосферу',
+          'Умеете поддерживать и вдохновлять',
+          'Эмпатичны и внимательны к другим',
+        ],
+        'en': [
+          'Easily make friends',
+          'Create positive atmosphere',
+          'Know how to support and inspire',
+          'Empathetic and attentive to others',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Можете избегать конфликтов в ущерб себе',
+          'Риск истощения от социальной активности',
+          'Возможная поверхностность связей',
+        ],
+        'en': [
+          'May avoid conflicts at your own expense',
+          'Risk of exhaustion from social activity',
+          'Possible superficiality of connections',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте глубину отношений',
+          'Учитесь говорить "нет"',
+          'Находите время для уединения',
+          'Цените качество, не только количество связей',
+        ],
+        'en': [
+          'Develop depth in relationships',
+          'Learn to say "no"',
+          'Find time for solitude',
+          'Value quality, not just quantity of connections',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите глубокий разговор с одним человеком вместо поверхностного общения со многими',
+        'en': 'Have a deep conversation with one person instead of surface chat with many',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность объединять людей — это суперсила. Используйте её мудро!',
+        'en': 'Your ability to connect people is a superpower. Use it wisely!',
+      },
+    ),
+
+    'profile_creative_thinker': TestProfile(
+      id: 'profile_creative_thinker',
+      name: {
+        'ru': '🎨 Творческий Мыслитель',
+        'en': '🎨 Creative Thinker',
+      },
+      description: {
+        'ru': 'Вы обладаете богатым внутренним миром и творческим мышлением. Предпочитаете глубину поверхностному общению.',
+        'en': 'You have a rich inner world and creative thinking. You prefer depth over superficial interaction.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш высокий Интеллект/Открытость в сочетании с умеренной интроверсией указывает на творческую натуру.',
+        'en': 'Your high Intellect/Openness combined with moderate introversion indicates a creative nature.',
+      },
+      strengths: {
+        'ru': [
+          'Оригинальное мышление',
+          'Глубина восприятия',
+          'Способность к концентрации',
+          'Богатое воображение',
+          'Независимость мысли',
+        ],
+        'en': [
+          'Original thinking',
+          'Depth of perception',
+          'Ability to concentrate',
+          'Rich imagination',
+          'Independence of thought',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Может быть сложно донести идеи до других',
+          'Риск отрыва от реальности',
+          'Социальная изоляция',
+        ],
+        'en': [
+          'May be difficult to convey ideas to others',
+          'Risk of detachment from reality',
+          'Social isolation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Найдите способы делиться творчеством',
+          'Поддерживайте связь с реальностью',
+          'Цените свою уникальность',
+          'Ищите единомышленников',
+        ],
+        'en': [
+          'Find ways to share your creativity',
+          'Stay connected to reality',
+          'Value your uniqueness',
+          'Seek like-minded people',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поделитесь одной творческой идеей с кем-то, кому доверяете',
+        'en': 'Share one creative idea with someone you trust',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше творчество — это уникальный дар миру. Не прячьте его!',
+        'en': 'Your creativity is a unique gift to the world. Don\'t hide it!',
+      },
+    ),
+
+    'profile_innovator': TestProfile(
+      id: 'profile_innovator',
+      name: {
+        'ru': '💡 Инноватор',
+        'en': '💡 Innovator',
+      },
+      description: {
+        'ru': 'Вы сочетаете творческое мышление с социальной энергией. Способны не только генерировать идеи, но и продвигать их.',
+        'en': 'You combine creative thinking with social energy. Able not only to generate ideas but also to promote them.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш высокий Интеллект в сочетании с Экстраверсией делает вас двигателем инноваций.',
+        'en': 'Your high Intellect combined with Extraversion makes you an innovation driver.',
+      },
+      strengths: {
+        'ru': [
+          'Генерация новых идей',
+          'Способность увлечь других',
+          'Предпринимательский дух',
+          'Открытость экспериментам',
+        ],
+        'en': [
+          'Generation of new ideas',
+          'Ability to engage others',
+          'Entrepreneurial spirit',
+          'Openness to experiments',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Можете начинать больше, чем заканчиваете',
+          'Нетерпение к рутине',
+          'Риск разбрасываться',
+        ],
+        'en': [
+          'May start more than you finish',
+          'Impatience with routine',
+          'Risk of scattering',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте навык доведения проектов до конца',
+          'Находите партнёров для реализации идей',
+          'Учитесь фокусировке',
+        ],
+        'en': [
+          'Develop the skill of completing projects',
+          'Find partners to implement ideas',
+          'Learn to focus',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одну идею и сделайте первый конкретный шаг к её реализации',
+        'en': 'Choose one idea and take the first concrete step toward implementing it',
+      },
+      inspiringConclusion: {
+        'ru': 'Мир нуждается в ваших идеях. Сфокусируйтесь и измените его!',
+        'en': 'The world needs your ideas. Focus and change it!',
+      },
+    ),
+
+    'profile_reliable_helper': TestProfile(
+      id: 'profile_reliable_helper',
+      name: {
+        'ru': '🤝 Надёжный Помощник',
+        'en': '🤝 Reliable Helper',
+      },
+      description: {
+        'ru': 'Вы ответственны, организованы и заботитесь о других. На вас можно положиться в любой ситуации.',
+        'en': 'You are responsible, organized, and care for others. You can be relied upon in any situation.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваша высокая Добросовестность и Доброжелательность делают вас незаменимым членом команды.',
+        'en': 'Your high Conscientiousness and Agreeableness make you an invaluable team member.',
+      },
+      strengths: {
+        'ru': [
+          'Надёжность и ответственность',
+          'Забота о других',
+          'Организованность',
+          'Терпение и внимательность',
+        ],
+        'en': [
+          'Reliability and responsibility',
+          'Care for others',
+          'Organization',
+          'Patience and attentiveness',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск перегрузки от помощи другим',
+          'Можете забывать о себе',
+          'Трудности с отказом',
+        ],
+        'en': [
+          'Risk of overload from helping others',
+          'May forget about yourself',
+          'Difficulty refusing',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Устанавливайте границы',
+          'Заботьтесь о себе так же, как о других',
+          'Просите помощь, когда нужно',
+        ],
+        'en': [
+          'Set boundaries',
+          'Care for yourself as you do for others',
+          'Ask for help when needed',
+        ],
+      },
+      tryToday: {
+        'ru': 'Сделайте что-то приятное для себя, не ожидая, что это заслужили',
+        'en': 'Do something nice for yourself without waiting to deserve it',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша надёжность — фундамент для других. Но помните заботиться и о себе!',
+        'en': 'Your reliability is a foundation for others. But remember to care for yourself too!',
+      },
+    ),
+
+    'profile_achiever': TestProfile(
+      id: 'profile_achiever',
+      name: {
+        'ru': '🏆 Достигатор',
+        'en': '🏆 Achiever',
+      },
+      description: {
+        'ru': 'Вы целеустремлённы, организованы и эмоционально устойчивы. Это позволяет вам добиваться впечатляющих результатов.',
+        'en': 'You are goal-oriented, organized, and emotionally stable. This allows you to achieve impressive results.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваша высокая Добросовестность и Эмоциональная стабильность — ключ к достижениям.',
+        'en': 'Your high Conscientiousness and Emotional Stability are the key to achievement.',
+      },
+      strengths: {
+        'ru': [
+          'Постановка и достижение целей',
+          'Устойчивость к стрессу',
+          'Самодисциплина',
+          'Настойчивость',
+        ],
+        'en': [
+          'Setting and achieving goals',
+          'Stress resilience',
+          'Self-discipline',
+          'Persistence',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Риск выгорания от чрезмерной работы',
+          'Перфекционизм',
+          'Возможное пренебрежение отношениями',
+        ],
+        'en': [
+          'Risk of burnout from overwork',
+          'Perfectionism',
+          'Possible neglect of relationships',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Балансируйте достижения и отношения',
+          'Отмечайте успехи',
+          'Принимайте несовершенство',
+        ],
+        'en': [
+          'Balance achievements and relationships',
+          'Celebrate successes',
+          'Accept imperfection',
+        ],
+      },
+      tryToday: {
+        'ru': 'Отпразднуйте одно недавнее достижение вместо того, чтобы сразу переходить к следующей цели',
+        'en': 'Celebrate one recent achievement instead of immediately moving to the next goal',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность достигать — это сила. Направьте её на то, что действительно важно!',
+        'en': 'Your ability to achieve is a strength. Direct it toward what truly matters!',
+      },
+    ),
+
+    'profile_sensitive_soul': TestProfile(
+      id: 'profile_sensitive_soul',
+      name: {
+        'ru': '💜 Чувствительная Душа',
+        'en': '💜 Sensitive Soul',
+      },
+      description: {
+        'ru': 'Вы глубоко чувствуете и заботитесь о других. Ваша чувствительность — это дар эмпатии.',
+        'en': 'You feel deeply and care for others. Your sensitivity is a gift of empathy.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваша низкая Эмоциональная стабильность в сочетании с высокой Доброжелательностью указывает на глубокую чувствительность.',
+        'en': 'Your low Emotional Stability combined with high Agreeableness indicates deep sensitivity.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокая эмпатия',
+          'Способность понимать чувства других',
+          'Искренность',
+          'Забота о близких',
+        ],
+        'en': [
+          'Deep empathy',
+          'Ability to understand others\' feelings',
+          'Sincerity',
+          'Care for loved ones',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Эмоциональная перегрузка',
+          'Тревожность',
+          'Трудности с границами',
+        ],
+        'en': [
+          'Emotional overload',
+          'Anxiety',
+          'Difficulty with boundaries',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте эмоциональную регуляцию',
+          'Практикуйте самосострадание',
+          'Устанавливайте здоровые границы',
+          'Обращайтесь за поддержкой при необходимости',
+        ],
+        'en': [
+          'Develop emotional regulation',
+          'Practice self-compassion',
+          'Set healthy boundaries',
+          'Seek support when needed',
+        ],
+      },
+      tryToday: {
+        'ru': 'Практикуйте 5 минут глубокого дыхания, когда почувствуете эмоциональную перегрузку',
+        'en': 'Practice 5 minutes of deep breathing when you feel emotionally overwhelmed',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша чувствительность — это дар. Защищайте её и используйте для добра!',
+        'en': 'Your sensitivity is a gift. Protect it and use it for good!',
+      },
+    ),
+
+    'profile_introspective': TestProfile(
+      id: 'profile_introspective',
+      name: {
+        'ru': '🔮 Интроспективный',
+        'en': '🔮 Introspective',
+      },
+      description: {
+        'ru': 'Вы склонны к глубокому самоанализу и предпочитаете уединение. Ваш богатый внутренний мир требует бережного отношения.',
+        'en': 'You tend toward deep self-analysis and prefer solitude. Your rich inner world requires careful treatment.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваша низкая Экстраверсия и Эмоциональная стабильность указывают на интроспективную натуру.',
+        'en': 'Your low Extraversion and Emotional Stability indicate an introspective nature.',
+      },
+      strengths: {
+        'ru': [
+          'Глубокое самопознание',
+          'Способность к рефлексии',
+          'Чуткость к нюансам',
+          'Аутентичность',
+        ],
+        'en': [
+          'Deep self-knowledge',
+          'Capacity for reflection',
+          'Sensitivity to nuances',
+          'Authenticity',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Склонность к руминации',
+          'Социальная тревожность',
+          'Изоляция',
+        ],
+        'en': [
+          'Tendency to ruminate',
+          'Social anxiety',
+          'Isolation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Балансируйте рефлексию с действием',
+          'Поддерживайте связи, пусть и немногочисленные',
+          'Работайте с тревожностью',
+          'Цените свою глубину',
+        ],
+        'en': [
+          'Balance reflection with action',
+          'Maintain connections, even if few',
+          'Work on anxiety',
+          'Value your depth',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выйдите на короткую прогулку и сфокусируйтесь на внешнем мире вместо внутренних мыслей',
+        'en': 'Take a short walk and focus on the external world instead of internal thoughts',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша глубина — редкий дар. Не теряйтесь в ней, но используйте её мудро!',
+        'en': 'Your depth is a rare gift. Don\'t get lost in it, but use it wisely!',
+      },
+    ),
+
+    'profile_quiet_achiever': TestProfile(
+      id: 'profile_quiet_achiever',
+      name: {
+        'ru': '🎯 Тихий Достигатор',
+        'en': '🎯 Quiet Achiever',
+      },
+      description: {
+        'ru': 'Вы работаете продуктивно и методично, не нуждаясь во внешнем признании. Ваши достижения говорят сами за себя.',
+        'en': 'You work productively and methodically without needing external recognition. Your achievements speak for themselves.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваша низкая Экстраверсия и высокая Добросовестность создают профиль тихого достигателя.',
+        'en': 'Your low Extraversion and high Conscientiousness create the quiet achiever profile.',
+      },
+      strengths: {
+        'ru': [
+          'Способность к глубокой концентрации',
+          'Методичность',
+          'Независимость от признания',
+          'Надёжность',
+        ],
+        'en': [
+          'Ability for deep concentration',
+          'Methodicalness',
+          'Independence from recognition',
+          'Reliability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Достижения могут недооцениваться',
+          'Сложности с самопрезентацией',
+          'Возможная изоляция',
+        ],
+        'en': [
+          'Achievements may be undervalued',
+          'Difficulties with self-presentation',
+          'Possible isolation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Учитесь делиться достижениями',
+          'Находите союзников для продвижения идей',
+          'Цените свой вклад',
+        ],
+        'en': [
+          'Learn to share achievements',
+          'Find allies to promote ideas',
+          'Value your contribution',
+        ],
+      },
+      tryToday: {
+        'ru': 'Расскажите кому-то о проекте, над которым работаете — дайте увидеть вашу работу',
+        'en': 'Tell someone about a project you\'re working on — let them see your work',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша работа ценна. Позвольте миру узнать о ваших достижениях!',
+        'en': 'Your work is valuable. Let the world know about your achievements!',
+      },
+    ),
+
+    'profile_deep_thinker': TestProfile(
+      id: 'profile_deep_thinker',
+      name: {
+        'ru': '🧠 Глубокий Мыслитель',
+        'en': '🧠 Deep Thinker',
+      },
+      description: {
+        'ru': 'Вы обладаете богатым внутренним миром и любознательностью. Предпочитаете уединённое размышление социальной активности.',
+        'en': 'You have a rich inner world and curiosity. You prefer solitary contemplation to social activity.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваша низкая Экстраверсия и высокий Интеллект создают профиль глубокого мыслителя.',
+        'en': 'Your low Extraversion and high Intellect create the deep thinker profile.',
+      },
+      strengths: {
+        'ru': [
+          'Глубина мышления',
+          'Способность к анализу',
+          'Независимость мысли',
+          'Любознательность',
+        ],
+        'en': [
+          'Depth of thinking',
+          'Analytical ability',
+          'Independence of thought',
+          'Curiosity',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сложности с практической реализацией',
+          'Социальная изоляция',
+          'Уход в абстракции',
+        ],
+        'en': [
+          'Difficulties with practical implementation',
+          'Social isolation',
+          'Retreat into abstractions',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Находите способы применять идеи',
+          'Поддерживайте связи с единомышленниками',
+          'Балансируйте мышление и действие',
+        ],
+        'en': [
+          'Find ways to apply ideas',
+          'Maintain connections with like-minded people',
+          'Balance thinking and action',
+        ],
+      },
+      tryToday: {
+        'ru': 'Превратите одну абстрактную идею в конкретное действие',
+        'en': 'Turn one abstract idea into a concrete action',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша глубина мышления — это сокровище. Поделитесь им с миром!',
+        'en': 'Your depth of thinking is a treasure. Share it with the world!',
+      },
+    ),
+
+    'profile_extrovert': TestProfile(
+      id: 'profile_extrovert',
+      name: {
+        'ru': '⚡ Экстраверт',
+        'en': '⚡ Extrovert',
+      },
+      description: {
+        'ru': 'Вы черпаете энергию из общения и социальной активности. Люди и события заряжают вас.',
+        'en': 'You draw energy from communication and social activity. People and events energize you.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш высокий балл по Экстраверсии — доминирующая черта вашей личности.',
+        'en': 'Your high score in Extraversion is the dominant trait of your personality.',
+      },
+      strengths: {
+        'ru': [
+          'Энергичность и активность',
+          'Лёгкость в общении',
+          'Способность заряжать других',
+          'Адаптивность в социуме',
+        ],
+        'en': [
+          'Energy and activity',
+          'Ease of communication',
+          'Ability to energize others',
+          'Social adaptability',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Сложности с уединением',
+          'Зависимость от внешней стимуляции',
+          'Риск поверхностности',
+        ],
+        'en': [
+          'Difficulty with solitude',
+          'Dependence on external stimulation',
+          'Risk of superficiality',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте уединение для баланса',
+          'Развивайте глубину отношений',
+          'Учитесь слушать, а не только говорить',
+        ],
+        'en': [
+          'Practice solitude for balance',
+          'Develop depth in relationships',
+          'Learn to listen, not just talk',
+        ],
+      },
+      tryToday: {
+        'ru': 'Проведите 30 минут в тишине без гаджетов и людей',
+        'en': 'Spend 30 minutes in silence without gadgets or people',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша энергия заразительна. Направляйте её на создание глубоких связей!',
+        'en': 'Your energy is contagious. Direct it toward creating deep connections!',
+      },
+    ),
+
+    'profile_introvert': TestProfile(
+      id: 'profile_introvert',
+      name: {
+        'ru': '🌙 Интроверт',
+        'en': '🌙 Introvert',
+      },
+      description: {
+        'ru': 'Вы восстанавливаете энергию в уединении и предпочитаете глубокие связи поверхностному общению.',
+        'en': 'You restore energy in solitude and prefer deep connections over superficial interaction.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш низкий балл по Экстраверсии — доминирующая черта вашей личности.',
+        'en': 'Your low score in Extraversion is the dominant trait of your personality.',
+      },
+      strengths: {
+        'ru': [
+          'Способность к глубокой концентрации',
+          'Ценность глубоких связей',
+          'Самодостаточность',
+          'Вдумчивость',
+        ],
+        'en': [
+          'Ability for deep concentration',
+          'Value of deep connections',
+          'Self-sufficiency',
+          'Thoughtfulness',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Социальное истощение',
+          'Сложности с нетворкингом',
+          'Возможная изоляция',
+        ],
+        'en': [
+          'Social exhaustion',
+          'Difficulty with networking',
+          'Possible isolation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Планируйте социальную энергию',
+          'Находите комфортные формы общения',
+          'Не изолируйтесь полностью',
+          'Цените свою интроверсию как силу',
+        ],
+        'en': [
+          'Plan social energy',
+          'Find comfortable forms of interaction',
+          'Don\'t isolate completely',
+          'Value your introversion as a strength',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запланируйте одну короткую социальную активность, которая вам комфортна',
+        'en': 'Plan one short social activity that feels comfortable to you',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша интроверсия — это сила. Используйте её для создания глубины в жизни!',
+        'en': 'Your introversion is a strength. Use it to create depth in life!',
+      },
+    ),
+
+    'profile_peacemaker': TestProfile(
+      id: 'profile_peacemaker',
+      name: {
+        'ru': '🕊️ Миротворец',
+        'en': '🕊️ Peacemaker',
+      },
+      description: {
+        'ru': 'Вы стремитесь к гармонии и заботитесь о благополучии окружающих. Конфликты вас огорчают, и вы стараетесь их предотвращать.',
+        'en': 'You strive for harmony and care about the well-being of those around you. Conflicts upset you, and you try to prevent them.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш высокий балл по Доброжелательности — доминирующая черта вашей личности.',
+        'en': 'Your high score in Agreeableness is the dominant trait of your personality.',
+      },
+      strengths: {
+        'ru': [
+          'Эмпатия и забота',
+          'Способность к сотрудничеству',
+          'Создание гармоничной атмосферы',
+          'Доверие от окружающих',
+        ],
+        'en': [
+          'Empathy and care',
+          'Ability to cooperate',
+          'Creating harmonious atmosphere',
+          'Trust from others',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Избегание необходимых конфликтов',
+          'Сложности с отстаиванием интересов',
+          'Риск быть использованным',
+        ],
+        'en': [
+          'Avoiding necessary conflicts',
+          'Difficulty standing up for interests',
+          'Risk of being taken advantage of',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Учитесь здоровой конфронтации',
+          'Устанавливайте границы',
+          'Балансируйте заботу о себе и других',
+        ],
+        'en': [
+          'Learn healthy confrontation',
+          'Set boundaries',
+          'Balance care for yourself and others',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выскажите своё мнение в ситуации, где обычно промолчали бы ради мира',
+        'en': 'Express your opinion in a situation where you would usually stay silent for peace',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша способность к гармонии — это дар. Но настоящий мир включает и вашу правду!',
+        'en': 'Your ability for harmony is a gift. But true peace includes your truth too!',
+      },
+    ),
+
+    'profile_steady': TestProfile(
+      id: 'profile_steady',
+      name: {
+        'ru': '⚓ Устойчивый',
+        'en': '⚓ Steady',
+      },
+      description: {
+        'ru': 'Вы эмоционально стабильны и спокойны. Вас сложно вывести из равновесия, и вы являетесь опорой для других.',
+        'en': 'You are emotionally stable and calm. It\'s hard to throw you off balance, and you are a support for others.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш высокий балл по Эмоциональной стабильности — доминирующая черта вашей личности.',
+        'en': 'Your high score in Emotional Stability is the dominant trait of your personality.',
+      },
+      strengths: {
+        'ru': [
+          'Спокойствие в стрессе',
+          'Надёжность для окружающих',
+          'Рациональное мышление',
+          'Устойчивость к давлению',
+        ],
+        'en': [
+          'Calmness under stress',
+          'Reliability for others',
+          'Rational thinking',
+          'Resistance to pressure',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Можете казаться отстранённым',
+          'Сложности с выражением эмоций',
+          'Недооценка эмоциональных потребностей',
+        ],
+        'en': [
+          'May seem detached',
+          'Difficulty expressing emotions',
+          'Undervaluing emotional needs',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Практикуйте выражение эмоций',
+          'Позволяйте себе уязвимость',
+          'Развивайте эмоциональный интеллект',
+        ],
+        'en': [
+          'Practice expressing emotions',
+          'Allow yourself vulnerability',
+          'Develop emotional intelligence',
+        ],
+      },
+      tryToday: {
+        'ru': 'Поделитесь с кем-то близким тем, что вы чувствуете, а не только думаете',
+        'en': 'Share with someone close what you feel, not just think',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша устойчивость — якорь для других. Не забывайте о своих эмоциях!',
+        'en': 'Your stability is an anchor for others. Don\'t forget about your emotions!',
+      },
+    ),
+
+    'profile_explorer': TestProfile(
+      id: 'profile_explorer',
+      name: {
+        'ru': '🔭 Исследователь',
+        'en': '🔭 Explorer',
+      },
+      description: {
+        'ru': 'Вы любознательны, открыты новому и ищете разнообразие. Рутина вас тяготит, а новые идеи вдохновляют.',
+        'en': 'You are curious, open to new things, and seek variety. Routine weighs you down, while new ideas inspire you.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваш высокий балл по Интеллекту/Открытости опыту — доминирующая черта вашей личности.',
+        'en': 'Your high score in Intellect/Openness is the dominant trait of your personality.',
+      },
+      strengths: {
+        'ru': [
+          'Любознательность и творчество',
+          'Открытость новому опыту',
+          'Широта взглядов',
+          'Способность к инновациям',
+        ],
+        'en': [
+          'Curiosity and creativity',
+          'Openness to new experiences',
+          'Breadth of views',
+          'Capacity for innovation',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Непостоянство интересов',
+          'Сложности с рутиной',
+          'Риск разбрасываться',
+        ],
+        'en': [
+          'Inconsistency of interests',
+          'Difficulty with routine',
+          'Risk of scattering',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Развивайте глубину, а не только широту',
+          'Находите интерес в рутинных задачах',
+          'Доводите проекты до конца',
+        ],
+        'en': [
+          'Develop depth, not just breadth',
+          'Find interest in routine tasks',
+          'Complete projects',
+        ],
+      },
+      tryToday: {
+        'ru': 'Завершите один давно отложенный проект вместо начала нового',
+        'en': 'Complete one long-postponed project instead of starting a new one',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваша любознательность открывает двери. Выбирайте, в какие из них войти!',
+        'en': 'Your curiosity opens doors. Choose which ones to enter!',
+      },
+    ),
+
+    'profile_balanced': TestProfile(
+      id: 'profile_balanced',
+      name: {
+        'ru': '⚖️ Сбалансированный',
+        'en': '⚖️ Balanced',
+      },
+      description: {
+        'ru': 'Ваш профиль личности сбалансирован без ярко выраженных доминирующих черт. Это даёт гибкость в разных ситуациях.',
+        'en': 'Your personality profile is balanced without pronounced dominant traits. This gives flexibility in different situations.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши баллы по всем пяти факторам находятся в умеренном диапазоне.',
+        'en': 'Your scores across all five factors are in the moderate range.',
+      },
+      strengths: {
+        'ru': [
+          'Адаптивность',
+          'Отсутствие крайностей',
+          'Гибкость поведения',
+          'Уравновешенность',
+        ],
+        'en': [
+          'Adaptability',
+          'Absence of extremes',
+          'Behavioral flexibility',
+          'Balance',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Отсутствие выраженных сильных сторон',
+          'Возможная неопределённость идентичности',
+        ],
+        'en': [
+          'Lack of pronounced strengths',
+          'Possible identity uncertainty',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Изучите свои скрытые предпочтения',
+          'Экспериментируйте с разными стилями',
+          'Цените свою универсальность',
+        ],
+        'en': [
+          'Explore your hidden preferences',
+          'Experiment with different styles',
+          'Value your versatility',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одну область личности, которую хотели бы усилить, и сделайте шаг в этом направлении',
+        'en': 'Choose one area of personality you\'d like to strengthen and take a step in that direction',
+      },
+      inspiringConclusion: {
+        'ru': 'Баланс — это уникальная сила. Используйте его, чтобы быть гибким в любой ситуации!',
+        'en': 'Balance is a unique strength. Use it to be flexible in any situation!',
+      },
+    ),
+  };
 }
 

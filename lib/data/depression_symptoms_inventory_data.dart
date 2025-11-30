@@ -1,4 +1,5 @@
 import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
 
 /// Data access class for Depression Symptoms Inventory
 /// Legacy Dart implementation (no JSON dependency)
@@ -779,4 +780,736 @@ class DepressionSymptomsInventoryData {
       },
     };
   }
+
+  /// Определить профиль на основе процентов по шкалам
+  static String determineProfile(Map<String, double> percentages) {
+    // Вычисляем средний уровень депрессии
+    final factors = ['emotional', 'cognitive', 'motivational', 'somatic', 'social'];
+
+    double total = 0;
+    int count = 0;
+    for (final factor in factors) {
+      if (percentages.containsKey(factor)) {
+        total += percentages[factor]!;
+        count++;
+      }
+    }
+
+    final averageLevel = count > 0 ? total / count : 0.0;
+
+    // Определяем профиль на основе среднего уровня и доминирующего фактора
+    if (averageLevel <= 16) {
+      return 'profile_minimal';
+    } else if (averageLevel <= 35) {
+      return 'profile_mild';
+    } else if (averageLevel <= 58) {
+      // Умеренная депрессия - определяем доминирующий фактор
+      String? dominantFactor;
+      double maxValue = 0;
+      for (final factor in factors) {
+        final value = percentages[factor] ?? 0;
+        if (value > maxValue) {
+          maxValue = value;
+          dominantFactor = factor;
+        }
+      }
+
+      switch (dominantFactor) {
+        case 'emotional':
+          return 'profile_emotional_focus';
+        case 'cognitive':
+          return 'profile_cognitive_focus';
+        case 'motivational':
+          return 'profile_motivational_focus';
+        case 'somatic':
+          return 'profile_somatic_focus';
+        case 'social':
+          return 'profile_social_focus';
+        default:
+          return 'profile_moderate';
+      }
+    } else if (averageLevel <= 78) {
+      return 'profile_severe';
+    } else {
+      return 'profile_very_severe';
+    }
+  }
+
+  /// Получить профиль по ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles[profileId];
+  }
+
+  /// Все профили для теста депрессии
+  static final Map<String, TestProfile> _profiles = {
+    'profile_minimal': TestProfile(
+      id: 'profile_minimal',
+      name: {
+        'ru': 'Минимальные симптомы',
+        'en': 'Minimal Symptoms',
+      },
+      description: {
+        'ru': 'Ваши результаты показывают минимальные или отсутствующие признаки депрессии. Это хороший показатель эмоционального благополучия.',
+        'en': 'Your results show minimal or no signs of depression. This is a good indicator of emotional well-being.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают низкий уровень по всем компонентам: эмоциональным, когнитивным, мотивационным, соматическим и социальным симптомам.',
+        'en': 'Your answers show low levels across all components: emotional, cognitive, motivational, somatic, and social symptoms.',
+      },
+      strengths: {
+        'ru': [
+          'Стабильное эмоциональное состояние',
+          'Позитивное мышление и самооценка',
+          'Сохранная мотивация и энергия',
+          'Хорошее физическое самочувствие',
+          'Активные социальные связи',
+        ],
+        'en': [
+          'Stable emotional state',
+          'Positive thinking and self-esteem',
+          'Preserved motivation and energy',
+          'Good physical well-being',
+          'Active social connections',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Важно поддерживать профилактику',
+          'Стресс может влиять на настроение',
+        ],
+        'en': [
+          'Important to maintain prevention',
+          'Stress can affect mood',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Продолжайте практики, которые поддерживают ваше благополучие',
+          'Поддерживайте режим сна и физическую активность',
+          'Сохраняйте социальные связи',
+          'Проходите самооценку периодически (раз в 3-6 месяцев)',
+        ],
+        'en': [
+          'Continue practices that support your well-being',
+          'Maintain sleep routine and physical activity',
+          'Preserve social connections',
+          'Do self-assessment periodically (every 3-6 months)',
+        ],
+      },
+      tryToday: {
+        'ru': 'Подумайте о том, что помогает вам чувствовать себя хорошо, и запланируйте одно такое занятие на эту неделю.',
+        'en': 'Think about what helps you feel good and schedule one such activity for this week.',
+      },
+      inspiringConclusion: {
+        'ru': 'Ваше эмоциональное здоровье — это ценный ресурс. Продолжайте заботиться о себе и помните: профилактика важнее лечения.',
+        'en': 'Your emotional health is a valuable resource. Continue caring for yourself and remember: prevention is better than cure.',
+      },
+    ),
+
+    'profile_mild': TestProfile(
+      id: 'profile_mild',
+      name: {
+        'ru': 'Лёгкие симптомы',
+        'en': 'Mild Symptoms',
+      },
+      description: {
+        'ru': 'У вас есть лёгкие признаки депрессивного состояния. Это нормальная реакция на стресс, но стоит обратить внимание на своё состояние.',
+        'en': 'You have mild signs of depressive state. This is a normal response to stress, but you should pay attention to your condition.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают небольшое повышение некоторых показателей, но общий уровень остаётся управляемым.',
+        'en': 'Your answers show a slight increase in some indicators, but the overall level remains manageable.',
+      },
+      strengths: {
+        'ru': [
+          'Сохранение базовой функциональности',
+          'Способность распознавать своё состояние',
+          'Ресурсы для самопомощи доступны',
+        ],
+        'en': [
+          'Preserved basic functionality',
+          'Ability to recognize your condition',
+          'Self-help resources available',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Периодическое снижение настроения',
+          'Возможное нарушение сна или аппетита',
+          'Временное снижение интереса к деятельности',
+        ],
+        'en': [
+          'Periodic mood decline',
+          'Possible sleep or appetite disturbance',
+          'Temporary decreased interest in activities',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Улучшите гигиену сна: 7-9 часов, регулярный режим',
+          'Физическая активность: 30 минут 5 раз в неделю улучшает настроение',
+          'Практикуйте техники релаксации или медитацию',
+          'Поддерживайте социальные контакты, даже когда не хочется',
+          'Ограничьте алкоголь — он усиливает депрессию',
+          'Если симптомы не проходят 2+ недели — обратитесь к специалисту',
+        ],
+        'en': [
+          'Improve sleep hygiene: 7-9 hours, regular schedule',
+          'Physical activity: 30 minutes 5 times a week improves mood',
+          'Practice relaxation techniques or meditation',
+          'Maintain social contacts, even when you don\'t feel like it',
+          'Limit alcohol — it worsens depression',
+          'If symptoms persist 2+ weeks — consult a specialist',
+        ],
+      },
+      tryToday: {
+        'ru': 'Совершите 15-минутную прогулку на свежем воздухе. Физическая активность и свет помогают улучшить настроение.',
+        'en': 'Take a 15-minute walk outside. Physical activity and light help improve mood.',
+      },
+      inspiringConclusion: {
+        'ru': 'Лёгкие симптомы — это сигнал обратить внимание на себя. Небольшие изменения в образе жизни могут значительно улучшить ваше состояние.',
+        'en': 'Mild symptoms are a signal to pay attention to yourself. Small lifestyle changes can significantly improve your condition.',
+      },
+    ),
+
+    'profile_emotional_focus': TestProfile(
+      id: 'profile_emotional_focus',
+      name: {
+        'ru': 'Эмоциональный фокус',
+        'en': 'Emotional Focus',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — эмоциональные переживания: грусть, тоска, чувство пустоты. Эмоции сейчас в центре вашего опыта депрессии.',
+        'en': 'Your main symptom is emotional experiences: sadness, melancholy, feeling of emptiness. Emotions are currently at the center of your depression experience.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех компонентов депрессии у вас доминируют эмоциональные симптомы: подавленность, тоска, плаксивость.',
+        'en': 'Among all depression components, emotional symptoms dominate: low mood, melancholy, tearfulness.',
+      },
+      strengths: {
+        'ru': [
+          'Способность чувствовать и осознавать эмоции',
+          'Сохранение когнитивных функций',
+          'Возможность получить облегчение через эмоциональную работу',
+        ],
+        'en': [
+          'Ability to feel and recognize emotions',
+          'Preserved cognitive functions',
+          'Possibility of relief through emotional work',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Глубокая грусть или подавленность',
+          'Чувство пустоты или эмоциональное онемение',
+          'Плаксивость или раздражительность',
+        ],
+        'en': [
+          'Deep sadness or low mood',
+          'Feeling of emptiness or emotional numbness',
+          'Tearfulness or irritability',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Ведите дневник эмоций — это помогает осознать и принять чувства',
+          'Практикуйте самосострадание: относитесь к себе как к хорошему другу',
+          'Разрешите себе грустить — подавление эмоций усиливает депрессию',
+          'Психотерапия (особенно эмоционально-фокусированная) очень эффективна',
+          'Найдите безопасного человека, с которым можно поделиться чувствами',
+          'Творческое самовыражение: музыка, рисование, письмо',
+        ],
+        'en': [
+          'Keep an emotion journal — it helps recognize and accept feelings',
+          'Practice self-compassion: treat yourself like a good friend',
+          'Allow yourself to be sad — suppressing emotions worsens depression',
+          'Psychotherapy (especially emotion-focused) is very effective',
+          'Find a safe person to share your feelings with',
+          'Creative expression: music, drawing, writing',
+        ],
+      },
+      tryToday: {
+        'ru': 'Напишите письмо к себе с позиции сострадательного друга. Что бы вы сказали себе, если бы видели свою боль со стороны?',
+        'en': 'Write a letter to yourself from the position of a compassionate friend. What would you say to yourself if you saw your pain from the outside?',
+      },
+      inspiringConclusion: {
+        'ru': 'Эмоции — это не враги, а посланники. Они говорят вам о важном. Научившись слушать их, вы найдёте путь к исцелению.',
+        'en': 'Emotions are not enemies, but messengers. They tell you something important. Learning to listen to them, you will find the path to healing.',
+      },
+    ),
+
+    'profile_cognitive_focus': TestProfile(
+      id: 'profile_cognitive_focus',
+      name: {
+        'ru': 'Когнитивный фокус',
+        'en': 'Cognitive Focus',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — когнитивные нарушения: негативное мышление, самокритика, трудности с концентрацией и памятью.',
+        'en': 'Your main symptom is cognitive impairment: negative thinking, self-criticism, difficulty with concentration and memory.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех компонентов депрессии у вас доминируют когнитивные симптомы: негативные мысли, самокритика, проблемы с вниманием.',
+        'en': 'Among all depression components, cognitive symptoms dominate: negative thoughts, self-criticism, attention problems.',
+      },
+      strengths: {
+        'ru': [
+          'Способность к анализу и самонаблюдению',
+          'Понимание связи мыслей и настроения',
+          'Хороший ответ на когнитивную терапию',
+        ],
+        'en': [
+          'Ability for analysis and self-observation',
+          'Understanding the connection between thoughts and mood',
+          'Good response to cognitive therapy',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Негативное мышление и руминации',
+          'Самокритика и чувство вины',
+          'Трудности с концентрацией',
+          'Проблемы с принятием решений',
+        ],
+        'en': [
+          'Negative thinking and rumination',
+          'Self-criticism and guilt',
+          'Difficulty concentrating',
+          'Problems with decision-making',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Когнитивно-поведенческая терапия (КПТ) — золотой стандарт при когнитивных симптомах',
+          'Практикуйте "ловлю" автоматических негативных мыслей',
+          'Ведите дневник мыслей: ситуация → мысль → эмоция → альтернативная мысль',
+          'Ограничьте руминации: поставьте "время для беспокойства" (15 минут в день)',
+          'Снизьте многозадачность — одна задача за раз',
+          'Медитация осознанности помогает прервать цикл негативных мыслей',
+        ],
+        'en': [
+          'Cognitive behavioral therapy (CBT) — gold standard for cognitive symptoms',
+          'Practice "catching" automatic negative thoughts',
+          'Keep thought diary: situation → thought → emotion → alternative thought',
+          'Limit rumination: set "worry time" (15 minutes a day)',
+          'Reduce multitasking — one task at a time',
+          'Mindfulness meditation helps break the cycle of negative thoughts',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишите одну негативную мысль о себе. Теперь спросите: какие факты её поддерживают? Какие факты ей противоречат? Это первый шаг к когнитивной перестройке.',
+        'en': 'Write down one negative thought about yourself. Now ask: what facts support it? What facts contradict it? This is the first step to cognitive restructuring.',
+      },
+      inspiringConclusion: {
+        'ru': 'Мысли — это не факты. Научившись различать их, вы обретёте свободу от тирании негативного мышления.',
+        'en': 'Thoughts are not facts. Learning to distinguish them, you will gain freedom from the tyranny of negative thinking.',
+      },
+    ),
+
+    'profile_motivational_focus': TestProfile(
+      id: 'profile_motivational_focus',
+      name: {
+        'ru': 'Мотивационный фокус',
+        'en': 'Motivational Focus',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — потеря мотивации и энергии. Апатия, усталость, потеря интереса к тому, что раньше радовало.',
+        'en': 'Your main symptom is loss of motivation and energy. Apathy, fatigue, loss of interest in what used to bring joy.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех компонентов депрессии у вас доминируют мотивационные симптомы: апатия, усталость, ангедония.',
+        'en': 'Among all depression components, motivational symptoms dominate: apathy, fatigue, anhedonia.',
+      },
+      strengths: {
+        'ru': [
+          'Понимание, что это симптом, а не лень',
+          'Сохранение базовых когнитивных функций',
+          'Возможность улучшения через поведенческую активацию',
+        ],
+        'en': [
+          'Understanding that this is a symptom, not laziness',
+          'Preserved basic cognitive functions',
+          'Possibility of improvement through behavioral activation',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Апатия и потеря интереса к жизни',
+          'Хроническая усталость без физической причины',
+          'Ангедония — неспособность получать удовольствие',
+          'Прокрастинация и избегание',
+        ],
+        'en': [
+          'Apathy and loss of interest in life',
+          'Chronic fatigue without physical cause',
+          'Anhedonia — inability to experience pleasure',
+          'Procrastination and avoidance',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Поведенческая активация: планируйте маленькие приятные действия каждый день',
+          'Начинайте с очень маленьких шагов — 5 минут любой активности',
+          'Не ждите мотивации — действие создаёт мотивацию, не наоборот',
+          'Составьте список того, что раньше приносило радость, и попробуйте одно',
+          'Физическая активность — мощный антидепрессант (даже 10 минут)',
+          'Структурируйте день — режим помогает при апатии',
+        ],
+        'en': [
+          'Behavioral activation: plan small pleasant activities every day',
+          'Start with very small steps — 5 minutes of any activity',
+          'Don\'t wait for motivation — action creates motivation, not vice versa',
+          'Make a list of what used to bring joy and try one thing',
+          'Physical activity — powerful antidepressant (even 10 minutes)',
+          'Structure your day — routine helps with apathy',
+        ],
+      },
+      tryToday: {
+        'ru': 'Выберите одно действие, которое раньше приносило радость (пусть даже маленькое), и сделайте его в течение 5 минут. Не ждите, что почувствуете удовольствие — просто сделайте.',
+        'en': 'Choose one action that used to bring joy (even small) and do it for 5 minutes. Don\'t expect to feel pleasure — just do it.',
+      },
+      inspiringConclusion: {
+        'ru': 'Апатия обманывает вас, говоря "это не поможет". Но каждое маленькое действие — это победа над депрессией. Мотивация вернётся, когда вы начнёте двигаться.',
+        'en': 'Apathy deceives you by saying "this won\'t help". But every small action is a victory over depression. Motivation will return when you start moving.',
+      },
+    ),
+
+    'profile_somatic_focus': TestProfile(
+      id: 'profile_somatic_focus',
+      name: {
+        'ru': 'Соматический фокус',
+        'en': 'Somatic Focus',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — физические проявления депрессии. Нарушения сна, аппетита, боли, усталость — тело говорит о депрессии.',
+        'en': 'Your main symptom is physical manifestations of depression. Sleep disturbances, appetite changes, pain, fatigue — body speaks about depression.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех компонентов депрессии у вас доминируют соматические симптомы: нарушения сна, аппетита, физическая усталость.',
+        'en': 'Among all depression components, somatic symptoms dominate: sleep disturbances, appetite changes, physical fatigue.',
+      },
+      strengths: {
+        'ru': [
+          'Связь с телесными ощущениями',
+          'Возможность улучшения через физические практики',
+          'Конкретные симптомы, которые можно отслеживать',
+        ],
+        'en': [
+          'Connection with bodily sensations',
+          'Possibility of improvement through physical practices',
+          'Concrete symptoms that can be tracked',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Нарушения сна: бессонница или гиперсомния',
+          'Изменения аппетита и веса',
+          'Физическая усталость и слабость',
+          'Необъяснимые боли',
+        ],
+        'en': [
+          'Sleep disturbances: insomnia or hypersomnia',
+          'Appetite and weight changes',
+          'Physical fatigue and weakness',
+          'Unexplained pain',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Обязательно: исключите физические заболевания (анализы, осмотр)',
+          'Гигиена сна: режим, темнота, прохлада, никаких экранов за час до сна',
+          'Регулярное питание, даже без аппетита — маленькие порции',
+          'Физическая активность — но мягкая: прогулки, йога, растяжка',
+          'Техники релаксации для тела: прогрессивная мышечная релаксация',
+          'Возможно рассмотрение антидепрессантов с седативным эффектом',
+        ],
+        'en': [
+          'Mandatory: rule out physical illness (tests, examination)',
+          'Sleep hygiene: routine, darkness, coolness, no screens an hour before bed',
+          'Regular meals, even without appetite — small portions',
+          'Physical activity — but gentle: walks, yoga, stretching',
+          'Body relaxation techniques: progressive muscle relaxation',
+          'Consider antidepressants with sedative effect',
+        ],
+      },
+      tryToday: {
+        'ru': 'Установите один элемент гигиены сна: ложитесь и вставайте в одно время. Даже если не спите — оставайтесь в постели только для сна.',
+        'en': 'Establish one element of sleep hygiene: go to bed and wake up at the same time. Even if you don\'t sleep — stay in bed only for sleep.',
+      },
+      inspiringConclusion: {
+        'ru': 'Тело и психика неразрывно связаны. Забота о физическом здоровье — это забота о душевном. Маленькие шаги к здоровому телу приведут к здоровому духу.',
+        'en': 'Body and psyche are inseparably connected. Caring for physical health is caring for mental health. Small steps toward a healthy body will lead to a healthy spirit.',
+      },
+    ),
+
+    'profile_social_focus': TestProfile(
+      id: 'profile_social_focus',
+      name: {
+        'ru': 'Социальный фокус',
+        'en': 'Social Focus',
+      },
+      description: {
+        'ru': 'Ваш основной симптом — социальная изоляция. Вы избегаете общения, чувствуете себя одиноким, отношения страдают.',
+        'en': 'Your main symptom is social isolation. You avoid communication, feel lonely, relationships suffer.',
+      },
+      whyThisProfile: {
+        'ru': 'Среди всех компонентов депрессии у вас доминируют социальные симптомы: изоляция, избегание общения, одиночество.',
+        'en': 'Among all depression components, social symptoms dominate: isolation, avoiding communication, loneliness.',
+      },
+      strengths: {
+        'ru': [
+          'Осознание важности социальных связей',
+          'Понимание, что изоляция — симптом, а не выбор',
+          'Возможность улучшения через маленькие социальные контакты',
+        ],
+        'en': [
+          'Awareness of the importance of social connections',
+          'Understanding that isolation is a symptom, not a choice',
+          'Possibility of improvement through small social contacts',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Избегание социальных контактов',
+          'Чувство одиночества и непонимания',
+          'Ухудшение отношений',
+          'Усиление депрессии от изоляции',
+        ],
+        'en': [
+          'Avoiding social contacts',
+          'Feeling of loneliness and misunderstanding',
+          'Deterioration of relationships',
+          'Worsening depression from isolation',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Начните с малого: один короткий контакт в день (сообщение, звонок)',
+          'Не ждите, пока захочется общаться — депрессия этого не позволит',
+          'Расскажите хотя бы одному человеку о своём состоянии',
+          'Групповая терапия особенно эффективна при социальных симптомах',
+          'Онлайн-сообщества поддержки, если реальные контакты слишком сложны',
+          'Структурированная социальная активность: клуб, класс, волонтёрство',
+        ],
+        'en': [
+          'Start small: one short contact per day (message, call)',
+          'Don\'t wait until you want to communicate — depression won\'t allow it',
+          'Tell at least one person about your condition',
+          'Group therapy is especially effective for social symptoms',
+          'Online support communities if real contacts are too difficult',
+          'Structured social activity: club, class, volunteering',
+        ],
+      },
+      tryToday: {
+        'ru': 'Напишите одно сообщение кому-то, о ком вы думали. Не нужно объяснять своё состояние — просто "привет, как дела?" уже контакт.',
+        'en': 'Send one message to someone you\'ve been thinking about. No need to explain your condition — just "hi, how are you?" is already contact.',
+      },
+      inspiringConclusion: {
+        'ru': 'Депрессия хочет изолировать вас. Но люди — лучшее лекарство. Каждый маленький контакт — это победа над изоляцией и шаг к выздоровлению.',
+        'en': 'Depression wants to isolate you. But people are the best medicine. Every small contact is a victory over isolation and a step toward recovery.',
+      },
+    ),
+
+    'profile_moderate': TestProfile(
+      id: 'profile_moderate',
+      name: {
+        'ru': 'Умеренная депрессия',
+        'en': 'Moderate Depression',
+      },
+      description: {
+        'ru': 'У вас умеренно выраженные симптомы депрессии по нескольким компонентам. Это состояние требует внимания и, возможно, профессиональной помощи.',
+        'en': 'You have moderately pronounced depression symptoms across several components. This condition requires attention and possibly professional help.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают умеренное повышение по нескольким компонентам депрессии без явного доминирования одного.',
+        'en': 'Your answers show moderate elevation across several depression components without clear dominance of any one.',
+      },
+      strengths: {
+        'ru': [
+          'Сохранение базовой функциональности',
+          'Способность распознать проблему',
+          'Мотивация искать помощь',
+        ],
+        'en': [
+          'Preserved basic functionality',
+          'Ability to recognize the problem',
+          'Motivation to seek help',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Множественные симптомы депрессии',
+          'Снижение качества жизни',
+          'Риск ухудшения без лечения',
+        ],
+        'en': [
+          'Multiple depression symptoms',
+          'Reduced quality of life',
+          'Risk of worsening without treatment',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'Рекомендуется консультация психолога или психотерапевта',
+          'КПТ (когнитивно-поведенческая терапия) — эффективный метод',
+          'Возможно обсуждение антидепрессантов с врачом',
+          'Поддержка образа жизни: сон, питание, физическая активность',
+          'Расскажите близким о своём состоянии',
+          'Не откладывайте обращение за помощью',
+        ],
+        'en': [
+          'Consultation with psychologist or psychotherapist recommended',
+          'CBT (cognitive behavioral therapy) — effective method',
+          'Possible discussion of antidepressants with doctor',
+          'Lifestyle support: sleep, nutrition, physical activity',
+          'Tell loved ones about your condition',
+          'Do not delay seeking help',
+        ],
+      },
+      tryToday: {
+        'ru': 'Запишитесь на консультацию к психологу или психотерапевту. Первый шаг — самый важный.',
+        'en': 'Schedule a consultation with a psychologist or psychotherapist. The first step is the most important.',
+      },
+      inspiringConclusion: {
+        'ru': 'Умеренная депрессия хорошо поддаётся лечению. С правильной помощью большинство людей выздоравливают. Вы не должны справляться в одиночку.',
+        'en': 'Moderate depression responds well to treatment. With proper help, most people recover. You don\'t have to cope alone.',
+      },
+    ),
+
+    'profile_severe': TestProfile(
+      id: 'profile_severe',
+      name: {
+        'ru': 'Выраженная депрессия',
+        'en': 'Severe Depression',
+      },
+      description: {
+        'ru': 'У вас выраженные симптомы депрессии. Это серьёзное состояние, которое требует профессиональной помощи. Вы не должны справляться с этим в одиночку.',
+        'en': 'You have pronounced depression symptoms. This is a serious condition that requires professional help. You should not cope with this alone.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают высокий уровень по большинству компонентов депрессии. Это хроническое состояние, влияющее на все сферы жизни.',
+        'en': 'Your answers show high levels across most depression components. This is a chronic condition affecting all areas of life.',
+      },
+      strengths: {
+        'ru': [
+          'Вы прошли этот тест — значит, ищете помощь',
+          'Осознание серьёзности ситуации',
+          'Депрессия лечится, даже выраженная',
+        ],
+        'en': [
+          'You took this test — meaning you seek help',
+          'Awareness of the seriousness of the situation',
+          'Depression is treatable, even severe',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Выраженные эмоциональные, когнитивные и физические симптомы',
+          'Значительное снижение функционирования',
+          'Социальная изоляция',
+          'Возможные мысли о бессмысленности жизни',
+        ],
+        'en': [
+          'Pronounced emotional, cognitive and physical symptoms',
+          'Significant reduction in functioning',
+          'Social isolation',
+          'Possible thoughts about meaninglessness of life',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'ОБЯЗАТЕЛЬНО: обратитесь к психиатру или психотерапевту',
+          'Антидепрессанты + психотерапия — наиболее эффективная комбинация',
+          'Возможен больничный лист — здоровье важнее работы',
+          'Расскажите близким — вам нужна поддержка',
+          'Не оставайтесь одни, особенно если есть мысли о смерти',
+          'Если есть мысли о самоповреждении — обратитесь за срочной помощью',
+        ],
+        'en': [
+          'MANDATORY: see a psychiatrist or psychotherapist',
+          'Antidepressants + psychotherapy — most effective combination',
+          'Sick leave possible — health is more important than work',
+          'Tell loved ones — you need support',
+          'Don\'t stay alone, especially if you have thoughts about death',
+          'If you have thoughts of self-harm — seek urgent help',
+        ],
+      },
+      tryToday: {
+        'ru': 'Позвоните близкому человеку и честно скажите: "Мне сейчас очень плохо, мне нужна поддержка". Вы заслуживаете помощи.',
+        'en': 'Call a loved one and honestly say: "I\'m feeling very bad right now, I need support." You deserve help.',
+      },
+      inspiringConclusion: {
+        'ru': 'Депрессия — это болезнь, а не слабость характера. Она лечится. Миллионы людей прошли через это и выздоровели. Вы тоже сможете — с правильной помощью.',
+        'en': 'Depression is an illness, not a character weakness. It is treatable. Millions of people have gone through this and recovered. You can too — with proper help.',
+      },
+    ),
+
+    'profile_very_severe': TestProfile(
+      id: 'profile_very_severe',
+      name: {
+        'ru': 'Тяжёлая депрессия',
+        'en': 'Very Severe Depression',
+      },
+      description: {
+        'ru': 'У вас тяжёлые симптомы депрессии. Это кризисное состояние, требующее немедленной профессиональной помощи. Пожалуйста, обратитесь за помощью сейчас.',
+        'en': 'You have severe depression symptoms. This is a crisis state requiring immediate professional help. Please seek help now.',
+      },
+      whyThisProfile: {
+        'ru': 'Ваши ответы показывают критически высокий уровень по большинству или всем компонентам депрессии.',
+        'en': 'Your answers show critically high levels across most or all depression components.',
+      },
+      strengths: {
+        'ru': [
+          'Вы прошли этот тест — это акт самосохранения',
+          'Даже тяжёлая депрессия поддаётся лечению',
+          'Помощь доступна прямо сейчас',
+        ],
+        'en': [
+          'You took this test — this is an act of self-preservation',
+          'Even severe depression responds to treatment',
+          'Help is available right now',
+        ],
+      },
+      vulnerabilities: {
+        'ru': [
+          'Критически высокий уровень всех симптомов',
+          'Серьёзное нарушение функционирования',
+          'Риск суицидальных мыслей',
+          'Необходимость срочной помощи',
+        ],
+        'en': [
+          'Critically high level of all symptoms',
+          'Serious functional impairment',
+          'Risk of suicidal thoughts',
+          'Need for urgent help',
+        ],
+      },
+      recommendations: {
+        'ru': [
+          'НЕМЕДЛЕННО: обратитесь к психиатру или в скорую помощь',
+          'Если есть мысли о самоповреждении: 8-800-2000-122 (бесплатно, круглосуточно)',
+          'Не оставайтесь одни — попросите кого-то быть рядом',
+          'Госпитализация может быть необходима и это нормально',
+          'Антидепрессанты + психотерапия + поддержка близких',
+          'Это временное состояние, которое пройдёт с лечением',
+        ],
+        'en': [
+          'IMMEDIATELY: see a psychiatrist or call emergency services',
+          'If you have thoughts of self-harm: please call a crisis helpline',
+          'Don\'t stay alone — ask someone to be with you',
+          'Hospitalization may be necessary and that is okay',
+          'Antidepressants + psychotherapy + support from loved ones',
+          'This is a temporary condition that will pass with treatment',
+        ],
+      },
+      tryToday: {
+        'ru': 'Прямо сейчас: позвоните на горячую линию 8-800-2000-122 или попросите кого-то отвезти вас к врачу. Это самое важное, что вы можете сделать.',
+        'en': 'Right now: call a crisis helpline or ask someone to take you to a doctor. This is the most important thing you can do.',
+      },
+      inspiringConclusion: {
+        'ru': 'Вы в очень тёмном месте сейчас. Но тьма — это не навсегда. Тысячи людей выходили из такой же глубокой депрессии. С помощью — выйдете и вы. Ваша жизнь имеет значение.',
+        'en': 'You are in a very dark place right now. But darkness is not forever. Thousands of people have emerged from similarly deep depression. With help — so will you. Your life matters.',
+      },
+    ),
+  };
 }
