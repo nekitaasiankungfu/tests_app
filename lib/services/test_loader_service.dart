@@ -27,6 +27,7 @@ import '../data/romantic_potential_data.dart';
 import '../data/cognitive_ability_data.dart';
 import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
+import '../data/perfectionism_fear_of_error_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -174,6 +175,9 @@ class TestLoaderService {
         break;
       case 'friendship_psychology_v1':
         test = FriendshipPsychologyData.getFriendshipPsychologyTest();
+        break;
+      case 'perfectionism_fear_of_error_v1':
+        test = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

@@ -26,6 +26,7 @@ import '../config/summary/question_weights/cognitive_ability_weights.dart';
 import '../config/summary/question_weights/relationship_compatibility_weights.dart';
 import '../config/summary/question_weights/friendship_psychology_weights.dart';
 import '../config/summary/question_weights/color_psychology_weights.dart';
+import '../config/summary/question_weights/perfectionism_fear_of_error_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -149,6 +150,7 @@ class SummaryService {
       ...RelationshipCompatibilityWeights.weights,
       ...FriendshipPsychologyWeights.weights,
       ...ColorPsychologyWeights.weights,
+      ...PerfectionismFearOfErrorWeights.weights,
     };
 
     // 8 personality type scales
@@ -549,6 +551,7 @@ class SummaryService {
       ...RelationshipCompatibilityWeights.weights,
       ...FriendshipPsychologyWeights.weights,
       ...ColorPsychologyWeights.weights,
+      ...PerfectionismFearOfErrorWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

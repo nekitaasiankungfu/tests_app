@@ -23,6 +23,7 @@ import 'summary/question_weights/romantic_potential_weights.dart';
 import 'summary/question_weights/cognitive_ability_weights.dart';
 import 'summary/question_weights/relationship_compatibility_weights.dart';
 import 'summary/question_weights/friendship_psychology_weights.dart';
+import 'summary/question_weights/perfectionism_fear_of_error_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2325,6 +2326,7 @@ class QuestionWeightsConfig {
     ...CognitiveAbilityWeights.weights,
     ...RelationshipCompatibilityWeights.weights,
     ...FriendshipPsychologyWeights.weights,
+    ...PerfectionismFearOfErrorWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

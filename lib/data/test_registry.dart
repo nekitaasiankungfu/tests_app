@@ -23,6 +23,7 @@ import 'tests/romantic_potential_test.dart';
 import 'tests/cognitive_ability_test.dart';
 import 'tests/relationship_compatibility_test.dart';
 import 'tests/friendship_psychology_test.dart';
+import 'tests/perfectionism_fear_of_error_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -72,6 +73,7 @@ class TestRegistry {
     CareerCompassTest(), // Special forced_choice test
     DigitalCareerFitTest(), // Digital career direction assessment
     CognitiveAbilityTest(), // Cognitive ability assessment (IQ-style)
+    PerfectionismFearOfErrorTest(), // Perfectionism and fear of error assessment
 
     // Emotional/Wellbeing
     ColorPsychologyTest(), // Special color-based test
