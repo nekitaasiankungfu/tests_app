@@ -1,7 +1,7 @@
 # CLAUDE.MD - Project Guidelines
 
 > **Comprehensive documentation moved to `docs/` directory.**
-> This file contains quick reference and essential information.
+> This file contains quick reference and essential information for Claude Code.
 
 ---
 
@@ -20,88 +20,16 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **24 psychological tests organized in 5 categories:**
-  - 🎭 **Типология личности:** IPIP Big Five (50 q), 16 Personality Types (80 q), DISC Personality (56 q)
-  - 🧠 **Темперамент:** Fisher Temperament (56 q), Temperament Profile (60 q), Social Battery (40 q)
-  - ❤️ **Отношения:** Love Profile (60 q), Love Languages (30 q), Romantic Potential (36 q), Relationship Compatibility (24 q), Friendship Psychology (24 q)
-  - 🌟 **Эмоциональное состояние:** Stress Test, Self-Esteem Test, Digital Detox (50 q), Burnout Diagnostic (54 q), Color Psychology (6 stages), Anxiety Symptoms Inventory (24 q), Depression Symptoms Inventory (27 q), Self Confidence Multiscale (36 q)
-  - 💼 **Карьера:** Holland Code RIASEC (60 q), Career Compass (56 forced_choice), Digital Career Fit (18 q), Cognitive Ability (60 q)
-- **Category-based test grouping** with collapsible sections
-- **Three test architectures:**
-  - Standard tests (21) - questionnaires with Likert scales
-  - Special tests (2) - visual/interactive with custom UI (Color Psychology, Career Compass)
-  - Profile tests (4) - multi-choice with 7-section result structure (Digital Career Fit, Romantic Potential, Relationship Compatibility, Friendship Psychology)
-- Multilingual support (Russian/English)
-- Daily mood tracking
-- Result history and archive
-- Aggregate summary analysis with **195 psychological scales**
-- **Cross-test personality type calculation** - all tests contribute to personality type
-- **Automatic direction detection** - negative weights auto-invert scale values
-- **Answer text display** - shows actual answer text in summary (e.g., "2/4 (Иногда)")
-- **Color Psychology Test features:**
-  - 6 interactive stages (12-15 minutes)
-  - 34+ unique interactions
-  - Drag-and-drop, paired comparisons, emotional associations
-  - Consistency metrics across stages
-  - 12 psychological scales
-- **Career Compass Test features:**
-  - 56 forced_choice questions (paired comparisons)
-  - 8 career interest scales (people, analysis, creation, technology, business, nature, order, care)
-  - Ipsative scoring (points distributed between scales)
-  - Radar chart visualization
-  - Career profile matching with recommendations
-  - ~15 minutes completion time
-- **Digital Career Fit Test features:**
-  - 18 multi-choice questions (6 options each)
-  - 6 career directions: product_thinking, data_analytics, design_ux, content_marketing, management_communication, tech_development
-  - **7-section result structure:**
-    1. Ваш цифровой профиль (главный вывод)
-    2. Почему именно он (обоснование)
-    3. Ваши сильные стороны
-    4. Подходящие направления/профессии
-    5. Рекомендации по развитию
-    6. Что попробовать сегодня
-    7. Вдохновляющий вывод
-  - 7 career profiles with full localization
-  - Dominant scale algorithm (10% gap threshold)
-  - Bipolar personality scales integration
-  - ~5 minutes completion time
-- **Romantic Potential Test features:**
-  - 36 questions (5-point Likert scale)
-  - 3 factors: romantic_potential, love_attitudes, love_stories
-  - **7-section result structure** (same as Digital Career Fit)
-  - 3 romantic profiles: Secure Romantic, Mixed Romantic, Romantic Challenges
-  - 12 reversed questions with proper handling
-  - ~8 minutes completion time
-- **Relationship Compatibility Test features:**
-  - 24 questions with 5-point Likert scale (0-4)
-  - 6 factors: emotional_connection, communication_style, values_alignment, relationship_expectations, conflict_management, intimacy_and_romance
-  - 3 compatibility profiles: Perfect Match (75-100%), Good Potential (45-74%), Needs Alignment (0-44%)
-  - 7-section result structure
-  - ~7 minutes completion time
-- **Friendship Psychology Test features:**
-  - 24 questions with 5-point Likert scale (0-4)
-  - 6 factors: emotional_closeness, communication_style, trust_and_loyalty, boundaries_and_space, supportive_behavior, friendship_expectations
-  - **12 friendship profiles + 1 mixed:**
-    - Deep Intimate, Loyal Classic, Social Butterfly, Free Independent
-    - Support Giver, Activity Partner, Mentor Guide, Equal Balance
-    - Cautious Observer, Crisis Helper, Emotional Anchor, Growth Partner
-  - 7-section result structure with vulnerabilities section
-  - Profile determination based on factor combinations
-  - ~7 minutes completion time
-- **Cognitive Ability Test features:**
-  - 60 questions (20 logical + 20 numerical + 20 verbal)
-  - 3 factors: logical_reasoning, numerical_ability, verbal_ability
-  - Binary scoring (0 = incorrect, 1 = correct)
-  - IQ-style assessment with correct answers
-  - Time-limited sections (10 minutes per section)
-  - ~15 psychological scales mapped per question
-  - ~30 minutes completion time
-- Theme customization (6 pastel colors + dark mode)
-- Onboarding experience for new users
-- Offline-first architecture with local persistence
-- Production-ready logging system
-- Comprehensive error handling
+- **24 psychological tests in 5 categories** (21 standard + 2 special + 4 profile tests)
+- **195 psychological scales** for aggregate personality analysis
+- **Three test architectures:** Standard (Likert), Special (visual/interactive), Profile (7-section results)
+- **Multilingual support** (Russian/English)
+- **Daily mood tracking** and result history
+- **Cross-test personality type calculation**
+- **Theme customization** (6 pastel colors + dark mode)
+- **Offline-first architecture** with local persistence
+
+📖 **For detailed test descriptions:** [`docs/TESTS_REFERENCE.md`](docs/TESTS_REFERENCE.md)
 
 ---
 
@@ -423,65 +351,20 @@ SummaryData? calculateSummary(List<TestResult> results) {
 
 ## Key Files Reference
 
-| File | Lines | Purpose |
-|------|-------|---------|
-| **Core Application Files** |||
-| `lib/main.dart` | 171 | App entry point, theme setup |
-| `lib/screens/home_screen.dart` | 398 | Test selection, navigation |
-| `lib/screens/test_screen.dart` | 631 | Test-taking interface (standard tests) |
-| `lib/services/test_service.dart` | 853 | Test business logic |
-| `lib/services/summary_service.dart` | 387 | Summary calculation |
-| `lib/config/summary/hierarchical_scales.dart` | 5,068 | 195 psychological scales |
-| **Standard Tests Data** |||
-| `lib/data/digital_detox_data.dart` | 1,150 | Digital Detox test (50 questions) |
-| `lib/data/burnout_diagnostic_data.dart` | 1,540 | Burnout Diagnostic test (54 questions) |
-| `lib/data/holland_code_data.dart` | 1,150 | Holland Code test (60 questions) |
-| `lib/config/summary/question_weights/holland_code_weights.dart` | 960 | Holland Code weights |
-| **Anxiety Symptoms Inventory** ||| ⭐ NEW
-| `lib/data/tests/anxiety_symptoms_inventory_test.dart` | 90 | Test stub with metadata |
-| `lib/data/anxiety_symptoms_inventory_data.dart` | 500 | 24 questions (bilingual), 4 factors |
-| `lib/config/summary/question_weights/anxiety_symptoms_inventory_weights.dart` | 430 | Weights mapping (~30 scales) |
-| **Color Psychology Test (Special)** |||
-| `lib/models/color_psychology_model.dart` | 280 | Color test data models (6 result types) |
-| `lib/data/color_psychology_data.dart` | 450 | Color test data (10 colors, 8 emotions, scales) |
-| `lib/screens/color_psychology_test_screen.dart` | 495 | Main test screen (6 stages management) |
-| `lib/screens/color_psychology_result_screen.dart` | 1,150 | Results screen (all 6 stages display) |
-| `lib/services/color_psychology_service.dart` | 850 | Color test scoring (12 scales + metrics) |
-| `lib/widgets/color_selection_widget.dart` | 200 | Stage 1: Quick choice (30 sec) |
-| `lib/widgets/color_ranking_widget.dart` | 250 | Stage 2: Drag-and-drop ranking (60 sec) |
-| `lib/widgets/color_paired_comparisons_widget.dart` | 280 | Stage 3: Paired comparisons (2 min) |
-| `lib/widgets/color_emotional_associations_widget.dart` | 220 | Stage 4: Emotional associations |
-| `lib/widgets/color_life_domains_widget.dart` | 260 | Stage 5: Life domains + situations |
-| `lib/widgets/color_temporal_perspective_widget.dart` | 230 | Stage 6: Temporal perspective |
-| **Career Compass Test (Special)** |||
-| `lib/models/career_compass_model.dart` | 210 | Career test models (ForcedChoice, Config) |
-| `lib/data/career_compass_data.dart` | 700 | 56 questions, 8 scales, profiles, interpretations |
-| `lib/screens/career_compass_test_screen.dart` | 410 | Main test screen (intro + questions) |
-| `lib/screens/career_compass_result_screen.dart` | 700 | Results with radar chart, profiles |
-| `lib/services/career_compass_service.dart` | 200 | Ipsative scoring, profile matching |
-| `lib/widgets/career_compass_question_widget.dart` | 300 | Forced choice UI (A vs B cards) |
-| `lib/data/tests/career_compass_test.dart` | 145 | Test stub (questions: []) |
-| **Digital Career Fit Test (Profile)** |||
-| `lib/data/tests/digital_career_fit_test.dart` | 100 | Test stub with metadata |
-| `lib/data/digital_career_fit_data.dart` | 800 | 18 questions, 7 profiles, determineProfile() |
-| `lib/config/summary/question_weights/digital_career_fit_weights.dart` | 400 | Weights + bipolar scales |
-| `lib/screens/test_result_screen.dart` | +200 | _buildDigitalCareerProfileCard(), _buildDigitalCareerExtendedSection() |
-| **Romantic Potential Test (Profile)** |||
-| `lib/data/tests/romantic_potential_test.dart` | 90 | Test stub with metadata |
-| `lib/data/romantic_potential_data.dart` | 850 | 36 questions, 3 profiles, 7-section structure |
-| `lib/config/summary/question_weights/romantic_potential_weights.dart` | 750 | Weights for ~60 scales |
-| **Relationship Compatibility Test (Profile)** |||
-| `lib/data/tests/relationship_compatibility_test.dart` | 95 | Test stub with metadata |
-| `lib/data/relationship_compatibility_data.dart` | 750 | 24 questions, 3 profiles, CompatibilityProfile model |
-| `lib/config/summary/question_weights/relationship_compatibility_weights.dart` | 450 | Weights mapping (~47 scales) |
-| **Friendship Psychology Test (Profile)** |||
-| `lib/data/tests/friendship_psychology_test.dart` | 95 | Test stub with metadata |
-| `lib/data/friendship_psychology_data.dart` | 900 | 24 questions, 13 profiles, FriendshipProfile model |
-| `lib/config/summary/question_weights/friendship_psychology_weights.dart` | 400 | Weights mapping (~40 scales) |
-| **Cognitive Ability Test** |||
-| `lib/data/tests/cognitive_ability_test.dart` | 57 | Test stub with metadata |
-| `lib/data/cognitive_ability_data.dart` | ~900 | 60 questions (bilingual), 3 factors, binary scoring |
-| `lib/config/summary/question_weights/cognitive_ability_weights.dart` | 1115 | Weights for ~15 scales per question |
+📖 **For complete file listing with sizes:** [`docs/FILES_MAP.md`](docs/FILES_MAP.md)
+
+### Essential Files for Quick Reference
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| **Entry** | `lib/main.dart` | App initialization |
+| **Home** | `lib/screens/home_screen.dart` | Test selection |
+| **Testing** | `lib/screens/test_screen.dart` | Standard test interface |
+| **Results** | `lib/screens/test_result_screen.dart` | Result display |
+| **Summary** | `lib/screens/summary_screen.dart` | Personality analysis |
+| **Scales** | `lib/config/summary/hierarchical_scales.dart` | 195 scales definition |
+| **Service** | `lib/services/test_service.dart` | Test logic |
+| **Registry** | `lib/data/test_registry.dart` | All tests list |
 
 ---
 
@@ -591,31 +474,7 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 
 ---
 
-**Last Updated:** 2025-11-23
-**Document Version:** 3.21.0
-**Codebase State:** ~50,000+ lines across 100+ files (+380% growth since v1.0.0)
-**Test Coverage:** 9 test files, 3,989 lines, ~35 unit tests
-**Psychological Tests:** 24 tests across 5 categories
-  - 18 standard tests (907 questions total)
-  - 2 special tests:
-    - Color Psychology (6 interactive stages, 34+ interactions)
-    - Career Compass (56 forced_choice questions, 8 career scales)
-  - 4 profile tests:
-    - Digital Career Fit (18 questions, 7-section result structure)
-    - Romantic Potential (36 questions, 3 profiles, 7-section result structure)
-    - Relationship Compatibility (24 questions, 3 profiles, 7-section result structure)
-    - Friendship Psychology (24 questions, 13 profiles, 7-section result structure)
-**Architecture Status:** Production-ready with triple architecture support
-**Test Architecture:** 18 Legacy Dart + 2 Special + 4 Profile = 24 total tests
-**Recent Updates:**
-- Merge: 4 new tests from parallel branches (v3.21.0) ⭐ NEW
-  - Cognitive Ability Test: 60 вопросов (IQ-style), 3 фактора, binary scoring
-  - Romantic Potential: 36 вопросов, 3 фактора, 7-секционная структура
-  - Relationship Compatibility: 24 вопроса, 6 факторов, 3 профиля совместимости
-  - Friendship Psychology: 24 вопроса, 6 факторов, 13 профилей дружбы
-- Merge: Digital Career Fit + Self Confidence Multiscale (v3.18.0)
-- Digital Career Fit: 18 вопросов, 6 направлений, 7-секционная структура (v3.17.0)
+**Last Updated:** 2025-11-30 | **Version:** 3.21.0
+**Codebase:** ~50,000+ lines | **Tests:** 24 (21 std + 2 special + 4 profile)
 
----
-
-> **📖 For detailed information, navigate to the respective documentation file in the `docs/` directory.**
+> **📖 For detailed information, navigate to the `docs/` directory.**
