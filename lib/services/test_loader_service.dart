@@ -28,6 +28,7 @@ import '../data/cognitive_ability_data.dart';
 import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
 import '../data/adhd_attention_profile_data.dart';
+import '../data/perfectionism_fear_of_error_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -178,6 +179,9 @@ class TestLoaderService {
         break;
       case 'adhd_attention_profile_v2':
         test = ADHDAttentionProfileData.getADHDAttentionProfileTest();
+        break;
+      case 'perfectionism_fear_of_error_v1':
+        test = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

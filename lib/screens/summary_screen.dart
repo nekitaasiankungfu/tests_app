@@ -38,6 +38,7 @@ import '../data/cognitive_ability_data.dart';
 import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
 import '../data/adhd_attention_profile_data.dart';
+import '../data/perfectionism_fear_of_error_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -127,6 +128,9 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
         break;
       case 'adhd_attention_profile_v2':
         testModel = ADHDAttentionProfileData.getADHDAttentionProfileTest();
+        break;
+      case 'perfectionism_fear_of_error_v1':
+        testModel = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
         break;
       default:
         appLogger.w('Unknown testId: $testId');
@@ -2691,6 +2695,9 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
           break;
         case 'adhd_attention_profile_v2':
           testModel = ADHDAttentionProfileData.getADHDAttentionProfileTest();
+          break;
+        case 'perfectionism_fear_of_error_v1':
+          testModel = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
           break;
         default:
           appLogger.w('Unknown testId: $testId');

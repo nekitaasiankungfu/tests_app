@@ -118,6 +118,37 @@ class _ColorPsychologyTestScreenState extends State<ColorPsychologyTestScreen> {
     }
   }
 
+  /// Переход к предыдущему этапу (back button)
+  void _previousStage() {
+    if (_currentStage > 1) {
+      _timer?.cancel();
+      setState(() {
+        _currentStage--;
+        // Clear the result of the current stage to allow re-entry
+        switch (_currentStage) {
+          case 1:
+            _quickChoiceResult = null;
+            break;
+          case 2:
+            _rankingResult = null;
+            break;
+          case 3:
+            _pairedComparisonResult = null;
+            break;
+          case 4:
+            _emotionalAssociationResult = null;
+            break;
+          case 5:
+            _lifeDomainResult = null;
+            break;
+          case 6:
+            _temporalPerspectiveResult = null;
+            break;
+        }
+      });
+    }
+  }
+
   /// Обработка результатов теста
   void _processResults() {
     final result = _service.calculateResultExtended(
@@ -129,10 +160,7 @@ class _ColorPsychologyTestScreenState extends State<ColorPsychologyTestScreen> {
       temporalPerspective: _temporalPerspectiveResult!,
     );
 
-    // Сохранить результат
-    _saveResult(result);
-
-    // Перейти к экрану результатов
+    // Перейти к экрану результатов (сохранение происходит там)
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => ColorPsychologyResultScreen(
@@ -140,12 +168,6 @@ class _ColorPsychologyTestScreenState extends State<ColorPsychologyTestScreen> {
         ),
       ),
     );
-  }
-
-  /// Сохранение результата
-  void _saveResult(ColorPsychologyResult result) {
-    // TODO: Implement saving to SharedPreferences
-    // This would integrate with existing TestProvider
   }
 
   /// Обработка результата быстрого выбора
@@ -211,22 +233,8 @@ class _ColorPsychologyTestScreenState extends State<ColorPsychologyTestScreen> {
         title: Text(
           isRussian ? 'Цветовая психология' : 'Color Psychology',
         ),
-        actions: [
-          if (_secondsRemaining > 0)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Text(
-                  '${_secondsRemaining}s',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: _secondsRemaining <= 10 ? Colors.red : null,
-                  ),
-                ),
-              ),
-            ),
-        ],
+        // Timer display removed - each stage widget manages its own timer internally
+        // for stages 1-3 (quick choice, ranking, paired comparisons)
       ),
       body: _buildBody(context, isRussian),
     );
@@ -242,32 +250,38 @@ class _ColorPsychologyTestScreenState extends State<ColorPsychologyTestScreen> {
         return ColorSelectionWidget(
           colors: ColorPsychologyData.colors,
           onComplete: _onQuickChoiceComplete,
+          onBack: null, // First stage - no back button
           isRussian: isRussian,
         );
       case 2:
         return ColorRankingWidget(
           colors: ColorPsychologyData.colors,
           onComplete: _onRankingComplete,
+          onBack: _previousStage,
           isRussian: isRussian,
         );
       case 3:
         return ColorPairedComparisonsWidget(
           onComplete: _onPairedComparisonsComplete,
+          onBack: _previousStage,
           locale: locale,
         );
       case 4:
         return ColorEmotionalAssociationsWidget(
           onComplete: _onEmotionalAssociationsComplete,
+          onBack: _previousStage,
           locale: locale,
         );
       case 5:
         return ColorLifeDomainsWidget(
           onComplete: _onLifeDomainsComplete,
+          onBack: _previousStage,
           locale: locale,
         );
       case 6:
         return ColorTemporalPerspectiveWidget(
           onComplete: _onTemporalPerspectiveComplete,
+          onBack: _previousStage,
           locale: locale,
         );
       default:

@@ -22,6 +22,7 @@ import '../data/cognitive_ability_data.dart';
 import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
 import '../data/adhd_attention_profile_data.dart';
+import '../data/perfectionism_fear_of_error_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -121,13 +122,15 @@ class TestService {
                                         ? 4  // Relationship Compatibility uses 0-4 scoring (5-point Likert)
                                         : test.id == 'friendship_psychology_v1'
                                             ? 4  // Friendship Psychology uses 0-4 scoring (5-point Likert)
-                                            : test.id == 'wellbeing_happiness_inventory_v1'
-                                                ? 5  // Wellbeing Happiness Inventory uses 0-5 scoring (6-point Likert)
-                                                : test.id == 'digital_career_fit_v1'
-                                                    ? 5  // Digital Career Fit uses 0-5 scoring (6 career directions)
-                                                    : test.id == 'adhd_attention_profile_v2'
-                                                        ? 4  // ADHD Attention Profile uses 0-4 scoring (5-point frequency scale)
-                                                        : 5;
+                                            : test.id == 'perfectionism_fear_of_error_v1'
+                                                ? 4  // Perfectionism Fear of Error uses 0-4 scoring (5-point Likert)
+                                                : test.id == 'wellbeing_happiness_inventory_v1'
+                                                    ? 5  // Wellbeing Happiness Inventory uses 0-5 scoring (6-point Likert)
+                                                    : test.id == 'digital_career_fit_v1'
+                                                        ? 5  // Digital Career Fit uses 0-5 scoring (6 career directions)
+                                                        : test.id == 'adhd_attention_profile_v2'
+                                                            ? 4  // ADHD Attention Profile uses 0-4 scoring (5-point frequency scale)
+                                                            : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -311,6 +314,9 @@ class TestService {
     } else if (test.id == 'adhd_attention_profile_v2') {
       factorNames = ADHDAttentionProfileData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'perfectionism_fear_of_error_v1') {
+      factorNames = PerfectionismFearOfErrorData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
@@ -417,6 +423,10 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             ADHDAttentionProfileData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'perfectionism_fear_of_error_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            PerfectionismFearOfErrorData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }

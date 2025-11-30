@@ -15,11 +15,13 @@ import '../data/color_psychology_data.dart';
 
 class ColorPairedComparisonsWidget extends StatefulWidget {
   final Function(PairedComparisonResult) onComplete;
+  final VoidCallback? onBack; // Callback to go back to previous stage
   final String locale;
 
   const ColorPairedComparisonsWidget({
     Key? key,
     required this.onComplete,
+    this.onBack,
     required this.locale,
   }) : super(key: key);
 
@@ -87,6 +89,22 @@ class _ColorPairedComparisonsWidgetState
 
   void _startResponseTimer() {
     _pairStartTime = DateTime.now();
+  }
+
+  /// Go back to previous pair within this stage
+  void _goBackWithinStage() {
+    if (_currentPairIndex > 0) {
+      setState(() {
+        _currentPairIndex--;
+        // Remove the last comparison and undo the win count
+        if (_comparisons.isNotEmpty) {
+          final lastComparison = _comparisons.removeLast();
+          final chosenColor = lastComparison.chosen;
+          _wins[chosenColor] = (_wins[chosenColor] ?? 1) - 1;
+        }
+        _startResponseTimer();
+      });
+    }
   }
 
   void _selectColor(String colorId) {
@@ -165,7 +183,24 @@ class _ColorPairedComparisonsWidgetState
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 16),
-              // Прогресс
+              // Кнопка назад (всегда видна)
+              if (_currentPairIndex > 0 || widget.onBack != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: OutlinedButton.icon(
+                    onPressed: _currentPairIndex > 0 ? _goBackWithinStage : widget.onBack,
+                    icon: const Icon(Icons.arrow_back, size: 18),
+                    label: Text(
+                      _currentPairIndex > 0
+                          ? (widget.locale == 'en' ? 'Previous pair' : 'Предыдущая пара')
+                          : (widget.locale == 'en' ? 'Previous stage' : 'Предыдущий этап'),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                  ),
+                ),
+              // Прогресс и таймер
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

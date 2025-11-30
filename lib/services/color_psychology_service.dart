@@ -762,14 +762,17 @@ class ColorPsychologyService {
     final metrics = <String, double>{};
 
     // Согласованность между быстрым выбором и ранжированием
+    // Проверяем, попали ли "любимые" цвета в топ-3 ранжирования
     int matchedLikes = 0;
     for (final likedColor in quickChoice.likedColors) {
       final rankPos = ranking.rankedColors.indexOf(likedColor) + 1;
       if (rankPos <= 3) matchedLikes++;
     }
-    metrics['quick_vs_ranking'] = (matchedLikes / 3) * 100;
+    // Возвращаем значение 0.0-1.0 (UI ожидает такой формат)
+    metrics['quick_vs_ranking'] = matchedLikes / 3.0;
 
     // Согласованность парных сравнений с ранжированием
+    // Проверяем, выбирал ли пользователь цвет с лучшей позицией в ранжировании
     int consistentWins = 0;
     int totalComparisons = 0;
     for (final comparison in pairedComparisons.comparisons) {
@@ -781,10 +784,12 @@ class ColorPsychologyService {
         consistentWins++;
       }
     }
-    metrics['paired_vs_ranking'] = (consistentWins / totalComparisons) * 100;
+    metrics['ranking_vs_paired'] = totalComparisons > 0
+        ? consistentWins / totalComparisons.toDouble()
+        : 0.0;
 
-    // Общая согласованность
-    metrics['overall'] = (metrics['quick_vs_ranking']! + metrics['paired_vs_ranking']!) / 2;
+    // Общая согласованность (среднее)
+    metrics['overall_consistency'] = (metrics['quick_vs_ranking']! + metrics['ranking_vs_paired']!) / 2.0;
 
     return metrics;
   }
