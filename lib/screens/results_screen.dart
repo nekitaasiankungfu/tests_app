@@ -6,11 +6,13 @@ import '../providers/user_preferences_provider.dart';
 import '../providers/summary_provider.dart';
 import '../models/test_model.dart';
 import '../models/career_compass_model.dart';
+import '../models/color_psychology_model.dart';
 import '../utils/theme_utils.dart';
 import '../constants/color_constants.dart';
 import 'test_result_screen.dart';
 import 'sixteen_types_result_screen.dart';
 import 'career_compass_result_screen.dart';
+import 'color_psychology_result_screen.dart';
 import 'summary_screen.dart';
 
 class ResultsScreen extends StatefulWidget {
@@ -389,6 +391,18 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       ),
                     ),
                   );
+                } else if (result.testId == 'color_psychology_v1') {
+                  // Для Color Psychology используем специальный экран
+                  final colorResult = _createColorPsychologyResult(result);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ColorPsychologyResultScreen(
+                        result: colorResult,
+                        fromHistory: true, // Don't save again when viewing from history
+                      ),
+                    ),
+                  );
                 } else {
                   Navigator.push(
                     context,
@@ -642,6 +656,68 @@ class _ResultsScreenState extends State<ResultsScreen> {
       scalePercentages: scalePercentages,
       completedAt: result.completedAt,
     );
+  }
+
+  /// Creates ColorPsychologyResult from saved TestResult
+  ColorPsychologyResult _createColorPsychologyResult(TestResult result) {
+    // Extract scale scores
+    final scaleScores = <String, double>{};
+    final interpretations = <String, String>{};
+    final patterns = <String>[];
+
+    // Use scaleScores if available
+    if (result.scaleScores != null) {
+      for (final entry in result.scaleScores!.entries) {
+        scaleScores[entry.key] = entry.value;
+      }
+    }
+
+    // Fallback to factorScores if scaleScores empty
+    if (scaleScores.isEmpty && result.factorScores != null) {
+      for (final entry in result.factorScores!.entries) {
+        scaleScores[entry.key] = entry.value.percentage;
+        // Extract interpretation from factorScores
+        final interp = entry.value.getInterpretation('ru');
+        if (interp.isNotEmpty) {
+          interpretations[entry.key] = interp;
+        }
+      }
+    }
+
+    // Try to extract patterns from interpretation string
+    if (result.interpretation.isNotEmpty && result.interpretation != 'Анализ завершён') {
+      patterns.addAll(result.interpretation.split(', ').map((name) => _patternNameToId(name)));
+    }
+
+    return ColorPsychologyResult(
+      testId: result.testId,
+      scaleScores: scaleScores,
+      interpretations: interpretations,
+      patterns: patterns,
+      completedAt: result.completedAt,
+    );
+  }
+
+  /// Convert pattern name back to ID
+  String _patternNameToId(String name) {
+    switch (name) {
+      case 'Выгорание':
+        return 'burnout_pattern';
+      case 'Компенсация стресса':
+        return 'stress_compensation';
+      case 'Эмоциональное отключение':
+        return 'emotional_shutdown';
+      case 'Тревожность':
+        return 'anxiety_pattern';
+      case 'Депрессивные признаки':
+        return 'depression_indicators';
+      case 'Гармония':
+        return 'healthy_balance';
+      case 'Потребность в заботе':
+        return 'need_for_warmth';
+      default:
+        return name;
+    }
   }
 
   String _formatDate(DateTime date) {

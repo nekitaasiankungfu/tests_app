@@ -13,12 +13,14 @@ import '../models/color_psychology_model.dart';
 class ColorRankingWidget extends StatefulWidget {
   final List<ColorInfo> colors;
   final Function(List<String>) onComplete;
+  final VoidCallback? onBack; // Callback to go back to previous stage
   final bool isRussian;
 
   const ColorRankingWidget({
     super.key,
     required this.colors,
     required this.onComplete,
+    this.onBack,
     required this.isRussian,
   });
 
@@ -158,19 +160,41 @@ class _ColorRankingWidgetState extends State<ColorRankingWidget> {
           ),
         ),
 
-        // Кнопка продолжения
+        // Кнопки навигации
         Container(
           padding: const EdgeInsets.all(16.0),
-          child: SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton(
-              onPressed: _complete,
-              child: Text(
-                widget.isRussian ? 'Продолжить' : 'Continue',
-                style: const TextStyle(fontSize: 18),
+          child: Row(
+            children: [
+              // Back button (only if callback is provided)
+              if (widget.onBack != null)
+                Expanded(
+                  child: SizedBox(
+                    height: 56,
+                    child: OutlinedButton.icon(
+                      onPressed: widget.onBack,
+                      icon: const Icon(Icons.arrow_back),
+                      label: Text(
+                        widget.isRussian ? 'Назад' : 'Back',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ),
+              if (widget.onBack != null) const SizedBox(width: 16),
+              // Continue button
+              Expanded(
+                child: SizedBox(
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: _complete,
+                    child: Text(
+                      widget.isRussian ? 'Продолжить' : 'Continue',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ],

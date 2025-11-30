@@ -442,6 +442,7 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.22.0 | 2025-11-30 | Claude Code | **Color Psychology Test Improvements** ⭐<br>- **FIXED:** Color Psychology results now affect all 195 hierarchical Summary scales (not just 4 bipolar)<br>- **FIXED:** Added `questionContributions` to Color Psychology results for Summary screen transparency<br>- **ADDED:** Back buttons on stages 3-6 (visible `OutlinedButton` with text: "Предыдущая пара/эмоция/вопрос")<br>- **ADDED:** "Без лимита" / "No limit" indicator on stages 4-6 (green badge with ∞ icon)<br>- **Method:** `_calculateHierarchicalScaleScoresWithContributions()` - maps 12 Color Psychology scales to ~80 hierarchical scales using weights<br>- **Files modified:** color_psychology_result_screen.dart, color_paired_comparisons_widget.dart, color_emotional_associations_widget.dart, color_life_domains_widget.dart, color_temporal_perspective_widget.dart |
 | 3.21.0 | 2025-11-23 | Claude Code | **Merge: Cognitive Ability + Romantic Potential + Relationship Compatibility + Friendship Psychology** ⭐<br>- **Объединение 4 тестов из параллельных веток**<br>- **Cognitive Ability:** 60 вопросов, 3 фактора, binary scoring (IQ-style)<br>- **Romantic Potential:** 36 вопросов, 3 фактора, 7-секционная структура<br>- **Relationship Compatibility:** 24 вопроса, 6 факторов, 3 профиля совместимости<br>- **Friendship Psychology:** 24 вопроса, 6 факторов, 13 профилей дружбы<br>- **Всего тестов:** 24 (21 стандартных + 2 специальных + 4 profile)<br>- **Test Architecture:** 22 Legacy Dart + 2 Special = 24 total tests |
 | 3.20.0 | 2025-11-23 | Claude Code | **Cognitive Ability Test Added**<br>- **Новый тест:** Cognitive Ability Test (60 вопросов, 3 фактора, ~30 минут)<br>- **3 Factors:** logical_reasoning (Q1-20), numerical_ability (Q21-40), verbal_ability (Q41-60)<br>- **Binary scoring:** 0 = incorrect, 1 = correct (IQ-style test) |
 | 3.19.0-a | 2025-11-23 | Claude Code | **Romantic Potential Test Added**<br>- **Новый тест:** Romantic Potential and Love Beliefs (36 вопросов, 3 фактора, ~8 минут)<br>- **3 Profiles:** Secure Romantic, Mixed Romantic, Romantic Challenges |
@@ -474,7 +475,7 @@ Comprehensive modular guide for adding psychological tests (v3.3.0):
 
 ---
 
-**Last Updated:** 2025-11-30 | **Version:** 3.21.0
+**Last Updated:** 2025-11-30 | **Version:** 3.22.0
 **Codebase:** ~50,000+ lines | **Tests:** 24 (21 std + 2 special + 4 profile)
 
 > **📖 For detailed information, navigate to the `docs/` directory.**

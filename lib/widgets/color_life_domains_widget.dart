@@ -12,11 +12,13 @@ import '../data/color_psychology_data.dart';
 
 class ColorLifeDomainsWidget extends StatefulWidget {
   final Function(LifeDomainResult) onComplete;
+  final VoidCallback? onBack; // Callback to go back to previous stage
   final String locale;
 
   const ColorLifeDomainsWidget({
     Key? key,
     required this.onComplete,
+    this.onBack,
     required this.locale,
   }) : super(key: key);
 
@@ -106,20 +108,57 @@ class _ColorLifeDomainsWidgetState extends State<ColorLifeDomainsWidget> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 16),
-              // Прогресс
+              // Кнопка назад (всегда видна)
+              if (_currentQuestionIndex > 0 || widget.onBack != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: OutlinedButton.icon(
+                    onPressed: _currentQuestionIndex > 0 ? _goBack : widget.onBack,
+                    icon: const Icon(Icons.arrow_back, size: 18),
+                    label: Text(
+                      _currentQuestionIndex > 0
+                          ? (widget.locale == 'en' ? 'Previous question' : 'Предыдущий вопрос')
+                          : (widget.locale == 'en' ? 'Previous stage' : 'Предыдущий этап'),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                  ),
+                ),
+              // Прогресс и индикатор времени
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (_currentQuestionIndex > 0)
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: _goBack,
-                      tooltip: widget.locale == 'en' ? 'Back' : 'Назад',
-                    ),
-                  const SizedBox(width: 8),
                   Text(
                     '${_currentQuestionIndex + 1} / ${ColorPsychologyData.lifeDomainQuestions.length}',
                     style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(width: 20),
+                  // Индикатор "без таймера"
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.all_inclusive,
+                          size: 16,
+                          color: Colors.green,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          widget.locale == 'en' ? 'No limit' : 'Без лимита',
+                          style: const TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

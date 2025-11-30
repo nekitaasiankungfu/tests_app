@@ -52,7 +52,8 @@
       "Bash(/mnt/r/flutter/bin/cache/dart-sdk/bin/dart.exe analyze:*)",
       "Bash(command -v:*)",
       "Bash(/mnt/c/flutter/bin/cache/dart-sdk/bin/dart analyze:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(/mnt/c/flutter/bin/cache/dart-sdk/bin/dart.exe analyze:*)"
     ],
     "deny": [],
     "ask": []

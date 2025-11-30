@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/color_psychology_model.dart';
+import '../models/test_model.dart';
 import '../data/color_psychology_data.dart';
 import '../providers/locale_provider.dart';
 import '../providers/user_preferences_provider.dart';
+import '../providers/test_provider.dart';
+import '../utils/app_logger.dart';
+import '../config/summary/question_weights/color_psychology_weights.dart';
 
 /// Экран результатов цветового психологического теста (расширенная версия)
 ///
@@ -22,15 +26,229 @@ import '../providers/user_preferences_provider.dart';
 /// - Интерпретации и рекомендации
 ///
 /// @author: Color Psychology Research Institute
-/// @version: 2.0.0 (Extended)
+/// @version: 2.1.0 (Extended + Save to history)
 
-class ColorPsychologyResultScreen extends StatelessWidget {
+class ColorPsychologyResultScreen extends StatefulWidget {
   final ColorPsychologyResult result;
+
+  /// If true, viewing from history - don't save again
+  final bool fromHistory;
 
   const ColorPsychologyResultScreen({
     super.key,
     required this.result,
+    this.fromHistory = false,
   });
+
+  @override
+  State<ColorPsychologyResultScreen> createState() => _ColorPsychologyResultScreenState();
+}
+
+class _ColorPsychologyResultScreenState extends State<ColorPsychologyResultScreen> {
+  bool _resultSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Save result after first frame, but only if not viewing from history
+    if (!widget.fromHistory) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _saveResult();
+      });
+    }
+  }
+
+  Future<void> _saveResult() async {
+    if (_resultSaved || widget.fromHistory) return;
+
+    try {
+      final testProvider = context.read<TestProvider>();
+
+      // Convert ColorPsychologyResult to standard TestResult
+      final testResult = _convertToTestResult(widget.result);
+
+      final success = await testProvider.saveTestResult(testResult);
+      if (success) {
+        _resultSaved = true;
+        appLogger.i('Color Psychology result saved successfully');
+      } else {
+        appLogger.e('Failed to save Color Psychology result');
+      }
+    } catch (e, stackTrace) {
+      appLogger.e('Error saving Color Psychology result', error: e, stackTrace: stackTrace);
+    }
+  }
+
+  /// Convert ColorPsychologyResult to standard TestResult for storage
+  TestResult _convertToTestResult(ColorPsychologyResult result) {
+    // Calculate total score as average of all scale scores (0-100)
+    final totalScore = result.scaleScores.isNotEmpty
+        ? (result.scaleScores.values.reduce((a, b) => a + b) / result.scaleScores.length).round()
+        : 50;
+    const maxScore = 100;
+
+    // Create factor scores for each scale
+    final factorScores = <String, FactorScore>{};
+    for (final entry in result.scaleScores.entries) {
+      final scale = ColorPsychologyData.getScaleById(entry.key);
+
+      factorScores[entry.key] = FactorScore(
+        factorId: entry.key,
+        factorName: scale?.name ?? {'ru': entry.key, 'en': entry.key},
+        score: entry.value.round(),
+        maxScore: 100,
+        interpretation: {
+          'ru': result.interpretations[entry.key] ?? '',
+          'en': result.interpretations[entry.key] ?? '',
+        },
+      );
+    }
+
+    // Create userAnswers for summary integration
+    // Each scale becomes a "question" with normalized score (0-4)
+    // This allows Color Psychology to contribute to personality type calculation
+    final userAnswers = <String, int>{};
+    for (final entry in result.scaleScores.entries) {
+      // Normalize: 0-100 -> 0-4
+      final normalizedScore = ((entry.value / 100.0) * 4).round().clamp(0, 4);
+      userAnswers['scale_${entry.key}'] = normalizedScore;
+    }
+
+    // Calculate hierarchical scale scores using weights
+    // This maps Color Psychology's 12 scales to the 195 hierarchical summary scales
+    // Also builds questionContributions for Summary screen transparency
+    final (hierarchicalScaleScores, questionContributions) = _calculateHierarchicalScaleScoresWithContributions(result.testId, result.scaleScores);
+    appLogger.d('Color Psychology: Calculated ${hierarchicalScaleScores.length} hierarchical scale scores');
+    appLogger.d('Color Psychology: Created questionContributions for ${questionContributions.length} scales');
+
+    // Create interpretation text based on patterns
+    String interpretation;
+    if (result.patterns.isNotEmpty) {
+      final patternNames = result.patterns.map((p) => _getPatternName(p)).join(', ');
+      interpretation = patternNames;
+    } else {
+      interpretation = 'Анализ завершён';
+    }
+
+    return TestResult(
+      testId: result.testId,
+      totalScore: totalScore,
+      maxScore: maxScore,
+      interpretation: interpretation,
+      completedAt: result.completedAt,
+      factorScores: factorScores,
+      scaleScores: hierarchicalScaleScores, // Use hierarchical scales for Summary integration
+      userAnswers: userAnswers,
+      questionContributions: questionContributions, // For Summary screen transparency
+      version: 2,
+    );
+  }
+
+  /// Calculate hierarchical scale scores from Color Psychology scales using weights
+  ///
+  /// Maps 12 Color Psychology scales (energy_level, stress_level, etc.) to
+  /// 195 hierarchical summary scales using weights defined in ColorPsychologyWeights.
+  ///
+  /// Returns a tuple of (scaleScores, questionContributions) for Summary screen transparency.
+  (Map<String, double>, Map<String, List<QuestionContribution>>) _calculateHierarchicalScaleScoresWithContributions(
+    String testId,
+    Map<String, double> colorPsychologyScales,
+  ) {
+    final hierarchicalScores = <String, double>{};
+    final hierarchicalWeights = <String, double>{};
+    final questionContributions = <String, List<QuestionContribution>>{};
+
+    // Process each Color Psychology scale
+    for (final entry in colorPsychologyScales.entries) {
+      final colorScaleId = entry.key;
+      final colorScaleScore = entry.value; // 0-100
+
+      // Normalize to 0-1 range for weight calculation
+      final normalizedScore = colorScaleScore / 100.0;
+
+      // Find weights for this Color Psychology scale
+      final weightKey = '$testId:scale_$colorScaleId';
+      final questionWeight = ColorPsychologyWeights.weights[weightKey];
+
+      if (questionWeight == null) {
+        appLogger.w('No weights found for Color Psychology scale: $colorScaleId (key: $weightKey)');
+        continue;
+      }
+
+      // Get scale name for display
+      final scale = ColorPsychologyData.getScaleById(colorScaleId);
+      final scaleName = scale?.name ?? {'ru': colorScaleId, 'en': colorScaleId};
+
+      // Apply weights to hierarchical scales
+      questionWeight.axisWeights.forEach((hierarchicalScaleId, weight) {
+        // Calculate contribution: normalized score * weight
+        // If weight is negative, invert the score (e.g., high stress -> low calmness)
+        final direction = weight < 0 ? -1 : 1;
+        final absWeight = weight.abs();
+
+        double contribution;
+        if (direction == -1) {
+          // Inverted: high source score -> low target score
+          contribution = (1.0 - normalizedScore) * absWeight * 100;
+        } else {
+          // Direct: high source score -> high target score
+          contribution = normalizedScore * absWeight * 100;
+        }
+
+        // Accumulate weighted scores
+        hierarchicalScores[hierarchicalScaleId] =
+            (hierarchicalScores[hierarchicalScaleId] ?? 0.0) + contribution;
+        hierarchicalWeights[hierarchicalScaleId] =
+            (hierarchicalWeights[hierarchicalScaleId] ?? 0.0) + absWeight;
+
+        // Add to questionContributions for transparency
+        // Color Psychology scales are treated as "questions" in the summary
+        questionContributions.putIfAbsent(hierarchicalScaleId, () => []);
+        questionContributions[hierarchicalScaleId]!.add(QuestionContribution(
+          questionId: 'scale_$colorScaleId',
+          questionText: scaleName,
+          answerScore: colorScaleScore.round(),
+          maxAnswerScore: 100,
+          weight: weight, // Keep original weight (with sign) for display
+          normalizedContribution: contribution / absWeight, // Single contribution before averaging
+        ));
+      });
+    }
+
+    // Normalize by total weight for each scale
+    final normalizedScores = <String, double>{};
+    hierarchicalScores.forEach((scaleId, totalScore) {
+      final totalWeight = hierarchicalWeights[scaleId] ?? 1.0;
+      if (totalWeight > 0) {
+        normalizedScores[scaleId] = (totalScore / totalWeight).clamp(0.0, 100.0);
+      }
+    });
+
+    appLogger.d('Mapped ${colorPsychologyScales.length} Color Psychology scales to ${normalizedScores.length} hierarchical scales');
+
+    return (normalizedScores, questionContributions);
+  }
+
+  String _getPatternName(String patternId) {
+    switch (patternId) {
+      case 'burnout_pattern':
+        return 'Выгорание';
+      case 'stress_compensation':
+        return 'Компенсация стресса';
+      case 'emotional_shutdown':
+        return 'Эмоциональное отключение';
+      case 'anxiety_pattern':
+        return 'Тревожность';
+      case 'depression_indicators':
+        return 'Депрессивные признаки';
+      case 'healthy_balance':
+        return 'Гармония';
+      case 'need_for_warmth':
+        return 'Потребность в заботе';
+      default:
+        return patternId;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +283,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Выявленные паттерны
-            if (result.patterns.isNotEmpty) ...[
+            if (widget.result.patterns.isNotEmpty) ...[
               _buildPatternsSection(context, isRussian),
               const SizedBox(height: 24),
             ],
@@ -75,31 +293,31 @@ class ColorPsychologyResultScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Парные сравнения (stage 3)
-            if (result.pairedComparisons != null) ...[
+            if (widget.result.pairedComparisons != null) ...[
               _buildPairedComparisonsSection(context, isRussian),
               const SizedBox(height: 24),
             ],
 
             // Эмоциональные ассоциации (stage 4)
-            if (result.emotionalAssociations != null) ...[
+            if (widget.result.emotionalAssociations != null) ...[
               _buildEmotionalAssociationsSection(context, isRussian),
               const SizedBox(height: 24),
             ],
 
             // Жизненные сферы (stage 5)
-            if (result.lifeDomains != null) ...[
+            if (widget.result.lifeDomains != null) ...[
               _buildLifeDomainsSection(context, isRussian),
               const SizedBox(height: 24),
             ],
 
             // Временная перспектива (stage 6)
-            if (result.temporalPerspective != null) ...[
+            if (widget.result.temporalPerspective != null) ...[
               _buildTemporalPerspectiveSection(context, isRussian),
               const SizedBox(height: 24),
             ],
 
             // Метрики согласованности
-            if (result.consistencyMetrics.isNotEmpty) ...[
+            if (widget.result.consistencyMetrics.isNotEmpty) ...[
               _buildConsistencyMetricsSection(context, isRussian),
               const SizedBox(height: 24),
             ],
@@ -144,8 +362,8 @@ class ColorPsychologyResultScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               isRussian
-                  ? 'Тест пройден: ${_formatDate(result.completedAt, isRussian)}'
-                  : 'Test completed: ${_formatDate(result.completedAt, isRussian)}',
+                  ? 'Тест пройден: ${_formatDate(widget.result.completedAt, isRussian)}'
+                  : 'Test completed: ${_formatDate(widget.result.completedAt, isRussian)}',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.grey,
                   ),
@@ -174,7 +392,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            ...result.scaleScores.entries.map((entry) {
+            ...widget.result.scaleScores.entries.map((entry) {
               final scale = ColorPsychologyData.getScaleById(entry.key);
               if (scale == null) return const SizedBox();
 
@@ -182,7 +400,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
                 context,
                 scale.name[isRussian ? 'ru' : 'en']!,
                 entry.value,
-                result.interpretations[entry.key] ?? '',
+                widget.result.interpretations[entry.key] ?? '',
                 _getScaleColor(entry.key, entry.value),
                 isRussian,
               );
@@ -275,7 +493,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
 
   Widget _buildPatternsSection(BuildContext context, bool isRussian) {
     return Card(
-      color: _getPatternCardColor(context, result.patterns),
+      color: _getPatternCardColor(context, widget.result.patterns),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -285,7 +503,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
               children: [
                 Icon(
                   Icons.psychology,
-                  color: _getPatternIconColor(result.patterns),
+                  color: _getPatternIconColor(widget.result.patterns),
                 ),
                 const SizedBox(width: 12),
                 Text(
@@ -295,7 +513,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            ...result.patterns.map((patternId) {
+            ...widget.result.patterns.map((patternId) {
               return _buildPatternItem(context, patternId, isRussian);
             }),
           ],
@@ -512,7 +730,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
   }
 
   Widget _buildColorPreferencesSection(BuildContext context, bool isRussian) {
-    if (result.ranking == null) return const SizedBox();
+    if (widget.result.ranking == null) return const SizedBox();
 
     return Card(
       child: Padding(
@@ -539,7 +757,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
             const SizedBox(height: 8),
             _buildColorList(
               context,
-              result.ranking!.rankedColors.take(3).toList(),
+              widget.result.ranking!.rankedColors.take(3).toList(),
               isRussian,
               true,
             ),
@@ -552,8 +770,8 @@ class ColorPsychologyResultScreen extends StatelessWidget {
             const SizedBox(height: 8),
             _buildColorList(
               context,
-              result.ranking!.rankedColors
-                  .skip(result.ranking!.rankedColors.length - 3)
+              widget.result.ranking!.rankedColors
+                  .skip(widget.result.ranking!.rankedColors.length - 3)
                   .toList(),
               isRussian,
               false,
@@ -616,7 +834,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
   }
 
   Widget _buildPairedComparisonsSection(BuildContext context, bool isRussian) {
-    final pairedComparisons = result.pairedComparisons!;
+    final pairedComparisons = widget.result.pairedComparisons!;
 
     // Сортируем цвета по количеству побед
     final sortedWins = pairedComparisons.wins.entries.toList()
@@ -697,7 +915,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
   }
 
   Widget _buildEmotionalAssociationsSection(BuildContext context, bool isRussian) {
-    final emotionalAssociations = result.emotionalAssociations!;
+    final emotionalAssociations = widget.result.emotionalAssociations!;
 
     return Card(
       child: Padding(
@@ -795,7 +1013,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
   }
 
   Widget _buildLifeDomainsSection(BuildContext context, bool isRussian) {
-    final lifeDomains = result.lifeDomains!;
+    final lifeDomains = widget.result.lifeDomains!;
 
     return Card(
       child: Padding(
@@ -923,7 +1141,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
   }
 
   Widget _buildTemporalPerspectiveSection(BuildContext context, bool isRussian) {
-    final temporalPerspective = result.temporalPerspective!;
+    final temporalPerspective = widget.result.temporalPerspective!;
 
     return Card(
       child: Padding(
@@ -1071,7 +1289,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 16),
-            ...result.consistencyMetrics.entries.map((entry) {
+            ...widget.result.consistencyMetrics.entries.map((entry) {
               return _buildConsistencyItem(
                 context,
                 _getConsistencyLabel(entry.key, isRussian),
@@ -1158,7 +1376,7 @@ class ColorPsychologyResultScreen extends StatelessWidget {
   }
 
   Widget _buildRecommendationsSection(BuildContext context, bool isRussian) {
-    final recommendations = _getRecommendations(result, isRussian);
+    final recommendations = _getRecommendations(widget.result, isRussian);
 
     return Card(
       color: Colors.blue.withOpacity(0.05),
