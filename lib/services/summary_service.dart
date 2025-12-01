@@ -28,6 +28,9 @@ import '../config/summary/question_weights/friendship_psychology_weights.dart';
 import '../config/summary/question_weights/adhd_attention_profile_weights.dart';
 import '../config/summary/question_weights/color_psychology_weights.dart';
 import '../config/summary/question_weights/perfectionism_fear_of_error_weights.dart';
+import '../config/summary/question_weights/emotional_intelligence_weights.dart';
+import '../config/summary/question_weights/imposter_syndrome_weights.dart';
+import '../config/summary/question_weights/sleep_recovery_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -153,6 +156,9 @@ class SummaryService {
       ...ADHDAttentionProfileWeights.weights,
       ...ColorPsychologyWeights.weights,
       ...PerfectionismFearOfErrorWeights.weights,
+      ...EmotionalIntelligenceWeights.weights,
+      ...ImposterSyndromeWeights.weights,
+      ...SleepRecoveryWeights.weights,
     };
 
     // 8 personality type scales
@@ -556,6 +562,9 @@ class SummaryService {
       ...ADHDAttentionProfileWeights.weights,
       ...ColorPsychologyWeights.weights,
       ...PerfectionismFearOfErrorWeights.weights,
+      ...EmotionalIntelligenceWeights.weights,
+      ...ImposterSyndromeWeights.weights,
+      ...SleepRecoveryWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

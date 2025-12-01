@@ -29,6 +29,11 @@ import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
 import '../data/adhd_attention_profile_data.dart';
 import '../data/perfectionism_fear_of_error_data.dart';
+import '../data/emotional_intelligence_data.dart';
+import '../data/imposter_syndrome_data.dart';
+import '../data/sleep_recovery_data.dart';
+import '../data/procrastination_productivity_data.dart';
+import '../data/boundaries_people_pleasing_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -182,6 +187,21 @@ class TestLoaderService {
         break;
       case 'perfectionism_fear_of_error_v1':
         test = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
+        break;
+      case 'emotional_intelligence':
+        test = EmotionalIntelligenceData.getEmotionalIntelligenceTest();
+        break;
+      case 'imposter_syndrome':
+        test = ImposterSyndromeData.getImposterSyndromeTest();
+        break;
+      case 'sleep_recovery_v1':
+        test = SleepRecoveryData.getSleepRecoveryTest();
+        break;
+      case 'procrastination_productivity_style_v1':
+        test = ProcrastinationProductivityData.getProcrastinationProductivityTest();
+        break;
+      case 'boundaries_people_pleasing':
+        test = BoundariesPeoplePleasingData.getBoundariesPeoplePleasingTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

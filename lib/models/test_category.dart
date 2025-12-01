@@ -95,9 +95,23 @@ class TestCategories {
     order: 5,
   );
 
+  static const intelligence = TestCategory(
+    id: 'intelligence',
+    name: {
+      'ru': 'Интеллект и способности',
+      'en': 'Intelligence and Abilities',
+    },
+    description: {
+      'ru': 'Тесты эмоционального и когнитивного интеллекта',
+      'en': 'Emotional and cognitive intelligence tests',
+    },
+    icon: '🧩',
+    order: 6,
+  );
+
   /// Get all categories in order
   static List<TestCategory> getAll() {
-    final categories = [personality, temperament, relationships, emotional, career];
+    final categories = [personality, temperament, relationships, emotional, career, intelligence];
     categories.sort((a, b) => a.order.compareTo(b.order));
     return categories;
   }
@@ -115,6 +129,8 @@ class TestCategories {
         return emotional;
       case 'career':
         return career;
+      case 'intelligence':
+        return intelligence;
       default:
         return null;
     }
