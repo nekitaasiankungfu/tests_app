@@ -28,6 +28,11 @@ import '../data/values_priorities_data.dart';
 import '../data/attachment_style_data.dart';
 import '../data/motivational_strategies_data.dart';
 import '../data/conflict_communication_style_data.dart';
+import '../data/emotional_intelligence_data.dart';
+import '../data/imposter_syndrome_data.dart';
+import '../data/sleep_recovery_data.dart';
+import '../data/procrastination_productivity_data.dart';
+import '../data/boundaries_people_pleasing_data.dart';
 
 /// Сервис для работы с профилями результатов тестов
 ///
@@ -67,6 +72,11 @@ class ProfileService {
     'attachment_styles_v1',
     'motivational_strategies_v1',
     'conflict_communication_style_v1',
+    'emotional_intelligence',
+    'imposter_syndrome',
+    'sleep_recovery_v1',
+    'procrastination_productivity_style_v1',
+    'boundaries_people_pleasing',
     // TODO: Добавить остальные тесты по мере реализации профилей
     // 'cognitive_ability_v1',
   };
@@ -148,6 +158,16 @@ class ProfileService {
         return MotivationalStrategiesData.determineProfile(percentages);
       case 'conflict_communication_style_v1':
         return ConflictCommunicationStyleData.determineProfile(percentages);
+      case 'emotional_intelligence':
+        return EmotionalIntelligenceData.determineProfile(percentages);
+      case 'imposter_syndrome':
+        return ImposterSyndromeData.determineProfile(percentages);
+      case 'sleep_recovery_v1':
+        return SleepRecoveryData.determineProfile(percentages);
+      case 'procrastination_productivity_style_v1':
+        return ProcrastinationProductivityData.determineProfile(percentages);
+      case 'boundaries_people_pleasing':
+        return BoundariesPeoplePleasingData.determineProfile(percentages);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
@@ -207,6 +227,16 @@ class ProfileService {
         return MotivationalStrategiesData.getProfile(profileId);
       case 'conflict_communication_style_v1':
         return ConflictCommunicationStyleData.getProfile(profileId);
+      case 'emotional_intelligence':
+        return EmotionalIntelligenceData.getProfile(profileId);
+      case 'imposter_syndrome':
+        return ImposterSyndromeData.getProfile(profileId);
+      case 'sleep_recovery_v1':
+        return SleepRecoveryData.getProfile(profileId);
+      case 'procrastination_productivity_style_v1':
+        return ProcrastinationProductivityData.getProfile(profileId);
+      case 'boundaries_people_pleasing':
+        return BoundariesPeoplePleasingData.getProfile(profileId);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
@@ -250,6 +280,10 @@ class ProfileService {
         return Icons.compass_calibration_outlined;
       case 'attachment_styles_v1':
         return Icons.favorite_border;
+      case 'emotional_intelligence':
+        return Icons.psychology_outlined;
+      case 'imposter_syndrome':
+        return Icons.person_search_outlined;
       case 'cognitive_ability_v1':
         return Icons.lightbulb_outline;
       case 'ipip_big_five':
@@ -260,6 +294,12 @@ class ProfileService {
         return Icons.spa_outlined;
       case 'self_esteem_test':
         return Icons.self_improvement;
+      case 'sleep_recovery_v1':
+        return Icons.bedtime_outlined;
+      case 'procrastination_productivity_style_v1':
+        return Icons.timer_outlined;
+      case 'boundaries_people_pleasing':
+        return Icons.shield_outlined;
       default:
         return Icons.analytics_outlined;
     }

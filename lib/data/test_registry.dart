@@ -29,6 +29,11 @@ import 'tests/values_priorities_test.dart';
 import 'tests/attachment_style_test.dart';
 import 'tests/motivational_strategies_test.dart';
 import 'tests/conflict_communication_style_test.dart';
+import 'tests/emotional_intelligence_test.dart';
+import 'tests/imposter_syndrome_test.dart';
+import 'tests/sleep_recovery_test.dart';
+import 'tests/procrastination_productivity_test.dart';
+import 'tests/boundaries_people_pleasing_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -84,6 +89,9 @@ class TestRegistry {
     CognitiveAbilityTest(), // Cognitive ability assessment (IQ-style)
     PerfectionismFearOfErrorTest(), // Perfectionism and fear of error assessment
 
+    // Intelligence/Abilities
+    EmotionalIntelligenceTest(), // Emotional intelligence (EQ) assessment
+
     // Emotional/Wellbeing
     ColorPsychologyTest(), // Special color-based test
     DigitalDetoxTest(),
@@ -93,6 +101,10 @@ class TestRegistry {
     WellbeingHappinessInventoryTest(), // PERMA wellbeing assessment
     SelfConfidenceMultiscaleTest(), // Self-confidence assessment
     ADHDAttentionProfileTest(), // ADHD attention and self-regulation profile
+    ImposterSyndromeTest(), // Imposter syndrome assessment
+    SleepRecoveryTest(), // Sleep quality and recovery assessment
+    ProcrastinationProductivityTest(), // Procrastination and productivity style assessment
+    BoundariesPeoplePleasingTest(), // Personal boundaries and people-pleasing assessment
 
     // Quick assessments
     StressTest(),

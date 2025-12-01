@@ -27,6 +27,11 @@ import '../data/values_priorities_data.dart';
 import '../data/attachment_style_data.dart';
 import '../data/motivational_strategies_data.dart';
 import '../data/conflict_communication_style_data.dart';
+import '../data/emotional_intelligence_data.dart';
+import '../data/imposter_syndrome_data.dart';
+import '../data/sleep_recovery_data.dart';
+import '../data/procrastination_productivity_data.dart';
+import '../data/boundaries_people_pleasing_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -140,7 +145,17 @@ class TestService {
                                                         ? 5  // Digital Career Fit uses 0-5 scoring (6 career directions)
                                                         : test.id == 'adhd_attention_profile_v2'
                                                             ? 4  // ADHD Attention Profile uses 0-4 scoring (5-point frequency scale)
-                                                            : 5;
+                                                            : test.id == 'emotional_intelligence'
+                                                                ? 4  // Emotional Intelligence uses 0-4 scoring (5-point frequency scale)
+                                                                : test.id == 'imposter_syndrome'
+                                                                    ? 4  // Imposter Syndrome uses 0-4 scoring (5-point Likert scale)
+                                                                    : test.id == 'sleep_recovery_v1'
+                                                                        ? 4  // Sleep Recovery uses 0-4 scoring (5-point frequency scale)
+                                                                        : test.id == 'procrastination_productivity_style_v1'
+                                                                            ? 4  // Procrastination Productivity uses 0-4 scoring (5-point frequency scale)
+                                                                            : test.id == 'boundaries_people_pleasing'
+                                                                                ? 4  // Boundaries People-Pleasing uses 0-4 scoring (5-point frequency scale)
+                                                                                : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -395,6 +410,21 @@ class TestService {
     } else if (test.id == 'conflict_communication_style_v1') {
       factorNames = {}; // Will use getFactorName method
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'emotional_intelligence') {
+      factorNames = EmotionalIntelligenceData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'imposter_syndrome') {
+      factorNames = ImposterSyndromeData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'sleep_recovery_v1') {
+      factorNames = SleepRecoveryData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'procrastination_productivity_style_v1') {
+      factorNames = ProcrastinationProductivityData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'boundaries_people_pleasing') {
+      factorNames = BoundariesPeoplePleasingData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
@@ -533,6 +563,26 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             ConflictCommunicationStyleData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'emotional_intelligence') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            EmotionalIntelligenceData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'imposter_syndrome') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            ImposterSyndromeData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'sleep_recovery_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            SleepRecoveryData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'procrastination_productivity_style_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            ProcrastinationProductivityData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'boundaries_people_pleasing') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            BoundariesPeoplePleasingData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }

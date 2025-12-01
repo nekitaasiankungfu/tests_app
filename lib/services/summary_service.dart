@@ -32,6 +32,11 @@ import '../config/summary/question_weights/values_priorities_weights.dart';
 import '../config/summary/question_weights/attachment_style_weights.dart';
 import '../config/summary/question_weights/motivational_strategies_weights.dart';
 import '../config/summary/question_weights/conflict_communication_style_weights.dart';
+import '../config/summary/question_weights/emotional_intelligence_weights.dart';
+import '../config/summary/question_weights/imposter_syndrome_weights.dart';
+import '../config/summary/question_weights/sleep_recovery_weights.dart';
+import '../config/summary/question_weights/procrastination_productivity_weights.dart';
+import '../config/summary/question_weights/boundaries_people_pleasing_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -161,6 +166,11 @@ class SummaryService {
       ...AttachmentStyleWeights.weights,
       ...MotivationalStrategiesWeights.weights,
       ...ConflictCommunicationStyleWeights.weights,
+      ...EmotionalIntelligenceWeights.weights,
+      ...ImposterSyndromeWeights.weights,
+      ...SleepRecoveryWeights.weights,
+      ...procrastinationProductivityWeights,
+      ...boundariesPeoplePleasingWeights,
     };
 
     // 8 personality type scales
@@ -572,6 +582,11 @@ class SummaryService {
       ...AttachmentStyleWeights.weights,
       ...MotivationalStrategiesWeights.weights,
       ...ConflictCommunicationStyleWeights.weights,
+      ...EmotionalIntelligenceWeights.weights,
+      ...ImposterSyndromeWeights.weights,
+      ...SleepRecoveryWeights.weights,
+      ...procrastinationProductivityWeights,
+      ...boundariesPeoplePleasingWeights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

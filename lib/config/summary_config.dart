@@ -29,6 +29,11 @@ import 'summary/question_weights/values_priorities_weights.dart';
 import 'summary/question_weights/attachment_style_weights.dart';
 import 'summary/question_weights/motivational_strategies_weights.dart';
 import 'summary/question_weights/conflict_communication_style_weights.dart';
+import 'summary/question_weights/emotional_intelligence_weights.dart';
+import 'summary/question_weights/imposter_syndrome_weights.dart';
+import 'summary/question_weights/sleep_recovery_weights.dart';
+import 'summary/question_weights/procrastination_productivity_weights.dart';
+import 'summary/question_weights/boundaries_people_pleasing_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2337,6 +2342,11 @@ class QuestionWeightsConfig {
     ...AttachmentStyleWeights.weights,
     ...MotivationalStrategiesWeights.weights,
     ...ConflictCommunicationStyleWeights.weights,
+    ...EmotionalIntelligenceWeights.weights,
+    ...ImposterSyndromeWeights.weights,
+    ...SleepRecoveryWeights.weights,
+    ...procrastinationProductivityWeights,
+    ...boundariesPeoplePleasingWeights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES
@@ -2353,7 +2363,11 @@ class QuestionWeightsConfig {
     // - disc_personality_weights.dart (56 questions, 45 unipolar + 7 bipolar poles)
     // - holland_code_weights.dart (60 questions)
     // - love_languages_weights.dart (30 questions)
-    // - career_compass_weights.dart (8 scale scores) ⭐ NEW
+    // - career_compass_weights.dart (8 scale scores)
+    // - emotional_intelligence_weights.dart (70 questions) ⭐ NEW
+    // - imposter_syndrome_weights.dart (42 questions) ⭐ NEW
+    // - sleep_recovery_weights.dart (40 questions) - expanded v2.0
+    // - procrastination_productivity_weights.dart (24 questions) ⭐ NEW
     // ========================================================================
     //
     // Old inline weights removed - now imported from separate files
