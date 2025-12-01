@@ -25,6 +25,10 @@ import 'tests/relationship_compatibility_test.dart';
 import 'tests/friendship_psychology_test.dart';
 import 'tests/adhd_attention_profile_test.dart';
 import 'tests/perfectionism_fear_of_error_test.dart';
+import 'tests/values_priorities_test.dart';
+import 'tests/attachment_style_test.dart';
+import 'tests/motivational_strategies_test.dart';
+import 'tests/conflict_communication_style_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -59,15 +63,19 @@ class TestRegistry {
     IPIPBigFiveTest(),
     LoveProfileTest(),
     LoveLanguagesTest(),
+    AttachmentStyleTest(), // Attachment styles in relationships assessment
     RomanticPotentialTest(), // Romantic beliefs and potential assessment
     RelationshipCompatibilityTest(), // Relationship compatibility assessment
     FriendshipPsychologyTest(), // Friendship style and depth assessment
+    ConflictCommunicationStyleTest(), // Conflict resolution styles assessment (Thomas-Kilmann)
 
     // Temperament/Personality
     DISCPersonalityTest(),
     FisherTemperamentTest(),
     TemperamentProfileTest(),
     SocialBatteryTest(),
+    ValuesPrioritiesTest(), // Personal values and life priorities assessment
+    MotivationalStrategiesTest(), // Motivational patterns assessment (9 types)
 
     // Career/Vocational
     HollandCodeTest(),

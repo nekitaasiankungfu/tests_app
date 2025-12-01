@@ -54,7 +54,11 @@
       "Bash(/mnt/c/flutter/bin/cache/dart-sdk/bin/dart analyze:*)",
       "Bash(git checkout:*)",
       "Bash(/mnt/c/flutter/bin/cache/dart-sdk/bin/dart.exe analyze:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(/mnt/c/flutter/bin/flutter.bat build:*)",
+      "Bash(/mnt/c/flutter/bin/cache/dart-sdk/bin/dart.exe run:*)",
+      "Bash(for i in {1..90})",
+      "Bash(do grep -q \"id: ''q$i''\" lib/data/motivational_strategies_data.dart)"
     ],
     "deny": [],
     "ask": []

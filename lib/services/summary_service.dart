@@ -28,6 +28,10 @@ import '../config/summary/question_weights/friendship_psychology_weights.dart';
 import '../config/summary/question_weights/adhd_attention_profile_weights.dart';
 import '../config/summary/question_weights/color_psychology_weights.dart';
 import '../config/summary/question_weights/perfectionism_fear_of_error_weights.dart';
+import '../config/summary/question_weights/values_priorities_weights.dart';
+import '../config/summary/question_weights/attachment_style_weights.dart';
+import '../config/summary/question_weights/motivational_strategies_weights.dart';
+import '../config/summary/question_weights/conflict_communication_style_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -153,6 +157,10 @@ class SummaryService {
       ...ADHDAttentionProfileWeights.weights,
       ...ColorPsychologyWeights.weights,
       ...PerfectionismFearOfErrorWeights.weights,
+      ...ValuesPrioritiesWeights.weights,
+      ...AttachmentStyleWeights.weights,
+      ...MotivationalStrategiesWeights.weights,
+      ...ConflictCommunicationStyleWeights.weights,
     };
 
     // 8 personality type scales
@@ -190,8 +198,12 @@ class SummaryService {
         questionWeight.axisWeights.forEach((scaleId, weight) {
           if (scaleIds.contains(scaleId)) {
             // Found personality type scale contribution
-            // Normalize answer score (0-4 scale -> 0-1 range)
-            final normalizedAnswer = answerScore / 4.0; // 0-4 -> 0-1
+            // For factor-based questions (factor_avoiding, factor_accommodating, etc.)
+            // the score is already count (0-45), normalize to 0-1
+            // For traditional questions, normalize from 0-4 scale
+            final normalizedAnswer = questionId.startsWith('factor_')
+                ? answerScore / 45.0 // Factor count 0-45 → 0-1
+                : answerScore / 4.0; // Traditional 0-4 → 0-1
             final weightedContribution = normalizedAnswer * weight.abs();
 
             scaleScores[scaleId] = (scaleScores[scaleId] ?? 0.0) + weightedContribution;
@@ -556,6 +568,10 @@ class SummaryService {
       ...ADHDAttentionProfileWeights.weights,
       ...ColorPsychologyWeights.weights,
       ...PerfectionismFearOfErrorWeights.weights,
+      ...ValuesPrioritiesWeights.weights,
+      ...AttachmentStyleWeights.weights,
+      ...MotivationalStrategiesWeights.weights,
+      ...ConflictCommunicationStyleWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

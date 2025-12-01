@@ -39,6 +39,10 @@ import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
 import '../data/adhd_attention_profile_data.dart';
 import '../data/perfectionism_fear_of_error_data.dart';
+import '../data/values_priorities_data.dart';
+import '../data/attachment_style_data.dart';
+import '../data/motivational_strategies_data.dart';
+import '../data/conflict_communication_style_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -131,6 +135,18 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
         break;
       case 'perfectionism_fear_of_error_v1':
         testModel = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
+        break;
+      case 'values_priorities_v1':
+        testModel = ValuesPrioritiesData.getValuesPrioritiesTest();
+        break;
+      case 'attachment_styles_v1':
+        testModel = AttachmentStyleData.getAttachmentStylesTest();
+        break;
+      case 'motivational_strategies_v1':
+        testModel = MotivationalStrategiesData.getMotivationalStrategiesTest();
+        break;
+      case 'conflict_communication_style_v1':
+        testModel = ConflictCommunicationStyleData.getConflictCommunicationStyleTest();
         break;
       default:
         appLogger.w('Unknown testId: $testId');
@@ -2499,6 +2515,10 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
             // Career Compass uses 0-4 scale for normalized career scale scores
             maxAnswerScore = 4;
             break;
+          case 'conflict_communication_style_v1':
+            // Conflict Communication Style uses 0-45 scale for factor counts
+            maxAnswerScore = 45;
+            break;
         }
 
         if (testModel != null) {
@@ -2698,6 +2718,25 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
           break;
         case 'perfectionism_fear_of_error_v1':
           testModel = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
+          break;
+        case 'values_priorities_v1':
+          testModel = ValuesPrioritiesData.getValuesPrioritiesTest();
+          break;
+        case 'attachment_styles_v1':
+          testModel = AttachmentStyleData.getAttachmentStylesTest();
+          break;
+        case 'motivational_strategies_v1':
+          testModel = MotivationalStrategiesData.getMotivationalStrategiesTest();
+          break;
+        case 'conflict_communication_style_v1':
+          // Conflict Communication Style: scores are saved as factor_* pseudo-questions
+          // Show factor name instead of question text
+          if (questionId.startsWith('factor_')) {
+            final factorName = questionId.replaceFirst('factor_', '');
+            final names = ConflictCommunicationStyleData.getFactorName(factorName);
+            return names[widget.languageCode] ?? names['ru'] ?? factorName;
+          }
+          testModel = ConflictCommunicationStyleData.getConflictCommunicationStyleTest();
           break;
         default:
           appLogger.w('Unknown testId: $testId');

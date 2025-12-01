@@ -24,6 +24,10 @@ import '../data/stress_test_data.dart';
 import '../data/self_esteem_test_data.dart';
 import '../data/love_profile_data.dart';
 import '../data/wellbeing_happiness_inventory_data.dart';
+import '../data/values_priorities_data.dart';
+import '../data/attachment_style_data.dart';
+import '../data/motivational_strategies_data.dart';
+import '../data/conflict_communication_style_data.dart';
 
 /// Сервис для работы с профилями результатов тестов
 ///
@@ -59,6 +63,10 @@ class ProfileService {
     'self_esteem_test',
     'love_profile',
     'wellbeing_happiness_inventory_v1',
+    'values_priorities_v1',
+    'attachment_styles_v1',
+    'motivational_strategies_v1',
+    'conflict_communication_style_v1',
     // TODO: Добавить остальные тесты по мере реализации профилей
     // 'cognitive_ability_v1',
   };
@@ -132,6 +140,14 @@ class ProfileService {
         return LoveProfileData.determineProfile(percentages);
       case 'wellbeing_happiness_inventory_v1':
         return WellbeingHappinessInventoryData.determineProfile(percentages);
+      case 'values_priorities_v1':
+        return ValuesPrioritiesData.determineProfile(percentages);
+      case 'attachment_styles_v1':
+        return AttachmentStyleData.determineProfile(percentages);
+      case 'motivational_strategies_v1':
+        return MotivationalStrategiesData.determineProfile(percentages);
+      case 'conflict_communication_style_v1':
+        return ConflictCommunicationStyleData.determineProfile(percentages);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
@@ -183,6 +199,14 @@ class ProfileService {
         return LoveProfileData.getProfile(profileId);
       case 'wellbeing_happiness_inventory_v1':
         return WellbeingHappinessInventoryData.getProfile(profileId);
+      case 'values_priorities_v1':
+        return ValuesPrioritiesData.getProfile(profileId);
+      case 'attachment_styles_v1':
+        return AttachmentStyleData.getProfile(profileId);
+      case 'motivational_strategies_v1':
+        return MotivationalStrategiesData.getProfile(profileId);
+      case 'conflict_communication_style_v1':
+        return ConflictCommunicationStyleData.getProfile(profileId);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
@@ -222,6 +246,10 @@ class ProfileService {
         return Icons.star_outline;
       case 'wellbeing_happiness_inventory_v1':
         return Icons.emoji_emotions_outlined;
+      case 'values_priorities_v1':
+        return Icons.compass_calibration_outlined;
+      case 'attachment_styles_v1':
+        return Icons.favorite_border;
       case 'cognitive_ability_v1':
         return Icons.lightbulb_outline;
       case 'ipip_big_five':

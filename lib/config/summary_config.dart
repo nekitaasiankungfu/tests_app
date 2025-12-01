@@ -25,6 +25,10 @@ import 'summary/question_weights/relationship_compatibility_weights.dart';
 import 'summary/question_weights/friendship_psychology_weights.dart';
 import 'summary/question_weights/adhd_attention_profile_weights.dart';
 import 'summary/question_weights/perfectionism_fear_of_error_weights.dart';
+import 'summary/question_weights/values_priorities_weights.dart';
+import 'summary/question_weights/attachment_style_weights.dart';
+import 'summary/question_weights/motivational_strategies_weights.dart';
+import 'summary/question_weights/conflict_communication_style_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2329,6 +2333,10 @@ class QuestionWeightsConfig {
     ...FriendshipPsychologyWeights.weights,
     ...ADHDAttentionProfileWeights.weights,
     ...PerfectionismFearOfErrorWeights.weights,
+    ...ValuesPrioritiesWeights.weights,
+    ...AttachmentStyleWeights.weights,
+    ...MotivationalStrategiesWeights.weights,
+    ...ConflictCommunicationStyleWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

@@ -23,6 +23,10 @@ import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
 import '../data/adhd_attention_profile_data.dart';
 import '../data/perfectionism_fear_of_error_data.dart';
+import '../data/values_priorities_data.dart';
+import '../data/attachment_style_data.dart';
+import '../data/motivational_strategies_data.dart';
+import '../data/conflict_communication_style_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -124,7 +128,13 @@ class TestService {
                                             ? 4  // Friendship Psychology uses 0-4 scoring (5-point Likert)
                                             : test.id == 'perfectionism_fear_of_error_v1'
                                                 ? 4  // Perfectionism Fear of Error uses 0-4 scoring (5-point Likert)
-                                                : test.id == 'wellbeing_happiness_inventory_v1'
+                                                : test.id == 'values_priorities_v1'
+                                                    ? 4  // Values and Priorities uses 0-4 scoring (5-point Likert)
+                                                    : test.id == 'attachment_styles_v1'
+                                                        ? 4  // Attachment Styles uses 0-4 scoring (5-point Likert)
+                                                        : test.id == 'motivational_strategies_v1'
+                                                            ? 4  // Motivational Strategies uses 0-4 scoring (5-point Likert)
+                                                            : test.id == 'wellbeing_happiness_inventory_v1'
                                                     ? 5  // Wellbeing Happiness Inventory uses 0-5 scoring (6-point Likert)
                                                     : test.id == 'digital_career_fit_v1'
                                                         ? 5  // Digital Career Fit uses 0-5 scoring (6 career directions)
@@ -156,17 +166,18 @@ class TestService {
 
         // Add score to corresponding factor
         if (question.factorId != null) {
-          // Special handling for Digital Career Fit test
-          // Score (0-5) indicates which factor was chosen, not the intensity
-          if (test.id == 'digital_career_fit_v1' && question.factorId == 'multi_choice') {
-            // Map score to factor: 0=product_thinking, 1=data_analytics, etc.
-            final factorOrder = digital_career.DigitalCareerFitData.factorOrder;
+          // Special handling for multi-choice tests (Digital Career Fit, Conflict Communication Style)
+          // Score (0-4 or 0-5) indicates which factor was chosen, not the intensity
+          if ((test.id == 'digital_career_fit_v1' || test.id == 'conflict_communication_style_v1') && question.factorId == 'multi_choice') {
+            // Map score to factor using factorOrder
+            final factorOrder = test.id == 'digital_career_fit_v1'
+                ? digital_career.DigitalCareerFitData.factorOrder
+                : ConflictCommunicationStyleData.factorOrder;
             if (score >= 0 && score < factorOrder.length) {
               final selectedFactor = factorOrder[score];
               // Each question adds 1 point to the chosen factor
               factorScores[selectedFactor] = (factorScores[selectedFactor] ?? 0) + 1;
-              // Max score per factor = number of questions (18)
-              // We track how many questions contributed to each factor
+              // Max score per factor = number of questions
               factorMaxScores[selectedFactor] = (factorMaxScores[selectedFactor] ?? 0) + 0; // Will set max later
             }
           } else {
@@ -205,6 +216,7 @@ class TestService {
       }
 
       // Store for migration
+      // Now we store ALL answers including multi-choice tests
       userAnswersMap[question.id] = answerScore;
 
       // Get min and max answer scores for this question (dynamic range detection)
@@ -232,6 +244,60 @@ class TestService {
             direction, // Pass direction (1 = direct, -1 = inverted)
           );
         });
+      }
+    }
+
+    // For multi-choice tests: apply weights for each individual question
+    // (not aggregated factor scores, to show real question texts)
+    if ((test.id == 'digital_career_fit_v1' || test.id == 'conflict_communication_style_v1')) {
+      appLogger.d('Processing multi-choice test questions for scales');
+
+      // Get factor order to map answers to factors
+      final factorOrder = test.id == 'digital_career_fit_v1'
+          ? digital_career.DigitalCareerFitData.factorOrder
+          : ConflictCommunicationStyleData.factorOrder;
+
+      // Process each question
+      for (final question in test.questions) {
+        final selectedAnswerId = answers[question.id];
+        if (selectedAnswerId == null) continue;
+
+        final selectedAnswer = question.answers.firstWhere(
+          (answer) => answer.id == selectedAnswerId,
+          orElse: () => question.answers.first,
+        );
+
+        // Get the selected factor based on answer score
+        int score = selectedAnswer.score;
+        if (score < 0 || score >= factorOrder.length) continue;
+
+        final selectedFactor = factorOrder[score];
+
+        // Get weights for this factor
+        final factorKey = 'factor_$selectedFactor';
+        final questionWeight = QuestionWeightsConfig.getWeights(test.id, factorKey);
+
+        if (questionWeight != null) {
+          // Each question contributes 1 point to its selected factor
+          // Max score per question = 1 (since each question picks one factor)
+          final contribution = 1.0;
+          final maxContribution = 1.0;
+
+          // Apply weighted scoring to each scale
+          questionWeight.axisWeights.forEach((scaleId, weight) {
+            final direction = questionWeight.getDirection(scaleId);
+            scaleAccumulator.addScore(
+              scaleId,
+              contribution,
+              0.0,
+              maxContribution,
+              weight.abs(),
+              question,  // Use real question instead of pseudo-question
+              score,     // Store the answer score (which factor was selected)
+              direction,
+            );
+          });
+        }
       }
     }
 
@@ -317,20 +383,44 @@ class TestService {
     } else if (test.id == 'perfectionism_fear_of_error_v1') {
       factorNames = PerfectionismFearOfErrorData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'values_priorities_v1') {
+      factorNames = ValuesPrioritiesData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'attachment_styles_v1') {
+      factorNames = AttachmentStyleData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'motivational_strategies_v1') {
+      factorNames = MotivationalStrategiesData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'conflict_communication_style_v1') {
+      factorNames = {}; // Will use getFactorName method
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
+    }
+
+    // For multi-choice tests (Conflict Communication Style), save factor scores
+    // as pseudo-questions for summary_service compatibility
+    if (test.id == 'conflict_communication_style_v1') {
+      for (String factorId in test.factorIds!) {
+        final score = factorScores[factorId] ?? 0;
+        userAnswersMap['factor_$factorId'] = score;
+      }
     }
 
     for (String factorId in test.factorIds!) {
       final score = factorScores[factorId] ?? 0;
       // For Love Profile test max is 50 points per factor (10 questions × 5 points)
       // For Digital Career Fit test max is 18 (total questions, since each adds 1 to chosen factor)
+      // For Conflict Communication Style test max is 45 (each question gives 1 point to chosen style)
       int maxFactorScore;
       if (test.id == 'love_profile') {
         maxFactorScore = 50;
       } else if (test.id == 'digital_career_fit_v1') {
         maxFactorScore = test.questions.length; // 18 questions
+      } else if (test.id == 'conflict_communication_style_v1') {
+        maxFactorScore = test.questions.length; // 45 questions
       } else {
         maxFactorScore = factorMaxScores[factorId] ?? 50;
       }
@@ -427,14 +517,32 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             PerfectionismFearOfErrorData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'values_priorities_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            ValuesPrioritiesData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'attachment_styles_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            AttachmentStyleData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'motivational_strategies_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            MotivationalStrategiesData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'conflict_communication_style_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            ConflictCommunicationStyleData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }
 
       factorScoresMap[factorId] = FactorScore(
         factorId: factorId,
-        factorName: factorNames[factorId] ??
-            {'ru': 'Неизвестный фактор', 'en': 'Unknown factor'},
+        factorName: (test.id == 'conflict_communication_style_v1')
+            ? ConflictCommunicationStyleData.getFactorName(factorId)
+            : (factorNames[factorId] ??
+                {'ru': 'Неизвестный фактор', 'en': 'Unknown factor'}),
         score: score,
         maxScore: maxFactorScore,
         interpretation: interpretation,

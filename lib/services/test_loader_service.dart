@@ -29,6 +29,10 @@ import '../data/relationship_compatibility_data.dart';
 import '../data/friendship_psychology_data.dart';
 import '../data/adhd_attention_profile_data.dart';
 import '../data/perfectionism_fear_of_error_data.dart';
+import '../data/values_priorities_data.dart';
+import '../data/attachment_style_data.dart';
+import '../data/motivational_strategies_data.dart';
+import '../data/conflict_communication_style_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -182,6 +186,18 @@ class TestLoaderService {
         break;
       case 'perfectionism_fear_of_error_v1':
         test = PerfectionismFearOfErrorData.getPerfectionismFearOfErrorTest();
+        break;
+      case 'values_priorities_v1':
+        test = ValuesPrioritiesData.getValuesPrioritiesTest();
+        break;
+      case 'attachment_styles_v1':
+        test = AttachmentStyleData.getAttachmentStylesTest();
+        break;
+      case 'motivational_strategies_v1':
+        test = MotivationalStrategiesData.getMotivationalStrategiesTest();
+        break;
+      case 'conflict_communication_style_v1':
+        test = ConflictCommunicationStyleData.getConflictCommunicationStyleTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

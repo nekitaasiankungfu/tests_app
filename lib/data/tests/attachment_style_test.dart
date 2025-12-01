@@ -11,30 +11,30 @@ import 'test_stub.dart';
 /// Not a clinical diagnosis. For self-awareness and relationship pattern understanding.
 class AttachmentStyleTest extends TestStub {
   @override
-  String get id => 'attachment_style_v1';
+  String get id => 'attachment_styles_v1';
 
   @override
   String get category => 'relationships';
 
   @override
   Map<String, String> get name => {
-        'ru': 'Стили привязанности: Ваши паттерны в отношениях',
-        'en': 'Attachment Style: Your Relationship Patterns',
+        'ru': 'Тест стилей привязанности в отношениях',
+        'en': 'Attachment Styles in Relationships Test',
       };
 
   @override
   Map<String, String> get description => {
         'ru':
-            'Стиль привязанности — это глубинный паттерн того, как вы формируете эмоциональные связи с другими людьми. Он формируется в детстве (0-3 года) в отношениях с основными опекунами и влияет на все ваши близкие отношения во взрослой жизни.\n\nТеория привязанности, разработанная психологом Джоном Боулби в 1950-х годах и расширенная Мэри Эйнсворт, показывает, что наш опыт ранних отношений создаёт "рабочую модель" отношений, которую мы неосознанно воспроизводим.\n\nЧетыре стиля привязанности: Безопасная (Secure) 🟢 ~50%, Тревожная (Anxious) 🟡 ~20%, Избегающая (Avoidant) 🔵 ~25%, Тревожно-избегающая (Fearful-Avoidant) 🔴 ~5%.\n\nВаш стиль привязанности НЕ приговор — это паттерн, который можно изменить через осознанность, терапию и здоровые отношения.',
+            'Этот тест поможет вам понять ваш стиль привязанности — уникальный паттерн того, как вы формируете и поддерживаете близкие отношения. Стиль привязанности формируется в раннем детстве и влияет на то, как вы взаимодействуете с партнерами, друзьями и близкими людьми во взрослой жизни.\n\nТест основан на современных психологических исследованиях теории привязанности и измеряет четыре основных стиля: безопасный (комфорт с близостью и независимостью), тревожный (страх отвержения и сильная потребность в близости), избегающий (дискомфорт с близостью и акцент на независимости) и дезорганизованный (противоречивые чувства о близости).\n\nПонимание своего стиля привязанности — первый шаг к построению более здоровых и гармоничных отношений. Результаты теста помогут вам осознать свои паттерны поведения и получить практические рекомендации по их улучшению.',
         'en':
-            'Attachment style is a deep-rooted pattern of how you form emotional bonds with others. It forms in childhood (0-3 years) in relationships with primary caregivers and affects all your close relationships in adulthood.\n\nAttachment theory, developed by psychologist John Bowlby in the 1950s and expanded by Mary Ainsworth, shows that our early relationship experiences create a "working model" of relationships that we unconsciously reproduce.\n\nFour attachment styles: Secure 🟢 ~50%, Anxious 🟡 ~20%, Avoidant 🔵 ~25%, Fearful-Avoidant 🔴 ~5%.\n\nYour attachment style is NOT a life sentence — it\'s a pattern that can be changed through awareness, therapy, and healthy relationships.',
+            'This test will help you understand your attachment style — a unique pattern of how you form and maintain close relationships. Attachment style forms in early childhood and influences how you interact with partners, friends, and loved ones in adulthood.\n\nBased on modern psychological research in attachment theory, the test measures four main styles: secure (comfort with intimacy and independence), anxious (fear of rejection and strong need for closeness), avoidant (discomfort with intimacy and emphasis on independence), and fearful (contradictory feelings about intimacy).\n\nUnderstanding your attachment style is the first step toward building healthier and more harmonious relationships. The test results will help you recognize your behavioral patterns and receive practical recommendations for improvement.',
       };
 
   @override
-  int get questionCount => 40;
+  int get questionCount => 60;
 
   @override
-  int get estimatedMinutes => 10;
+  int get estimatedMinutes => 12;
 
   @override
   String get type => 'multi_factor';
@@ -54,7 +54,7 @@ class AttachmentStyleTest extends TestStub {
   @override
   Map<String, dynamic> get metadata => {
         'version': '1.0.0',
-        'author': 'Attachment Research Institute',
+        'author': 'Original Development',
         'year': '2025',
         'category_display': {
           'ru': 'Отношения',
@@ -64,30 +64,28 @@ class AttachmentStyleTest extends TestStub {
           'secure',
           'anxious',
           'avoidant',
-          'fearful_avoidant',
+          'fearful',
         ],
         'factor_names': {
           'ru': {
-            'secure': 'Безопасная привязанность (Secure)',
-            'anxious': 'Тревожная привязанность (Anxious-Preoccupied)',
-            'avoidant': 'Избегающая привязанность (Dismissive-Avoidant)',
-            'fearful_avoidant':
-                'Тревожно-избегающая привязанность (Fearful-Avoidant)',
+            'secure': 'Безопасный стиль',
+            'anxious': 'Тревожный стиль',
+            'avoidant': 'Избегающий стиль',
+            'fearful': 'Дезорганизованный стиль',
           },
           'en': {
-            'secure': 'Secure Attachment',
-            'anxious': 'Anxious-Preoccupied Attachment',
-            'avoidant': 'Dismissive-Avoidant Attachment',
-            'fearful_avoidant': 'Fearful-Avoidant Attachment',
+            'secure': 'Secure',
+            'anxious': 'Anxious',
+            'avoidant': 'Avoidant',
+            'fearful': 'Fearful-Avoidant',
           },
         },
         'response_type': 'likert_5',
         'scientific_basis': [
-          'Bowlby\'s Attachment Theory (1969)',
-          'Ainsworth\'s Strange Situation (1970)',
-          'Bartholomew & Horowitz Four-Category Model (1991)',
-          'Adult Attachment Research',
-          'Relationship Patterns in Clinical Psychology',
+          'Теория привязанности Джона Боулби',
+          'Исследования Мэри Эйнсворт о паттернах привязанности',
+          'Современные модели привязанности у взрослых (Хазан и Шейвер)',
+          'Двухмерная модель привязанности (тревожность и избегание)',
         ],
       };
 }

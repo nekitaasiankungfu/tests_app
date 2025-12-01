@@ -1,0 +1,2086 @@
+{
+  "test_info": {
+    "id": "motivational_strategies_v1",
+    "version": "1.0",
+    "name": {
+      "ru": "Тест мотивационных стратегий",
+      "en": "Motivational Strategies Assessment"
+    },
+    "short_name": {
+      "ru": "9 типов мотивации",
+      "en": "9 Motivation Types"
+    },
+    "description": {
+      "ru": "Этот тест помогает определить ваш доминирующий мотивационный паттерн — то, что движет вашими действиями, решениями и реакциями на жизненные ситуации. Основываясь на теории базовых психологических потребностей и современных исследованиях мотивации, тест выявляет 9 основных стратегий, которые люди используют для достижения удовлетворенности и преодоления жизненных вызовов.\n\nПонимание своей мотивационной стратегии поможет вам лучше осознать свои сильные стороны, области роста и оптимальные пути самореализации. Тест также покажет ваш вторичный тип мотивации, что даст более полную картину вашей личности.",
+      "en": "This test helps identify your dominant motivational pattern — what drives your actions, decisions, and reactions to life situations. Based on the theory of basic psychological needs and modern motivation research, the test reveals 9 core strategies that people use to achieve satisfaction and overcome life challenges.\n\nUnderstanding your motivational strategy will help you better recognize your strengths, growth areas, and optimal paths for self-realization. The test also shows your secondary motivation type, providing a more complete picture of your personality."
+    },
+    "category": {
+      "ru": "🎭 Типология личности",
+      "en": "🎭 Personality Typology"
+    },
+    "duration_minutes": 20,
+    "question_count": 90,
+    "author": "Based on Self-Determination Theory (Deci & Ryan) and Motivational Systems Theory",
+    "theoretical_basis": {
+      "ru": [
+        "Теория самодетерминации (Deci & Ryan, 1985)",
+        "Теория базовых психологических потребностей",
+        "Концепция мотивационных систем (McClelland)",
+        "Теория защитных стратегий и копинг-механизмов"
+      ],
+      "en": [
+        "Self-Determination Theory (Deci & Ryan, 1985)",
+        "Basic Psychological Needs Theory",
+        "Motivational Systems Concept (McClelland)",
+        "Defense Strategies and Coping Mechanisms Theory"
+      ]
+    },
+    "target_audience": {
+      "ru": "Взрослые от 18 лет, интересующиеся самопознанием и личностным развитием",
+      "en": "Adults 18+, interested in self-knowledge and personal development"
+    },
+    "languages": ["ru", "en"]
+  },
+
+  "scales": [
+    {
+      "id": "idealist",
+      "name": {
+        "ru": "Идеалист",
+        "en": "Idealist"
+      },
+      "short_description": {
+        "ru": "Стремление к совершенству и правильности",
+        "en": "Striving for perfection and correctness"
+      },
+      "core_motivation": {
+        "ru": "Быть правильным, честным и улучшать мир вокруг",
+        "en": "To be right, honest, and improve the world around"
+      }
+    },
+    {
+      "id": "altruist",
+      "name": {
+        "ru": "Альтруист",
+        "en": "Altruist"
+      },
+      "short_description": {
+        "ru": "Потребность быть нужным и заботиться о других",
+        "en": "Need to be needed and care for others"
+      },
+      "core_motivation": {
+        "ru": "Быть любимым через заботу и помощь другим",
+        "en": "To be loved through caring and helping others"
+      }
+    },
+    {
+      "id": "achiever",
+      "name": {
+        "ru": "Достигатель",
+        "en": "Achiever"
+      },
+      "short_description": {
+        "ru": "Ориентация на успех и признание",
+        "en": "Focus on success and recognition"
+      },
+      "core_motivation": {
+        "ru": "Достигать целей и получать признание за успехи",
+        "en": "To achieve goals and receive recognition for success"
+      }
+    },
+    {
+      "id": "creator",
+      "name": {
+        "ru": "Созидатель",
+        "en": "Creator"
+      },
+      "short_description": {
+        "ru": "Поиск уникальности и глубины",
+        "en": "Search for uniqueness and depth"
+      },
+      "core_motivation": {
+        "ru": "Быть особенным и выражать свою аутентичность",
+        "en": "To be special and express authenticity"
+      }
+    },
+    {
+      "id": "analyst",
+      "name": {
+        "ru": "Аналитик",
+        "en": "Analyst"
+      },
+      "short_description": {
+        "ru": "Жажда знаний и понимания",
+        "en": "Thirst for knowledge and understanding"
+      },
+      "core_motivation": {
+        "ru": "Понимать мир и обладать компетентностью",
+        "en": "To understand the world and possess competence"
+      }
+    },
+    {
+      "id": "guardian",
+      "name": {
+        "ru": "Защитник",
+        "en": "Guardian"
+      },
+      "short_description": {
+        "ru": "Потребность в безопасности и поддержке",
+        "en": "Need for security and support"
+      },
+      "core_motivation": {
+        "ru": "Чувствовать безопасность и иметь надежную опору",
+        "en": "To feel safe and have reliable support"
+      }
+    },
+    {
+      "id": "optimist",
+      "name": {
+        "ru": "Оптимист",
+        "en": "Optimist"
+      },
+      "short_description": {
+        "ru": "Стремление к радости и новым возможностям",
+        "en": "Pursuit of joy and new possibilities"
+      },
+      "core_motivation": {
+        "ru": "Быть счастливым и избегать боли через новый опыт",
+        "en": "To be happy and avoid pain through new experiences"
+      }
+    },
+    {
+      "id": "leader",
+      "name": {
+        "ru": "Лидер",
+        "en": "Leader"
+      },
+      "short_description": {
+        "ru": "Потребность в контроле и влиянии",
+        "en": "Need for control and influence"
+      },
+      "core_motivation": {
+        "ru": "Быть сильным и защищать себя и других",
+        "en": "To be strong and protect oneself and others"
+      }
+    },
+    {
+      "id": "harmonizer",
+      "name": {
+        "ru": "Гармонизатор",
+        "en": "Harmonizer"
+      },
+      "short_description": {
+        "ru": "Стремление к миру и внутреннему покою",
+        "en": "Striving for peace and inner calm"
+      },
+      "core_motivation": {
+        "ru": "Сохранять гармонию и избегать конфликтов",
+        "en": "To maintain harmony and avoid conflicts"
+      }
+    }
+  ],
+
+  "response_format": {
+    "type": "likert_5",
+    "options": {
+      "ru": [
+        "Совершенно не согласен",
+        "Скорее не согласен",
+        "Нейтрально",
+        "Скорее согласен",
+        "Полностью согласен"
+      ],
+      "en": [
+        "Strongly disagree",
+        "Disagree",
+        "Neutral",
+        "Agree",
+        "Strongly agree"
+      ]
+    },
+    "scoring": [0, 1, 2, 3, 4]
+  },
+
+  "questions": [
+    {
+      "id": 1,
+      "text": {
+        "ru": "Для меня важно делать все правильно, даже в мелочах",
+        "en": "It's important for me to do everything correctly, even in small details"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 2,
+      "text": {
+        "ru": "Я чувствую удовлетворение, когда помогаю другим решать их проблемы",
+        "en": "I feel satisfied when I help others solve their problems"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 3,
+      "text": {
+        "ru": "Достижение видимых результатов мотивирует меня больше всего",
+        "en": "Achieving visible results motivates me the most"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 4,
+      "text": {
+        "ru": "Я часто чувствую, что отличаюсь от большинства людей в своем восприятии мира",
+        "en": "I often feel that I differ from most people in my perception of the world"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 5,
+      "text": {
+        "ru": "Мне нужно глубоко понять вопрос, прежде чем принять решение",
+        "en": "I need to deeply understand an issue before making a decision"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 6,
+      "text": {
+        "ru": "Я предпочитаю иметь четкий план и знать, что меня ждет впереди",
+        "en": "I prefer to have a clear plan and know what lies ahead"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 7,
+      "text": {
+        "ru": "Я всегда ищу новые впечатления и возможности для веселья",
+        "en": "I'm always looking for new experiences and opportunities for fun"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 8,
+      "text": {
+        "ru": "Я не боюсь противостоять другим, когда уверен в своей правоте",
+        "en": "I'm not afraid to confront others when I'm sure I'm right"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 9,
+      "text": {
+        "ru": "Я предпочитаю избегать конфликтов и сохранять спокойную атмосферу",
+        "en": "I prefer to avoid conflicts and maintain a calm atmosphere"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 10,
+      "text": {
+        "ru": "Меня расстраивает, когда люди действуют неэтично или несправедливо",
+        "en": "It upsets me when people act unethically or unfairly"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 11,
+      "text": {
+        "ru": "Я часто забываю о своих потребностях, заботясь о других",
+        "en": "I often forget about my own needs while caring for others"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 12,
+      "text": {
+        "ru": "Признание моих достижений другими людьми для меня очень важно",
+        "en": "Recognition of my achievements by others is very important to me"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 13,
+      "text": {
+        "ru": "Я глубоко переживаю свои эмоции и часто рефлексирую",
+        "en": "I deeply experience my emotions and often reflect"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 14,
+      "text": {
+        "ru": "Я предпочитаю наблюдать и анализировать, а не сразу действовать",
+        "en": "I prefer to observe and analyze rather than act immediately"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 15,
+      "text": {
+        "ru": "Неопределенность вызывает у меня тревогу",
+        "en": "Uncertainty causes me anxiety"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 16,
+      "text": {
+        "ru": "Я с трудом переношу скуку и однообразие",
+        "en": "I have difficulty tolerating boredom and monotony"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 17,
+      "text": {
+        "ru": "Я ценю силу и уверенность в себе больше, чем мягкость",
+        "en": "I value strength and self-confidence more than gentleness"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 18,
+      "text": {
+        "ru": "Я легко адаптируюсь к мнению других, чтобы не создавать напряжения",
+        "en": "I easily adapt to others' opinions to avoid creating tension"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 19,
+      "text": {
+        "ru": "Я стремлюсь к самосовершенствованию и работе над своими недостатками",
+        "en": "I strive for self-improvement and working on my flaws"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 20,
+      "text": {
+        "ru": "Мне трудно просить о помощи, я привык помогать другим",
+        "en": "It's hard for me to ask for help, I'm used to helping others"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 21,
+      "text": {
+        "ru": "Я всегда устанавливаю амбициозные цели для себя",
+        "en": "I always set ambitious goals for myself"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 22,
+      "text": {
+        "ru": "Меня привлекает все необычное и артистичное",
+        "en": "I'm attracted to everything unusual and artistic"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 23,
+      "text": {
+        "ru": "Я предпочитаю минимизировать социальные контакты, чтобы сосредоточиться на своих интересах",
+        "en": "I prefer to minimize social contacts to focus on my interests"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 24,
+      "text": {
+        "ru": "Я ценю надежность и последовательность в людях",
+        "en": "I value reliability and consistency in people"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 25,
+      "text": {
+        "ru": "Я предпочитаю держать несколько вариантов открытыми, а не фокусироваться на одном",
+        "en": "I prefer to keep several options open rather than focus on one"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 26,
+      "text": {
+        "ru": "Я естественно беру на себя роль лидера в группе",
+        "en": "I naturally take on the role of leader in a group"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 27,
+      "text": {
+        "ru": "Мне легче согласиться с другими, чем отстаивать свою позицию",
+        "en": "It's easier for me to agree with others than to defend my position"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 28,
+      "text": {
+        "ru": "Я часто критикую себя за ошибки и несовершенства",
+        "en": "I often criticize myself for mistakes and imperfections"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 29,
+      "text": {
+        "ru": "Я чувствую себя ценным, когда другие нуждаются во мне",
+        "en": "I feel valuable when others need me"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 30,
+      "text": {
+        "ru": "Я адаптирую свое поведение в зависимости от ситуации для достижения успеха",
+        "en": "I adapt my behavior depending on the situation to achieve success"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 31,
+      "text": {
+        "ru": "Я часто чувствую, что мне чего-то не хватает в жизни",
+        "en": "I often feel that something is missing in my life"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 32,
+      "text": {
+        "ru": "Мне нужно время в одиночестве, чтобы восстановить энергию",
+        "en": "I need time alone to restore my energy"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 33,
+      "text": {
+        "ru": "Я часто сомневаюсь в своих решениях и ищу дополнительные подтверждения",
+        "en": "I often doubt my decisions and seek additional confirmation"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 34,
+      "text": {
+        "ru": "Я нахожу способы сделать даже рутинные задачи интересными",
+        "en": "I find ways to make even routine tasks interesting"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 35,
+      "text": {
+        "ru": "Я защищаю слабых и несправедливо обиженных",
+        "en": "I defend the weak and unfairly offended"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 36,
+      "text": {
+        "ru": "Я склонен откладывать принятие решений, чтобы сохранить покой",
+        "en": "I tend to postpone making decisions to maintain peace"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 37,
+      "text": {
+        "ru": "У меня есть четкие представления о том, что правильно и что неправильно",
+        "en": "I have clear ideas about what is right and what is wrong"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 38,
+      "text": {
+        "ru": "Я интуитивно чувствую эмоциональные потребности других людей",
+        "en": "I intuitively sense the emotional needs of others"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 39,
+      "text": {
+        "ru": "Неудача воспринимается мной болезненно и снижает мою самооценку",
+        "en": "Failure is perceived by me painfully and lowers my self-esteem"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 40,
+      "text": {
+        "ru": "Я ценю красоту и эстетику во всех проявлениях жизни",
+        "en": "I appreciate beauty and aesthetics in all manifestations of life"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 41,
+      "text": {
+        "ru": "Я собираю информацию и знания, даже если не планирую их использовать",
+        "en": "I collect information and knowledge, even if I don't plan to use them"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 42,
+      "text": {
+        "ru": "Я лоялен к людям и организациям, которые заслужили мое доверие",
+        "en": "I am loyal to people and organizations that have earned my trust"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 43,
+      "text": {
+        "ru": "Я нетерпелив и хочу все попробовать прямо сейчас",
+        "en": "I am impatient and want to try everything right now"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 44,
+      "text": {
+        "ru": "Я говорю прямо и не скрываю свое мнение",
+        "en": "I speak directly and don't hide my opinion"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 45,
+      "text": {
+        "ru": "Мне сложно сказать 'нет', даже когда это в моих интересах",
+        "en": "It's difficult for me to say 'no', even when it's in my best interest"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 46,
+      "text": {
+        "ru": "Я верю, что всегда можно найти лучший способ сделать что-то",
+        "en": "I believe there's always a better way to do something"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 47,
+      "text": {
+        "ru": "Я получаю энергию от возможности заботиться о близких",
+        "en": "I get energy from the opportunity to care for loved ones"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 48,
+      "text": {
+        "ru": "Я ориентируюсь на результат больше, чем на процесс",
+        "en": "I focus on results more than on the process"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 49,
+      "text": {
+        "ru": "Мне нравится выражать себя через творчество или уникальный стиль",
+        "en": "I like to express myself through creativity or unique style"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 50,
+      "text": {
+        "ru": "Я чувствую себя комфортно в роли эксперта или специалиста",
+        "en": "I feel comfortable in the role of expert or specialist"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 51,
+      "text": {
+        "ru": "Я тщательно оцениваю риски перед принятием решений",
+        "en": "I carefully assess risks before making decisions"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 52,
+      "text": {
+        "ru": "Я фокусируюсь на позитивных возможностях, а не на ограничениях",
+        "en": "I focus on positive possibilities rather than limitations"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 53,
+      "text": {
+        "ru": "Я уважаю силу и могу проявлять жесткость, когда это необходимо",
+        "en": "I respect strength and can show toughness when necessary"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 54,
+      "text": {
+        "ru": "Я ценю комфорт и стабильность больше, чем амбиции",
+        "en": "I value comfort and stability more than ambition"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 55,
+      "text": {
+        "ru": "Я замечаю ошибки и недочеты там, где другие их не видят",
+        "en": "I notice mistakes and flaws where others don't see them"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 56,
+      "text": {
+        "ru": "Я склонен гордиться собой через успехи тех, кому помог",
+        "en": "I tend to take pride in myself through the success of those I've helped"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 57,
+      "text": {
+        "ru": "Я определяю свою ценность через достижения и успехи",
+        "en": "I define my worth through achievements and successes"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 58,
+      "text": {
+        "ru": "Я испытываю сильную тягу к тому, что кажется недостижимым или утраченным",
+        "en": "I feel a strong pull toward what seems unattainable or lost"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 59,
+      "text": {
+        "ru": "Я предпочитаю думать о проблеме, а не сразу действовать эмоционально",
+        "en": "I prefer to think about a problem rather than act emotionally immediately"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 60,
+      "text": {
+        "ru": "Я ищу руководства и поддержки у авторитетных фигур",
+        "en": "I seek guidance and support from authority figures"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 61,
+      "text": {
+        "ru": "Мне трудно фокусироваться на одной задаче, когда вокруг столько интересного",
+        "en": "It's hard for me to focus on one task when there's so much interesting around"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 62,
+      "text": {
+        "ru": "Я не боюсь конфронтации и могу проявлять агрессию для защиты своих интересов",
+        "en": "I'm not afraid of confrontation and can show aggression to protect my interests"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 63,
+      "text": {
+        "ru": "Я могу потерять связь со своими истинными желаниями, подстраиваясь под других",
+        "en": "I can lose touch with my true desires by adapting to others"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 64,
+      "text": {
+        "ru": "Я испытываю внутреннее напряжение от осознания несовершенства мира",
+        "en": "I experience inner tension from awareness of the world's imperfection"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 65,
+      "text": {
+        "ru": "Я манипулирую ситуациями, чтобы другие нуждались во мне",
+        "en": "I manipulate situations so that others need me"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 66,
+      "text": {
+        "ru": "Я боюсь выглядеть неудачником в глазах других",
+        "en": "I'm afraid of looking like a failure in others' eyes"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 67,
+      "text": {
+        "ru": "Я склонен идеализировать то, чего у меня нет",
+        "en": "I tend to idealize what I don't have"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 68,
+      "text": {
+        "ru": "Я могу отстраняться от эмоций, чтобы сохранить ясность мышления",
+        "en": "I can detach from emotions to maintain clarity of thinking"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 69,
+      "text": {
+        "ru": "Я проецирую свои страхи на внешний мир, видя опасности повсюду",
+        "en": "I project my fears onto the external world, seeing dangers everywhere"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 70,
+      "text": {
+        "ru": "Я избегаю негативных эмоций, переключаясь на что-то приятное",
+        "en": "I avoid negative emotions by switching to something pleasant"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 71,
+      "text": {
+        "ru": "Я могу быть чрезмерно контролирующим и доминирующим",
+        "en": "I can be overly controlling and dominating"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 72,
+      "text": {
+        "ru": "Я склонен к пассивности и прокрастинации в важных вопросах",
+        "en": "I tend toward passivity and procrastination on important matters"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 73,
+      "text": {
+        "ru": "Я требую от себя и других высоких стандартов",
+        "en": "I demand high standards from myself and others"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 74,
+      "text": {
+        "ru": "Я подавляю свои собственные нужды ради других",
+        "en": "I suppress my own needs for the sake of others"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 75,
+      "text": {
+        "ru": "Я ставлю работу и достижения выше отношений",
+        "en": "I put work and achievements above relationships"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 76,
+      "text": {
+        "ru": "Я могу чрезмерно погружаться в свои эмоциональные переживания",
+        "en": "I can become overly absorbed in my emotional experiences"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 77,
+      "text": {
+        "ru": "Я минимизирую контакты с внешним миром, чувствуя истощение от людей",
+        "en": "I minimize contact with the outside world, feeling drained by people"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 78,
+      "text": {
+        "ru": "Я испытываю постоянную тревогу о будущем",
+        "en": "I experience constant anxiety about the future"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 79,
+      "text": {
+        "ru": "Я импульсивно принимаю решения, чтобы избежать дискомфорта",
+        "en": "I impulsively make decisions to avoid discomfort"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 80,
+      "text": {
+        "ru": "Я скрываю свою уязвимость за маской силы",
+        "en": "I hide my vulnerability behind a mask of strength"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 81,
+      "text": {
+        "ru": "Я забываю о своих приоритетах, растворяясь в потоке жизни",
+        "en": "I forget about my priorities, dissolving in the flow of life"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    },
+    {
+      "id": 82,
+      "text": {
+        "ru": "Я испытываю праведный гнев, когда сталкиваюсь с несправедливостью",
+        "en": "I experience righteous anger when confronted with injustice"
+      },
+      "scale": "idealist",
+      "reverse": false
+    },
+    {
+      "id": 83,
+      "text": {
+        "ru": "Мне трудно принимать помощь, я привык давать, а не получать",
+        "en": "It's hard for me to accept help, I'm used to giving, not receiving"
+      },
+      "scale": "altruist",
+      "reverse": false
+    },
+    {
+      "id": 84,
+      "text": {
+        "ru": "Я стремлюсь быть лучшим в том, чем занимаюсь",
+        "en": "I strive to be the best at what I do"
+      },
+      "scale": "achiever",
+      "reverse": false
+    },
+    {
+      "id": 85,
+      "text": {
+        "ru": "Я чувствую себя непонятым большинством людей",
+        "en": "I feel misunderstood by most people"
+      },
+      "scale": "creator",
+      "reverse": false
+    },
+    {
+      "id": 86,
+      "text": {
+        "ru": "Я исследую темы глубже, чем это необходимо для практических целей",
+        "en": "I explore topics deeper than necessary for practical purposes"
+      },
+      "scale": "analyst",
+      "reverse": false
+    },
+    {
+      "id": 87,
+      "text": {
+        "ru": "Я чувствую себя комфортнее в структурированной и предсказуемой среде",
+        "en": "I feel more comfortable in a structured and predictable environment"
+      },
+      "scale": "guardian",
+      "reverse": false
+    },
+    {
+      "id": 88,
+      "text": {
+        "ru": "Я вижу жизнь как приключение, полное возможностей",
+        "en": "I see life as an adventure full of possibilities"
+      },
+      "scale": "optimist",
+      "reverse": false
+    },
+    {
+      "id": 89,
+      "text": {
+        "ru": "Я предпочитаю контролировать ситуацию, а не быть контролируемым",
+        "en": "I prefer to control the situation rather than be controlled"
+      },
+      "scale": "leader",
+      "reverse": false
+    },
+    {
+      "id": 90,
+      "text": {
+        "ru": "Я ценю мир и гармонию превыше всего",
+        "en": "I value peace and harmony above all else"
+      },
+      "scale": "harmonizer",
+      "reverse": false
+    }
+  ],
+
+  "scoring_rules": {
+    "reverse_scoring": {
+      "formula": "4 - score",
+      "note": "В данном тесте все вопросы прямые, реверсивные не используются"
+    },
+    "scale_calculations": {
+      "idealist": {
+        "method": "sum",
+        "items": [1, 10, 19, 28, 37, 46, 55, 64, 73, 82],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "altruist": {
+        "method": "sum",
+        "items": [2, 11, 20, 29, 38, 47, 56, 65, 74, 83],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "achiever": {
+        "method": "sum",
+        "items": [3, 12, 21, 30, 39, 48, 57, 66, 75, 84],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "creator": {
+        "method": "sum",
+        "items": [4, 13, 22, 31, 40, 49, 58, 67, 76, 85],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "analyst": {
+        "method": "sum",
+        "items": [5, 14, 23, 32, 41, 50, 59, 68, 77, 86],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "guardian": {
+        "method": "sum",
+        "items": [6, 15, 24, 33, 42, 51, 60, 69, 78, 87],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "optimist": {
+        "method": "sum",
+        "items": [7, 16, 25, 34, 43, 52, 61, 70, 79, 88],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "leader": {
+        "method": "sum",
+        "items": [8, 17, 26, 35, 44, 53, 62, 71, 80, 89],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      },
+      "harmonizer": {
+        "method": "sum",
+        "items": [9, 18, 27, 36, 45, 54, 63, 72, 81, 90],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw - 0) / 40) * 100",
+          "min_raw": 0,
+          "max_raw": 40
+        }
+      }
+    },
+    "profile_determination": {
+      "method": "highest_score",
+      "details": {
+        "primary_type": "Тип с наивысшим баллом",
+        "secondary_type": "Тип со вторым по величине баллом",
+        "minimum_difference": 5,
+        "note": "Если разница между первым и вторым типом менее 5%, результат указывает на сбалансированный профиль"
+      }
+    }
+  },
+
+  "interpretation": {
+    "interpretation_method": "profiles",
+    "profiles": [
+      {
+        "id": "idealist",
+        "name": {
+          "ru": "Идеалист",
+          "en": "Idealist"
+        },
+        "core_motivation": {
+          "ru": "Быть правильным, честным и совершенствовать себя и мир",
+          "en": "To be right, honest, and improve oneself and the world"
+        },
+        "description": {
+          "ru": "Вы движимы глубоким стремлением к совершенству и правильности. Ваша жизнь — это постоянный процесс самосовершенствования и улучшения мира вокруг вас. Вы обладаете сильным внутренним компасом этики и морали, который направляет все ваши действия. Вы замечаете несоответствия и ошибки там, где другие их не видят, и чувствуете ответственность за их исправление.\n\nВаша внутренняя критика может быть очень требовательной, заставляя вас постоянно оценивать себя и свои действия. Вы верите, что всегда есть «правильный» способ делать вещи, и стремитесь найти его. Ваша дисциплина, честность и приверженность принципам делают вас надежным и уважаемым человеком.",
+          "en": "You are driven by a deep desire for perfection and correctness. Your life is a constant process of self-improvement and making the world around you better. You possess a strong internal compass of ethics and morality that guides all your actions. You notice inconsistencies and errors where others don't see them, and feel responsible for correcting them.\n\nYour inner critic can be very demanding, constantly making you evaluate yourself and your actions. You believe there's always a 'right' way to do things and strive to find it. Your discipline, honesty, and commitment to principles make you a reliable and respected person."
+        },
+        "characteristics": {
+          "ru": [
+            "Высокие стандарты для себя и других",
+            "Сильное чувство правильного и неправильного",
+            "Дисциплинированность и организованность",
+            "Внутренняя самокритика",
+            "Стремление к совершенству",
+            "Ответственность и надежность",
+            "Праведное негодование при несправедливости"
+          ],
+          "en": [
+            "High standards for self and others",
+            "Strong sense of right and wrong",
+            "Discipline and organization",
+            "Inner self-criticism",
+            "Striving for perfection",
+            "Responsibility and reliability",
+            "Righteous indignation at injustice"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Целостность и принципиальность",
+            "Способность видеть и исправлять ошибки",
+            "Высокая работоспособность",
+            "Честность и прямота",
+            "Стремление улучшить мир"
+          ],
+          "en": [
+            "Integrity and principles",
+            "Ability to see and correct errors",
+            "High work capacity",
+            "Honesty and directness",
+            "Desire to improve the world"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Чрезмерная самокритика",
+            "Перфекционизм, мешающий завершению задач",
+            "Критичность к другим",
+            "Подавленный гнев и раздражение",
+            "Трудности с принятием несовершенства"
+          ],
+          "en": [
+            "Excessive self-criticism",
+            "Perfectionism hindering task completion",
+            "Being critical of others",
+            "Suppressed anger and irritation",
+            "Difficulty accepting imperfection"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Практикуйте самосострадание и принятие себя",
+            "Учитесь видеть «достаточно хорошо» как приемлемый результат",
+            "Разрешите себе ошибаться",
+            "Развивайте спонтанность и гибкость",
+            "Признавайте свой гнев и выражайте его конструктивно"
+          ],
+          "en": [
+            "Practice self-compassion and self-acceptance",
+            "Learn to see 'good enough' as acceptable",
+            "Allow yourself to make mistakes",
+            "Develop spontaneity and flexibility",
+            "Acknowledge your anger and express it constructively"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Аудитор",
+            "Редактор",
+            "Судья",
+            "Учитель",
+            "Эксперт по качеству",
+            "Консультант по этике"
+          ],
+          "en": [
+            "Auditor",
+            "Editor",
+            "Judge",
+            "Teacher",
+            "Quality expert",
+            "Ethics consultant"
+          ]
+        }
+      },
+      {
+        "id": "altruist",
+        "name": {
+          "ru": "Альтруист",
+          "en": "Altruist"
+        },
+        "core_motivation": {
+          "ru": "Быть любимым и нужным через заботу о других",
+          "en": "To be loved and needed through caring for others"
+        },
+        "description": {
+          "ru": "Вы ориентированы на отношения и глубоко мотивированы желанием быть полезным и любимым. Ваша эмпатия и способность чувствовать потребности других делают вас незаменимым другом и помощником. Вы получаете удовлетворение от того, что помогаете людям решать их проблемы, и часто ставите нужды других выше собственных.\n\nВаша щедрость и теплота создают вокруг вас атмосферу заботы и поддержки. Вы интуитивно понимаете, что нужно другим, иногда даже раньше, чем они сами. Однако вам важно помнить о собственных потребностях и не растворяться полностью в заботе о других.",
+          "en": "You are relationship-oriented and deeply motivated by the desire to be helpful and loved. Your empathy and ability to sense others' needs make you an indispensable friend and helper. You gain satisfaction from helping people solve their problems and often put others' needs above your own.\n\nYour generosity and warmth create an atmosphere of care and support around you. You intuitively understand what others need, sometimes even before they do. However, it's important for you to remember your own needs and not dissolve completely in caring for others."
+        },
+        "characteristics": {
+          "ru": [
+            "Высокая эмпатия",
+            "Щедрость и забота",
+            "Ориентация на отношения",
+            "Интуитивное понимание эмоций других",
+            "Потребность быть нужным",
+            "Трудности с отказом",
+            "Самоидентификация через помощь другим"
+          ],
+          "en": [
+            "High empathy",
+            "Generosity and care",
+            "Relationship orientation",
+            "Intuitive understanding of others' emotions",
+            "Need to be needed",
+            "Difficulty saying no",
+            "Self-identification through helping others"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Способность создавать глубокие связи",
+            "Понимание эмоциональных потребностей",
+            "Щедрость и великодушие",
+            "Навыки поддержки и утешения",
+            "Умение мотивировать других"
+          ],
+          "en": [
+            "Ability to create deep connections",
+            "Understanding emotional needs",
+            "Generosity and magnanimity",
+            "Support and comfort skills",
+            "Ability to motivate others"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Игнорирование собственных потребностей",
+            "Манипуляция через заботу",
+            "Зависимость от признания",
+            "Трудности с границами",
+            "Подавление собственных чувств"
+          ],
+          "en": [
+            "Ignoring own needs",
+            "Manipulation through care",
+            "Dependence on recognition",
+            "Difficulty with boundaries",
+            "Suppression of own feelings"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Учитесь распознавать и выражать свои потребности",
+            "Развивайте способность принимать помощь",
+            "Устанавливайте здоровые границы",
+            "Практикуйте заботу о себе",
+            "Осознавайте свою ценность независимо от помощи другим"
+          ],
+          "en": [
+            "Learn to recognize and express your needs",
+            "Develop ability to accept help",
+            "Set healthy boundaries",
+            "Practice self-care",
+            "Recognize your worth independent of helping others"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Психолог",
+            "Медсестра",
+            "Социальный работник",
+            "HR-специалист",
+            "Коуч",
+            "Учитель"
+          ],
+          "en": [
+            "Psychologist",
+            "Nurse",
+            "Social worker",
+            "HR specialist",
+            "Coach",
+            "Teacher"
+          ]
+        }
+      },
+      {
+        "id": "achiever",
+        "name": {
+          "ru": "Достигатель",
+          "en": "Achiever"
+        },
+        "core_motivation": {
+          "ru": "Достигать успеха и получать признание за достижения",
+          "en": "To achieve success and receive recognition for accomplishments"
+        },
+        "description": {
+          "ru": "Вы ориентированы на результат и мотивированы достижением видимых успехов. Ваша энергия, целеустремленность и способность адаптироваться помогают вам эффективно достигать поставленных целей. Вы знаете, как произвести впечатление и представить себя в лучшем свете, что делает вас успешным в карьере и социальных ситуациях.\n\nВы измеряете свою ценность через достижения и признание других. Ваша продуктивность и способность к многозадачности впечатляют окружающих. Однако важно помнить, что ваша истинная ценность не зависит только от внешних успехов.",
+          "en": "You are results-oriented and motivated by achieving visible success. Your energy, determination, and ability to adapt help you effectively reach your goals. You know how to make an impression and present yourself in the best light, making you successful in career and social situations.\n\nYou measure your worth through achievements and others' recognition. Your productivity and multitasking ability impress those around you. However, it's important to remember that your true worth doesn't depend only on external success."
+        },
+        "characteristics": {
+          "ru": [
+            "Целеустремленность",
+            "Высокая продуктивность",
+            "Адаптивность",
+            "Конкурентность",
+            "Ориентация на имидж",
+            "Эффективность",
+            "Амбициозность"
+          ],
+          "en": [
+            "Goal-orientation",
+            "High productivity",
+            "Adaptability",
+            "Competitiveness",
+            "Image-consciousness",
+            "Efficiency",
+            "Ambition"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Способность достигать целей",
+            "Мотивация и энергичность",
+            "Навыки самопрезентации",
+            "Практичность",
+            "Вдохновение для других"
+          ],
+          "en": [
+            "Ability to achieve goals",
+            "Motivation and energy",
+            "Self-presentation skills",
+            "Practicality",
+            "Inspiration for others"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Отождествление себя с достижениями",
+            "Поверхностность в отношениях",
+            "Трудоголизм",
+            "Страх неудачи",
+            "Обман для достижения успеха"
+          ],
+          "en": [
+            "Identifying self with achievements",
+            "Superficiality in relationships",
+            "Workaholism",
+            "Fear of failure",
+            "Deception to achieve success"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Развивайте аутентичность",
+            "Цените процесс, а не только результат",
+            "Осознайте свою ценность вне достижений",
+            "Углубляйте эмоциональные связи",
+            "Практикуйте уязвимость"
+          ],
+          "en": [
+            "Develop authenticity",
+            "Value process, not just result",
+            "Recognize your worth beyond achievements",
+            "Deepen emotional connections",
+            "Practice vulnerability"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Предприниматель",
+            "Менеджер по продажам",
+            "Маркетолог",
+            "Спортсмен",
+            "Руководитель проекта",
+            "Актер"
+          ],
+          "en": [
+            "Entrepreneur",
+            "Sales manager",
+            "Marketer",
+            "Athlete",
+            "Project manager",
+            "Actor"
+          ]
+        }
+      },
+      {
+        "id": "creator",
+        "name": {
+          "ru": "Созидатель",
+          "en": "Creator"
+        },
+        "core_motivation": {
+          "ru": "Быть уникальным и выражать свою аутентичность",
+          "en": "To be unique and express authenticity"
+        },
+        "description": {
+          "ru": "Вы глубоко эмоциональны и мотивированы поиском уникальности и смысла. Ваша способность к глубокой рефлексии и эмоциональная восприимчивость позволяют вам создавать что-то по-настоящему оригинальное. Вы цените красоту, аутентичность и глубину во всех аспектах жизни.\n\nВы часто чувствуете, что отличаетесь от других, и эта особенность может быть как источником вдохновения, так и одиночества. Ваша богатая внутренняя жизнь и способность к творческому самовыражению делают вас уникальным. Однако важно не идеализировать то, чего у вас нет, и ценить то, что есть.",
+          "en": "You are deeply emotional and motivated by seeking uniqueness and meaning. Your capacity for deep reflection and emotional sensitivity allow you to create something truly original. You value beauty, authenticity, and depth in all aspects of life.\n\nYou often feel different from others, and this particularity can be both a source of inspiration and loneliness. Your rich inner life and ability for creative self-expression make you unique. However, it's important not to idealize what you don't have and value what you do."
+        },
+        "characteristics": {
+          "ru": [
+            "Эмоциональная глубина",
+            "Креативность",
+            "Самовыражение",
+            "Чувствительность",
+            "Интроспекция",
+            "Эстетическое восприятие",
+            "Поиск уникальности"
+          ],
+          "en": [
+            "Emotional depth",
+            "Creativity",
+            "Self-expression",
+            "Sensitivity",
+            "Introspection",
+            "Aesthetic perception",
+            "Search for uniqueness"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Творческое мышление",
+            "Эмоциональная честность",
+            "Способность видеть красоту",
+            "Глубина понимания",
+            "Аутентичность"
+          ],
+          "en": [
+            "Creative thinking",
+            "Emotional honesty",
+            "Ability to see beauty",
+            "Depth of understanding",
+            "Authenticity"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Меланхолия и депрессия",
+            "Зависть к другим",
+            "Идеализация недостижимого",
+            "Эмоциональная нестабильность",
+            "Самопоглощенность"
+          ],
+          "en": [
+            "Melancholy and depression",
+            "Envy of others",
+            "Idealizing the unattainable",
+            "Emotional instability",
+            "Self-absorption"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Практикуйте принятие обыденного",
+            "Цените то, что у вас есть",
+            "Развивайте эмоциональную стабильность",
+            "Баланс между внутренним миром и внешней реальностью",
+            "Превращайте эмоции в конструктивное творчество"
+          ],
+          "en": [
+            "Practice accepting the ordinary",
+            "Appreciate what you have",
+            "Develop emotional stability",
+            "Balance between inner world and external reality",
+            "Transform emotions into constructive creativity"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Художник",
+            "Дизайнер",
+            "Писатель",
+            "Психотерапевт",
+            "Музыкант",
+            "Креативный директор"
+          ],
+          "en": [
+            "Artist",
+            "Designer",
+            "Writer",
+            "Psychotherapist",
+            "Musician",
+            "Creative director"
+          ]
+        }
+      },
+      {
+        "id": "analyst",
+        "name": {
+          "ru": "Аналитик",
+          "en": "Analyst"
+        },
+        "core_motivation": {
+          "ru": "Понимать мир и обладать компетентностью",
+          "en": "To understand the world and possess competence"
+        },
+        "description": {
+          "ru": "Вы интеллектуально любознательны и мотивированы глубоким пониманием. Ваша способность к анализу и накоплению знаний делает вас экспертом в выбранных областях. Вы цените независимость, уединение и время для размышлений.\n\nВы предпочитаете наблюдать и анализировать, прежде чем действовать. Ваша потребность в понимании и компетентности движет вашим постоянным стремлением к знаниям. Вы можете отстраняться от эмоций, чтобы сохранить ясность мышления, но важно также оставаться связанным с миром и людьми.",
+          "en": "You are intellectually curious and motivated by deep understanding. Your analytical ability and knowledge accumulation make you an expert in chosen fields. You value independence, solitude, and time for reflection.\n\nYou prefer to observe and analyze before acting. Your need for understanding and competence drives your constant pursuit of knowledge. You can detach from emotions to maintain mental clarity, but it's also important to stay connected with the world and people."
+        },
+        "characteristics": {
+          "ru": [
+            "Аналитическое мышление",
+            "Интеллектуальная любознательность",
+            "Независимость",
+            "Наблюдательность",
+            "Минимализм в потребностях",
+            "Эмоциональная сдержанность",
+            "Стремление к компетентности"
+          ],
+          "en": [
+            "Analytical thinking",
+            "Intellectual curiosity",
+            "Independence",
+            "Observational skills",
+            "Minimalism in needs",
+            "Emotional restraint",
+            "Striving for competence"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Глубокие знания",
+            "Объективность",
+            "Способность к концентрации",
+            "Инновационное мышление",
+            "Самодостаточность"
+          ],
+          "en": [
+            "Deep knowledge",
+            "Objectivity",
+            "Concentration ability",
+            "Innovative thinking",
+            "Self-sufficiency"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Социальная изоляция",
+            "Эмоциональная отстраненность",
+            "Паралич анализа",
+            "Скупость (эмоциональная и материальная)",
+            "Высокомерие знания"
+          ],
+          "en": [
+            "Social isolation",
+            "Emotional detachment",
+            "Analysis paralysis",
+            "Stinginess (emotional and material)",
+            "Knowledge arrogance"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Практикуйте эмоциональную связь",
+            "Делитесь знаниями с другими",
+            "Переходите от анализа к действию",
+            "Развивайте щедрость",
+            "Баланс между размышлением и участием в жизни"
+          ],
+          "en": [
+            "Practice emotional connection",
+            "Share knowledge with others",
+            "Move from analysis to action",
+            "Develop generosity",
+            "Balance between reflection and life participation"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Исследователь",
+            "Ученый",
+            "Программист",
+            "Аналитик",
+            "Философ",
+            "Инженер"
+          ],
+          "en": [
+            "Researcher",
+            "Scientist",
+            "Programmer",
+            "Analyst",
+            "Philosopher",
+            "Engineer"
+          ]
+        }
+      },
+      {
+        "id": "guardian",
+        "name": {
+          "ru": "Защитник",
+          "en": "Guardian"
+        },
+        "core_motivation": {
+          "ru": "Чувствовать безопасность и иметь надежную опору",
+          "en": "To feel safe and have reliable support"
+        },
+        "description": {
+          "ru": "Вы мотивированы потребностью в безопасности и надежности. Ваша верность, ответственность и способность предвидеть проблемы делают вас надежным партнером и членом команды. Вы цените структуру, последовательность и доверие.\n\nВы внимательно оцениваете риски и тщательно планируете будущее. Ваша лояльность к людям и организациям, заслужившим ваше доверие, непоколебима. Вы можете испытывать тревогу по поводу неопределенности, но эта бдительность также помогает вам и другим избегать опасностей.",
+          "en": "You are motivated by the need for security and reliability. Your loyalty, responsibility, and ability to foresee problems make you a reliable partner and team member. You value structure, consistency, and trust.\n\nYou carefully assess risks and thoroughly plan for the future. Your loyalty to people and organizations that have earned your trust is unwavering. You may experience anxiety about uncertainty, but this vigilance also helps you and others avoid dangers."
+        },
+        "characteristics": {
+          "ru": [
+            "Лояльность",
+            "Ответственность",
+            "Бдительность",
+            "Тревожность",
+            "Потребность в поддержке",
+            "Предусмотрительность",
+            "Преданность"
+          ],
+          "en": [
+            "Loyalty",
+            "Responsibility",
+            "Vigilance",
+            "Anxiety",
+            "Need for support",
+            "Foresight",
+            "Devotion"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Надежность",
+            "Способность предвидеть проблемы",
+            "Командная работа",
+            "Верность принципам",
+            "Подготовленность"
+          ],
+          "en": [
+            "Reliability",
+            "Ability to foresee problems",
+            "Teamwork",
+            "Loyalty to principles",
+            "Preparedness"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Хроническая тревожность",
+            "Чрезмерная зависимость от авторитетов",
+            "Параноидальность",
+            "Избегание рисков",
+            "Прокрастинация из-за страха"
+          ],
+          "en": [
+            "Chronic anxiety",
+            "Excessive dependence on authorities",
+            "Paranoia",
+            "Risk avoidance",
+            "Procrastination due to fear"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Развивайте доверие к себе",
+            "Практикуйте управление тревогой",
+            "Отличайте реальные угрозы от воображаемых",
+            "Принимайте неопределенность",
+            "Развивайте внутренний авторитет"
+          ],
+          "en": [
+            "Develop self-trust",
+            "Practice anxiety management",
+            "Distinguish real threats from imaginary",
+            "Accept uncertainty",
+            "Develop internal authority"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Специалист по безопасности",
+            "Юрист",
+            "Администратор",
+            "Риск-менеджер",
+            "Финансовый аналитик",
+            "Военный"
+          ],
+          "en": [
+            "Security specialist",
+            "Lawyer",
+            "Administrator",
+            "Risk manager",
+            "Financial analyst",
+            "Military"
+          ]
+        }
+      },
+      {
+        "id": "optimist",
+        "name": {
+          "ru": "Оптимист",
+          "en": "Optimist"
+        },
+        "core_motivation": {
+          "ru": "Быть счастливым и избегать боли через новый опыт",
+          "en": "To be happy and avoid pain through new experiences"
+        },
+        "description": {
+          "ru": "Вы мотивированы стремлением к радости, свободе и новизне. Ваш энтузиазм, оптимизм и способность видеть возможности делают вас источником вдохновения для окружающих. Вы ищете разнообразие и приключения во всех сферах жизни.\n\nВы фокусируетесь на позитивных возможностях будущего и избегаете негативных эмоций, переключаясь на что-то приятное. Ваша способность находить радость и превращать обыденное в интересное ценится другими. Однако важно также научиться справляться с трудностями, а не только избегать их.",
+          "en": "You are motivated by the pursuit of joy, freedom, and novelty. Your enthusiasm, optimism, and ability to see possibilities make you a source of inspiration for others. You seek variety and adventure in all areas of life.\n\nYou focus on positive future possibilities and avoid negative emotions by switching to something pleasant. Your ability to find joy and make the ordinary interesting is valued by others. However, it's also important to learn to deal with difficulties rather than just avoid them."
+        },
+        "characteristics": {
+          "ru": [
+            "Энтузиазм",
+            "Оптимизм",
+            "Спонтанность",
+            "Любознательность",
+            "Избегание боли",
+            "Многозадачность",
+            "Жизнерадостность"
+          ],
+          "en": [
+            "Enthusiasm",
+            "Optimism",
+            "Spontaneity",
+            "Curiosity",
+            "Pain avoidance",
+            "Multitasking",
+            "Cheerfulness"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Способность вдохновлять",
+            "Креативность и инновации",
+            "Адаптивность",
+            "Оптимистичный взгляд",
+            "Энергичность"
+          ],
+          "en": [
+            "Ability to inspire",
+            "Creativity and innovation",
+            "Adaptability",
+            "Optimistic outlook",
+            "Energy"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Поверхностность",
+            "Импульсивность",
+            "Избегание негативных эмоций",
+            "Неспособность завершать проекты",
+            "Саморазрушительное поведение под маской веселья"
+          ],
+          "en": [
+            "Superficiality",
+            "Impulsiveness",
+            "Avoidance of negative emotions",
+            "Inability to complete projects",
+            "Self-destructive behavior behind mask of fun"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Практикуйте присутствие в настоящем",
+            "Учитесь справляться с дискомфортом",
+            "Развивайте глубину вместо широты",
+            "Завершайте начатые проекты",
+            "Признавайте негативные эмоции"
+          ],
+          "en": [
+            "Practice presence in the moment",
+            "Learn to deal with discomfort",
+            "Develop depth instead of breadth",
+            "Complete started projects",
+            "Acknowledge negative emotions"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Предприниматель",
+            "Путешественник",
+            "Ведущий мероприятий",
+            "Маркетолог",
+            "Консультант по инновациям",
+            "Журналист"
+          ],
+          "en": [
+            "Entrepreneur",
+            "Traveler",
+            "Event host",
+            "Marketer",
+            "Innovation consultant",
+            "Journalist"
+          ]
+        }
+      },
+      {
+        "id": "leader",
+        "name": {
+          "ru": "Лидер",
+          "en": "Leader"
+        },
+        "core_motivation": {
+          "ru": "Быть сильным и защищать себя и других",
+          "en": "To be strong and protect oneself and others"
+        },
+        "description": {
+          "ru": "Вы мотивированы силой, контролем и справедливостью. Ваша уверенность, решительность и способность брать на себя ответственность делают вас естественным лидером. Вы не боитесь конфликтов и готовы защищать слабых и отстаивать справедливость.\n\nВы цените прямоту, честность и силу, как в себе, так и в других. Ваша энергия и способность к действию впечатляют. Вы контролируете ситуации, чтобы защитить себя и тех, кто зависит от вас. Однако важно также признавать свою уязвимость и не скрывать ее за маской силы.",
+          "en": "You are motivated by strength, control, and justice. Your confidence, decisiveness, and ability to take responsibility make you a natural leader. You're not afraid of conflicts and ready to defend the weak and uphold justice.\n\nYou value directness, honesty, and strength, both in yourself and others. Your energy and capacity for action are impressive. You control situations to protect yourself and those who depend on you. However, it's also important to acknowledge your vulnerability and not hide it behind a mask of strength."
+        },
+        "characteristics": {
+          "ru": [
+            "Уверенность",
+            "Решительность",
+            "Прямота",
+            "Контроль",
+            "Сила воли",
+            "Защита слабых",
+            "Интенсивность"
+          ],
+          "en": [
+            "Confidence",
+            "Decisiveness",
+            "Directness",
+            "Control",
+            "Willpower",
+            "Protection of the weak",
+            "Intensity"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Лидерские качества",
+            "Защита справедливости",
+            "Способность к действию",
+            "Честность",
+            "Сила характера"
+          ],
+          "en": [
+            "Leadership qualities",
+            "Justice protection",
+            "Action capacity",
+            "Honesty",
+            "Strength of character"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Доминирование и контроль",
+            "Агрессивность",
+            "Отрицание уязвимости",
+            "Импульсивность",
+            "Нечувствительность к другим"
+          ],
+          "en": [
+            "Domination and control",
+            "Aggressiveness",
+            "Denial of vulnerability",
+            "Impulsiveness",
+            "Insensitivity to others"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Практикуйте уязвимость",
+            "Развивайте эмпатию",
+            "Учитесь делегировать контроль",
+            "Канализируйте энергию конструктивно",
+            "Признавайте свои слабости"
+          ],
+          "en": [
+            "Practice vulnerability",
+            "Develop empathy",
+            "Learn to delegate control",
+            "Channel energy constructively",
+            "Acknowledge your weaknesses"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Руководитель",
+            "Предприниматель",
+            "Юрист",
+            "Политик",
+            "Военный командир",
+            "Активист"
+          ],
+          "en": [
+            "Executive",
+            "Entrepreneur",
+            "Lawyer",
+            "Politician",
+            "Military commander",
+            "Activist"
+          ]
+        }
+      },
+      {
+        "id": "harmonizer",
+        "name": {
+          "ru": "Гармонизатор",
+          "en": "Harmonizer"
+        },
+        "core_motivation": {
+          "ru": "Сохранять гармонию и избегать конфликтов",
+          "en": "To maintain harmony and avoid conflicts"
+        },
+        "description": {
+          "ru": "Вы мотивированы сохранением мира, гармонии и внутреннего покоя. Ваша способность видеть разные точки зрения и создавать атмосферу принятия делает вас отличным медиатором. Вы цените стабильность, комфорт и отсутствие напряжения.\n\nВы легко адаптируетесь к мнению других и предпочитаете избегать конфликтов. Ваше спокойствие и принятие создают безопасное пространство для окружающих. Однако важно также не забывать о своих собственных желаниях и приоритетах, не растворяясь полностью в потоке жизни.",
+          "en": "You are motivated by maintaining peace, harmony, and inner calm. Your ability to see different perspectives and create an atmosphere of acceptance makes you an excellent mediator. You value stability, comfort, and absence of tension.\n\nYou easily adapt to others' opinions and prefer to avoid conflicts. Your calmness and acceptance create a safe space for those around you. However, it's also important not to forget your own desires and priorities, not dissolving completely in the flow of life."
+        },
+        "characteristics": {
+          "ru": [
+            "Миролюбие",
+            "Принятие",
+            "Адаптивность",
+            "Спокойствие",
+            "Избегание конфликтов",
+            "Комфорт",
+            "Слияние с другими"
+          ],
+          "en": [
+            "Peacefulness",
+            "Acceptance",
+            "Adaptability",
+            "Calmness",
+            "Conflict avoidance",
+            "Comfort",
+            "Merging with others"
+          ]
+        },
+        "strengths": {
+          "ru": [
+            "Создание гармонии",
+            "Медиация",
+            "Принятие различий",
+            "Терпение",
+            "Стабилизация группы"
+          ],
+          "en": [
+            "Creating harmony",
+            "Mediation",
+            "Accepting differences",
+            "Patience",
+            "Group stabilization"
+          ]
+        },
+        "blind_spots": {
+          "ru": [
+            "Пассивность",
+            "Прокрастинация",
+            "Потеря себя в отношениях",
+            "Избегание важных решений",
+            "Пассивная агрессия"
+          ],
+          "en": [
+            "Passivity",
+            "Procrastination",
+            "Losing oneself in relationships",
+            "Avoiding important decisions",
+            "Passive aggression"
+          ]
+        },
+        "growth_path": {
+          "ru": [
+            "Развивайте ассертивность",
+            "Определяйте свои приоритеты",
+            "Практикуйте принятие решений",
+            "Признавайте свои потребности",
+            "Учитесь конструктивному конфликту"
+          ],
+          "en": [
+            "Develop assertiveness",
+            "Define your priorities",
+            "Practice decision-making",
+            "Acknowledge your needs",
+            "Learn constructive conflict"
+          ]
+        },
+        "suitable_roles": {
+          "ru": [
+            "Медиатор",
+            "Консультант",
+            "Дипломат",
+            "Психолог",
+            "HR-специалист",
+            "Социальный работник"
+          ],
+          "en": [
+            "Mediator",
+            "Counselor",
+            "Diplomat",
+            "Psychologist",
+            "HR specialist",
+            "Social worker"
+          ]
+        }
+      }
+    ]
+  },
+
+  "validation": {
+    "reliability": {
+      "cronbach_alpha_target": 0.75,
+      "test_retest_period_weeks": 4,
+      "test_retest_correlation_target": 0.80
+    },
+    "validity": {
+      "inter_scale_correlation_range": [0.2, 0.5],
+      "convergent_validity_tests": [
+        "Big Five Personality Test",
+        "Self-Determination Theory scales"
+      ],
+      "discriminant_validity_tests": [
+        "Intelligence tests",
+        "Clinical symptom inventories"
+      ]
+    }
+  },
+
+  "implementation_notes": {
+    "question_order": "randomize_within_scales",
+    "scale_order": "fixed",
+    "progress_indicator": true,
+    "allow_back_navigation": true,
+    "required_questions": "all",
+    "save_progress": true,
+    "adaptive_testing": false,
+    "time_limit_per_question": null,
+    "result_storage": "local",
+    "visualization_type": "radar_chart",
+    "export_formats": ["pdf", "json"]
+  },
+
+  "copyright_notice": {
+    "ru": "Этот тест является оригинальной разработкой, основанной на научных теориях мотивации. Тест не копирует защищенные методики и создан для образовательных целей.",
+    "en": "This test is an original development based on scientific motivation theories. The test does not copy protected methodologies and is created for educational purposes."
+  }
+}

@@ -16,6 +16,157 @@
 
 ---
 
+## [3.25.0] - 2025-12-01
+
+### 🆕 НОВЫЙ ТЕСТ: Attachment Styles - Стили привязанности в отношениях
+
+#### Added
+- **Новый психологический тест "Стили привязанности":**
+  - 💑 **60 вопросов** (12 минут прохождения)
+  - 📊 **4 стиля привязанности:** Secure (надёжная), Anxious (тревожная), Avoidant (избегающая), Fearful (дезорганизованная)
+  - 👤 **5 профилей личности:** Securely Attached, Anxiously Attached, Avoidant Attached, Fearfully Attached, Mixed Attachment
+  - 📈 **15 вопросов на каждый стиль** для точной диагностики
+  - 🌍 **Билингвальный** (русский/английский)
+  - 🧠 **Теоретическая основа:** Bowlby's Attachment Theory (1969), Ainsworth Strange Situation, Hazan & Shaver Adult Attachment
+
+- **Интеграция с биполярными шкалами личности:**
+  - ✅ **E/I (Экстраверсия/Интроверсия):** 6 вопросов (Q1, Q13, Q37 экстраверсия / Q3, Q9, Q39 интроверсия)
+  - ✅ **T/F (Логика/Эмоции):** 4 вопроса (Q1, Q17 feeling / Q27, Q47 thinking)
+  - ✅ **J/P (Рациональность/Импровизация):** 2 вопроса (Q21, Q45 judging)
+  - 🎯 **Всего добавлено:** 11 биполярных весов (+ 1 note: S/N не применимо к attachment styles)
+
+- **Новые файлы:**
+  - `lib/data/tests/attachment_style_test.dart` (94 строки) - TestStub с 4 факторами
+  - `lib/data/attachment_style_data.dart` (1,334 строки) - 5 профилей с 7-секционной структурой
+  - `lib/config/summary/question_weights/attachment_style_weights.dart` (957 строк) - маппинг на ~85 шкал из 195 (44%)
+
+#### Changed
+- **lib/data/test_registry.dart:**
+  - ✅ Добавлен `AttachmentStyleTest()` в секцию Relationships
+  - 📈 Теперь 27 тестов (было 26)
+
+- **lib/services/test_loader_service.dart:**
+  - ✅ Добавлен case `'attachment_styles_v1'` в `_loadLegacyTest()`
+
+- **lib/services/test_service.dart:**
+  - ✅ BLOCK 1: maxQuestionScore = 4 (5-point Likert, scores 0-4)
+  - ✅ BLOCK 2: factorNames через `AttachmentStyleData.getFactorNames()`
+  - ✅ BLOCK 3: interpretations через `AttachmentStyleData.getFactorInterpretation()`
+
+- **lib/services/summary_service.dart:**
+  - ✅ Добавлены weights в оба `allWeights` map (строки ~157 и ~560)
+
+- **lib/screens/summary_screen.dart:**
+  - ✅ Добавлены 2 switch cases для получения question/answer текстов
+
+- **lib/config/summary_config.dart:**
+  - ✅ Добавлены weights в `_weights` map (критично для "Affected Scales")
+
+- **lib/services/profile_service.dart:**
+  - ✅ Добавлен `'attachment_styles_v1'` в `_supportedTests` set
+  - ✅ Добавлен case в `determineProfileId()`
+  - ✅ Добавлен case в `getProfile()`
+  - ✅ Добавлена иконка: `Icons.favorite_border`
+
+#### Fixed
+- **Critical Import Fix:** Исправлен неправильный импорт в attachment_style_data.dart
+  - 🐛 **Проблема:** Task tool создал файл с `import 'test_data.dart';` вместо правильных импортов
+  - ✅ **Решение:** Заменено на `import '../models/test_model.dart';` и `import '../models/test_profile_model.dart';`
+
+- **Function Name Fix:** Исправлено несоответствие имени функции
+  - 🐛 **Проблема:** Функция называлась `getAttachmentStyleTest()` но использовалась как `getAttachmentStylesTest()`
+  - ✅ **Решение:** Добавлена 's' в имя функции для консистентности с test ID
+
+#### Documentation
+- **CLAUDE.md v3.25.0:**
+  - Обновлён счётчик тестов: 27 (24 std + 2 special + 1 profile)
+  - Обновлён счётчик профилей: 23 теста поддерживают профили (было 22)
+  - Обновлена статистика: ~59,000 lines (было ~56,600)
+  - Добавлена запись в Revision History
+
+#### Metrics
+- 📦 **Размер кодовой базы:** 56,600 → 59,000 lines (+4.2%)
+- 🧪 **Всего тестов:** 26 → 27
+- 📊 **Профили:** 23 теста поддерживают 7-секционные профили (было 22)
+- 🎯 **Покрытие шкал:** ~85 из 195 психологических шкал (44%)
+- 🧬 **Биполярные шкалы:** 3 из 4 шкал (E/I, T/F, J/P) учитывают Attachment test
+
+---
+
+## [3.24.0] - 2025-11-30
+
+### 🆕 НОВЫЙ ТЕСТ: Values and Priorities - Личностные ценности и жизненные приоритеты
+
+#### Added
+- **Новый психологический тест "Ценности и приоритеты":**
+  - 🎯 **40 вопросов** (10 минут прохождения)
+  - 📊 **10 измерений ценностей:** Security, Freedom, Achievement, Creativity, Relationships, Self-Development, Power, Pleasure, Altruism, Health
+  - ⚖️ **Двойное измерение:** Importance (важность) vs Energy (фактические вложения)
+  - 👤 **8 профилей личности:** Aligned, Values Without Action, Energy Misaligned, Burnout Risk, Freedom Seeker, Stability Seeker, Relationships Focused, Growth Oriented
+  - 📈 **Composite Scores:** Values Alignment Index, Top 5 Importance/Energy, Gap Analysis
+  - 🌍 **Билингвальный** (русский/английский)
+  - 🔄 **20 reversed questions** (50% для валидности)
+  - 🧠 **Теоретическая основа:** Schwartz Values Theory
+
+- **Интеграция с биполярными шкалами личности:**
+  - ✅ **E/I (Экстраверсия/Интроверсия):** 3 вопроса (Q17, Q18, Q19)
+  - ✅ **S/N (Сенсорика/Интуиция):** 6 вопросов (Q9, Q13, Q14, Q15, Q21, Q22)
+  - ✅ **T/F (Логика/Эмоции):** 4 вопроса (Q17, Q18, Q33, Q34)
+  - ✅ **J/P (Рациональность/Импровизация):** 6 вопросов (Q1, Q2, Q3, Q4, Q5, Q6)
+  - 🎯 **Всего добавлено:** 20 биполярных весов
+
+- **Новые файлы:**
+  - `lib/data/tests/values_priorities_test.dart` (118 строк) - TestStub с 20 факторами
+  - `lib/data/values_priorities_data.dart` (1,906 строк) - 8 профилей, composite scores, gap analysis
+  - `lib/config/summary/question_weights/values_priorities_weights.dart` (594 строки) - маппинг на 195 шкал + 20 bipolar weights
+
+#### Changed
+- **lib/data/test_registry.dart:**
+  - ✅ Добавлен `ValuesPrioritiesTest()` в секцию Temperament/Personality
+  - 📈 Теперь 26 тестов (было 25)
+
+- **lib/services/test_loader_service.dart:**
+  - ✅ Добавлен case `'values_priorities_v1'` в `_loadLegacyTest()`
+
+- **lib/services/test_service.dart:**
+  - ✅ BLOCK 1: maxQuestionScore = 4 (5-point Likert, scores 0-4)
+  - ✅ BLOCK 2: factorNames через `ValuesPrioritiesData.getFactorNames()`
+  - ✅ BLOCK 3: interpretations через `ValuesPrioritiesData.getFactorInterpretation()`
+
+- **lib/services/summary_service.dart:**
+  - ✅ Добавлены weights в оба `allWeights` map (строки ~156 и ~560)
+
+- **lib/screens/summary_screen.dart:**
+  - ✅ Добавлены 2 switch cases для получения question/answer текстов
+
+- **lib/config/summary_config.dart:**
+  - ✅ Добавлены weights в `_weights` map (критично для "Affected Scales")
+
+- **lib/services/profile_service.dart:**
+  - ✅ Добавлен `'values_priorities_v1'` в `_supportedTests` set
+  - ✅ Добавлен case в `determineProfileId()`
+  - ✅ Добавлен case в `getProfile()`
+  - ✅ Добавлена иконка: `Icons.compass_calibration_outlined`
+
+#### Fixed
+- **Error #14:** Исправлена ошибка использования `testResult.testId` вместо `test.id` в test_service.dart:436
+  - 🐛 **Проблема:** Compilation error "The getter 'testResult' isn't defined"
+  - ✅ **Решение:** Заменено на `test.id` согласно ADDING_TEST_ERRORS.md
+
+#### Documentation
+- **CLAUDE.md v3.24.0:**
+  - Обновлён счётчик тестов: 26 (23 std + 2 special + 1 profile)
+  - Обновлена статистика: ~56,600 lines (было ~54,000)
+  - Добавлена запись в Revision History
+
+#### Metrics
+- 📦 **Размер кодовой базы:** 54,000 → 56,600 lines (+4.8%)
+- 🧪 **Всего тестов:** 25 → 26
+- 📊 **Профили:** 22 теста поддерживают 7-секционные профили
+- 🎯 **Биполярные шкалы:** Все 4 шкалы (E/I, S/N, T/F, J/P) теперь учитывают Values test
+
+---
+
 ## [3.7.0] - 2025-01-09
 
 ### 🆕 НОВЫЙ ТЕСТ: Burnout Diagnostic - Диагностика профессионального выгорания

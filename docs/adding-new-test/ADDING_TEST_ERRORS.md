@@ -1,7 +1,9 @@
-# 🔴 ADDING TEST - 15 типичных ошибок и их решения
+# 🔴 ADDING TEST - 17 типичных ошибок и их решения
 
-> **Эти ошибки были обнаружены при добавлении реальных тестов (DISC, Burnout, Digital Detox, Holland Code, Love Languages, Wellbeing Happiness Inventory)**
+> **Эти ошибки были обнаружены при добавлении реальных тестов (DISC, Burnout, Digital Detox, Holland Code, Love Languages, Wellbeing Happiness Inventory, Motivational Strategies, Conflict Communication Style)**
 > Используйте этот документ для быстрой диагностики проблем
+>
+> **🆕 Ошибка #17:** Неправильная структура weights для multi-choice тестов (Conflict Communication Style)
 
 ---
 
@@ -488,24 +490,414 @@ final answers = [
 
 ---
 
+## Ошибка #15: Дубликаты ключей в bipolarWeights ⭐ NEW
+
+### 🔍 Симптомы
+- **Ошибка компиляции:** `Two keys in a constant map literal can't be equal. Change or remove the duplicate key.`
+- Flutter analyze показывает: `equal_keys_in_const_map`
+- Один вопрос указан несколько раз в `bipolarWeights`
+
+### ❌ Неправильно
+```dart
+static const Map<String, Map<String, double>> bipolarWeights = {
+  // E/I секция
+  'motivational_strategies_v1:q2': {
+    'extraversion': 0.6, // Altruist - social
+  },
+
+  // T/F секция
+  'motivational_strategies_v1:q2': {  // ❌ ДУБЛИКАТ!
+    'feeling': 0.8, // Altruist - helping
+  },
+
+  // J/P секция
+  'motivational_strategies_v1:q7': {
+    'perceiving': 0.6, // Optimist - spontaneity
+  },
+
+  'motivational_strategies_v1:q7': {  // ❌ ДУБЛИКАТ!
+    'extraversion': 0.7, // Optimist - seeking experiences
+  },
+};
+```
+
+### ✅ Решение
+**Объедините все веса для одного вопроса в ОДНОЙ записи:**
+```dart
+static const Map<String, Map<String, double>> bipolarWeights = {
+  'motivational_strategies_v1:q2': {
+    'extraversion': 0.6, // Altruist - social (E/I)
+    'feeling': 0.8,      // Altruist - helping (T/F)
+  },
+
+  'motivational_strategies_v1:q7': {
+    'extraversion': 0.7, // Optimist - seeking experiences (E/I)
+    'perceiving': 0.6,   // Optimist - spontaneity (J/P)
+  },
+};
+```
+
+### 📍 Где искать проблему
+- Weights файл: `lib/config/summary/question_weights/your_test_weights.dart`
+- Секция `bipolarWeights`
+- Поиск дубликатов: `grep "'your_test:q" weights_file.dart | sort | uniq -d`
+
+### ⚠️ Важно
+- Один вопрос МОЖЕТ влиять на несколько биполярных измерений
+- Но все эти веса должны быть в ОДНОЙ записи Map
+- Каждый ключ (`test_id:question_id`) должен встречаться РОВНО ОДИН РАЗ
+
+### 💡 Как избежать
+1. При планировании весов создайте таблицу:
+   ```
+   Question | E/I | S/N | T/F | J/P
+   ---------|-----|-----|-----|----
+   q1       |     | S:7 |     | J:7
+   q2       | E:6 |     | F:8 |
+   q7       | E:7 |     |     | P:6
+   ```
+2. Переносите в код построчно (один вопрос = одна запись)
+
+### 🔗 См. также
+- Ошибка #16: Несбалансированные биполярные веса
+
+---
+
+## Ошибка #16: Несбалансированное покрытие биполярных шкал (T/F и J/P) ⭐ NEW
+
+### 🔍 Симптомы
+- Тест влияет на E/I и S/N, но **НЕ влияет** на T/F и J/P
+- Summary screen показывает 0% или неизменные значения для Thinking/Feeling и Judging/Perceiving
+- Пользователи жалуются: "тест не показывает мой тип личности полностью"
+
+### ❌ Неправильно
+```dart
+static const Map<String, Map<String, double>> bipolarWeights = {
+  // Только E/I и S/N (8 вопросов)
+  'test_v1:q2': {'extraversion': 0.6},
+  'test_v1:q7': {'extraversion': 0.7},
+  'test_v1:q23': {'introversion': 0.9},
+  'test_v1:q32': {'introversion': 1.0},
+
+  'test_v1:q1': {'sensing': 0.7},
+  'test_v1:q4': {'intuition': 0.8},
+  'test_v1:q22': {'intuition': 0.9},
+  'test_v1:q55': {'sensing': 0.8},
+
+  // ❌ T/F и J/P полностью отсутствуют!
+};
+```
+
+### ✅ Решение
+**Обеспечьте СБАЛАНСИРОВАННОЕ покрытие всех 4 измерений:**
+
+```dart
+static const Map<String, Map<String, double>> bipolarWeights = {
+  // E/I - 8 вопросов ✅
+  'test_v1:q2': {'extraversion': 0.6},
+  'test_v1:q7': {'extraversion': 0.7},
+  'test_v1:q8': {'extraversion': 0.7},
+  'test_v1:q26': {'extraversion': 0.8},
+  'test_v1:q47': {'extraversion': 0.5},
+  'test_v1:q23': {'introversion': 0.9},
+  'test_v1:q32': {'introversion': 1.0},
+  'test_v1:q77': {'introversion': 0.9},
+
+  // S/N - 7 вопросов ✅
+  'test_v1:q1': {'sensing': 0.7},
+  'test_v1:q6': {'sensing': 0.6},
+  'test_v1:q55': {'sensing': 0.8},
+  'test_v1:q4': {'intuition': 0.8},
+  'test_v1:q22': {'intuition': 0.9},
+  'test_v1:q31': {'intuition': 0.7},
+  'test_v1:q52': {'intuition': 0.8},
+
+  // T/F - минимум 10-12 вопросов ✅ NEW!
+  'test_v1:q5': {'thinking': 0.8},   // Analyst - need understanding
+  'test_v1:q14': {'thinking': 0.7},  // Analyst - observe and analyze
+  'test_v1:q41': {'thinking': 0.6},  // Analyst - collect information
+  'test_v1:q59': {'thinking': 1.0},  // Analyst - not emotional
+  'test_v1:q68': {'thinking': 0.9},  // Analyst - detach emotions
+  'test_v1:q44': {'thinking': 0.6},  // Leader - speak directly
+
+  'test_v1:q10': {'feeling': 0.7},   // Idealist - upset by unethical
+  'test_v1:q11': {'feeling': 0.8},   // Altruist - forget own needs
+  'test_v1:q13': {'feeling': 0.6},   // Creator - deeply experience emotions
+  'test_v1:q20': {'feeling': 0.7},   // Altruist - hard to ask for help
+  'test_v1:q29': {'feeling': 0.8},   // Altruist - feel valuable when needed
+  'test_v1:q35': {'feeling': 0.7},   // Leader - defend weak
+  'test_v1:q38': {'feeling': 0.9},   // Altruist - sense emotions
+
+  // J/P - минимум 15-20 вопросов ✅ NEW!
+  'test_v1:q1': {'judging': 0.7},    // Idealist - correctly (с sensing)
+  'test_v1:q15': {'judging': 0.8},   // Guardian - uncertainty anxiety
+  'test_v1:q24': {'judging': 0.7},   // Guardian - value reliability
+  'test_v1:q28': {'judging': 0.7},   // Idealist - criticize mistakes
+  'test_v1:q33': {'judging': 0.6},   // Guardian - doubt decisions
+  'test_v1:q37': {'judging': 0.8},   // Idealist - clear right/wrong
+  'test_v1:q42': {'judging': 0.7},   // Guardian - loyal to trust
+  'test_v1:q46': {'judging': 0.6},   // Idealist - always better way
+  'test_v1:q51': {'judging': 0.8},   // Guardian - assess risks
+  'test_v1:q60': {'judging': 0.9},   // Guardian - need order
+  'test_v1:q78': {'judging': 0.7},   // Guardian - follow rules
+  'test_v1:q87': {'judging': 0.9},   // Guardian - structured
+
+  'test_v1:q7': {'perceiving': 0.6}, // Optimist - spontaneity (с extraversion)
+  'test_v1:q16': {'perceiving': 0.8},// Optimist - difficulty boredom
+  'test_v1:q18': {'perceiving': 0.5},// Harmonizer - adapt easily
+  'test_v1:q25': {'perceiving': 0.9},// Optimist - keep options open
+  'test_v1:q27': {'perceiving': 0.6},// Harmonizer - easier to agree
+  'test_v1:q34': {'perceiving': 0.7},// Optimist - make tasks interesting
+  'test_v1:q36': {'perceiving': 0.6},// Harmonizer - postpone decisions
+  'test_v1:q43': {'perceiving': 0.7},// Optimist - impatient
+  'test_v1:q45': {'perceiving': 0.5},// Harmonizer - hard to say no
+  'test_v1:q52': {'perceiving': 0.6},// Optimist - possibilities (с intuition)
+  'test_v1:q61': {'perceiving': 0.8},// Optimist - live in moment
+  'test_v1:q70': {'perceiving': 0.7},// Optimist - spontaneous
+  'test_v1:q79': {'perceiving': 0.6},// Optimist - avoid commitments
+};
+```
+
+### 📊 Рекомендуемое минимальное покрытие
+
+| Измерение | Минимум вопросов | Оптимально | Пример из теста |
+|-----------|------------------|------------|-----------------|
+| **E/I** | 6-8 | 10-12 | 8 вопросов (5E + 3I) |
+| **S/N** | 6-8 | 10-12 | 7 вопросов (3S + 4N) |
+| **T/F** | 10-12 | 14-16 | 13 вопросов (7T + 6F) ⭐ |
+| **J/P** | 15-20 | 22-26 | 22 вопроса (11J + 11P) ⭐ |
+
+### ⚠️ Почему J/P требует больше вопросов?
+
+**J/P - самое сложное измерение** для определения, потому что:
+1. Проявляется в поведении, а не в предпочтениях
+2. Контекстно-зависимое (работа vs личная жизнь)
+3. Легко спутать с другими чертами (тревожность ≠ judging)
+4. Требует больше данных для точности
+
+### 📍 Где искать проблему
+- Weights файл: секция `bipolarWeights`
+- Подсчет: `grep -c "'thinking'" weights_file.dart`
+- Проверка баланса:
+  ```bash
+  echo "E/I: $(grep -E "'(extraversion|introversion)'" file.dart | wc -l)"
+  echo "S/N: $(grep -E "'(sensing|intuition)'" file.dart | wc -l)"
+  echo "T/F: $(grep -E "'(thinking|feeling)'" file.dart | wc -l)"
+  echo "J/P: $(grep -E "'(judging|perceiving)'" file.dart | wc -l)"
+  ```
+
+### 💡 Какие вопросы выбирать для T/F и J/P?
+
+**Thinking vs Feeling:**
+- ✅ Эмоциональные vs логические решения
+- ✅ Эмпатия и забота vs анализ и объективность
+- ✅ Гармония отношений vs честность и правда
+- ✅ Чувствительность к критике vs рациональное восприятие
+
+**Judging vs Perceiving:**
+- ✅ Планирование vs спонтанность
+- ✅ Порядок и структура vs гибкость и адаптация
+- ✅ Завершенность vs открытые варианты
+- ✅ Дедлайны и обязательства vs свобода и исследование
+- ✅ Определенность vs неопределенность
+
+### 🔗 См. также
+- Ошибка #15: Дубликаты ключей в bipolarWeights
+- ПРАВИЛО #9: Биполярные веса для типа личности (ADDING_TEST_RULES.md)
+
+---
+
 ## 📝 Чеклист отладки
 
 При возникновении проблемы проверьте по порядку:
 
+### Фаза 1: Компиляция
 1. □ `flutter analyze` - нет ошибок компиляции?
-2. □ `bash tools/validate_test.sh` - все CHECK пройдены?
-3. □ Scores начинаются с 0 (не с 1)?
-4. □ Проценты не превышают 100%?
-5. □ maxQuestionScore правильный?
-6. □ Все шкалы существуют?
-7. □ Биполярные полюса без отрицательных весов?
-8. □ NaN protection в getFactorInterpretation?
-9. □ Правильное имя класса (без "Test")?
-10. □ Все 7 точек интеграции выполнены?
-11. □ Weights добавлены в summary_config._weights?
-12. □ В test_service.dart используется `test.id` (не `testResult.testId`)?
-13. □ Full restart (не hot reload)?
+2. □ Нет дубликатов ключей в `bipolarWeights`? (Ошибка #15)
+3. □ `bash tools/validate_test.sh` - все CHECK пройдены?
+
+### Фаза 2: Данные теста
+4. □ Scores начинаются с 0 (не с 1)? (Ошибка #3)
+5. □ Проценты не превышают 100%? (Ошибка #14)
+6. □ maxQuestionScore правильный? (ПРАВИЛО #8)
+7. □ NaN protection в getFactorInterpretation? (Ошибка #2)
+
+### Фаза 3: Веса (Weights)
+8. □ Все шкалы существуют в hierarchical_scales.dart?
+9. □ Биполярные полюса без отрицательных весов? (ПРАВИЛО #4)
+10. □ Weights добавлены в summary_config._weights?
+11. □ **Биполярные веса сбалансированы?** ⭐ NEW
+    - E/I: минимум 6-8 вопросов
+    - S/N: минимум 6-8 вопросов
+    - **T/F: минимум 10-12 вопросов** (Ошибка #16)
+    - **J/P: минимум 15-20 вопросов** (Ошибка #16)
+
+### Фаза 4: Интеграция
+12. □ Правильное имя класса (без "Test")? (Ошибка #11)
+13. □ Все 7 точек интеграции выполнены?
+14. □ В test_service.dart используется `test.id` (не `testResult.testId`)? (Ошибка #14)
+15. □ ProfileService обновлен (если есть профили)?
+
+### Фаза 5: Запуск
+16. □ Full restart (не hot reload)?
+17. □ Пройден полный тест (все вопросы отвечены)?
+
+---
+
+### 🔍 Быстрая проверка баланса биполярных весов
+
+```bash
+# В папке с проектом:
+cd lib/config/summary/question_weights/
+
+# Подсчет весов для вашего теста:
+TEST_ID="your_test_v1"  # замените на ваш test_id
+
+echo "=== Баланс биполярных весов для $TEST_ID ==="
+echo "E/I: $(grep -E "'(extraversion|introversion)'" ${TEST_ID//_v/_}_weights.dart | grep "$TEST_ID" | wc -l)"
+echo "S/N: $(grep -E "'(sensing|intuition)'" ${TEST_ID//_v/_}_weights.dart | grep "$TEST_ID" | wc -l)"
+echo "T/F: $(grep -E "'(thinking|feeling)'" ${TEST_ID//_v/_}_weights.dart | grep "$TEST_ID" | wc -l)"
+echo "J/P: $(grep -E "'(judging|perceiving)'" ${TEST_ID//_v/_}_weights.dart | grep "$TEST_ID" | wc -l)"
+echo ""
+echo "Минимальные требования: E/I(6-8), S/N(6-8), T/F(10-12), J/P(15-20)"
+```
+
+---
+
+## Ошибка #17: Неправильная структура weights для multi-choice тестов 🆕
+
+### 🔍 Симптомы
+- ✅ Тест компилируется и запускается
+- ❌ НО: Нет влияния на шкалы summary screen
+- ❌ НО: Профиль не отображается в результатах (даже если ProfileService настроен)
+- ❌ НО: Нет описаний факторов в результатах теста
+
+### ❓ Что это такое?
+**Multi-choice тесты** — это ситуационные тесты, где каждый вопрос имеет несколько вариантов ответа, и **каждый вариант влияет на РАЗНЫЙ фактор** (не на один общий).
+
+**Примеры:**
+- Conflict Communication Style: 5 вариантов → 5 стилей (избегание, приспособление, соперничество, компромисс, сотрудничество)
+- Digital Career Fit: 6 вариантов → 6 карьерных направлений
+
+### ❌ Неправильно (weights per question)
+```dart
+// ОШИБКА: Веса привязаны к ВОПРОСАМ, но каждый вариант ответа влияет на разные шкалы!
+class ConflictCommunicationStyleWeights {
+  static const Map<String, QuestionWeight> weights = {
+    'conflict_communication_style_v1:q1': QuestionWeight(
+      testId: 'conflict_communication_style_v1',
+      questionId: 'q1',
+      axisWeights: {
+        'cooperativeness': 1.0,  // ← Но какой вариант выбран?!
+        'assertiveness': 0.9,
+      },
+    ),
+    'conflict_communication_style_v1:q2': ...
+  };
+}
+```
+
+**Почему не работает:**
+- Веса ищутся по ключу `testId:questionId` (например, `conflict_communication_style_v1:q1`)
+- Но в multi-choice тестах каждый **ответ** (a/b/c/d/e) влияет на **разные факторы**!
+- Результат: `summary_service` не находит веса, шкалы не обновляются
+
+### ✅ Решение (weights per STYLE/FACTOR)
+```dart
+// ПРАВИЛЬНО: Веса привязаны к СТИЛЯМ, не к вопросам
+class ConflictCommunicationStyleWeights {
+  static const Map<String, QuestionWeight> weights = {
+    // Каждый стиль имеет свои веса
+    'conflict_communication_style_v1:avoiding': QuestionWeight(
+      testId: 'conflict_communication_style_v1',
+      questionId: 'avoiding',  // ← Используем название стиля как questionId
+      axisWeights: {
+        'conflict_avoidance': 1.0,
+        'passivity': 0.9,
+        'assertiveness': -0.8,
+      },
+    ),
+    'conflict_communication_style_v1:accommodating': QuestionWeight(...),
+    'conflict_communication_style_v1:competing': QuestionWeight(...),
+    'conflict_communication_style_v1:compromising': QuestionWeight(...),
+    'conflict_communication_style_v1:collaborating': QuestionWeight(...),
+  };
+}
+```
+
+**Почему работает:**
+- У нас только 5 entries вместо 45
+- Каждый стиль применяется независимо от того, какой вопрос его вызвал
+- `summary_service` находит веса по ключу `testId:styleName`
+
+### 📝 Дополнительно: Исправить summary_service.dart
+
+Добавьте специальную логику для multi-choice тестов:
+
+```dart
+// В summary_service.dart, метод _calculateUnipolarScores
+testResult.userAnswers!.forEach((questionId, answerScore) {
+  String weightKey;
+
+  // Special handling for multi-choice tests
+  if (testId == 'conflict_communication_style_v1') {
+    // Map answer score to factor using factorOrder
+    final factorOrder = ['avoiding', 'accommodating', 'competing', 'compromising', 'collaborating'];
+    if (answerScore >= 0 && answerScore < factorOrder.length) {
+      final selectedFactor = factorOrder[answerScore];
+      weightKey = '$testId:$selectedFactor';  // ← Ключ по фактору!
+    } else {
+      return; // Invalid score
+    }
+  } else {
+    weightKey = '$testId:$questionId';  // ← Обычные тесты
+  }
+
+  final questionWeight = allWeights[weightKey];
+  // ... rest of the logic
+});
+```
+
+### 🔧 Как исправить существующий тест
+
+**ШАГ 1:** Удалите старые веса per-question (45+ entries)
+
+**ШАГ 2:** Создайте новые веса per-style/factor (5-6 entries)
+
+**ШАГ 3:** Добавьте специальную логику в `summary_service.dart` (см. выше)
+
+**ШАГ 4:** Убедитесь, что `factorOrder` в data-файле совпадает с порядком в weights
+
+```dart
+// В data-файле:
+static const List<String> factorOrder = [
+  'avoiding',      // score 0
+  'accommodating', // score 1
+  'competing',     // score 2
+  'compromising',  // score 3
+  'collaborating', // score 4
+];
+```
+
+### 📍 Где искать проблему
+- **Weights файл:** `lib/config/summary/question_weights/your_test_weights.dart` (должен быть ~200 строк, не 1000+)
+- **Summary service:** `lib/services/summary_service.dart` (добавьте multi-choice логику)
+- **Data файл:** `lib/data/your_test_data.dart` (проверьте factorOrder)
+
+### ✅ Проверка
+После исправления:
+1. ✅ Тест компилируется
+2. ✅ Влияет на шкалы summary screen
+3. ✅ Профиль отображается в результатах
+4. ✅ Описания факторов есть в результатах
+
+### 📚 Связанные документы
+- Ошибка #14: Использование test.id вместо testResult.testId
+- `ADDING_SPECIAL_TESTS.md` - руководство по специальным тестам
+- `ADDING_TEST_EXAMPLES.md` - примеры multi-choice тестов
 
 ---
 
 > **💡 Совет:** Большинство ошибок ловится автоматической проверкой `validate_test.sh`!
+>
+> **⚠️ Новое:** Для multi-choice тестов используйте style-based weights, не question-based!
