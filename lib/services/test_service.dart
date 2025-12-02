@@ -32,6 +32,9 @@ import '../data/imposter_syndrome_data.dart';
 import '../data/sleep_recovery_data.dart';
 import '../data/procrastination_productivity_data.dart';
 import '../data/boundaries_people_pleasing_data.dart';
+import '../data/fomo_social_comparison_data.dart';
+import '../data/creative_type_data.dart';
+import '../data/friendship_red_flags_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -155,7 +158,13 @@ class TestService {
                                                                             ? 4  // Procrastination Productivity uses 0-4 scoring (5-point frequency scale)
                                                                             : test.id == 'boundaries_people_pleasing'
                                                                                 ? 4  // Boundaries People-Pleasing uses 0-4 scoring (5-point frequency scale)
-                                                                                : 5;
+                                                                                : test.id == 'fomo_social_comparison_v1'
+                                                                                    ? 4  // FOMO Social Comparison uses 0-4 scoring (5-point frequency scale)
+                                                                                    : test.id == 'creative_type_v1'
+                                                                                        ? 4  // Creative Type uses 0-4 scoring for frequency questions (questions 1-40)
+                                                                                        : test.id == 'friendship_red_flags_v1'
+                                                                                            ? 4  // Friendship Red Flags uses 0-4 scoring (5-point frequency scale)
+                                                                                            : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -181,9 +190,21 @@ class TestService {
 
         // Add score to corresponding factor
         if (question.factorId != null) {
-          // Special handling for multi-choice tests (Digital Career Fit, Conflict Communication Style)
-          // Score (0-4 or 0-5) indicates which factor was chosen, not the intensity
-          if ((test.id == 'digital_career_fit_v1' || test.id == 'conflict_communication_style_v1') && question.factorId == 'multi_choice') {
+          // Special handling for Creative Type Test multiple choice questions (q41-48)
+          if (test.id == 'creative_type_v1' && question.factorId == 'multiple') {
+            // Use answer-specific weights from getAnswerWeights()
+            final answerWeights = CreativeTypeData.getAnswerWeights();
+            final weights = answerWeights[selectedAnswerId];
+            if (weights != null) {
+              // Add weights to each affected factor
+              weights.forEach((factorId, weight) {
+                factorScores[factorId] = (factorScores[factorId] ?? 0) + weight.toInt();
+                // Note: maxScore is handled separately for creative_type
+              });
+            }
+          }
+          // Special handling for other multi-choice tests (Digital Career Fit, Conflict Communication Style)
+          else if ((test.id == 'digital_career_fit_v1' || test.id == 'conflict_communication_style_v1') && question.factorId == 'multi_choice') {
             // Map score to factor using factorOrder
             final factorOrder = test.id == 'digital_career_fit_v1'
                 ? digital_career.DigitalCareerFitData.factorOrder
@@ -262,9 +283,60 @@ class TestService {
       }
     }
 
+    // For Creative Type Test: handle frequency questions (q1-40) with multiple axisWeights
+    // These questions have axisWeights defined directly in QuestionModel
+    if (test.id == 'creative_type_v1') {
+      appLogger.d('Processing Creative Type frequency questions with axisWeights');
+      for (final question in test.questions) {
+        // Skip multiple choice questions (q41-48), they are handled separately below
+        if (question.factorId == 'multiple') continue;
+
+        final selectedAnswerId = answers[question.id];
+        if (selectedAnswerId == null) continue;
+
+        final selectedAnswer = question.answers.firstWhere(
+          (answer) => answer.id == selectedAnswerId,
+          orElse: () => question.answers.first,
+        );
+
+        int answerScore = selectedAnswer.score;
+
+        // If question has axisWeights, apply them to factor scores
+        if (question.axisWeights != null && question.axisWeights!.isNotEmpty) {
+          question.axisWeights!.forEach((factorId, weight) {
+            // Add weighted score to factor
+            factorScores[factorId] = (factorScores[factorId] ?? 0) + (answerScore * weight).toInt();
+            // Max score per question contribution
+            factorMaxScores[factorId] = (factorMaxScores[factorId] ?? 0) + (maxQuestionScore * weight).toInt();
+          });
+        }
+      }
+
+      // Handle multiple choice questions (q41-48) with getAnswerWeights()
+      // These already processed in main loop above, but we need maxScores
+      final answerWeights = CreativeTypeData.getAnswerWeights();
+      // Calculate max possible scores for each factor based on answer weights
+      for (final question in test.questions) {
+        if (question.factorId == 'multiple') {
+          // Find the maximum possible weight for each factor from this question's answers
+          for (final answer in question.answers) {
+            final weights = answerWeights[answer.id];
+            if (weights != null) {
+              weights.forEach((factorId, weight) {
+                // Track maximum possible contribution from this answer choice
+                final currentMax = factorMaxScores[factorId] ?? 0;
+                // We take the max weight available for this factor across all answers
+                factorMaxScores[factorId] = math.max(currentMax, (factorMaxScores[factorId] ?? 0) + weight.toInt());
+              });
+            }
+          }
+        }
+      }
+    }
+
     // For multi-choice tests: apply weights for each individual question
     // (not aggregated factor scores, to show real question texts)
-    if ((test.id == 'digital_career_fit_v1' || test.id == 'conflict_communication_style_v1')) {
+    else if ((test.id == 'digital_career_fit_v1' || test.id == 'conflict_communication_style_v1')) {
       appLogger.d('Processing multi-choice test questions for scales');
 
       // Get factor order to map answers to factors
@@ -421,6 +493,15 @@ class TestService {
       factorInterpretations = {}; // Will use percentage-based interpretation
     } else if (test.id == 'procrastination_productivity_style_v1') {
       factorNames = ProcrastinationProductivityData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'fomo_social_comparison_v1') {
+      factorNames = FomoSocialComparisonData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'creative_type_v1') {
+      factorNames = CreativeTypeData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'friendship_red_flags_v1') {
+      factorNames = FriendshipRedFlagsData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
     } else if (test.id == 'boundaries_people_pleasing') {
       factorNames = BoundariesPeoplePleasingData.getFactorNames();
@@ -579,6 +660,18 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             ProcrastinationProductivityData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'fomo_social_comparison_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            FomoSocialComparisonData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'creative_type_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            CreativeTypeData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'friendship_red_flags_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            FriendshipRedFlagsData.getFactorInterpretation(factorId, percentage);
       } else if (test.id == 'boundaries_people_pleasing') {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =

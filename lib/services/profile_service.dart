@@ -33,6 +33,9 @@ import '../data/imposter_syndrome_data.dart';
 import '../data/sleep_recovery_data.dart';
 import '../data/procrastination_productivity_data.dart';
 import '../data/boundaries_people_pleasing_data.dart';
+import '../data/fomo_social_comparison_data.dart';
+import '../data/creative_type_data.dart';
+import '../data/friendship_red_flags_data.dart';
 
 /// Сервис для работы с профилями результатов тестов
 ///
@@ -77,6 +80,9 @@ class ProfileService {
     'sleep_recovery_v1',
     'procrastination_productivity_style_v1',
     'boundaries_people_pleasing',
+    'fomo_social_comparison_v1',
+    'creative_type_v1',
+    'friendship_red_flags_v1',
     // TODO: Добавить остальные тесты по мере реализации профилей
     // 'cognitive_ability_v1',
   };
@@ -168,6 +174,12 @@ class ProfileService {
         return ProcrastinationProductivityData.determineProfile(percentages);
       case 'boundaries_people_pleasing':
         return BoundariesPeoplePleasingData.determineProfile(percentages);
+      case 'fomo_social_comparison_v1':
+        return FomoSocialComparisonData.determineProfile(percentages);
+      case 'creative_type_v1':
+        return CreativeTypeData.determineProfile(percentages);
+      case 'friendship_red_flags_v1':
+        return FriendshipRedFlagsData.determineProfile(percentages);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
@@ -237,6 +249,12 @@ class ProfileService {
         return ProcrastinationProductivityData.getProfile(profileId);
       case 'boundaries_people_pleasing':
         return BoundariesPeoplePleasingData.getProfile(profileId);
+      case 'fomo_social_comparison_v1':
+        return FomoSocialComparisonData.getProfile(profileId);
+      case 'creative_type_v1':
+        return CreativeTypeData.getProfile(profileId);
+      case 'friendship_red_flags_v1':
+        return FriendshipRedFlagsData.getProfile(profileId);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
@@ -300,6 +318,8 @@ class ProfileService {
         return Icons.timer_outlined;
       case 'boundaries_people_pleasing':
         return Icons.shield_outlined;
+      case 'fomo_social_comparison_v1':
+        return Icons.phone_android_outlined;
       default:
         return Icons.analytics_outlined;
     }

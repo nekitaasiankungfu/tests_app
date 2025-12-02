@@ -34,6 +34,10 @@ import 'summary/question_weights/imposter_syndrome_weights.dart';
 import 'summary/question_weights/sleep_recovery_weights.dart';
 import 'summary/question_weights/procrastination_productivity_weights.dart';
 import 'summary/question_weights/boundaries_people_pleasing_weights.dart';
+import 'summary/question_weights/fomo_social_comparison_weights.dart';
+import 'summary/question_weights/creative_type_weights.dart';
+import 'summary/question_weights/friendship_red_flags_weights.dart';
+import 'summary/question_weights/visual_micro_tests_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2347,6 +2351,10 @@ class QuestionWeightsConfig {
     ...SleepRecoveryWeights.weights,
     ...procrastinationProductivityWeights,
     ...boundariesPeoplePleasingWeights,
+    ...FomoSocialComparisonWeights.weights,
+    ...CreativeTypeWeights.weights,
+    ...FriendshipRedFlagsWeights.weights,
+    ...VisualMicroTestsWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

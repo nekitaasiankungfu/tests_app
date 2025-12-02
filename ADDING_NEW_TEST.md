@@ -13,7 +13,7 @@
 
 Главный индексный файл, который содержит ссылки на все модули:
 
-1. **[ADDING_TEST_CHECKLIST.md](./docs/adding-new-test/ADDING_TEST_CHECKLIST.md)** - ⭐ 65-пунктовый чеклист (НАЧНИТЕ ЗДЕСЬ!)
+1. **[ADDING_TEST_CHECKLIST.md](./docs/adding-new-test/ADDING_TEST_CHECKLIST.md)** - ⭐ 78-пунктовый чеклист v3.5.0 (НАЧНИТЕ ЗДЕСЬ!)
 2. **[ADDING_TEST_RULES.md](./docs/adding-new-test/ADDING_TEST_RULES.md)** - ⚠️ 8 критических правил (ОБЯЗАТЕЛЬНО К ПРОЧТЕНИЮ)
 3. **[ADDING_TEST_ERRORS.md](./docs/adding-new-test/ADDING_TEST_ERRORS.md)** - ✅ 12 типичных ошибок и их решения
 4. **[ADDING_TEST_EXAMPLES.md](./docs/adding-new-test/ADDING_TEST_EXAMPLES.md)** - ✅ Готовые примеры кода для копирования

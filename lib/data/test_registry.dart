@@ -34,6 +34,10 @@ import 'tests/imposter_syndrome_test.dart';
 import 'tests/sleep_recovery_test.dart';
 import 'tests/procrastination_productivity_test.dart';
 import 'tests/boundaries_people_pleasing_test.dart';
+import 'tests/fomo_social_comparison_test.dart';
+import 'tests/creative_type_test.dart';
+import 'tests/friendship_red_flags_test.dart';
+import 'tests/visual_micro_tests_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -72,6 +76,7 @@ class TestRegistry {
     RomanticPotentialTest(), // Romantic beliefs and potential assessment
     RelationshipCompatibilityTest(), // Relationship compatibility assessment
     FriendshipPsychologyTest(), // Friendship style and depth assessment
+    FriendshipRedFlagsTest(), // Friendship red flags and toxic patterns assessment
     ConflictCommunicationStyleTest(), // Conflict resolution styles assessment (Thomas-Kilmann)
 
     // Temperament/Personality
@@ -92,9 +97,16 @@ class TestRegistry {
     // Intelligence/Abilities
     EmotionalIntelligenceTest(), // Emotional intelligence (EQ) assessment
 
+    // Creativity
+    CreativeTypeTest(), // Creative type and style assessment
+
+    // Visual Insights
+    VisualMicroTestsTest(), // Special visual perception micro-tests package
+
     // Emotional/Wellbeing
     ColorPsychologyTest(), // Special color-based test
     DigitalDetoxTest(),
+    FomoSocialComparisonTest(), // FOMO and social comparison assessment
     BurnoutDiagnosticTest(),
     AnxietySymptomsInventoryTest(), // Anxiety assessment
     DepressionSymptomsInventoryTest(), // Depression assessment

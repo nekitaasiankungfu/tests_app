@@ -5,6 +5,7 @@ import '../providers/locale_provider.dart';
 import '../providers/user_preferences_provider.dart';
 import '../providers/category_provider.dart';
 import '../models/test_category.dart';
+import '../data/test_registry.dart';
 import '../utils/theme_utils.dart';
 import '../utils/app_logger.dart';
 import '../constants/color_constants.dart';
@@ -14,6 +15,7 @@ import 'results_screen.dart';
 import 'settings_screen.dart';
 import 'color_psychology_test_screen.dart';
 import 'career_compass_test_screen.dart';
+import 'visual_micro_tests_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -186,14 +188,14 @@ class HomeScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final categoryProvider = Provider.of<CategoryProvider>(context);
 
-    // Group tests by category
+    // Group tests by category - use TestRegistry to get ALL tests (including special)
     final testsByCategory = <String, List<dynamic>>{};
-    for (final test in testProvider.tests) {
-      final categoryId = test.categoryId;
+    for (final stub in TestRegistry.allTests) {
+      final categoryId = stub.category;
       if (!testsByCategory.containsKey(categoryId)) {
         testsByCategory[categoryId] = [];
       }
-      testsByCategory[categoryId]!.add(test);
+      testsByCategory[categoryId]!.add(stub);
     }
 
     // Get categories in order
@@ -364,6 +366,14 @@ class HomeScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const CareerCompassTestScreen(),
+                ),
+              );
+            } else if (test.id == 'visual_micro_tests_v1') {
+              // Специальный тест с визуальными микротестами
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const VisualMicroTestsScreen(),
                 ),
               );
             } else if (test.disclaimer != null) {

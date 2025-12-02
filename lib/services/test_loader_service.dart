@@ -38,6 +38,9 @@ import '../data/imposter_syndrome_data.dart';
 import '../data/sleep_recovery_data.dart';
 import '../data/procrastination_productivity_data.dart';
 import '../data/boundaries_people_pleasing_data.dart';
+import '../data/fomo_social_comparison_data.dart';
+import '../data/creative_type_data.dart';
+import '../data/friendship_red_flags_data.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -69,6 +72,12 @@ class TestLoaderService {
       if (_cache.containsKey(stub.id)) {
         appLogger.d('Loading test ${stub.id} from cache');
         return _cache[stub.id]!;
+      }
+
+      // Special tests with custom screens don't use TestModel
+      if (stub.type == 'special') {
+        appLogger.i('Skipping TestModel load for special test ${stub.id} (uses custom screen)');
+        throw TestLoadException('Special test ${stub.id} uses custom screen, should not load TestModel');
       }
 
       // If assetPath is empty, use legacy Dart data directly
@@ -215,6 +224,15 @@ class TestLoaderService {
         break;
       case 'procrastination_productivity_style_v1':
         test = ProcrastinationProductivityData.getProcrastinationProductivityTest();
+        break;
+      case 'fomo_social_comparison_v1':
+        test = FomoSocialComparisonData.getFomoSocialComparisonTest();
+        break;
+      case 'creative_type_v1':
+        test = CreativeTypeData.getCreativeTypeTest();
+        break;
+      case 'friendship_red_flags_v1':
+        test = FriendshipRedFlagsData.getFriendshipRedFlagsTest();
         break;
       case 'boundaries_people_pleasing':
         test = BoundariesPeoplePleasingData.getBoundariesPeoplePleasingTest();

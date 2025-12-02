@@ -1,0 +1,1611 @@
+{
+  "test_info": {
+    "title": {
+      "ru": "Тест типа креативности",
+      "en": "Creative Type Test"
+    },
+    "description": {
+      "ru": "Этот тест помогает понять, как именно вы создаёте — через какие каналы восприятия, процессы и подходы проявляется ваша креативность. В отличие от общих тестов на творческий потенциал, мы фокусируемся на вашем уникальном креативном языке: кто-то мыслит образами и визуальными метафорами, кто-то создаёт через слова и концепции, а кто-то находит вдохновение в структуре и системном мышлении.\n\nПонимание своего типа креативности даёт вам суперсилу: вы перестаёте сравнивать себя с другими и начинаете работать в своём естественном режиме. Это не про «хороший» или «плохой» креатив — это про то, как найти свой поток, понять, что вас блокирует и где искать вдохновение.\n\nТест также выявляет ваши основные блокаторы креативности и главные источники вдохновения — эта информация поможет создать персональную экосистему для творчества.",
+      "en": "This test helps you understand exactly how you create — through which channels of perception, processes, and approaches your creativity manifests. Unlike general creative potential tests, we focus on your unique creative language: some people think in images and visual metaphors, others create through words and concepts, while others find inspiration in structure and systems thinking.\n\nUnderstanding your creative type gives you a superpower: you stop comparing yourself to others and start working in your natural mode. This isn't about 'good' or 'bad' creativity — it's about finding your flow, understanding what blocks you, and knowing where to look for inspiration.\n\nThe test also identifies your main creativity blockers and primary sources of inspiration — this information will help you create a personalized ecosystem for creativity."
+    },
+    "question_count": 48,
+    "estimated_time_minutes": 8,
+    "target_audience": {
+      "ru": "Подростки и молодые взрослые (14-30 лет), интересующиеся творчеством: блогеры, дизайнеры, музыканты, писатели, создатели контента, а также все, кто хочет понять свой креативный процесс",
+      "en": "Teenagers and young adults (14-30 years old) interested in creativity: bloggers, designers, musicians, writers, content creators, and anyone who wants to understand their creative process"
+    },
+    "theoretical_basis": {
+      "ru": "Тест основан на современных когнитивных теориях креативности (Guilford, Torrance), теории множественного интеллекта Гарднера, концепции flow-состояния Чиксентмихайи и исследованиях творческого процесса в цифровую эпоху. Включает элементы нейропсихологии креативности и социокультурного подхода к творчеству.",
+      "en": "The test is based on modern cognitive theories of creativity (Guilford, Torrance), Gardner's theory of multiple intelligences, Csikszentmihalyi's flow state concept, and research on the creative process in the digital age. Includes elements of neuropsychology of creativity and sociocultural approach to creative work."
+    }
+  },
+  "scales": [
+    {
+      "id": "visual_creator",
+      "name": {
+        "ru": "Визуальный креатор",
+        "en": "Visual Creator"
+      },
+      "description": {
+        "ru": "Мыслит образами, цветами, композицией. Создаёт через визуальные метафоры и эстетику.",
+        "en": "Thinks in images, colors, composition. Creates through visual metaphors and aesthetics."
+      }
+    },
+    {
+      "id": "verbal_creator",
+      "name": {
+        "ru": "Вербальный креатор",
+        "en": "Verbal Creator"
+      },
+      "description": {
+        "ru": "Играет словами, концепциями, идеями. Сторителлинг и нарративы — его стихия.",
+        "en": "Plays with words, concepts, ideas. Storytelling and narratives are their element."
+      }
+    },
+    {
+      "id": "systematic_creator",
+      "name": {
+        "ru": "Системный креатор",
+        "en": "Systematic Creator"
+      },
+      "description": {
+        "ru": "Находит креативность в структуре, паттернах, логических связях. Создаёт системы и фреймворки.",
+        "en": "Finds creativity in structure, patterns, logical connections. Creates systems and frameworks."
+      }
+    },
+    {
+      "id": "emotional_creator",
+      "name": {
+        "ru": "Эмоциональный креатор",
+        "en": "Emotional Creator"
+      },
+      "description": {
+        "ru": "Творит через чувства, настроение, атмосферу. Передаёт эмоции и создаёт вайб.",
+        "en": "Creates through feelings, mood, atmosphere. Conveys emotions and creates vibes."
+      }
+    },
+    {
+      "id": "experimental_creator",
+      "name": {
+        "ru": "Экспериментальный креатор",
+        "en": "Experimental Creator"
+      },
+      "description": {
+        "ru": "Пробует всё подряд, миксует стили, ломает правила. Креативность через хаос и спонтанность.",
+        "en": "Tries everything, mixes styles, breaks rules. Creativity through chaos and spontaneity."
+      }
+    },
+    {
+      "id": "social_creator",
+      "name": {
+        "ru": "Социальный креатор",
+        "en": "Social Creator"
+      },
+      "description": {
+        "ru": "Черпает энергию из взаимодействия, коллаборации, диалога. Креативность рождается в обмене.",
+        "en": "Draws energy from interaction, collaboration, dialogue. Creativity is born in exchange."
+      }
+    },
+    {
+      "id": "blockers",
+      "name": {
+        "ru": "Блокаторы креативности",
+        "en": "Creativity Blockers"
+      },
+      "description": {
+        "ru": "Что мешает вашему креативному процессу: перфекционизм, страх оценки, прокрастинация.",
+        "en": "What hinders your creative process: perfectionism, fear of judgment, procrastination."
+      }
+    },
+    {
+      "id": "inspiration_sources",
+      "name": {
+        "ru": "Источники вдохновения",
+        "en": "Inspiration Sources"
+      },
+      "description": {
+        "ru": "Откуда вы черпаете креативную энергию: из медиа, людей, природы, случайностей.",
+        "en": "Where you draw creative energy from: media, people, nature, randomness."
+      }
+    }
+  ],
+  "response_format": {
+    "primary_type": "frequency",
+    "primary_options": {
+      "ru": ["Никогда", "Редко", "Иногда", "Часто", "Всегда"],
+      "en": ["Never", "Rarely", "Sometimes", "Often", "Always"]
+    },
+    "primary_scoring": [0, 1, 2, 3, 4],
+    "secondary_type": "multiple_choice",
+    "note": {
+      "ru": "Большинство вопросов используют шкалу частоты, несколько вопросов — множественный выбор ситуаций",
+      "en": "Most questions use frequency scale, several questions use multiple choice scenarios"
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": {
+        "ru": "Когда я объясняю идею, я рисую схемы, диаграммы или скетчи",
+        "en": "When explaining an idea, I draw diagrams, charts, or sketches"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "visual_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 2,
+      "text": {
+        "ru": "Я сохраняю скриншоты или картинки, которые вызывают какое-то чувство, даже если не знаю зачем",
+        "en": "I save screenshots or images that evoke some feeling, even if I don't know why"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "visual_creator": 1,
+        "emotional_creator": 0.5
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 3,
+      "text": {
+        "ru": "Мне легче запомнить лицо человека, чем его имя",
+        "en": "It's easier for me to remember a person's face than their name"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "visual_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 4,
+      "text": {
+        "ru": "Я замечаю шрифты на вывесках и упаковках",
+        "en": "I notice fonts on signs and packaging"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "visual_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 5,
+      "text": {
+        "ru": "Когда я в плохом настроении, я меняю обои на телефоне или переставляю вещи на столе",
+        "en": "When I'm in a bad mood, I change my phone wallpaper or rearrange things on my desk"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "visual_creator": 1,
+        "emotional_creator": 0.5
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 6,
+      "text": {
+        "ru": "Я долго подбираю слова, чтобы точно выразить мысль",
+        "en": "I take time to find the right words to express a thought precisely"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "verbal_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 7,
+      "text": {
+        "ru": "Мне нравится придумывать названия для плейлистов, папок или заметок",
+        "en": "I enjoy coming up with names for playlists, folders, or notes"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "verbal_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 8,
+      "text": {
+        "ru": "Я замечаю интересные обороты речи в разговорах или текстах",
+        "en": "I notice interesting turns of phrase in conversations or texts"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "verbal_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 9,
+      "text": {
+        "ru": "Когда мне нравится песня, я читаю её текст",
+        "en": "When I like a song, I read its lyrics"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "verbal_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 10,
+      "text": {
+        "ru": "Я придумываю истории или сценарии в голове, пока иду куда-то",
+        "en": "I make up stories or scenarios in my head while walking somewhere"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "verbal_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 11,
+      "text": {
+        "ru": "Я сортирую файлы, папки или закладки по категориям",
+        "en": "I sort files, folders, or bookmarks into categories"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "systematic_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 12,
+      "text": {
+        "ru": "Мне нравится находить паттерны или связи между разными вещами",
+        "en": "I enjoy finding patterns or connections between different things"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "systematic_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 13,
+      "text": {
+        "ru": "Перед началом проекта я составляю план или список шагов",
+        "en": "Before starting a project, I make a plan or list of steps"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "systematic_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 14,
+      "text": {
+        "ru": "Я люблю оптимизировать процессы — найти способ сделать что-то быстрее или эффективнее",
+        "en": "I love optimizing processes — finding ways to do things faster or more efficiently"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "systematic_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 15,
+      "text": {
+        "ru": "Мне легко объяснить сложную тему через аналогии или простые схемы",
+        "en": "I can easily explain complex topics through analogies or simple schemes"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "systematic_creator": 1,
+        "verbal_creator": 0.5
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 16,
+      "text": {
+        "ru": "Музыка сильно влияет на моё настроение и продуктивность",
+        "en": "Music strongly affects my mood and productivity"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "emotional_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 17,
+      "text": {
+        "ru": "Я создаю разные плейлисты под разное настроение или задачу",
+        "en": "I create different playlists for different moods or tasks"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "emotional_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 18,
+      "text": {
+        "ru": "Я чувствую энергию или атмосферу места, как только захожу",
+        "en": "I feel the energy or atmosphere of a place as soon as I enter"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "emotional_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 19,
+      "text": {
+        "ru": "Мне важно, чтобы моё окружение (комната, рабочее место) отражало моё текущее состояние",
+        "en": "It's important to me that my surroundings (room, workspace) reflect my current state"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "emotional_creator": 1,
+        "visual_creator": 0.5
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 20,
+      "text": {
+        "ru": "Я легко понимаю, что чувствует другой человек, даже если он не говорит об этом",
+        "en": "I easily understand what another person is feeling, even if they don't say it"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "emotional_creator": 1,
+        "social_creator": 0.5
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 21,
+      "text": {
+        "ru": "Я пробую новые функции приложений или настройки, не читая инструкцию",
+        "en": "I try new app features or settings without reading instructions"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "experimental_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 22,
+      "text": {
+        "ru": "Мне нравится комбинировать стили, жанры или форматы, которые обычно не смешивают",
+        "en": "I enjoy combining styles, genres, or formats that aren't usually mixed"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "experimental_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 23,
+      "text": {
+        "ru": "Я меняю планы на ходу, если появляется более интересная идея",
+        "en": "I change plans on the go if a more interesting idea appears"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "experimental_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 24,
+      "text": {
+        "ru": "Мне скучно делать что-то одним и тем же способом дважды",
+        "en": "I get bored doing something the same way twice"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "experimental_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 25,
+      "text": {
+        "ru": "Я использую вещи не по их прямому назначению (например, приложения или инструменты)",
+        "en": "I use things not for their intended purpose (like apps or tools)"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "experimental_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 26,
+      "text": {
+        "ru": "Обсуждение идеи с кем-то помогает мне её развить лучше, чем размышление в одиночку",
+        "en": "Discussing an idea with someone helps me develop it better than thinking alone"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "social_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 27,
+      "text": {
+        "ru": "Я сохраняю интересные посты или идеи, чтобы поделиться ими с определёнными людьми",
+        "en": "I save interesting posts or ideas to share them with specific people"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "social_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 28,
+      "text": {
+        "ru": "Мне нравится делать коллаборации или работать над чем-то вместе с другими",
+        "en": "I enjoy collaborations or working on something together with others"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "social_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 29,
+      "text": {
+        "ru": "Я часто получаю вдохновение от разговоров или наблюдения за людьми",
+        "en": "I often get inspiration from conversations or observing people"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "social_creator": 1,
+        "inspiration_sources": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 30,
+      "text": {
+        "ru": "Мне важна реакция других на то, что я создаю",
+        "en": "Other people's reactions to what I create are important to me"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "social_creator": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 31,
+      "text": {
+        "ru": "Я откладываю публикацию или показ своей работы, потому что она кажется недостаточно хорошей",
+        "en": "I postpone publishing or showing my work because it doesn't seem good enough"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "blockers": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 32,
+      "text": {
+        "ru": "Я начинаю много проектов, но мало доделываю до конца",
+        "en": "I start many projects but finish few"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "blockers": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 33,
+      "text": {
+        "ru": "Я сравниваю свою работу с работой других и это демотивирует",
+        "en": "I compare my work to others' and it demotivates me"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "blockers": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 34,
+      "text": {
+        "ru": "Страх критики останавливает меня от экспериментов",
+        "en": "Fear of criticism stops me from experimenting"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "blockers": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 35,
+      "text": {
+        "ru": "Я трачу больше времени на подготовку/планирование, чем на само создание",
+        "en": "I spend more time preparing/planning than actually creating"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "blockers": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 36,
+      "text": {
+        "ru": "Я получаю вдохновение от случайных вещей: подслушанного разговора, странной вывески, необычного сочетания предметов",
+        "en": "I get inspiration from random things: overheard conversations, weird signs, unusual combinations of objects"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "inspiration_sources": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 37,
+      "text": {
+        "ru": "Прогулки или движение помогают мне думать и придумывать идеи",
+        "en": "Walks or movement help me think and come up with ideas"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "inspiration_sources": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 38,
+      "text": {
+        "ru": "Я черпаю идеи из разного контента: фильмов, книг, подкастов, соцсетей",
+        "en": "I draw ideas from different content: movies, books, podcasts, social media"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "inspiration_sources": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 39,
+      "text": {
+        "ru": "Природа или тишина перезагружают моё креативное мышление",
+        "en": "Nature or silence reboots my creative thinking"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "inspiration_sources": 1
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 40,
+      "text": {
+        "ru": "Я замечаю детали в окружающем мире, которые другие пропускают",
+        "en": "I notice details in the world around me that others miss"
+      },
+      "response_type": "frequency",
+      "scales": {
+        "inspiration_sources": 1,
+        "visual_creator": 0.5
+      },
+      "reverse_scored": false
+    },
+    {
+      "id": 41,
+      "text": {
+        "ru": "Когда у меня творческий ступор, я:",
+        "en": "When I have creative block, I:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Скроллю Pinterest, Behance или сохранённые посты",
+            "en": "Scroll through Pinterest, Behance, or saved posts"
+          },
+          "scales": {
+            "visual_creator": 2,
+            "inspiration_sources": 1
+          }
+        },
+        {
+          "text": {
+            "ru": "Пишу поток мыслей в заметки или разговариваю с кем-то",
+            "en": "Write stream of consciousness in notes or talk to someone"
+          },
+          "scales": {
+            "verbal_creator": 2,
+            "social_creator": 1
+          }
+        },
+        {
+          "text": {
+            "ru": "Переключаюсь на другую задачу или проект",
+            "en": "Switch to another task or project"
+          },
+          "scales": {
+            "systematic_creator": 1,
+            "experimental_creator": 1
+          }
+        },
+        {
+          "text": {
+            "ru": "Слушаю музыку или иду гулять, чтобы перезагрузиться",
+            "en": "Listen to music or go for a walk to reboot"
+          },
+          "scales": {
+            "emotional_creator": 2,
+            "inspiration_sources": 1
+          }
+        },
+        {
+          "text": {
+            "ru": "Начинаю экспериментировать со случайными идеями, даже глупыми",
+            "en": "Start experimenting with random ideas, even silly ones"
+          },
+          "scales": {
+            "experimental_creator": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "text": {
+        "ru": "Идеальный проект для меня — это:",
+        "en": "The ideal project for me is:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Что-то визуально красивое: дизайн, арт, эстетика",
+            "en": "Something visually beautiful: design, art, aesthetics"
+          },
+          "scales": {
+            "visual_creator": 3
+          }
+        },
+        {
+          "text": {
+            "ru": "История, текст, концепция — что-то, что можно рассказать",
+            "en": "A story, text, concept — something that can be told"
+          },
+          "scales": {
+            "verbal_creator": 3
+          }
+        },
+        {
+          "text": {
+            "ru": "Система, которую можно улучшить или оптимизировать",
+            "en": "A system that can be improved or optimized"
+          },
+          "scales": {
+            "systematic_creator": 3
+          }
+        },
+        {
+          "text": {
+            "ru": "Что-то, что вызывает эмоции и создаёт настроение",
+            "en": "Something that evokes emotions and creates a mood"
+          },
+          "scales": {
+            "emotional_creator": 3
+          }
+        },
+        {
+          "text": {
+            "ru": "Эксперимент: что-то новое, что никто ещё не делал",
+            "en": "An experiment: something new that no one has done yet"
+          },
+          "scales": {
+            "experimental_creator": 3
+          }
+        },
+        {
+          "text": {
+            "ru": "Коллаборация с интересными людьми",
+            "en": "Collaboration with interesting people"
+          },
+          "scales": {
+            "social_creator": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "text": {
+        "ru": "Когда я смотрю на работу другого человека, первое, что я замечаю:",
+        "en": "When I look at someone else's work, the first thing I notice:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Цвета, композицию, визуальную гармонию",
+            "en": "Colors, composition, visual harmony"
+          },
+          "scales": {
+            "visual_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Идею, месседж, то, что автор хотел сказать",
+            "en": "The idea, message, what the author wanted to say"
+          },
+          "scales": {
+            "verbal_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Структуру, логику, как это сделано технически",
+            "en": "Structure, logic, how it's technically done"
+          },
+          "scales": {
+            "systematic_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Какие чувства это вызывает, общий вайб",
+            "en": "What feelings it evokes, overall vibe"
+          },
+          "scales": {
+            "emotional_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Насколько это оригинально и неожиданно",
+            "en": "How original and unexpected it is"
+          },
+          "scales": {
+            "experimental_creator": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "text": {
+        "ru": "Мой рабочий процесс обычно выглядит так:",
+        "en": "My work process usually looks like:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Сначала визуализирую в голове или делаю мудборд",
+            "en": "First visualize in my head or make a moodboard"
+          },
+          "scales": {
+            "visual_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Записываю мысли, делаю брейншторм на бумаге",
+            "en": "Write down thoughts, brainstorm on paper"
+          },
+          "scales": {
+            "verbal_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Разбиваю на этапы, делаю структуру или план",
+            "en": "Break into stages, make structure or plan"
+          },
+          "scales": {
+            "systematic_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Ловлю нужное настроение и работаю в потоке",
+            "en": "Catch the right mood and work in flow"
+          },
+          "scales": {
+            "emotional_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Просто начинаю что-то делать и смотрю, куда это приведёт",
+            "en": "Just start doing something and see where it leads"
+          },
+          "scales": {
+            "experimental_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Обсуждаю с кем-то, получаю фидбек по ходу",
+            "en": "Discuss with someone, get feedback along the way"
+          },
+          "scales": {
+            "social_creator": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "text": {
+        "ru": "Что даёт мне больше всего энергии для творчества:",
+        "en": "What gives me the most energy for creativity:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Красивые визуальные референсы и вдохновляющая эстетика",
+            "en": "Beautiful visual references and inspiring aesthetics"
+          },
+          "scales": {
+            "visual_creator": 2,
+            "inspiration_sources": 1
+          }
+        },
+        {
+          "text": {
+            "ru": "Интересные книги, подкасты, статьи — новые идеи",
+            "en": "Interesting books, podcasts, articles — new ideas"
+          },
+          "scales": {
+            "verbal_creator": 2,
+            "inspiration_sources": 1
+          }
+        },
+        {
+          "text": {
+            "ru": "Задача с чёткой целью, которую можно решить",
+            "en": "A task with a clear goal that can be solved"
+          },
+          "scales": {
+            "systematic_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Сильные эмоции или атмосферные места",
+            "en": "Strong emotions or atmospheric places"
+          },
+          "scales": {
+            "emotional_creator": 2,
+            "inspiration_sources": 1
+          }
+        },
+        {
+          "text": {
+            "ru": "Свобода экспериментировать без ограничений",
+            "en": "Freedom to experiment without limits"
+          },
+          "scales": {
+            "experimental_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Общение с креативными людьми",
+            "en": "Communication with creative people"
+          },
+          "scales": {
+            "social_creator": 2,
+            "inspiration_sources": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "text": {
+        "ru": "Если бы мне нужно было создать что-то прямо сейчас, я бы скорее всего:",
+        "en": "If I had to create something right now, I would most likely:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Открыл Figma/Photoshop или начал бы рисовать",
+            "en": "Open Figma/Photoshop or start drawing"
+          },
+          "scales": {
+            "visual_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Начал писать: текст, историю, концепцию",
+            "en": "Start writing: text, story, concept"
+          },
+          "scales": {
+            "verbal_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Набросал бы схему или план в Notion/Miro",
+            "en": "Sketch out a scheme or plan in Notion/Miro"
+          },
+          "scales": {
+            "systematic_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Включил музыку и начал что-то делать по настроению",
+            "en": "Turn on music and start doing something based on mood"
+          },
+          "scales": {
+            "emotional_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Попробовал бы что-то новое, чего раньше не делал",
+            "en": "Try something new I haven't done before"
+          },
+          "scales": {
+            "experimental_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Написал бы кому-то: 'Давай сделаем что-то вместе'",
+            "en": "Message someone: 'Let's make something together'"
+          },
+          "scales": {
+            "social_creator": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "text": {
+        "ru": "Для меня 'завершённая работа' — это когда:",
+        "en": "For me 'finished work' is when:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Визуально всё гармонично и красиво",
+            "en": "Everything is visually harmonious and beautiful"
+          },
+          "scales": {
+            "visual_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Идея ясно передана и понятна",
+            "en": "The idea is clearly conveyed and understandable"
+          },
+          "scales": {
+            "verbal_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Всё работает логично и эффективно",
+            "en": "Everything works logically and efficiently"
+          },
+          "scales": {
+            "systematic_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Это вызывает нужное чувство или эмоцию",
+            "en": "It evokes the right feeling or emotion"
+          },
+          "scales": {
+            "emotional_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Я попробовал всё, что хотел, даже если результат неидеален",
+            "en": "I tried everything I wanted, even if the result isn't perfect"
+          },
+          "scales": {
+            "experimental_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Другие люди дали положительную реакцию",
+            "en": "Other people gave positive feedback"
+          },
+          "scales": {
+            "social_creator": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "text": {
+        "ru": "Моя главная мотивация в творчестве:",
+        "en": "My main motivation in creativity:"
+      },
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "text": {
+            "ru": "Создавать красивые, эстетичные вещи",
+            "en": "Create beautiful, aesthetic things"
+          },
+          "scales": {
+            "visual_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Делиться идеями и историями",
+            "en": "Share ideas and stories"
+          },
+          "scales": {
+            "verbal_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Решать проблемы и улучшать процессы",
+            "en": "Solve problems and improve processes"
+          },
+          "scales": {
+            "systematic_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Передавать эмоции и создавать атмосферу",
+            "en": "Convey emotions and create atmosphere"
+          },
+          "scales": {
+            "emotional_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Пробовать новое и ломать границы",
+            "en": "Try new things and break boundaries"
+          },
+          "scales": {
+            "experimental_creator": 2
+          }
+        },
+        {
+          "text": {
+            "ru": "Сотрудничать и создавать вместе с другими",
+            "en": "Collaborate and create together with others"
+          },
+          "scales": {
+            "social_creator": 2
+          }
+        }
+      ]
+    }
+  ],
+  "scoring_method": {
+    "type": "weighted_sum_with_percentages",
+    "description": {
+      "ru": "Для каждой шкалы типов креативности (6 основных) баллы суммируются с учётом весовых коэффициентов. Затем вычисляется процентное соотношение каждого типа от общей суммы. Определяется доминирующий тип (максимальный процент) и вторичный тип (второй по величине процент). Шкалы блокаторов и источников вдохновения подсчитываются отдельно как абсолютные значения с пороговой интерпретацией.",
+      "en": "For each creativity type scale (6 main), scores are summed with weight coefficients. Then the percentage of each type from the total sum is calculated. The dominant type (maximum percentage) and secondary type (second highest percentage) are determined. Blockers and inspiration sources scales are calculated separately as absolute values with threshold interpretation."
+    },
+    "formula": {
+      "creativity_types": {
+        "calculation": "Для каждого типа: Score = Σ(question_score × weight). Total = Σ(all_type_scores). Percentage = (Type_Score / Total) × 100%",
+        "scales": [
+          "visual_creator",
+          "verbal_creator",
+          "systematic_creator",
+          "emotional_creator",
+          "experimental_creator",
+          "social_creator"
+        ]
+      },
+      "blockers": {
+        "calculation": "Score = Σ(question_scores). Max = number_of_questions × 4",
+        "scale": "blockers"
+      },
+      "inspiration": {
+        "calculation": "Score = Σ(question_scores). Max = number_of_questions × 4",
+        "scale": "inspiration_sources"
+      }
+    },
+    "rationale": {
+      "ru": "Процентное соотношение позволяет увидеть баланс креативных типов, а не абсолютные значения. Это важно, так как человек может иметь несколько сильных типов креативности. Доминирующий тип определяет основной канал творчества, а вторичный — дополнительный стиль. Блокаторы и источники вдохновения измеряются абсолютно, так как важна их интенсивность, а не соотношение.",
+      "en": "Percentage ratio allows seeing the balance of creative types rather than absolute values. This is important as a person can have several strong creativity types. The dominant type determines the main channel of creativity, while the secondary defines the complementary style. Blockers and inspiration sources are measured absolutely, as their intensity matters rather than ratio."
+    }
+  },
+  "interpretation": {
+    "creativity_types": {
+      "dominant_type": {
+        "threshold": "Максимальный процент среди всех типов",
+        "levels": {
+          "very_strong": {
+            "range": "≥35%",
+            "description": {
+              "ru": "Чёткий, ярко выраженный тип креативности",
+              "en": "Clear, strongly expressed creativity type"
+            }
+          },
+          "strong": {
+            "range": "25-34%",
+            "description": {
+              "ru": "Доминирующий, но с заметным влиянием других типов",
+              "en": "Dominant, but with notable influence of other types"
+            }
+          },
+          "moderate": {
+            "range": "18-24%",
+            "description": {
+              "ru": "Один из нескольких сильных типов, гибридная креативность",
+              "en": "One of several strong types, hybrid creativity"
+            }
+          },
+          "balanced": {
+            "range": "<18%",
+            "description": {
+              "ru": "Сбалансированный профиль, нет явного доминирующего типа",
+              "en": "Balanced profile, no clear dominant type"
+            }
+          }
+        }
+      },
+      "secondary_type": {
+        "threshold": "Второй по величине процент",
+        "description": {
+          "ru": "Дополнительный канал креативности, который усиливает или компенсирует доминирующий тип",
+          "en": "Additional creativity channel that enhances or compensates the dominant type"
+        }
+      }
+    },
+    "blockers": {
+      "levels": {
+        "low": {
+          "range": "0-8",
+          "description": {
+            "ru": "Минимальные блокаторы, креативность течёт свободно",
+            "en": "Minimal blockers, creativity flows freely"
+          }
+        },
+        "moderate": {
+          "range": "9-14",
+          "description": {
+            "ru": "Средний уровень блокаторов, периодически мешают процессу",
+            "en": "Moderate blockers, occasionally hinder the process"
+          }
+        },
+        "high": {
+          "range": "15-20",
+          "description": {
+            "ru": "Значительные блокаторы, требуют внимания и проработки",
+            "en": "Significant blockers, require attention and work"
+          }
+        }
+      }
+    },
+    "inspiration_sources": {
+      "levels": {
+        "low": {
+          "range": "0-12",
+          "description": {
+            "ru": "Ограниченные источники вдохновения, стоит расширить",
+            "en": "Limited inspiration sources, worth expanding"
+          }
+        },
+        "moderate": {
+          "range": "13-20",
+          "description": {
+            "ru": "Хороший набор источников вдохновения",
+            "en": "Good set of inspiration sources"
+          }
+        },
+        "high": {
+          "range": "21+",
+          "description": {
+            "ru": "Богатая экосистема вдохновения, разнообразные источники",
+            "en": "Rich inspiration ecosystem, diverse sources"
+          }
+        }
+      }
+    }
+  },
+  "type_descriptions": {
+    "visual_creator": {
+      "title": {
+        "ru": "Визуальный креатор",
+        "en": "Visual Creator"
+      },
+      "tagline": {
+        "ru": "Ты мыслишь картинками и создаёшь через образы",
+        "en": "You think in pictures and create through images"
+      },
+      "description": {
+        "ru": "Твой креативный язык — это визуальные метафоры. Ты замечаешь цвета, композицию, формы там, где другие видят просто объекты. Для тебя эстетика — это не украшение, а способ мышления. Ты можешь часами листать Pinterest, собирать мудборды и сохранять скриншоты красивых вещей — это не прокрастинация, это твой способ думать.\n\nТы легко запоминаешь лица, но можешь забыть имена. Ты обращаешь внимание на шрифты на вывесках и раздражаешься, когда что-то визуально дисгармонично. Твой телефон полон скриншотов и референсов, и когда объясняешь идею, ты рисуешь схемы или показываешь картинки.\n\nТвоя суперсила: способность создавать визуальную гармонию и передавать сложные идеи через образы. Ты видишь красоту в деталях и можешь превратить абстрактную концепцию в визуальную историю.",
+        "en": "Your creative language is visual metaphors. You notice colors, composition, forms where others see just objects. For you, aesthetics isn't decoration — it's a way of thinking. You can spend hours scrolling Pinterest, collecting mood boards, and saving screenshots of beautiful things — this isn't procrastination, it's your way of thinking.\n\nYou easily remember faces but might forget names. You notice fonts on signs and get irritated when something is visually disharmonious. Your phone is full of screenshots and references, and when explaining an idea, you draw diagrams or show pictures.\n\nYour superpower: ability to create visual harmony and convey complex ideas through images. You see beauty in details and can turn an abstract concept into a visual story."
+      },
+      "strengths": {
+        "ru": ["Сильное чувство эстетики", "Визуальная память", "Способность к композиции", "Внимание к деталям", "Умение создавать атмосферу через визуал"],
+        "en": ["Strong sense of aesthetics", "Visual memory", "Compositional ability", "Attention to detail", "Ability to create atmosphere through visuals"]
+      },
+      "challenges": {
+        "ru": ["Перфекционизм в визуальных деталях", "Сложно работать с 'некрасивым' контентом", "Можно застрять на поиске референсов"],
+        "en": ["Perfectionism in visual details", "Difficult to work with 'ugly' content", "Can get stuck searching for references"]
+      },
+      "recommendations": {
+        "ru": [
+          "Создай визуальную библиотеку вдохновения (но ограничь время на её пополнение)",
+          "Экспериментируй с разными медиа: от digital до аналоговых техник",
+          "Практикуй быстрые скетчи — не всё должно быть идеально с первого раза",
+          "Изучай теорию цвета и композиции — это усилит твою интуицию",
+          "Работай над проектами с дедлайнами, чтобы не застревать в деталях"
+        ],
+        "en": [
+          "Create a visual inspiration library (but limit time spent expanding it)",
+          "Experiment with different media: from digital to analog techniques",
+          "Practice quick sketches — not everything needs to be perfect first time",
+          "Study color theory and composition — it will strengthen your intuition",
+          "Work on projects with deadlines to avoid getting stuck in details"
+        ]
+      }
+    },
+    "verbal_creator": {
+      "title": {
+        "ru": "Вербальный креатор",
+        "en": "Verbal Creator"
+      },
+      "tagline": {
+        "ru": "Ты создаёшь через слова, концепции и истории",
+        "en": "You create through words, concepts, and stories"
+      },
+      "description": {
+        "ru": "Твой креативный инструмент — это язык. Ты не просто говоришь или пишешь — ты играешь словами, как музыкант с нотами. Ты замечаешь интересные обороты речи, придумываешь названия для всего (даже для плейлистов и папок), и можешь застрять на одном предложении, подбирая идеальное слово.\n\nТвоя голова — это вечный генератор историй. Ты можешь идти по улице и придумывать сценарии, диалоги, концепции. Когда тебе нравится песня, ты читаешь её текст. Ты легко улавливаешь подтексты и нюансы в разговорах и текстах.\n\nТвоя суперсила: способность упаковать сложную идею в простые слова и создать нарратив, который зацепит. Ты можешь превратить скучную тему в захватывающую историю и найти метафору, которая объяснит что угодно.",
+        "en": "Your creative tool is language. You don't just speak or write — you play with words like a musician with notes. You notice interesting turns of phrase, come up with names for everything (even playlists and folders), and can get stuck on one sentence finding the perfect word.\n\nYour head is an eternal story generator. You can walk down the street making up scenarios, dialogues, concepts. When you like a song, you read its lyrics. You easily catch subtexts and nuances in conversations and texts.\n\nYour superpower: ability to package complex ideas in simple words and create narratives that hook. You can turn a boring topic into a captivating story and find a metaphor that explains anything."
+      },
+      "strengths": {
+        "ru": ["Сильные навыки сторителлинга", "Концептуальное мышление", "Умение формулировать идеи", "Чувство языка и стиля", "Способность убеждать и вовлекать"],
+        "en": ["Strong storytelling skills", "Conceptual thinking", "Ability to articulate ideas", "Sense of language and style", "Ability to persuade and engage"]
+      },
+      "challenges": {
+        "ru": ["Можно застрять в перфекционизме формулировок", "Сложно визуализировать без слов", "Переизбыток идей без реализации"],
+        "en": ["Can get stuck in perfectionism of wording", "Difficult to visualize without words", "Too many ideas without execution"]
+      },
+      "recommendations": {
+        "ru": [
+          "Практикуй фрирайтинг — пиши без редактуры, чтобы идеи текли свободно",
+          "Сочетай вербальное с визуальным — учись делать презентации и сторителлинг",
+          "Читай разнообразно: от поэзии до нон-фикшна",
+          "Записывай случайные фразы и идеи — они пригодятся",
+          "Учись отпускать — не каждый текст должен быть шедевром"
+        ],
+        "en": [
+          "Practice freewriting — write without editing so ideas flow freely",
+          "Combine verbal with visual — learn presentations and storytelling",
+          "Read diversely: from poetry to non-fiction",
+          "Record random phrases and ideas — they'll be useful",
+          "Learn to let go — not every text needs to be a masterpiece"
+        ]
+      }
+    },
+    "systematic_creator": {
+      "title": {
+        "ru": "Системный креатор",
+        "en": "Systematic Creator"
+      },
+      "tagline": {
+        "ru": "Ты находишь креативность в структуре и порядке",
+        "en": "You find creativity in structure and order"
+      },
+      "description": {
+        "ru": "Для тебя креативность — это не хаос, а элегантная система. Ты видишь паттерны там, где другие видят случайности. Ты кайфуешь от оптимизации процессов, создания фреймворков и нахождения логических связей между, казалось бы, не связанными вещами.\n\nТы не начинаешь проект, пока не составишь план. Твои файлы, папки и закладки организованы по категориям. Ты читаешь инструкции и любишь, когда есть чёткая структура. Для тебя креативность — это найти самый эффективный путь к цели.\n\nТвоя суперсила: способность превратить хаос в систему и создать логичную структуру для любой идеи. Ты можешь разложить сложную проблему на простые шаги и построить фреймворк, который будет работать снова и снова.",
+        "en": "For you, creativity isn't chaos — it's an elegant system. You see patterns where others see randomness. You get a kick from optimizing processes, creating frameworks, and finding logical connections between seemingly unrelated things.\n\nYou don't start a project without making a plan. Your files, folders, and bookmarks are organized by categories. You read instructions and love when there's clear structure. For you, creativity is finding the most efficient path to the goal.\n\nYour superpower: ability to turn chaos into system and create logical structure for any idea. You can break down complex problems into simple steps and build frameworks that work repeatedly."
+      },
+      "strengths": {
+        "ru": ["Логическое мышление", "Способность к планированию", "Умение находить паттерны", "Организованность", "Эффективность в решении проблем"],
+        "en": ["Logical thinking", "Planning ability", "Pattern recognition", "Organization", "Problem-solving efficiency"]
+      },
+      "challenges": {
+        "ru": ["Сложно начать без плана", "Может не хватать спонтанности", "Перепланирование вместо действия"],
+        "en": ["Difficult to start without a plan", "May lack spontaneity", "Over-planning instead of action"]
+      },
+      "recommendations": {
+        "ru": [
+          "Балансируй структуру со спонтанностью — иногда позволяй идеям течь свободно",
+          "Изучай дизайн-мышление и системный анализ",
+          "Создавай шаблоны и фреймворки для повторяющихся задач",
+          "Сотрудничай с экспериментальными креаторами — они дополнят твой подход",
+          "Практикуй быстрое прототипирование, чтобы не застревать в планировании"
+        ],
+        "en": [
+          "Balance structure with spontaneity — sometimes let ideas flow freely",
+          "Study design thinking and systems analysis",
+          "Create templates and frameworks for repetitive tasks",
+          "Collaborate with experimental creators — they'll complement your approach",
+          "Practice rapid prototyping to avoid getting stuck in planning"
+        ]
+      }
+    },
+    "emotional_creator": {
+      "title": {
+        "ru": "Эмоциональный креатор",
+        "en": "Emotional Creator"
+      },
+      "tagline": {
+        "ru": "Ты создаёшь через чувства и атмосферу",
+        "en": "You create through feelings and atmosphere"
+      },
+      "description": {
+        "ru": "Твой креативный процесс — это про эмоции, настроение и вайб. Ты не просто создаёшь контент — ты создаёшь чувства. Музыка сильно влияет на твою продуктивность, и у тебя есть разные плейлисты под разные задачи и настроения. Ты чувствуешь атмосферу места, как только заходишь.\n\nТы легко считываешь эмоции других людей, даже когда они не говорят об этом. Для тебя важно, чтобы окружение отражало твоё внутреннее состояние. Ты кайфуешь от создания вайба — будь то комната, плейлист или визуальная работа.\n\nТвоя суперсила: способность передать эмоцию так, что её почувствуют другие. Ты можешь создать атмосферу, которая зацепит на уровне чувств, и превратить настроение в креативный продукт.",
+        "en": "Your creative process is about emotions, mood, and vibe. You don't just create content — you create feelings. Music strongly affects your productivity, and you have different playlists for different tasks and moods. You feel the atmosphere of a place as soon as you enter.\n\nYou easily read other people's emotions, even when they don't talk about it. It's important for you that your surroundings reflect your inner state. You love creating vibes — whether it's a room, playlist, or visual work.\n\nYour superpower: ability to convey emotion so others feel it. You can create an atmosphere that hooks on a feeling level and turn mood into creative product."
+      },
+      "strengths": {
+        "ru": ["Высокая эмпатия", "Способность передавать настроение", "Эмоциональная выразительность", "Чувствительность к атмосфере", "Глубина переживаний"],
+        "en": ["High empathy", "Ability to convey mood", "Emotional expressiveness", "Sensitivity to atmosphere", "Depth of experience"]
+      },
+      "challenges": {
+        "ru": ["Зависимость от настроения", "Эмоциональное выгорание", "Сложно работать 'на холодную'"],
+        "en": ["Mood dependency", "Emotional burnout", "Difficult to work 'cold'"]
+      },
+      "recommendations": {
+        "ru": [
+          "Создавай ритуалы для входа в нужное состояние",
+          "Используй музыку и свет для управления настроением",
+          "Учись работать даже когда 'не чувствуешь' — это навык",
+          "Берегись эмоционального выгорания — делай перерывы",
+          "Фиксируй эмоциональные моменты в журнале или заметках"
+        ],
+        "en": [
+          "Create rituals for entering the right state",
+          "Use music and light to manage mood",
+          "Learn to work even when you don't 'feel it' — it's a skill",
+          "Beware of emotional burnout — take breaks",
+          "Capture emotional moments in journal or notes"
+        ]
+      }
+    },
+    "experimental_creator": {
+      "title": {
+        "ru": "Экспериментальный креатор",
+        "en": "Experimental Creator"
+      },
+      "tagline": {
+        "ru": "Ты создаёшь через эксперимент и хаос",
+        "en": "You create through experiment and chaos"
+      },
+      "description": {
+        "ru": "Твоя креативность — это вечный эксперимент. Ты не читаешь инструкции — ты пробуешь всё сам. Тебе скучно делать что-то одинаковым способом дважды. Ты миксуешь стили, жанры, форматы, которые обычно не смешивают, и находишь в этом кайф.\n\nТы меняешь планы на ходу, если появляется что-то интереснее. Ты используешь вещи не по назначению и находишь нестандартные применения для обычных инструментов. Твоя креативность живёт в спонтанности и нарушении правил.\n\nТвоя суперсила: способность создавать что-то абсолютно новое и оригинальное. Ты не боишься провала, потому что для тебя процесс важнее результата. Ты можешь найти неожиданное решение там, где другие видят тупик.",
+        "en": "Your creativity is an eternal experiment. You don't read instructions — you try everything yourself. You get bored doing things the same way twice. You mix styles, genres, formats that aren't usually mixed, and find joy in it.\n\nYou change plans on the go if something more interesting appears. You use things not for their intended purpose and find unconventional applications for ordinary tools. Your creativity lives in spontaneity and rule-breaking.\n\nYour superpower: ability to create something absolutely new and original. You're not afraid of failure because for you process matters more than result. You can find unexpected solutions where others see dead ends."
+      },
+      "strengths": {
+        "ru": ["Оригинальность", "Смелость в экспериментах", "Гибкость мышления", "Способность к импровизации", "Инновационность"],
+        "en": ["Originality", "Boldness in experiments", "Flexible thinking", "Ability to improvise", "Innovation"]
+      },
+      "challenges": {
+        "ru": ["Много незаконченных проектов", "Сложно с дисциплиной", "Может не хватать структуры"],
+        "en": ["Many unfinished projects", "Difficult with discipline", "May lack structure"]
+      },
+      "recommendations": {
+        "ru": [
+          "Документируй эксперименты — даже неудачные могут быть ценны позже",
+          "Найди баланс между экспериментом и завершением проектов",
+          "Сотрудничай с системными креаторами — они помогут структурировать хаос",
+          "Установи правило 'доделывать хотя бы 30%' от начатого",
+          "Используй эксперименты как часть процесса, а не вместо него"
+        ],
+        "en": [
+          "Document experiments — even failed ones can be valuable later",
+          "Find balance between experiment and project completion",
+          "Collaborate with systematic creators — they'll help structure chaos",
+          "Set a rule to 'finish at least 30%' of what you start",
+          "Use experiments as part of process, not instead of it"
+        ]
+      }
+    },
+    "social_creator": {
+      "title": {
+        "ru": "Социальный креатор",
+        "en": "Social Creator"
+      },
+      "tagline": {
+        "ru": "Ты создаёшь через взаимодействие и коллаборацию",
+        "en": "You create through interaction and collaboration"
+      },
+      "description": {
+        "ru": "Твоя креативность рождается в диалоге. Обсуждение идеи с кем-то помогает тебе развить её лучше, чем размышление в одиночку. Ты сохраняешь посты и идеи, чтобы поделиться с конкретными людьми. Тебе важна реакция других на то, что ты создаёшь.\n\nТы кайфуешь от коллабораций и совместных проектов. Ты часто получаешь вдохновение от разговоров или наблюдения за людьми. Тебе легче работать в команде, чем в одиночку — не потому что не можешь сам, а потому что энергия обмена тебя заряжает.\n\nТвоя суперсила: способность объединять людей и создавать проекты, которые больше суммы частей. Ты умеешь считывать идеи других, синтезировать их и превращать в коллективный креатив. Ты строишь креативные сообщества.",
+        "en": "Your creativity is born in dialogue. Discussing an idea with someone helps you develop it better than thinking alone. You save posts and ideas to share with specific people. Other people's reactions to what you create are important to you.\n\nYou love collaborations and joint projects. You often get inspiration from conversations or observing people. It's easier for you to work in a team than alone — not because you can't do it yourself, but because the energy of exchange charges you.\n\nYour superpower: ability to bring people together and create projects greater than the sum of parts. You can read others' ideas, synthesize them, and turn them into collective creativity. You build creative communities."
+      },
+      "strengths": {
+        "ru": ["Коммуникативность", "Способность к коллаборации", "Эмпатия и понимание людей", "Создание сетей и сообществ", "Синтез разных идей"],
+        "en": ["Communication skills", "Collaboration ability", "Empathy and understanding people", "Building networks and communities", "Synthesis of different ideas"]
+      },
+      "challenges": {
+        "ru": ["Зависимость от фидбека", "Сложно работать в одиночку", "Может быть слишком много мнений"],
+        "en": ["Dependence on feedback", "Difficult to work alone", "Can have too many opinions"]
+      },
+      "recommendations": {
+        "ru": [
+          "Развивай способность работать соло — это усилит твою автономию",
+          "Выбирай коллаборации осознанно — не все проекты нужно делать вместе",
+          "Создавай мастермайнд-группы или креативные клубы",
+          "Учись давать и получать конструктивный фидбек",
+          "Баланси между коллаборацией и личным видением"
+        ],
+        "en": [
+          "Develop ability to work solo — it will strengthen your autonomy",
+          "Choose collaborations consciously — not all projects need to be joint",
+          "Create mastermind groups or creative clubs",
+          "Learn to give and receive constructive feedback",
+          "Balance between collaboration and personal vision"
+        ]
+      }
+    }
+  },
+  "combined_types": {
+    "description": {
+      "ru": "Большинство креаторов имеют комбинацию из нескольких типов. Вот некоторые популярные сочетания:",
+      "en": "Most creators have a combination of several types. Here are some popular combinations:"
+    },
+    "combinations": [
+      {
+        "types": ["visual_creator", "emotional_creator"],
+        "name": {
+          "ru": "Визуально-эмоциональный креатор",
+          "en": "Visual-Emotional Creator"
+        },
+        "description": {
+          "ru": "Создаёт атмосферу через визуал. Идеален для фотографии, дизайна интерьеров, fashion.",
+          "en": "Creates atmosphere through visuals. Ideal for photography, interior design, fashion."
+        }
+      },
+      {
+        "types": ["verbal_creator", "systematic_creator"],
+        "name": {
+          "ru": "Концептуальный стратег",
+          "en": "Conceptual Strategist"
+        },
+        "description": {
+          "ru": "Упаковывает сложные идеи в структурированные нарративы. Отлично для UX-writing, контент-стратегии.",
+          "en": "Packages complex ideas into structured narratives. Great for UX writing, content strategy."
+        }
+      },
+      {
+        "types": ["experimental_creator", "visual_creator"],
+        "name": {
+          "ru": "Визуальный экспериментатор",
+          "en": "Visual Experimenter"
+        },
+        "description": {
+          "ru": "Ломает визуальные границы, создаёт авангардную эстетику. Идеален для digital art, motion design.",
+          "en": "Breaks visual boundaries, creates avant-garde aesthetics. Ideal for digital art, motion design."
+        }
+      },
+      {
+        "types": ["social_creator", "verbal_creator"],
+        "name": {
+          "ru": "Коммуникационный креатор",
+          "en": "Communication Creator"
+        },
+        "description": {
+          "ru": "Создаёт через истории и диалог. Отлично для SMM, community building, контента.",
+          "en": "Creates through stories and dialogue. Great for SMM, community building, content."
+        }
+      },
+      {
+        "types": ["systematic_creator", "experimental_creator"],
+        "name": {
+          "ru": "Инновационный архитектор",
+          "en": "Innovation Architect"
+        },
+        "description": {
+          "ru": "Создаёт новые системы и фреймворки. Идеален для продуктового дизайна, стартапов.",
+          "en": "Creates new systems and frameworks. Ideal for product design, startups."
+        }
+      }
+    ]
+  },
+  "action_plan": {
+    "title": {
+      "ru": "Как использовать результаты",
+      "en": "How to Use Results"
+    },
+    "steps": [
+      {
+        "step": 1,
+        "title": {
+          "ru": "Принять свой тип",
+          "en": "Accept Your Type"
+        },
+        "description": {
+          "ru": "Твой доминирующий тип — это не ограничение, а твоя суперсила. Перестань пытаться работать как другие креаторы.",
+          "en": "Your dominant type isn't a limitation — it's your superpower. Stop trying to work like other creators."
+        }
+      },
+      {
+        "step": 2,
+        "title": {
+          "ru": "Оптимизировать процесс под себя",
+          "en": "Optimize Process for Yourself"
+        },
+        "description": {
+          "ru": "Создай рабочий процесс, который учитывает твой тип креативности. Визуальному креатору нужны референсы, социальному — обсуждения.",
+          "en": "Create a workflow that accounts for your creativity type. Visual creators need references, social creators need discussions."
+        }
+      },
+      {
+        "step": 3,
+        "title": {
+          "ru": "Работать с блокаторами",
+          "en": "Work on Blockers"
+        },
+        "description": {
+          "ru": "Определи свои основные блокаторы и создай стратегию работы с ними. Высокие блокаторы требуют внимания.",
+          "en": "Identify your main blockers and create a strategy to work with them. High blockers require attention."
+        }
+      },
+      {
+        "step": 4,
+        "title": {
+          "ru": "Расширить источники вдохновения",
+          "en": "Expand Inspiration Sources"
+        },
+        "description": {
+          "ru": "Если источников вдохновения мало, осознанно расширяй их. Ходи в новые места, общайся с новыми людьми, потребляй разный контент.",
+          "en": "If inspiration sources are limited, consciously expand them. Visit new places, talk to new people, consume different content."
+        }
+      },
+      {
+        "step": 5,
+        "title": {
+          "ru": "Найти комплементарных креаторов",
+          "en": "Find Complementary Creators"
+        },
+        "description": {
+          "ru": "Сотрудничай с людьми других типов креативности. Они дополнят твои слабые стороны и усилят сильные.",
+          "en": "Collaborate with people of other creativity types. They'll complement your weaknesses and strengthen your strengths."
+        }
+      }
+    ]
+  },
+  "metadata": {
+    "version": "1.0",
+    "created_by": "Custom Psychological Test Generator",
+    "language_support": ["ru", "en"],
+    "copyright_notice": {
+      "ru": "Данный тест является оригинальной разработкой и не нарушает авторские права существующих психометрических инструментов. Все вопросы и шкалы созданы с нуля на основе научных теорий креативности.",
+      "en": "This test is an original development and does not violate copyrights of existing psychometric instruments. All questions and scales are created from scratch based on scientific theories of creativity."
+    },
+    "usage_notes": {
+      "ru": "Тест предназначен для самопознания и развития креативных навыков. Не является клиническим инструментом.",
+      "en": "The test is intended for self-knowledge and creative skill development. Not a clinical instrument."
+    }
+  }
+}

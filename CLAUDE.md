@@ -5,6 +5,113 @@
 
 ---
 
+## ⚠️ КРИТИЧЕСКИ ВАЖНО: Добавление новых тестов
+
+> **ЭТО ПРАВИЛО ОБЯЗАТЕЛЬНО ДЛЯ ВЫПОЛНЕНИЯ!**
+> При добавлении ЛЮБОГО нового теста СНАЧАЛА прочитай документацию, ЗАТЕМ выполняй работу.
+
+### 🔴 ОБЯЗАТЕЛЬНЫЕ ШАГИ (в этом порядке!)
+
+1. **СНАЧАЛА** прочитать `docs/adding-new-test/ADDING_TEST_RULES.md` (8 критических правил)
+2. **ЗАТЕМ** прочитать `docs/adding-new-test/ADDING_TEST_CHECKLIST.md` (78 пунктов, v3.5.0)
+3. **⭐ НОВОЕ v3.5.0:** Создавать профили результатов СРАЗУ после интеграции (ФАЗА 5), ПЕРЕД тестированием (ФАЗА 6)!
+4. **ИСПОЛЬЗОВАТЬ** `bash tools/validate_test.sh test_id` после создания weights файла
+
+### 🔴 ПРАВИЛО #6: Используй ТОЛЬКО существующие 195 шкал!
+
+**❌ ЗАПРЕЩЕНО** выдумывать новые шкалы! Все шкалы ДОЛЖНЫ существовать в `hierarchical_scales.dart`.
+
+<details>
+<summary>📋 Полный список 195 валидных hierarchical шкал (нажми чтобы развернуть)</summary>
+
+```
+abstract_reasoning, acceptance, accountability, achievement_motivation, achievement_striving,
+achievement_value, actions, active_listening, activity, adaptability_leadership, aesthetics,
+affection_expression, affiliation_motivation, altruism, ambition, analytical_thinking, anger,
+anxiety, anxious_attachment, artistic_appreciation, assertiveness, attention_control,
+authenticity, autonomy_need, autonomy_wellbeing, avoidant_attachment, avoidant_coping,
+benevolence, body_image, boundary_setting, callousness, calmness, catastrophizing, charisma,
+cognitive_flexibility, cognitive_reappraisal, commitment, communication_quality, compassion,
+competence, competence_need, compliance, composure, confidence_building, conflict_management,
+conflict_resolution, conformity, convergent_thinking, cooperativeness, critical_thinking,
+curiosity, decisiveness, decisiveness_behavior, delegation, deliberation, dependability,
+depression, diligence, divergent_thinking, dominance, drive_for_excellence, dutifulness,
+elaboration, emotion_focused_coping, emotional_intelligence, emotional_intimacy,
+emotional_openness, emotional_reactivity, emotional_resilience, empathy, entitlement,
+environmental_mastery, excitement_seeking, expressiveness, extrinsic_motivation, fantasy,
+fear_of_abandonment, feelings, flexibility_creative, fluency, forgiveness, frustration_tolerance,
+gender_identity_comfort, grandiosity, gregariousness, growth_mindset, happiness, harm_avoidance,
+hedonism, humor, ideas, identity_clarity, identity_flexibility, impulsiveness,
+impulsivity_behavior, impulsivity_dark, inspirational_motivation, intellectual_curiosity,
+intimacy_comfort, intrinsic_motivation, jealousy, learning_ability, life_satisfaction,
+liveliness, loyalty, machiavellianism, manipulation, maturity, meaning_purpose, mentoring,
+mindfulness_coping, modesty, mood_stability, narcissism, negotiation, networking,
+nonverbal_communication, novelty_seeking, numerical_ability, order, organization, originality,
+overall_adjustment, panic_tendency, passion_vitality, patience, perfectionism, persistence,
+personal_growth, persuasion, physical_intimacy, playfulness, politeness, positive_emotions,
+positive_relations, power_motivation, power_value, problem_focused_coping, problem_solving,
+processing_speed, procrastination, prudence, psychopathy, punctuality, relatedness_need,
+relationship_security, reliability_partnership, resilience_meta, responsibility,
+reward_dependence, risk_taking, risk_taking_creative, rumination, secure_attachment,
+security_value, self_acceptance, self_awareness, self_compassion, self_consciousness,
+self_direction, self_discipline, self_efficacy, self_esteem, self_monitoring, sensation_seeking,
+shared_goals, social_boldness, social_confidence, social_perception, social_support_seeking,
+spatial_reasoning, spontaneity, stimulation, straightforwardness, strategic_thinking,
+stress_tolerance, support_giving, team_building, tender_mindedness, tradition, trust,
+trust_in_relationships, type_a_behavior, universalism, values, verbal_communication,
+verbal_intelligence, vision, vitality, vulnerability, vulnerability_sharing, warmth, wisdom,
+working_memory, worry_tendency
+```
+
+</details>
+
+### 🔴 8 биполярных полюсов (Personality Type)
+
+**ТОЛЬКО положительные веса!** Вместо `-0.5` на `extraversion` используй `+0.5` на `introversion`.
+
+- `extraversion` ↔ `introversion`
+- `sensing` ↔ `intuition`
+- `thinking` ↔ `feeling`
+- `judging` ↔ `perceiving`
+
+### 🔴 8 точек интеграции (ВСЕ обязательны!)
+
+| # | Файл | Что добавить |
+|---|------|--------------|
+| 1 | `lib/data/test_registry.dart` | import + тест в allTests |
+| 2 | `lib/services/test_loader_service.dart` | import + case в _loadLegacyTest |
+| 3 | `lib/services/test_service.dart` | import + 3 блока (maxScore, factorNames, interpretations) |
+| 4 | `lib/services/summary_service.dart` | import + weights в 2 местах |
+| 5 | `lib/screens/summary_screen.dart` | import + 2 switch cases |
+| 6 | `lib/config/summary_config.dart` | import + weights в _weights |
+| 7 | `lib/services/profile_service.dart` | import + 4 места (если есть профили) |
+| 8 | Weights файл | Создать в question_weights/ |
+
+### 🔴 ОБЯЗАТЕЛЬНАЯ проверка после создания weights
+
+```bash
+bash tools/validate_test.sh your_test_id
+```
+
+> ⚠️ **СТОП! Перед продолжением работы:**
+> 1. Запустить validate_test.sh
+> 2. Показать результат пользователю
+> 3. Исправить ВСЕ ошибки перед интеграцией
+> 4. НЕ ПРОДОЛЖАТЬ если есть ошибки в CHECK B (невалидные шкалы)!
+
+Скрипт проверит:
+- **CHECK A:** Файлы существуют
+- **CHECK B:** Валидность всех шкал (КРИТИЧНО!)
+- **CHECK C:** Отсутствие дубликатов ключей
+- **CHECK D:** Отсутствие отрицательных весов на биполярных полюсах
+- **CHECK E-J:** Регистрацию во всех точках интеграции
+
+### 📚 Справочник шкал
+
+Полный список 195 шкал с категориями: [`docs/adding-new-test/ADDING_TEST_REFERENCE.md`](docs/adding-new-test/ADDING_TEST_REFERENCE.md)
+
+---
+
 ## Project Overview
 
 **Name:** Психологические тесты (Psycho Tests)
@@ -20,10 +127,11 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **27 psychological tests in 5 categories** (24 standard + 2 special + 1 profile test)
+- **29 psychological tests in 7 categories** (25 standard + 3 special + 1 profile test)
 - **195 psychological scales** for aggregate personality analysis
-- **Universal profile system** - 24 tests with 7-section detailed profiles ⭐
+- **Universal profile system** - 25 tests with 7-section detailed profiles ⭐
 - **ProfileService** - Automatic profile display in results ⭐
+- **Visual Micro Tests** - 10 visual micro-tests with trait accumulation scoring ⭐ NEW
 - **Multilingual support** (Russian/English)
 - **Daily mood tracking** and result history
 - **Cross-test personality type calculation**
@@ -159,8 +267,8 @@ Data & Config Layer (Test Data, Storage)
 └── README.md                      # Project overview (Russian)
 ```
 
-**Total Growth:** 10,347 → ~63,000 lines (+509%)
-**Latest Addition:** Conflict Communication Style Test (45 questions, 5 styles, TKI model)
+**Total Growth:** 10,347 → ~67,000 lines (+548%)
+**Latest Addition:** Visual Micro Tests (10 visual micro-tests, trait accumulation, top-5 results)
 
 ---
 
@@ -243,20 +351,41 @@ SummaryData? calculateSummary(List<TestResult> results) {
 
 ## Current Status
 
-**Latest Version:** 3.26.0 (2025-12-01)
+**Latest Version:** 3.28.0 (2025-12-02)
 
-### Recent Addition: Conflict Communication Style Test
+### Recent Addition: Visual Micro Tests ⭐ NEW
 
-- 45 вопросов, 5 стилей конфликтного поведения
-- Based on Thomas-Kilmann Conflict Mode Instrument (TKI)
-- Multi-choice format с ситуационными вопросами
-- 5 profiles с 7-секционной структурой
-- 32 шкалы (24 hierarchical + 8 personality type poles)
+- **Special test type** - custom screen with visual interface
+- **10 visual micro-tests** - quick perception-based assessments
+- **Trait accumulation scoring** - 15 personality traits scored across tests
+- **Top-5 results** - Shows strongest 5 traits with descriptions
+- **Overall portrait** - Synthesized personality description
+- **Auto-save** - Results saved automatically (no manual save button)
+- **New "Visual" category** - 7th test category
+- **11 new files** - Complete architecture: models, screens, widgets, service, data
+
+### Architecture Details
+
+**Files Added:**
+- `lib/models/visual_micro_tests_model.dart` - Data models (MicroTest, TraitProfile, VisualMicroTestsResult)
+- `lib/screens/visual_micro_tests_screen.dart` - Main test screen with progress tracking
+- `lib/screens/visual_micro_tests_result_screen.dart` - Results display with top-5 traits
+- `lib/widgets/visual_micro_test_widget.dart` - Individual micro-test widget
+- `lib/services/visual_micro_tests_service.dart` - Scoring and result generation
+- `lib/data/visual_micro_tests_data.dart` - Test content and trait mappings
+- `lib/data/tests/visual_micro_tests_test.dart` - TestStub for registration
+- `add_tests/visual_micro_tests.json` - Source test data
+
+**Integration Points:**
+- TestRegistry - Registered as special test (type='special')
+- Results screen - Custom navigation with JSON serialization/deserialization
+- Home screen - New "Visual" category with icon and description
 
 ### Progress
 
 **Completed:**
-- ✅ 27 psychological tests implemented
+- ✅ 29 psychological tests implemented (25 std + 3 special + 1 profile)
+- ✅ Visual Micro Tests with custom architecture ⭐ NEW
 - ✅ Universal profile system (ProfileService)
 - ✅ Production-ready error handling
 - ✅ Comprehensive test documentation
@@ -278,6 +407,7 @@ SummaryData? calculateSummary(List<TestResult> results) {
 | **Entry** | `lib/main.dart` | App initialization |
 | **Home** | `lib/screens/home_screen.dart` | Test selection |
 | **Testing** | `lib/screens/test_screen.dart` | Standard test interface |
+| **Visual Tests** | `lib/screens/visual_micro_tests_screen.dart` | Visual micro-tests ⭐ NEW |
 | **Results** | `lib/screens/test_result_screen.dart` | Result display + profiles |
 | **Summary** | `lib/screens/summary_screen.dart` | Personality analysis |
 | **Scales** | `lib/config/summary/hierarchical_scales.dart` | 195 scales definition |
@@ -357,31 +487,39 @@ Comprehensive modular guide for adding psychological tests (v3.5.0):
 
 ### Latest Version
 
-**Version:** 3.26.0
-**Date:** 2025-12-01
-**Codebase:** ~63,000 lines
-**Tests:** 27 (24 std + 2 special + 1 profile)
+**Version:** 3.28.0
+**Date:** 2025-12-02
+**Codebase:** ~67,000 lines
+**Tests:** 29 (25 std + 3 special + 1 profile)
 
 ### Recent Changes
 
-**v3.26.0 (2025-12-01):** Conflict Communication Style Test Added
-- 45 вопросов, 5 стилей конфликтного поведения
-- Thomas-Kilmann Conflict Mode Instrument (TKI)
-- Multi-choice format с ситуационными вопросами
-- 5 profiles с 7-секционной структурой
-- **Критические исправления:**
-  - Удалены 45 невалидных шкал
-  - Исправлено использование биполярных полюсов
-  - Переработана архитектура multi-choice тестов
+**v3.28.0 (2025-12-02):** Visual Micro Tests Added ⭐ NEW
+- **Special test type** - custom visual interface with 10 micro-tests
+- **Trait accumulation** - 15 personality traits scored across tests
+- **Top-5 results** - Shows strongest traits with icons and descriptions
+- **Overall portrait** - AI-synthesized personality description
+- **Auto-save** - No manual save button, results saved automatically
+- **New category:** Visual (7th category)
+- **Architecture:**
+  - 11 new files (models, screens, widgets, service, data)
+  - Custom navigation with JSON serialization/deserialization
+  - TestRegistry integration as special test
+  - Results screen handles restoration from JSON
 
+**v3.27.0 (2025-12-02):** Creative Type Test Added
+- 48 questions (40 frequency + 8 multiple choice)
+- 6 creative types + 2 additional scales
+- Dual question format with 6 profiles
+
+**v3.26.0 (2025-12-01):** Conflict Communication Style Test
 **v3.25.0 (2025-12-01):** Attachment Styles Test
 **v3.24.0 (2025-11-30):** Values and Priorities Test
-**v3.23.0 (2025-11-30):** Universal Profile System Merge
 
 **📖 See [docs/REVISION_HISTORY.md](docs/REVISION_HISTORY.md) for full history**
 
 ---
 
-**Last Updated:** 2025-12-01 | **Version:** 3.26.0
+**Last Updated:** 2025-12-02 | **Version:** 3.28.0
 
 > **📖 For detailed information, navigate to the `docs/` directory.**

@@ -29,3 +29,4 @@ flutter:
   assets:
     - assets/tests/stress_test.json
     - assets/tests/self_esteem_test.json
+    - add_tests/visual_micro_tests.json

@@ -462,6 +462,19 @@ class _TestScreenState extends State<TestScreen> {
 
       if (shouldContinue != true) {
         appLogger.d('Пользователь отменил завершение теста');
+        // Находим первый неотвеченный вопрос и возвращаемся к нему
+        final unansweredQuestions = _testService.validateAllQuestionsAnswered(widget.test, _answers);
+        if (unansweredQuestions.isNotEmpty) {
+          final firstUnansweredIndex = widget.test.questions.indexWhere(
+            (q) => unansweredQuestions.contains(q.id)
+          );
+          if (firstUnansweredIndex >= 0) {
+            setState(() {
+              _currentQuestionIndex = firstUnansweredIndex;
+            });
+            appLogger.d('Переход к первому неотвеченному вопросу: индекс=$firstUnansweredIndex');
+          }
+        }
         return; // Возвращаемся к тесту
       }
       appLogger.d('Пользователь подтвердил завершение с неполными ответами');

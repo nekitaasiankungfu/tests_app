@@ -37,6 +37,10 @@ import '../config/summary/question_weights/imposter_syndrome_weights.dart';
 import '../config/summary/question_weights/sleep_recovery_weights.dart';
 import '../config/summary/question_weights/procrastination_productivity_weights.dart';
 import '../config/summary/question_weights/boundaries_people_pleasing_weights.dart';
+import '../config/summary/question_weights/fomo_social_comparison_weights.dart';
+import '../config/summary/question_weights/creative_type_weights.dart';
+import '../config/summary/question_weights/friendship_red_flags_weights.dart';
+import '../config/summary/question_weights/visual_micro_tests_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -171,6 +175,10 @@ class SummaryService {
       ...SleepRecoveryWeights.weights,
       ...procrastinationProductivityWeights,
       ...boundariesPeoplePleasingWeights,
+      ...FomoSocialComparisonWeights.weights,
+      ...CreativeTypeWeights.weights,
+      ...FriendshipRedFlagsWeights.weights,
+      ...VisualMicroTestsWeights.weights,
     };
 
     // 8 personality type scales
@@ -587,6 +595,10 @@ class SummaryService {
       ...SleepRecoveryWeights.weights,
       ...procrastinationProductivityWeights,
       ...boundariesPeoplePleasingWeights,
+      ...FomoSocialComparisonWeights.weights,
+      ...CreativeTypeWeights.weights,
+      ...FriendshipRedFlagsWeights.weights,
+      ...VisualMicroTestsWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');
