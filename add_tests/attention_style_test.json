@@ -1,0 +1,931 @@
+{
+  "test_metadata": {
+    "test_id": "attention_style",
+    "version": "1.0.0",
+    "title": {
+      "ru": "Тест «Стиль внимания: мозг-пчёлка или лазер»",
+      "en": "Attention Style Test: Bee Brain or Laser Brain"
+    },
+    "subtitle": {
+      "ru": "Как работает твоё внимание?",
+      "en": "How does your attention work?"
+    },
+    "description": {
+      "ru": "Этот тест измеряет твой индивидуальный стиль внимания и концентрации. У всех нас разные мозги: кто-то может часами фокусироваться на одном (мозг-лазер), кто-то постоянно переключается между задачами (мозг-пчёлка), а кто-то легко отвлекается на всё вокруг (мозг-бабочка). Это не хорошо и не плохо — это просто особенности работы твоего внимания.\n\nВажно понимать: рассеянность, трудности с концентрацией или гиперфокус НЕ обязательно означают СДВГ (синдром дефицита внимания и гиперактивности). СДВГ — это медицинский диагноз, который может поставить только врач-психиатр на основе комплексного обследования. Этот тест НЕ является диагностическим инструментом и НЕ заменяет консультацию специалиста. Даже если ты узнаешь себя во многих симптомах, это может быть особенностью твоего стиля внимания, стрессом, недосыпом, тревожностью или другими факторами.\n\nЦель теста — помочь тебе понять, как работает твоё внимание, и дать практические советы по работе с твоим конкретным стилем. Если результаты вызывают беспокойство и симптомы серьёзно мешают жизни, учёбе или работе — обратись к психиатру или психологу для профессиональной оценки.",
+      "en": "This test measures your individual attention and concentration style. We all have different brains: some can focus on one thing for hours (laser brain), some constantly switch between tasks (bee brain), and some easily get distracted by everything around (butterfly brain). This is neither good nor bad — it's just features of how your attention works.\n\nImportant to understand: distractibility, concentration difficulties, or hyperfocus do NOT necessarily mean ADHD (Attention Deficit Hyperactivity Disorder). ADHD is a medical diagnosis that can only be made by a psychiatrist based on comprehensive evaluation. This test is NOT a diagnostic tool and does NOT replace specialist consultation. Even if you recognize yourself in many symptoms, it may be a feature of your attention style, stress, sleep deprivation, anxiety, or other factors.\n\nThe test's goal is to help you understand how your attention works and provide practical advice for working with your specific style. If results cause concern and symptoms seriously interfere with life, studies, or work — consult a psychiatrist or psychologist for professional assessment."
+    },
+    "author": "Based on attention and ADHD research",
+    "theoretical_basis": [
+      "ADHD Research (DSM-5 criteria as reference only)",
+      "Attention Theory (Posner & Petersen)",
+      "Executive Function Research",
+      "Barkley's Model of ADHD",
+      "Flow State Theory (Csikszentmihalyi)"
+    ],
+    "target_audience": {
+      "ru": "Подростки и взрослые от 14 лет, интересующиеся своим стилем внимания (НЕ для диагностики СДВГ)",
+      "en": "Teenagers and adults 14+, interested in their attention style (NOT for ADHD diagnosis)"
+    },
+    "estimated_time_minutes": 7,
+    "question_count": 40,
+    "response_type": "frequency",
+    "category": "cognitive",
+    "critical_disclaimers": {
+      "ru": [
+        "🚨 ЭТО НЕ ДИАГНОЗ СДВГ",
+        "СДВГ диагностирует ТОЛЬКО врач-психиатр",
+        "Тест измеряет стиль внимания, не расстройство",
+        "Рассеянность ≠ автоматически СДВГ",
+        "Многие факторы влияют на внимание: стресс, сон, тревога",
+        "При серьёзных проблемах обратись к специалисту",
+        "Не используй результаты для самодиагностики",
+        "Не начинай лечение без консультации врача"
+      ],
+      "en": [
+        "🚨 THIS IS NOT ADHD DIAGNOSIS",
+        "ADHD is diagnosed ONLY by psychiatrist",
+        "Test measures attention style, not disorder",
+        "Distractibility ≠ automatically ADHD",
+        "Many factors affect attention: stress, sleep, anxiety",
+        "For serious problems, consult specialist",
+        "Don't use results for self-diagnosis",
+        "Don't start treatment without doctor consultation"
+      ]
+    }
+  },
+
+  "response_config": {
+    "type": "frequency",
+    "options": {
+      "ru": [
+        "Никогда",
+        "Редко",
+        "Иногда",
+        "Часто",
+        "Постоянно"
+      ],
+      "en": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often",
+        "Constantly"
+      ]
+    },
+    "scoring": [0, 1, 2, 3, 4],
+    "reverse_formula": "4 - score"
+  },
+
+  "scales": [
+    {
+      "id": "inattention",
+      "name": {
+        "ru": "Рассеянность",
+        "en": "Inattention"
+      },
+      "icon": "🦋",
+      "description": {
+        "ru": "Трудности с удержанием внимания, лёгкая отвлекаемость, забывчивость, потеря вещей",
+        "en": "Difficulty maintaining attention, easy distractibility, forgetfulness, losing things"
+      },
+      "question_ids": [1, 2, 3, 4, 5, 6, 7, 8],
+      "scoring_method": "sum",
+      "normalization": "linear",
+      "min_score": 0,
+      "max_score": 32
+    },
+    {
+      "id": "hyperfocus",
+      "name": {
+        "ru": "Гиперфокус",
+        "en": "Hyperfocus"
+      },
+      "icon": "🔬",
+      "description": {
+        "ru": "Способность полностью погружаться в интересные задачи, теряя счёт времени",
+        "en": "Ability to completely immerse in interesting tasks, losing track of time"
+      },
+      "question_ids": [9, 10, 11, 12, 13, 14, 15, 16],
+      "scoring_method": "sum",
+      "normalization": "linear",
+      "min_score": 0,
+      "max_score": 32
+    },
+    {
+      "id": "impulsivity",
+      "name": {
+        "ru": "Импульсивность",
+        "en": "Impulsivity"
+      },
+      "icon": "⚡",
+      "description": {
+        "ru": "Действия без обдумывания, трудности с ожиданием, прерывание других",
+        "en": "Acting without thinking, difficulty waiting, interrupting others"
+      },
+      "question_ids": [17, 18, 19, 20, 21, 22, 23, 24],
+      "scoring_method": "sum",
+      "normalization": "linear",
+      "min_score": 0,
+      "max_score": 32
+    },
+    {
+      "id": "task_completion",
+      "name": {
+        "ru": "Завершение задач",
+        "en": "Task Completion"
+      },
+      "icon": "📋",
+      "description": {
+        "ru": "Трудности с доведением дел до конца, прокрастинация, незавершённые проекты",
+        "en": "Difficulty completing tasks, procrastination, unfinished projects"
+      },
+      "question_ids": [25, 26, 27, 28, 29, 30, 31, 32],
+      "scoring_method": "sum",
+      "normalization": "linear",
+      "min_score": 0,
+      "max_score": 32
+    },
+    {
+      "id": "task_switching",
+      "name": {
+        "ru": "Переключение между задачами",
+        "en": "Task Switching"
+      },
+      "icon": "🔄",
+      "description": {
+        "ru": "Частая смена занятий, трудности с возвращением к задаче, многозадачность",
+        "en": "Frequent activity changes, difficulty returning to task, multitasking"
+      },
+      "question_ids": [33, 34, 35, 36, 37, 38, 39, 40],
+      "scoring_method": "sum",
+      "normalization": "linear",
+      "min_score": 0,
+      "max_score": 32
+    }
+  ],
+
+  "questions": [
+    {
+      "id": 1,
+      "text": {
+        "ru": "Я легко отвлекаюсь на посторонние звуки, движения или мысли",
+        "en": "I easily get distracted by external sounds, movements, or thoughts"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 2,
+      "text": {
+        "ru": "Я забываю, что собирался сделать, пока шёл к другой комнате",
+        "en": "I forget what I was going to do while walking to another room"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 3,
+      "text": {
+        "ru": "Мне трудно следить за длинными разговорами или лекциями",
+        "en": "I find it hard to follow long conversations or lectures"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 4,
+      "text": {
+        "ru": "Я теряю вещи (ключи, телефон, кошелёк) или не могу вспомнить, куда их положил",
+        "en": "I lose things (keys, phone, wallet) or can't remember where I put them"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 5,
+      "text": {
+        "ru": "Я пропускаю детали или делаю ошибки по невнимательности",
+        "en": "I miss details or make careless mistakes"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 6,
+      "text": {
+        "ru": "Мне сложно концентрироваться на скучных или рутинных задачах",
+        "en": "I struggle to concentrate on boring or routine tasks"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 7,
+      "text": {
+        "ru": "Я часто 'витаю в облаках' или погружаюсь в свои мысли",
+        "en": "I often 'daydream' or get lost in my thoughts"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 8,
+      "text": {
+        "ru": "Я забываю о важных встречах, дедлайнах или обещаниях",
+        "en": "I forget important meetings, deadlines, or promises"
+      },
+      "scale": "inattention",
+      "reverse": false
+    },
+    {
+      "id": 9,
+      "text": {
+        "ru": "Когда меня что-то увлекает, я могу часами работать над этим, забывая обо всём",
+        "en": "When something interests me, I can work on it for hours, forgetting everything"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 10,
+      "text": {
+        "ru": "Я так погружаюсь в задачу, что не слышу, когда меня зовут",
+        "en": "I get so absorbed in a task that I don't hear when called"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 11,
+      "text": {
+        "ru": "Я теряю счёт времени, когда занимаюсь чем-то интересным",
+        "en": "I lose track of time when doing something interesting"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 12,
+      "text": {
+        "ru": "Мне трудно оторваться от интересного дела, даже если нужно",
+        "en": "I find it hard to break away from interesting activity, even when needed"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 13,
+      "text": {
+        "ru": "Я могу забыть поесть или поспать, когда увлечён проектом",
+        "en": "I can forget to eat or sleep when absorbed in a project"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 14,
+      "text": {
+        "ru": "Когда я в 'потоке', мне кажется, что весь мир исчезает",
+        "en": "When I'm in 'flow', it feels like the whole world disappears"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 15,
+      "text": {
+        "ru": "Я могу работать над любимым делом всю ночь напролёт",
+        "en": "I can work on favorite activity all night long"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 16,
+      "text": {
+        "ru": "Моя концентрация на интересном — как лазер, всё остальное не существует",
+        "en": "My concentration on interesting things is like laser, everything else doesn't exist"
+      },
+      "scale": "hyperfocus",
+      "reverse": false
+    },
+    {
+      "id": 17,
+      "text": {
+        "ru": "Я говорю или делаю что-то, не подумав о последствиях",
+        "en": "I say or do things without thinking about consequences"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 18,
+      "text": {
+        "ru": "Мне трудно ждать своей очереди в разговоре, я перебиваю других",
+        "en": "I find it hard to wait my turn in conversation, I interrupt others"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 19,
+      "text": {
+        "ru": "Я делаю импульсивные покупки, которые потом жалею",
+        "en": "I make impulse purchases that I later regret"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 20,
+      "text": {
+        "ru": "Я отправляю сообщения или emails, не перечитав их",
+        "en": "I send messages or emails without rereading them"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 21,
+      "text": {
+        "ru": "Мне сложно сдерживать эмоции или реакции",
+        "en": "I struggle to hold back emotions or reactions"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 22,
+      "text": {
+        "ru": "Я начинаю новое дело, не закончив предыдущее, потому что оно кажется интереснее",
+        "en": "I start new thing without finishing previous one because it seems more interesting"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 23,
+      "text": {
+        "ru": "Я принимаю спонтанные решения, которые меняют мои планы",
+        "en": "I make spontaneous decisions that change my plans"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 24,
+      "text": {
+        "ru": "Мне трудно сидеть спокойно, я постоянно ёрзаю или двигаюсь",
+        "en": "I find it hard to sit still, I constantly fidget or move"
+      },
+      "scale": "impulsivity",
+      "reverse": false
+    },
+    {
+      "id": 25,
+      "text": {
+        "ru": "У меня много начатых, но незавершённых проектов",
+        "en": "I have many started but unfinished projects"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 26,
+      "text": {
+        "ru": "Мне сложно доводить скучные задачи до конца",
+        "en": "I struggle to complete boring tasks"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 27,
+      "text": {
+        "ru": "Я откладываю дела до последнего момента",
+        "en": "I postpone things until the last moment"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 28,
+      "text": {
+        "ru": "Самая сложная часть задачи для меня — это последние 20%",
+        "en": "The hardest part of task for me is the last 20%"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 29,
+      "text": {
+        "ru": "Я теряю интерес к проекту, когда проходит начальный энтузиазм",
+        "en": "I lose interest in project when initial enthusiasm passes"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 30,
+      "text": {
+        "ru": "Мне нужны дедлайны и внешнее давление, чтобы закончить дело",
+        "en": "I need deadlines and external pressure to finish things"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 31,
+      "text": {
+        "ru": "Я начинаю много дел одновременно и не могу закончить ни одно",
+        "en": "I start many things simultaneously and can't finish any"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 32,
+      "text": {
+        "ru": "Мне трудно следовать пошаговым инструкциям от начала до конца",
+        "en": "I find it hard to follow step-by-step instructions from start to finish"
+      },
+      "scale": "task_completion",
+      "reverse": false
+    },
+    {
+      "id": 33,
+      "text": {
+        "ru": "Я часто переключаюсь между разными задачами в течение дня",
+        "en": "I frequently switch between different tasks during the day"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    },
+    {
+      "id": 34,
+      "text": {
+        "ru": "Мне трудно вернуться к задаче после перерыва",
+        "en": "I find it hard to return to task after break"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    },
+    {
+      "id": 35,
+      "text": {
+        "ru": "Я делаю несколько дел одновременно (читаю и смотрю видео, например)",
+        "en": "I do several things simultaneously (read and watch video, for example)"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    },
+    {
+      "id": 36,
+      "text": {
+        "ru": "Я постоянно проверяю телефон, даже когда работаю над важным",
+        "en": "I constantly check phone even when working on important task"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    },
+    {
+      "id": 37,
+      "text": {
+        "ru": "Мне скучно делать одно и то же долго, хочется разнообразия",
+        "en": "I get bored doing same thing for long, want variety"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    },
+    {
+      "id": 38,
+      "text": {
+        "ru": "Я начинаю новую задачу, не закончив текущую, потому что вспомнил о ней",
+        "en": "I start new task without finishing current one because I remembered it"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    },
+    {
+      "id": 39,
+      "text": {
+        "ru": "У меня открыто 20+ вкладок в браузере одновременно",
+        "en": "I have 20+ browser tabs open simultaneously"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    },
+    {
+      "id": 40,
+      "text": {
+        "ru": "Мне сложно сосредоточиться на чём-то одном — мой мозг порхает как пчела",
+        "en": "I struggle to focus on one thing — my brain flits like a bee"
+      },
+      "scale": "task_switching",
+      "reverse": false
+    }
+  ],
+
+  "scoring_rules": {
+    "reverse_scoring": {
+      "formula": "4 - score",
+      "note": "No reverse items in this test"
+    },
+    "scale_calculations": {
+      "inattention": {
+        "method": "sum",
+        "items": [1, 2, 3, 4, 5, 6, 7, 8],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw_score - 0) / 32) * 100"
+        }
+      },
+      "hyperfocus": {
+        "method": "sum",
+        "items": [9, 10, 11, 12, 13, 14, 15, 16],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw_score - 0) / 32) * 100"
+        }
+      },
+      "impulsivity": {
+        "method": "sum",
+        "items": [17, 18, 19, 20, 21, 22, 23, 24],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw_score - 0) / 32) * 100"
+        }
+      },
+      "task_completion": {
+        "method": "sum",
+        "items": [25, 26, 27, 28, 29, 30, 31, 32],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw_score - 0) / 32) * 100"
+        }
+      },
+      "task_switching": {
+        "method": "sum",
+        "items": [33, 34, 35, 36, 37, 38, 39, 40],
+        "reverse_items": [],
+        "normalization": {
+          "type": "linear",
+          "formula": "((raw_score - 0) / 32) * 100"
+        }
+      }
+    },
+    "composite_scores": {
+      "attention_challenges": {
+        "method": "mean",
+        "description": "Overall attention challenges (not ADHD diagnosis)",
+        "scales": ["inattention", "impulsivity", "task_completion", "task_switching"]
+      }
+    }
+  },
+
+  "interpretation_guide": {
+    "interpretation_method": "brain_types",
+    
+    "critical_preface": {
+      "ru": "🚨 ВАЖНО ПРОЧИТАТЬ ПЕРЕД РЕЗУЛЬТАТАМИ:\n\n1. Это НЕ диагноз СДВГ. СДВГ может диагностировать ТОЛЬКО врач-психиатр.\n2. Высокие баллы могут означать:\n   • Особенности твоего стиля внимания\n   • Стресс или выгорание\n   • Недостаток сна\n   • Тревожность или депрессию\n   • Скучную работу/учёбу\n   • Или действительно СДВГ (но это определит врач)\n3. Даже если ты узнаёшь себя во всех вопросах — это не значит, что у тебя СДВГ.\n4. Если симптомы серьёзно мешают жизни — обратись к психиатру для профессиональной оценки.\n\nА теперь — твой стиль внимания:",
+      "en": "🚨 IMPORTANT TO READ BEFORE RESULTS:\n\n1. This is NOT ADHD diagnosis. ADHD can be diagnosed ONLY by psychiatrist.\n2. High scores may mean:\n   • Features of your attention style\n   • Stress or burnout\n   • Lack of sleep\n   • Anxiety or depression\n   • Boring work/studies\n   • Or actually ADHD (but doctor will determine this)\n3. Even if you recognize yourself in all questions — this doesn't mean you have ADHD.\n4. If symptoms seriously interfere with life — consult psychiatrist for professional assessment.\n\nNow — your attention style:"
+    },
+
+    "brain_type_profiles": [
+      {
+        "id": "balanced_brain",
+        "name": {"ru": "Мозг-баланс ⚖️", "en": "Balanced Brain ⚖️"},
+        "criteria": {
+          "inattention": {"max": 40},
+          "hyperfocus": {"max": 60},
+          "impulsivity": {"max": 40},
+          "task_completion": {"max": 40},
+          "task_switching": {"max": 40}
+        },
+        "description": {
+          "ru": "У тебя сбалансированный стиль внимания. Ты можешь фокусироваться, когда нужно, но и гибко переключаться между задачами. Это здоровый паттерн работы мозга.",
+          "en": "You have balanced attention style. You can focus when needed but also flexibly switch between tasks. This is healthy brain pattern."
+        },
+        "strengths": {
+          "ru": ["Можешь концентрироваться на важном", "Гибкость в переключении", "Завершаешь начатое", "Контролируешь импульсы"],
+          "en": ["Can concentrate on important things", "Flexibility in switching", "Complete what you start", "Control impulses"]
+        },
+        "tips": {
+          "ru": ["Продолжай поддерживать здоровый режим сна", "Используй техники тайм-менеджмента для продуктивности", "Балансируй работу и отдых"],
+          "en": ["Continue maintaining healthy sleep schedule", "Use time management techniques for productivity", "Balance work and rest"]
+        }
+      },
+      {
+        "id": "bee_brain",
+        "name": {"ru": "Мозг-пчёлка 🐝", "en": "Bee Brain 🐝"},
+        "criteria": {
+          "inattention": {"min": 50},
+          "task_switching": {"min": 50},
+          "hyperfocus": {"max": 50}
+        },
+        "description": {
+          "ru": "Твой мозг постоянно порхает между разными мыслями и задачами, как пчела между цветами. Тебе сложно долго фокусироваться на чём-то одном, ты любишь разнообразие и легко отвлекаешься.",
+          "en": "Your brain constantly flits between different thoughts and tasks, like bee between flowers. You struggle to focus on one thing for long, you love variety and get easily distracted."
+        },
+        "strengths": {
+          "ru": ["Креативность и нестандартное мышление", "Умение видеть связи между разными идеями", "Гибкость и адаптивность", "Энергичность"],
+          "en": ["Creativity and non-standard thinking", "Ability to see connections between ideas", "Flexibility and adaptability", "Energy"]
+        },
+        "challenges": {
+          "ru": ["Трудно завершать длинные проекты", "Легко отвлекаешься", "Много начатого, мало завершённого", "Рутинные задачи — твой кошмар"],
+          "en": ["Hard to complete long projects", "Easily distracted", "Much started, little finished", "Routine tasks are your nightmare"]
+        },
+        "practical_tips": {
+          "ru": [
+            "Используй таймер Pomodoro (25 минут работы, 5 минут перерыв)",
+            "Разбивай большие задачи на маленькие шаги",
+            "Работай в тихом месте без раздражителей",
+            "Создай списки дел и визуальные напоминания",
+            "Найди 'body doubling' партнёра (работать рядом с кем-то)",
+            "Принимай свою пчелиную природу — это не плохо!"
+          ],
+          "en": [
+            "Use Pomodoro timer (25 minutes work, 5 minutes break)",
+            "Break big tasks into small steps",
+            "Work in quiet place without distractions",
+            "Create to-do lists and visual reminders",
+            "Find 'body doubling' partner (work alongside someone)",
+            "Accept your bee nature — it's not bad!"
+          ]
+        },
+        "when_to_seek_help": {
+          "ru": "Если твоя рассеянность СЕРЬЁЗНО мешает учёбе, работе или отношениям, и эти симптомы были у тебя с детства — стоит проконсультироваться с психиатром.",
+          "en": "If your distractibility SERIOUSLY interferes with studies, work, or relationships, and these symptoms have been since childhood — consider consulting psychiatrist."
+        }
+      },
+      {
+        "id": "laser_brain",
+        "name": {"ru": "Мозг-лазер 🔬", "en": "Laser Brain 🔬"},
+        "criteria": {
+          "hyperfocus": {"min": 65},
+          "inattention": {"max": 40}
+        },
+        "description": {
+          "ru": "Когда тебя что-то увлекает, ты погружаешься в это полностью, как лазер. Мир вокруг перестаёт существовать. Это твоя суперсила, но иногда может быть проблемой.",
+          "en": "When something interests you, you immerse completely, like laser. World around ceases to exist. This is your superpower, but sometimes can be problem."
+        },
+        "strengths": {
+          "ru": ["Невероятная продуктивность в интересных задачах", "Способность к глубокой работе", "Мастерство в любимых областях", "Состояние 'потока'"],
+          "en": ["Incredible productivity in interesting tasks", "Ability for deep work", "Mastery in favorite areas", "'Flow' state"]
+        },
+        "challenges": {
+          "ru": ["Трудно переключиться, даже когда нужно", "Можешь забыть о базовых потребностях (еда, сон)", "Скучные задачи — пытка", "Дисбаланс жизни (работа vs отдых)"],
+          "en": ["Hard to switch even when needed", "May forget basic needs (food, sleep)", "Boring tasks are torture", "Life imbalance (work vs rest)"]
+        },
+        "practical_tips": {
+          "ru": [
+            "Ставь будильники для напоминаний (поесть, встать, закончить)",
+            "Используй гиперфокус стратегически для важных задач",
+            "Создай 'интерфейс' между собой и миром (партнёр, который напомнит)",
+            "Для скучных задач: геймификация, музыка, смена обстановки",
+            "Балансируй: после гиперфокуса нужен отдых",
+            "Следи за здоровьем — не забывай про тело!"
+          ],
+          "en": [
+            "Set alarms for reminders (eat, stand up, finish)",
+            "Use hyperfocus strategically for important tasks",
+            "Create 'interface' between you and world (partner who reminds)",
+            "For boring tasks: gamification, music, change of scenery",
+            "Balance: after hyperfocus need rest",
+            "Monitor health — don't forget body!"
+          ]
+        }
+      },
+      {
+        "id": "butterfly_brain",
+        "name": {"ru": "Мозг-бабочка 🦋", "en": "Butterfly Brain 🦋"},
+        "criteria": {
+          "inattention": {"min": 60},
+          "impulsivity": {"min": 50},
+          "task_completion": {"min": 50}
+        },
+        "description": {
+          "ru": "Твой мозг как бабочка — красивый, но непредсказуемый. Ты легко отвлекаешься, действуешь импульсивно и с трудом завершаешь задачи. Жизнь с таким мозгом может быть хаотичной.",
+          "en": "Your brain is like butterfly — beautiful but unpredictable. You easily get distracted, act impulsively, and struggle to complete tasks. Life with such brain can be chaotic."
+        },
+        "challenges": {
+          "ru": ["Серьёзные трудности с концентрацией", "Импульсивные решения", "Много незавершённых проектов", "Хаос в жизни и делах"],
+          "en": ["Serious concentration difficulties", "Impulsive decisions", "Many unfinished projects", "Chaos in life and affairs"]
+        },
+        "practical_tips": {
+          "ru": [
+            "Создай жёсткую внешнюю структуру (напоминания, списки, рутины)",
+            "Минимизируй отвлекающие факторы максимально",
+            "Используй 'метод одной вещи': сосредоточься только на одном",
+            "Найди accountability партнёра",
+            "Рассмотри консультацию со специалистом"
+          ],
+          "en": [
+            "Create rigid external structure (reminders, lists, routines)",
+            "Minimize distracting factors maximally",
+            "Use 'one thing method': focus on only one",
+            "Find accountability partner",
+            "Consider consulting specialist"
+          ]
+        },
+        "important_note": {
+          "ru": "⚠️ Если эти симптомы сильно мешают твоей жизни с детства — это может быть СДВГ. Обратись к психиатру для оценки. Есть эффективное лечение!",
+          "en": "⚠️ If these symptoms strongly interfere with your life since childhood — this may be ADHD. Consult psychiatrist for assessment. Effective treatment exists!"
+        }
+      },
+      {
+        "id": "scanner_brain",
+        "name": {"ru": "Мозг-сканер 📡", "en": "Scanner Brain 📡"},
+        "criteria": {
+          "task_switching": {"min": 65},
+          "hyperfocus": {"max": 40}
+        },
+        "description": {
+          "ru": "Твой мозг постоянно сканирует окружение в поисках нового. Ты мультипотенциал — у тебя множество интересов, но трудно углубиться в что-то одно.",
+          "en": "Your brain constantly scans environment for new things. You're multipotentialite — you have many interests but hard to go deep into one."
+        },
+        "strengths": {
+          "ru": ["Широкий кругозор", "Умение видеть общую картину", "Адаптивность к изменениям", "Интерес к множеству областей"],
+          "en": ["Broad horizons", "Ability to see big picture", "Adaptability to changes", "Interest in many areas"]
+        },
+        "tips": {
+          "ru": [
+            "Прими свою мультипотенциальность — это ОК",
+            "Ищи работу, где нужно разнообразие",
+            "Используй 'метод ротации' для проектов",
+            "Читай: 'Отказываюсь выбирать' (Барбара Шер)"
+          ],
+          "en": [
+            "Accept your multipotentiality — it's OK",
+            "Look for work requiring variety",
+            "Use 'rotation method' for projects",
+            "Read: 'Refuse to Choose' (Barbara Sher)"
+          ]
+        }
+      }
+    ],
+
+    "adhd_screening_note": {
+      "ru": {
+        "title": "А это может быть СДВГ?",
+        "content": "Если твои результаты высокие (60%+) по нескольким шкалам, и эти симптомы:\n• Были у тебя с детства (до 12 лет)\n• Проявляются в разных ситуациях (дома, на работе, с друзьями)\n• Серьёзно мешают жизни, учёбе или работе\n• Не объясняются стрессом, депрессией или недосыпом\n\nТогда стоит проконсультироваться с психиатром для профессиональной оценки.\n\nНО: даже при высоких баллах это может быть НЕ СДВГ, а:\n• Тревожное расстройство\n• Депрессия\n• Биполярное расстройство\n• Проблемы со сном\n• Гипертиреоз\n• Или просто твой стиль работы мозга\n\nТолько врач может поставить диагноз после полного обследования.",
+        "where_to_go": "Куда обратиться: психиатр (для диагностики) → психотерапевт/психолог (для поддержки) → возможно медикаментозное лечение"
+      },
+      "en": {
+        "title": "Could this be ADHD?",
+        "content": "If your results are high (60%+) on several scales, and these symptoms:\n• Have been with you since childhood (before age 12)\n• Manifest in different situations (home, work, with friends)\n• Seriously interfere with life, studies, or work\n• Aren't explained by stress, depression, or sleep deprivation\n\nThen consider consulting psychiatrist for professional assessment.\n\nBUT: even with high scores this may be NOT ADHD, but:\n• Anxiety disorder\n• Depression\n• Bipolar disorder\n• Sleep problems\n• Hyperthyroidism\n• Or just your brain's working style\n\nOnly doctor can diagnose after full examination.",
+        "where_to_go": "Where to go: psychiatrist (for diagnosis) → psychotherapist/psychologist (for support) → possibly medication"
+      }
+    },
+
+    "lifestyle_factors": {
+      "ru": {
+        "title": "Факторы, влияющие на внимание",
+        "note": "Перед тем как думать о СДВГ, проверь эти факторы:",
+        "factors": [
+          {
+            "factor": "Сон",
+            "impact": "Недосып (<7-8 часов) вызывает симптомы, идентичные СДВГ"
+          },
+          {
+            "factor": "Стресс",
+            "impact": "Хронический стресс разрушает концентрацию и память"
+          },
+          {
+            "factor": "Тревожность",
+            "impact": "Тревога создаёт 'шум' в голове, мешая фокусу"
+          },
+          {
+            "factor": "Депрессия",
+            "impact": "Депрессия вызывает когнитивные трудности"
+          },
+          {
+            "factor": "Питание",
+            "impact": "Дефицит витаминов (особенно B12, D, железо) влияет на мозг"
+          },
+          {
+            "factor": "Цифровая перегрузка",
+            "impact": "Соцсети тренируют мозг на короткое внимание"
+          },
+          {
+            "factor": "Скучная работа/учёба",
+            "impact": "Недостимулирующая среда = рассеянность"
+          }
+        ]
+      },
+      "en": {
+        "title": "Factors Affecting Attention",
+        "note": "Before thinking about ADHD, check these factors:",
+        "factors": [
+          {
+            "factor": "Sleep",
+            "impact": "Sleep deprivation (<7-8 hours) causes symptoms identical to ADHD"
+          },
+          {
+            "factor": "Stress",
+            "impact": "Chronic stress destroys concentration and memory"
+          },
+          {
+            "factor": "Anxiety",
+            "impact": "Anxiety creates 'noise' in head, interfering with focus"
+          },
+          {
+            "factor": "Depression",
+            "impact": "Depression causes cognitive difficulties"
+          },
+          {
+            "factor": "Nutrition",
+            "impact": "Vitamin deficiency (especially B12, D, iron) affects brain"
+          },
+          {
+            "factor": "Digital Overload",
+            "impact": "Social media train brain for short attention"
+          },
+          {
+            "factor": "Boring Work/Studies",
+            "impact": "Understimulating environment = distractibility"
+          }
+        ]
+      }
+    },
+
+    "resources": {
+      "ru": {
+        "books": [
+          "Driven to Distraction (Э. Хэллоуэлл) — про СДВГ у взрослых",
+          "Отказываюсь выбирать (Б. Шер) — для мультипотенциалов",
+          "Эссенциализм (Г. МакКеон) — про фокус на важном"
+        ],
+        "apps": [
+          "Forest — таймер для фокуса",
+          "Brain Focus Productivity Timer — Pomodoro",
+          "Habitica — геймификация задач"
+        ],
+        "communities": [
+          "r/ADHD (Reddit) — для вопросов о СДВГ",
+          "How to ADHD (YouTube) — образовательные видео"
+        ]
+      },
+      "en": {
+        "books": [
+          "Driven to Distraction (E. Hallowell) — about adult ADHD",
+          "Refuse to Choose (B. Sher) — for multipotentialites",
+          "Essentialism (G. McKeown) — about focus on important"
+        ],
+        "apps": [
+          "Forest — focus timer",
+          "Brain Focus Productivity Timer — Pomodoro",
+          "Habitica — task gamification"
+        ],
+        "communities": [
+          "r/ADHD (Reddit) — for ADHD questions",
+          "How to ADHD (YouTube) — educational videos"
+        ]
+      }
+    }
+  },
+
+  "validation_data": {
+    "reliability": {
+      "cronbach_alpha_target": 0.80,
+      "test_retest_period_weeks": 4,
+      "test_retest_correlation_target": 0.75
+    },
+    "validity": {
+      "inter_scale_correlation_range": [0.3, 0.6],
+      "convergent_validity_tests": [
+        "Adult ADHD Self-Report Scale (ASRS)",
+        "Conners Adult ADHD Rating Scale",
+        "Executive Function tests"
+      ],
+      "discriminant_validity_tests": [
+        "General Intelligence Test",
+        "Personality Tests"
+      ],
+      "note": "This test is NOT diagnostic tool and cannot replace professional ADHD assessment"
+    }
+  },
+
+  "implementation_notes": {
+    "question_order": "fixed",
+    "scale_order": "fixed",
+    "progress_indicator": true,
+    "allow_back_navigation": true,
+    "required_questions": "all",
+    "save_progress": true,
+    "adaptive_testing": false,
+    "time_limit_per_question": null,
+    "result_storage": "local",
+    "visualization_type": "bar_chart",
+    "retake_recommendation": "Every 6 months or after significant life changes",
+    "medical_disclaimer": {
+      "ru": "МЕДИЦИНСКИЙ DISCLAIMER: Этот тест не является медицинским инструментом и не может диагностировать СДВГ или любое другое состояние. Он предназначен исключительно для образовательных целей и самопознания. Для диагностики СДВГ требуется комплексная оценка врача-психиатра, включающая клиническое интервью, анамнез с детства, исключение других состояний и, возможно, нейропсихологическое тестирование. Не начинайте какое-либо лечение на основе результатов этого теста без консультации с квалифицированным медицинским специалистом.",
+      "en": "MEDICAL DISCLAIMER: This test is not medical tool and cannot diagnose ADHD or any other condition. It is intended solely for educational purposes and self-knowledge. ADHD diagnosis requires comprehensive assessment by psychiatrist, including clinical interview, childhood history, ruling out other conditions, and possibly neuropsychological testing. Do not start any treatment based on this test results without consulting qualified medical professional."
+    }
+  }
+}

@@ -14,6 +14,7 @@ import 'results_screen.dart';
 import 'settings_screen.dart';
 import 'color_psychology_test_screen.dart';
 import 'career_compass_test_screen.dart';
+import 'text_conflict_communication_test_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -364,6 +365,14 @@ class HomeScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const CareerCompassTestScreen(),
+                ),
+              );
+            } else if (test.id == 'text_conflict_communication') {
+              // Специальный тест с scenario-based форматом
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TextConflictCommunicationTestScreen(),
                 ),
               );
             } else if (test.disclaimer != null) {

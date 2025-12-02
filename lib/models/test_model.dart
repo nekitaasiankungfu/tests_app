@@ -705,7 +705,11 @@ class QuestionContribution {
       final maxAnswerScore = TestResult._validateInt(json, 'maxAnswerScore', required: true, min: 1);
 
       // Validate score relationship
-      if (answerScore > maxAnswerScore) {
+      // Note: This is a soft validation - answerScore can exceed maxAnswerScore in legacy data
+      // where maxAnswerScore was incorrectly set to 1 for tests with 0-4 or 1-5 ranges.
+      // We only log a warning, not throw an error, to maintain backward compatibility.
+      if (answerScore > maxAnswerScore && maxAnswerScore > 1) {
+        // Only warn if maxAnswerScore > 1 (meaning it's not legacy data with maxAnswerScore=1)
         appLogger.w('QuestionContribution.fromJson: answerScore ($answerScore) exceeds maxAnswerScore ($maxAnswerScore)');
       }
 

@@ -32,6 +32,13 @@ import '../data/imposter_syndrome_data.dart';
 import '../data/sleep_recovery_data.dart';
 import '../data/procrastination_productivity_data.dart';
 import '../data/boundaries_people_pleasing_data.dart';
+import '../data/dark_personality_traits_data.dart';
+import '../data/toxic_patterns_data.dart';
+import '../data/attention_style_data.dart';
+import '../data/mental_age_lifespan_styles_data.dart';
+import '../data/self_sabotage_data.dart';
+import '../data/money_mindset_habits_data.dart';
+import '../data/gaming_balance_check_data.dart';
 import '../config/summary_config.dart';
 import '../config/summary/personality_type_scales.dart';
 import '../utils/app_logger.dart';
@@ -155,7 +162,21 @@ class TestService {
                                                                             ? 4  // Procrastination Productivity uses 0-4 scoring (5-point frequency scale)
                                                                             : test.id == 'boundaries_people_pleasing'
                                                                                 ? 4  // Boundaries People-Pleasing uses 0-4 scoring (5-point frequency scale)
-                                                                                : 5;
+                                                                                : test.id == 'dark_personality_traits'
+                                                                                    ? 4  // Dark Personality Traits uses 0-4 scoring (5-point Likert scale)
+                                                                                    : test.id == 'toxic_patterns'
+                                                                                        ? 4  // Toxic Patterns uses 0-4 scoring (5-point frequency scale)
+                                                                                        : test.id == 'attention_style'
+                                                                                            ? 4  // Attention Style uses 0-4 scoring (5-point frequency scale)
+                                                                                            : test.id == 'mental_age_lifespan_styles_v1'
+                                                                                                ? 4  // Mental Age Lifespan Styles uses 0-4 scoring (5-point Likert scale)
+                                                                                                : test.id == 'self_sabotage_how_you_block_yourself_v1'
+                                                                                                    ? 4  // Self-Sabotage uses 0-4 scoring (5-point frequency scale)
+                                                                                                    : test.id == 'money_mindset_habits_v1'
+                                                                                                        ? 4  // Money Mindset Habits uses 0-4 scoring (5-point frequency scale)
+                                                                                                        : test.id == 'gaming_balance_check_v1'
+                                                                                                            ? 4  // Gaming Balance Check uses 0-4 scoring (5-point frequency scale)
+                                                                                                            : 5;
 
     for (final question in test.questions) {
       final selectedAnswerId = answers[question.id];
@@ -425,6 +446,27 @@ class TestService {
     } else if (test.id == 'boundaries_people_pleasing') {
       factorNames = BoundariesPeoplePleasingData.getFactorNames();
       factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'dark_personality_traits') {
+      factorNames = DarkPersonalityTraitsData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'toxic_patterns') {
+      factorNames = ToxicPatternsData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'attention_style') {
+      factorNames = AttentionStyleData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'mental_age_lifespan_styles_v1') {
+      factorNames = MentalAgeLifespanStylesData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'self_sabotage_how_you_block_yourself_v1') {
+      factorNames = SelfSabotageData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'money_mindset_habits_v1') {
+      factorNames = MoneyMindsetHabitsData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
+    } else if (test.id == 'gaming_balance_check_v1') {
+      factorNames = GamingBalanceCheckData.getFactorNames();
+      factorInterpretations = {}; // Will use percentage-based interpretation
     } else {
       factorNames = IPIPBigFiveData.getFactorNames();
       factorInterpretations = {};
@@ -583,6 +625,34 @@ class TestService {
         final percentage = (score / maxFactorScore) * 100;
         interpretation =
             BoundariesPeoplePleasingData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'dark_personality_traits') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            DarkPersonalityTraitsData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'toxic_patterns') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            ToxicPatternsData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'attention_style') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            AttentionStyleData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'mental_age_lifespan_styles_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            MentalAgeLifespanStylesData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'self_sabotage_how_you_block_yourself_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            SelfSabotageData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'money_mindset_habits_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            MoneyMindsetHabitsData.getFactorInterpretation(factorId, percentage);
+      } else if (test.id == 'gaming_balance_check_v1') {
+        final percentage = (score / maxFactorScore) * 100;
+        interpretation =
+            GamingBalanceCheckData.getFactorInterpretation(factorId, percentage);
       } else {
         interpretation = IPIPBigFiveData.getFactorInterpretation(factorId, score);
       }

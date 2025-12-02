@@ -29,11 +29,19 @@ import 'summary/question_weights/values_priorities_weights.dart';
 import 'summary/question_weights/attachment_style_weights.dart';
 import 'summary/question_weights/motivational_strategies_weights.dart';
 import 'summary/question_weights/conflict_communication_style_weights.dart';
+import 'summary/question_weights/text_conflict_communication_weights.dart';
 import 'summary/question_weights/emotional_intelligence_weights.dart';
 import 'summary/question_weights/imposter_syndrome_weights.dart';
 import 'summary/question_weights/sleep_recovery_weights.dart';
 import 'summary/question_weights/procrastination_productivity_weights.dart';
 import 'summary/question_weights/boundaries_people_pleasing_weights.dart';
+import 'summary/question_weights/dark_personality_traits_weights.dart';
+import 'summary/question_weights/toxic_patterns_weights.dart';
+import 'summary/question_weights/attention_style_weights.dart';
+import 'summary/question_weights/mental_age_lifespan_styles_weights.dart';
+import 'summary/question_weights/self_sabotage_weights.dart';
+import 'summary/question_weights/money_mindset_habits_weights.dart';
+import 'summary/question_weights/gaming_balance_check_weights.dart';
 
 // Re-export for convenience
 export 'bipolar_scales.dart';
@@ -2342,11 +2350,19 @@ class QuestionWeightsConfig {
     ...AttachmentStyleWeights.weights,
     ...MotivationalStrategiesWeights.weights,
     ...ConflictCommunicationStyleWeights.weights,
+    ...TextConflictCommunicationWeights.weights,
     ...EmotionalIntelligenceWeights.weights,
     ...ImposterSyndromeWeights.weights,
     ...SleepRecoveryWeights.weights,
     ...procrastinationProductivityWeights,
     ...boundariesPeoplePleasingWeights,
+    ...DarkPersonalityTraitsWeights.weights,
+    ...ToxicPatternsWeights.weights,
+    ...AttentionStyleWeights.weights,
+    ...MentalAgeLifespanStylesWeights.weights,
+    ...SelfSabotageWeights.weights,
+    ...MoneyMindsetHabitsWeights.weights,
+    ...GamingBalanceCheckWeights.weights,
 
     // ========================================================================
     // WEIGHTS NOW LOADED FROM SEPARATE FILES

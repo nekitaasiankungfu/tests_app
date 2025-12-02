@@ -1,0 +1,166 @@
+{
+  "id": "love_profile",
+  "version": "1.0.0",
+  "type": "multi_factor",
+  "factors": [
+    "intimacy",
+    "passion",
+    "commitment"
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "text": {
+        "ru": "TODO: Вопрос 1",
+        "en": "TODO: Question 1"
+      },
+      "factor": "intimacy",
+      "is_reversed": false,
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Совершенно неточно",
+            "en": "Very Inaccurate"
+          },
+          "score": 1
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Скорее неточно",
+            "en": "Moderately Inaccurate"
+          },
+          "score": 2
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Ни точно, ни неточно",
+            "en": "Neither Accurate Nor Inaccurate"
+          },
+          "score": 3
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Скорее точно",
+            "en": "Moderately Accurate"
+          },
+          "score": 4
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Совершенно точно",
+            "en": "Very Accurate"
+          },
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": {
+        "ru": "TODO: Вопрос 2",
+        "en": "TODO: Question 2"
+      },
+      "factor": "passion",
+      "is_reversed": false,
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Совершенно неточно",
+            "en": "Very Inaccurate"
+          },
+          "score": 1
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Скорее неточно",
+            "en": "Moderately Inaccurate"
+          },
+          "score": 2
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Ни точно, ни неточно",
+            "en": "Neither Accurate Nor Inaccurate"
+          },
+          "score": 3
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Скорее точно",
+            "en": "Moderately Accurate"
+          },
+          "score": 4
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Совершенно точно",
+            "en": "Very Accurate"
+          },
+          "score": 5
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": {
+        "ru": "TODO: Вопрос 3",
+        "en": "TODO: Question 3"
+      },
+      "factor": "commitment",
+      "is_reversed": false,
+      "answers": [
+        {
+          "id": "a1",
+          "text": {
+            "ru": "Совершенно неточно",
+            "en": "Very Inaccurate"
+          },
+          "score": 1
+        },
+        {
+          "id": "a2",
+          "text": {
+            "ru": "Скорее неточно",
+            "en": "Moderately Inaccurate"
+          },
+          "score": 2
+        },
+        {
+          "id": "a3",
+          "text": {
+            "ru": "Ни точно, ни неточно",
+            "en": "Neither Accurate Nor Inaccurate"
+          },
+          "score": 3
+        },
+        {
+          "id": "a4",
+          "text": {
+            "ru": "Скорее точно",
+            "en": "Moderately Accurate"
+          },
+          "score": 4
+        },
+        {
+          "id": "a5",
+          "text": {
+            "ru": "Совершенно точно",
+            "en": "Very Accurate"
+          },
+          "score": 5
+        }
+      ]
+    }
+  ],
+  "_note": "TODO: Add 60 questions. Run convert_tests.bat on Windows or convert manually."
+}

@@ -38,6 +38,14 @@ import '../data/imposter_syndrome_data.dart';
 import '../data/sleep_recovery_data.dart';
 import '../data/procrastination_productivity_data.dart';
 import '../data/boundaries_people_pleasing_data.dart';
+import '../data/dark_personality_traits_data.dart';
+import '../data/toxic_patterns_data.dart';
+import '../data/attention_style_data.dart';
+import '../data/mental_age_lifespan_styles_data.dart';
+import '../data/self_sabotage_data.dart';
+import '../data/money_mindset_habits_data.dart';
+import '../data/gaming_balance_check_data.dart';
+import '../data/tests/text_conflict_communication_test.dart';
 
 /// Service for loading tests from JSON files with caching.
 ///
@@ -218,6 +226,30 @@ class TestLoaderService {
         break;
       case 'boundaries_people_pleasing':
         test = BoundariesPeoplePleasingData.getBoundariesPeoplePleasingTest();
+        break;
+      case 'dark_personality_traits':
+        test = DarkPersonalityTraitsData.getDarkPersonalityTraitsTest();
+        break;
+      case 'toxic_patterns':
+        test = ToxicPatternsData.getToxicPatternsTest();
+        break;
+      case 'attention_style':
+        test = AttentionStyleData.getAttentionStyleTest();
+        break;
+      case 'mental_age_lifespan_styles_v1':
+        test = MentalAgeLifespanStylesData.getMentalAgeLifespanStylesTest();
+        break;
+      case 'self_sabotage_how_you_block_yourself_v1':
+        test = SelfSabotageData.getTestData();
+        break;
+      case 'money_mindset_habits_v1':
+        test = MoneyMindsetHabitsData.getTestData();
+        break;
+      case 'gaming_balance_check_v1':
+        test = GamingBalanceCheckData.getGamingBalanceCheckTest();
+        break;
+      case 'text_conflict_communication':
+        test = TextConflictCommunicationTest.getTextConflictCommunicationTest();
         break;
       default:
         throw TestLoadException('No legacy data available for ${stub.id}');

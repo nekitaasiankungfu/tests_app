@@ -20,9 +20,9 @@ A mobile application providing professional psychological tests for self-assessm
 
 ### Core Features
 
-- **27 psychological tests in 5 categories** (24 standard + 2 special + 1 profile test)
+- **28 psychological tests in 5 categories** (24 standard + 3 special + 1 profile test)
 - **195 psychological scales** for aggregate personality analysis
-- **Universal profile system** - 24 tests with 7-section detailed profiles ⭐
+- **Universal profile system** - 25 tests with 7-section detailed profiles ⭐
 - **ProfileService** - Automatic profile display in results ⭐
 - **Multilingual support** (Russian/English)
 - **Daily mood tracking** and result history
@@ -125,15 +125,15 @@ Data & Config Layer (Test Data, Storage)
 ## Project Structure
 
 ```
-├── lib/                           # Main application (~63,000 lines)
+├── lib/                           # Main application (~66,200 lines)
 │   ├── main.dart                  # App entry point
 │   ├── config/                    # Configuration
-│   │   └── summary/question_weights/  # Personality type weights
-│   ├── data/                      # Test data (28+ files)
-│   ├── models/                    # Data models
+│   │   └── summary/question_weights/  # Personality type weights (31 files)
+│   ├── data/                      # Test data (31+ files)
+│   ├── models/                    # Data models (9 files)
 │   ├── providers/                 # State management (5 providers)
-│   ├── services/                  # Business logic
-│   ├── screens/                   # UI screens (15+ files)
+│   ├── services/                  # Business logic (7 files)
+│   ├── screens/                   # UI screens (20+ files)
 │   └── widgets/                   # Reusable components
 ├── test/                          # Tests (9 files, 3,989 lines)
 ├── docs/                          # Documentation
@@ -159,8 +159,25 @@ Data & Config Layer (Test Data, Storage)
 └── README.md                      # Project overview (Russian)
 ```
 
-**Total Growth:** 10,347 → ~63,000 lines (+509%)
-**Latest Addition:** Conflict Communication Style Test (45 questions, 5 styles, TKI model)
+**Total Growth:** 10,347 → ~66,200 lines (+539%)
+**Latest Addition:** Text Conflict Communication Test (20 scenarios, 4 scales, custom UI)
+
+### Special Tests with Custom UI
+
+The app includes 3 special tests with custom interfaces:
+
+1. **Color Psychology Test** (`color_psychology_v1`)
+   - Custom widgets for color selection, ranking, pairing, associations
+   - 6 distinct interaction types
+
+2. **Career Compass Test** (`career_compass_v1`)
+   - Forced-choice format (A vs B comparisons)
+   - 56 questions, 8 career scales
+
+3. **Text Conflict Communication Test** (`text_conflict_communication`) ⭐ NEW
+   - Scenario-based format (situation + context + question)
+   - 20 questions with A/B/C/D options
+   - 4 communication scales, 5 profiles
 
 ---
 
@@ -243,24 +260,26 @@ SummaryData? calculateSummary(List<TestResult> results) {
 
 ## Current Status
 
-**Latest Version:** 3.26.0 (2025-12-01)
+**Latest Version:** 3.27.0 (2025-12-03)
 
-### Recent Addition: Conflict Communication Style Test
+### Recent Addition: Text Conflict Communication Test
 
-- 45 вопросов, 5 стилей конфликтного поведения
-- Based on Thomas-Kilmann Conflict Mode Instrument (TKI)
-- Multi-choice format с ситуационными вопросами
-- 5 profiles с 7-секционной структурой
-- 32 шкалы (24 hierarchical + 8 personality type poles)
+- 20 scenario-based questions about texting behavior in conflicts
+- Custom UI with situation + context + question format
+- 4 communication scales: avoidance, aggression, passive_revenge, assertiveness
+- 5 profiles: the_ghoster, the_exploder, the_passive_avenger, the_assertive, the_mixed
+- 7-section profile structure with recommendations
+- Integrated with 195 hierarchical psychological scales
 
 ### Progress
 
 **Completed:**
-- ✅ 27 psychological tests implemented
+- ✅ 28 psychological tests implemented
 - ✅ Universal profile system (ProfileService)
 - ✅ Production-ready error handling
 - ✅ Comprehensive test documentation
 - ✅ Critical UI tests
+- ✅ Legacy data validation fix (maxAnswerScore compatibility)
 
 **In Progress:**
 - 🔄 Documentation coverage (target: 60%+)
@@ -285,6 +304,8 @@ SummaryData? calculateSummary(List<TestResult> results) {
 | **TestProfile** | `lib/models/test_profile_model.dart` | Profile model |
 | **Service** | `lib/services/test_service.dart` | Test logic |
 | **Registry** | `lib/data/test_registry.dart` | All tests list |
+| **Loader** | `lib/services/test_loader_service.dart` | Lazy test loading + cache |
+| **Special Tests** | `lib/screens/text_conflict_communication_test_screen.dart` | Custom UI for scenario tests |
 
 **📖 For complete file listing:** [`docs/FILES_MAP.md`](docs/FILES_MAP.md)
 
@@ -357,31 +378,33 @@ Comprehensive modular guide for adding psychological tests (v3.5.0):
 
 ### Latest Version
 
-**Version:** 3.26.0
-**Date:** 2025-12-01
-**Codebase:** ~63,000 lines
-**Tests:** 27 (24 std + 2 special + 1 profile)
+**Version:** 3.27.0
+**Date:** 2025-12-03
+**Codebase:** ~66,200 lines
+**Tests:** 28 (24 std + 3 special + 1 profile)
 
 ### Recent Changes
 
-**v3.26.0 (2025-12-01):** Conflict Communication Style Test Added
-- 45 вопросов, 5 стилей конфликтного поведения
-- Thomas-Kilmann Conflict Mode Instrument (TKI)
-- Multi-choice format с ситуационными вопросами
-- 5 profiles с 7-секционной структурой
-- **Критические исправления:**
-  - Удалены 45 невалидных шкал
-  - Исправлено использование биполярных полюсов
-  - Переработана архитектура multi-choice тестов
+**v3.27.0 (2025-12-03):** Text Conflict Communication Test Added
+- 20 scenario-based questions about texting behavior in conflicts
+- Custom UI: situation + context + question format with A/B/C/D options
+- 4 communication scales (avoidance, aggression, passive_revenge, assertiveness)
+- 5 detailed profiles with 7-section structure
+- **Files Created:** 7 files, 3,169 lines
+  - Models, data, test stub, custom screens, service, weights
+- **Bug Fixes:**
+  - Fixed legacy data validation (maxAnswerScore compatibility)
+  - Removed disclaimer to enable custom UI navigation
+  - Added test loader case for proper test loading
 
+**v3.26.0 (2025-12-01):** Conflict Communication Style Test
 **v3.25.0 (2025-12-01):** Attachment Styles Test
 **v3.24.0 (2025-11-30):** Values and Priorities Test
-**v3.23.0 (2025-11-30):** Universal Profile System Merge
 
 **📖 See [docs/REVISION_HISTORY.md](docs/REVISION_HISTORY.md) for full history**
 
 ---
 
-**Last Updated:** 2025-12-01 | **Version:** 3.26.0
+**Last Updated:** 2025-12-03 | **Version:** 3.27.0
 
 > **📖 For detailed information, navigate to the `docs/` directory.**

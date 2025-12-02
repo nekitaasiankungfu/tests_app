@@ -34,6 +34,14 @@ import 'tests/imposter_syndrome_test.dart';
 import 'tests/sleep_recovery_test.dart';
 import 'tests/procrastination_productivity_test.dart';
 import 'tests/boundaries_people_pleasing_test.dart';
+import 'tests/dark_personality_traits_test.dart';
+import 'tests/toxic_patterns_test.dart';
+import 'tests/attention_style_test.dart';
+import 'tests/mental_age_lifespan_styles_test.dart';
+import 'tests/self_sabotage_test.dart';
+import 'tests/money_mindset_habits_test.dart';
+import 'tests/gaming_balance_check_test.dart';
+import 'tests/text_conflict_communication_test.dart';
 
 /// Central registry for all psychological tests.
 ///
@@ -73,6 +81,7 @@ class TestRegistry {
     RelationshipCompatibilityTest(), // Relationship compatibility assessment
     FriendshipPsychologyTest(), // Friendship style and depth assessment
     ConflictCommunicationStyleTest(), // Conflict resolution styles assessment (Thomas-Kilmann)
+    TextConflictCommunicationTest(), // Text conflict communication styles assessment
 
     // Temperament/Personality
     DISCPersonalityTest(),
@@ -81,6 +90,8 @@ class TestRegistry {
     SocialBatteryTest(),
     ValuesPrioritiesTest(), // Personal values and life priorities assessment
     MotivationalStrategiesTest(), // Motivational patterns assessment (9 types)
+    DarkPersonalityTraitsTest(), // Dark Triad assessment (Machiavellianism, Narcissism, Psychopathy)
+    MentalAgeLifespanStylesTest(), // Mental age and life-style patterns (child/teen/adult/elder)
 
     // Career/Vocational
     HollandCodeTest(),
@@ -88,9 +99,11 @@ class TestRegistry {
     DigitalCareerFitTest(), // Digital career direction assessment
     CognitiveAbilityTest(), // Cognitive ability assessment (IQ-style)
     PerfectionismFearOfErrorTest(), // Perfectionism and fear of error assessment
+    MoneyMindsetHabitsTest(), // Money mindset and financial habits assessment (5 scales, 4 profiles)
 
     // Intelligence/Abilities
     EmotionalIntelligenceTest(), // Emotional intelligence (EQ) assessment
+    AttentionStyleTest(), // Attention style assessment (5 brain types, NOT ADHD diagnostic)
 
     // Emotional/Wellbeing
     ColorPsychologyTest(), // Special color-based test
@@ -105,6 +118,9 @@ class TestRegistry {
     SleepRecoveryTest(), // Sleep quality and recovery assessment
     ProcrastinationProductivityTest(), // Procrastination and productivity style assessment
     BoundariesPeoplePleasingTest(), // Personal boundaries and people-pleasing assessment
+    ToxicPatternsTest(), // Toxic relationship patterns assessment (6 patterns, 5 profiles)
+    SelfSabotageTest(), // Self-sabotage behavioral patterns assessment (4 scales, 4 profiles)
+    GamingBalanceCheckTest(), // Gaming addiction and balance assessment (4 scales, 4 risk levels)
 
     // Quick assessments
     StressTest(),

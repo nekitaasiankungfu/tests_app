@@ -1,0 +1,754 @@
+import '../models/test_model.dart';
+import '../models/test_profile_model.dart';
+
+class SelfSabotageData {
+  /// Get the complete test model
+  static TestModel getTestData() {
+    return TestModel(
+      id: 'self_sabotage_how_you_block_yourself_v1',
+      title: {
+        'ru': 'Самосаботаж: в чём ты сам себе ставишь палки в колёса?',
+        'en': 'Self-Sabotage: How You Get in Your Own Way',
+      },
+      description: {
+        'ru':
+            'Тест помогает выявить паттерны поведения, которые мешают достижению целей: прокрастинация, токсичные отношения, самообесценивание и страх успеха/неудачи',
+        'en':
+            'This test helps identify behavioral patterns that undermine goal achievement: procrastination, toxic relationships, self-devaluation, and fear of success/failure',
+      },
+      category: {
+        'ru': 'Эмоциональные состояния',
+        'en': 'Emotional States',
+      },
+      categoryId: 'emotional',
+      questions: _buildQuestions(),
+      estimatedTime: 7,
+      type: TestType.multiFactor,
+      factorIds: [
+        'procrastination_avoidance',
+        'toxic_relationship_patterns',
+        'self_devaluation',
+        'fear_success_failure',
+      ],
+      disclaimer: _disclaimer,
+    );
+  }
+
+  static final Map<String, String> _disclaimer = {
+    'ru':
+        'Этот тест предназначен для самопознания и выявления паттернов поведения, которые могут мешать достижению целей. Он НЕ является клиническим инструментом диагностики. Если вы испытываете серьёзные трудности с мотивацией, самооценкой или отношениями, обратитесь к психологу.',
+    'en':
+        'This test is designed for self-awareness and identifying behavioral patterns that may hinder goal achievement. It is NOT a clinical diagnostic tool. If you experience serious difficulties with motivation, self-esteem, or relationships, please consult a psychologist.',
+  };
+
+  /// Build all 24 questions
+  static List<QuestionModel> _buildQuestions() {
+    return [
+      // Procrastination & Avoidance (Q1-Q6)
+      QuestionModel(
+        id: 'q1',
+        text: {
+          'ru': 'Откладываю важные дела на потом, даже зная, что это создаёт проблемы',
+          'en': 'I postpone important tasks even though I know it creates problems',
+        },
+        answers: _buildFrequencyAnswers(),
+        factorId: 'procrastination_avoidance',
+        isReversed: false,
+      ),
+      QuestionModel(
+        id: 'q2',
+        text: {
+          'ru': 'Избегаю сложных задач, переключаясь на мелкие и несрочные дела',
+          'en': 'I avoid difficult tasks by switching to minor and non-urgent matters',
+        },
+        answers: _buildFrequencyAnswers(),
+        factorId: 'procrastination_avoidance',
+        isReversed: false,
+      ),
+    Question(
+      id: 'q3',
+      textRu: 'Начинаю что-то новое, но редко довожу до конца',
+      textEn: 'I start new things but rarely follow through to completion',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q4',
+      textRu: 'Планирую дела заранее и выполняю их в срок',
+      textEn: 'I plan tasks in advance and complete them on time',
+      options: _frequencyOptions,
+      reversed: true, // REVERSED
+    ),
+    Question(
+      id: 'q5',
+      textRu: 'Ищу отвлечения (соцсети, сериалы, игры), чтобы не думать о важном',
+      textEn: 'I seek distractions (social media, shows, games) to avoid thinking about important matters',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q6',
+      textRu: 'Оправдываю бездействие усталостью или «неподходящим моментом»',
+      textEn: 'I justify inaction with tiredness or "bad timing"',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+
+    // Toxic Relationship Patterns (Q7-Q12)
+    Question(
+      id: 'q7',
+      textRu: 'Выбираю партнёров или друзей, которые меня обесценивают или критикуют',
+      textEn: 'I choose partners or friends who devalue or criticize me',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q8',
+      textRu: 'Остаюсь в отношениях, которые меня истощают или причиняют боль',
+      textEn: 'I stay in relationships that drain me or cause pain',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q9',
+      textRu: 'Жертвую своими потребностями ради других, чтобы избежать конфликта',
+      textEn: 'I sacrifice my needs for others to avoid conflict',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q10',
+      textRu: 'Устанавливаю чёткие границы и отстаиваю свои интересы в отношениях',
+      textEn: 'I set clear boundaries and defend my interests in relationships',
+      options: _frequencyOptions,
+      reversed: true, // REVERSED
+    ),
+    Question(
+      id: 'q11',
+      textRu: 'Притягиваю людей, которые подтверждают мои худшие опасения о себе',
+      textEn: 'I attract people who confirm my worst fears about myself',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q12',
+      textRu: 'Разрушаю хорошие отношения из-за страха быть брошенным или непонятым',
+      textEn: 'I ruin good relationships out of fear of being abandoned or misunderstood',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+
+    // Self-Devaluation (Q13-Q18)
+    Question(
+      id: 'q13',
+      textRu: 'Обесцениваю свои достижения («просто повезло», «любой бы справился»)',
+      textEn: 'I devalue my achievements ("just got lucky", "anyone could do it")',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q14',
+      textRu: 'Сравниваю себя с другими, и всегда проигрываю в этом сравнении',
+      textEn: 'I compare myself to others and always come out worse in the comparison',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q15',
+      textRu: 'Игнорирую комплименты или считаю их незаслуженными',
+      textEn: 'I ignore compliments or consider them undeserved',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q16',
+      textRu: 'Признаю свои сильные стороны и достижения',
+      textEn: 'I acknowledge my strengths and accomplishments',
+      options: _frequencyOptions,
+      reversed: true, // REVERSED
+    ),
+    Question(
+      id: 'q17',
+      textRu: 'Говорю себе, что недостаточно хорош/а для успеха или счастья',
+      textEn: 'I tell myself I\'m not good enough for success or happiness',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q18',
+      textRu: 'Концентрируюсь на неудачах, игнорируя успехи',
+      textEn: 'I focus on failures while ignoring successes',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+
+    // Fear of Success & Failure (Q19-Q24)
+    Question(
+      id: 'q19',
+      textRu: 'Боюсь, что успех сделает меня объектом зависти или критики',
+      textEn: 'I fear that success will make me a target of envy or criticism',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q20',
+      textRu: 'Саботирую свои достижения, когда близок к цели («я не готов/а»)',
+      textEn: 'I sabotage my achievements when close to the goal ("I\'m not ready")',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q21',
+      textRu: 'Избегаю амбициозных целей из страха провала',
+      textEn: 'I avoid ambitious goals out of fear of failure',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q22',
+      textRu: 'Воспринимаю неудачи как опыт и возможность для роста',
+      textEn: 'I view failures as experience and opportunities for growth',
+      options: _frequencyOptions,
+      reversed: true, // REVERSED
+    ),
+    Question(
+      id: 'q23',
+      textRu: 'Чувствую, что не заслуживаю успеха или счастья',
+      textEn: 'I feel I don\'t deserve success or happiness',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+    Question(
+      id: 'q24',
+      textRu: 'Откладываю важные решения из страха сделать «неправильный» выбор',
+      textEn: 'I postpone important decisions out of fear of making the "wrong" choice',
+      options: _frequencyOptions,
+      reversed: false,
+    ),
+  ];
+
+  static final List<QuestionOption> _frequencyOptions = [
+    QuestionOption(value: 0, labelRu: 'Никогда', labelEn: 'Never'),
+    QuestionOption(value: 1, labelRu: 'Редко', labelEn: 'Rarely'),
+    QuestionOption(value: 2, labelRu: 'Иногда', labelEn: 'Sometimes'),
+    QuestionOption(value: 3, labelRu: 'Часто', labelEn: 'Often'),
+    QuestionOption(value: 4, labelRu: 'Всегда', labelEn: 'Always'),
+  ];
+
+  static final List<Factor> _factors = [
+    Factor(
+      id: 'procrastination_avoidance',
+      nameRu: 'Прокрастинация и избегание',
+      nameEn: 'Procrastination & Avoidance',
+      descriptionRu:
+          'Склонность откладывать важные дела, избегать сложных задач и отвлекаться на несущественное',
+      descriptionEn:
+          'Tendency to postpone important matters, avoid difficult tasks, and get distracted by non-essentials',
+      questionIds: ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'],
+    ),
+    Factor(
+      id: 'toxic_relationship_patterns',
+      nameRu: 'Токсичные паттерны в отношениях',
+      nameEn: 'Toxic Relationship Patterns',
+      descriptionRu:
+          'Выбор деструктивных отношений, отсутствие границ и саботаж здоровых связей',
+      descriptionEn:
+          'Choosing destructive relationships, lacking boundaries, and sabotaging healthy connections',
+      questionIds: ['q7', 'q8', 'q9', 'q10', 'q11', 'q12'],
+    ),
+    Factor(
+      id: 'self_devaluation',
+      nameRu: 'Самообесценивание',
+      nameEn: 'Self-Devaluation',
+      descriptionRu:
+          'Обесценивание достижений, игнорирование успехов и постоянное сравнение с другими',
+      descriptionEn:
+          'Devaluing achievements, ignoring successes, and constantly comparing oneself to others',
+      questionIds: ['q13', 'q14', 'q15', 'q16', 'q17', 'q18'],
+    ),
+    Factor(
+      id: 'fear_success_failure',
+      nameRu: 'Страх успеха и неудачи',
+      nameEn: 'Fear of Success & Failure',
+      descriptionRu:
+          'Саботаж достижений из страха зависти, критики или провала, избегание амбициозных целей',
+      descriptionEn:
+          'Sabotaging achievements out of fear of envy, criticism, or failure, avoiding ambitious goals',
+      questionIds: ['q19', 'q20', 'q21', 'q22', 'q23', 'q24'],
+    ),
+  ];
+
+  static final List<TestProfile> _profiles = [
+    // Profile 1: Very Low Sabotage (0-24%)
+    TestProfile(
+      id: 'very_low_sabotage',
+      nameRu: 'Конструктивный путь',
+      nameEn: 'Constructive Path',
+      descriptionRu:
+          'Ваш уровень самосаботажа минимален. Вы способны ставить цели и достигать их, не создавая себе искусственных препятствий.',
+      descriptionEn:
+          'Your self-sabotage level is minimal. You can set goals and achieve them without creating artificial obstacles for yourself.',
+      detailedDescriptionRu:
+          'Вы демонстрируете редкую способность действовать в своих интересах последовательно и осознанно. У вас развиты навыки планирования, вы не боитесь ответственности и готовы двигаться к амбициозным целям. Вы строите здоровые отношения с чёткими границами, не обесцениваете свои достижения и воспринимаете неудачи как часть процесса роста.\n\nЭто не означает, что вы идеальны или никогда не сомневаетесь — это означает, что вы умеете справляться с внутренним сопротивлением и не позволяете ему управлять вашей жизнью. Вы понимаете свою ценность и не ищете подтверждения в токсичных отношениях или саморазрушительном поведении.',
+      detailedDescriptionEn:
+          'You demonstrate a rare ability to act in your own best interests consistently and consciously. You have developed planning skills, are not afraid of responsibility, and are ready to pursue ambitious goals. You build healthy relationships with clear boundaries, don\'t devalue your achievements, and view failures as part of the growth process.\n\nThis doesn\'t mean you\'re perfect or never doubt yourself — it means you know how to handle internal resistance and don\'t let it control your life. You understand your value and don\'t seek validation in toxic relationships or self-destructive behavior.',
+      whyThisProfileRu:
+          'Ваш низкий балл по всем 4 шкалам указывает на отсутствие значимых паттернов самосаботажа. Вы редко откладываете важное (прокрастинация), не застреваете в деструктивных отношениях, признаёте свои достижения и не боитесь ни успеха, ни неудачи. Это комбинация здоровой самооценки, развитых навыков саморегуляции и готовности брать ответственность за свою жизнь.',
+      whyThisProfileEn:
+          'Your low scores across all 4 scales indicate an absence of significant self-sabotage patterns. You rarely postpone important matters (procrastination), don\'t get stuck in destructive relationships, acknowledge your achievements, and fear neither success nor failure. This is a combination of healthy self-esteem, developed self-regulation skills, and willingness to take responsibility for your life.',
+      strengthsRu: [
+        'Способность доводить начатое до конца без откладывания',
+        'Здоровые отношения с чёткими границами',
+        'Реалистичная оценка своих достижений и способностей',
+        'Восприятие неудач как опыта, а не как приговора',
+        'Готовность ставить амбициозные цели и работать над ними',
+        'Низкая зависимость от внешнего одобрения',
+      ],
+      strengthsEn: [
+        'Ability to follow through without procrastination',
+        'Healthy relationships with clear boundaries',
+        'Realistic assessment of achievements and abilities',
+        'Viewing failures as experience rather than judgment',
+        'Willingness to set ambitious goals and work toward them',
+        'Low dependence on external validation',
+      ],
+      vulnerabilitiesRu: [
+        'Риск недооценить сложность стоящих перед вами вызовов',
+        'Возможное непонимание трудностей людей, склонных к самосаботажу',
+        'Соблазн взять на себя слишком много обязательств одновременно',
+        'Вероятность упустить из виду эмоциональные сигналы у себя и других',
+      ],
+      vulnerabilitiesEn: [
+        'Risk of underestimating the complexity of challenges you face',
+        'Possible lack of understanding of people prone to self-sabotage',
+        'Temptation to take on too many commitments simultaneously',
+        'Likelihood of overlooking emotional signals in yourself and others',
+      ],
+      recommendationsRu: [
+        'Используйте свои навыки планирования и самодисциплины как ресурс для помощи другим',
+        'Оставайтесь внимательными к своим эмоциональным потребностям — не только к достижениям',
+        'Развивайте эмпатию к тем, кто борется с прокрастинацией или низкой самооценкой',
+        'Помните, что «отсутствие саботажа» не означает «постоянное движение вперёд» — отдых тоже важен',
+        'Будьте открыты к обратной связи: иногда то, что кажется вам «нормальным», другим даётся с трудом',
+      ],
+      recommendationsEn: [
+        'Use your planning and self-discipline skills as a resource to help others',
+        'Stay attentive to your emotional needs — not just achievements',
+        'Develop empathy for those struggling with procrastination or low self-esteem',
+        'Remember that "absence of sabotage" doesn\'t mean "constant forward motion" — rest is important too',
+        'Be open to feedback: sometimes what seems "normal" to you is difficult for others',
+      ],
+      tryTodayRu:
+          'Помогите кому-то из близких разобраться с задачей, которую они давно откладывают. Поделитесь своим подходом к планированию без осуждения — просто как инструментом, который помог вам.',
+      tryTodayEn:
+          'Help someone close to you tackle a task they\'ve been postponing. Share your planning approach without judgment — simply as a tool that worked for you.',
+      inspiringConclusionRu:
+          'Ваша способность не мешать самому себе — это дар, который вы можете использовать не только для личного роста, но и для поддержки других. Продолжайте двигаться вперёд, но не забывайте оглядываться назад — не все идут в том же темпе, и это нормально.',
+      inspiringConclusionEn:
+          'Your ability not to stand in your own way is a gift you can use not only for personal growth but also to support others. Keep moving forward, but don\'t forget to look back — not everyone moves at the same pace, and that\'s okay.',
+    ),
+
+    // Profile 2: Moderate Sabotage (25-49%)
+    TestProfile(
+      id: 'moderate_sabotage',
+      nameRu: 'Осознанная борьба',
+      nameEn: 'Conscious Struggle',
+      descriptionRu:
+          'У вас присутствуют некоторые паттерны самосаботажа, но они ещё не стали доминирующими. Вы находитесь в процессе осознания своих «блокираторов».',
+      descriptionEn:
+          'You have some self-sabotage patterns, but they haven\'t become dominant yet. You\'re in the process of becoming aware of your "blockers".',
+      detailedDescriptionRu:
+          'Вы находитесь в той фазе личностного развития, где видите свои саморазрушительные привычки, но ещё не до конца научились с ними справляться. Возможно, вы иногда откладываете важные дела, но не систематически. Или вы признаёте свои достижения, но внутренний критик всё ещё иногда перебивает вас. Может быть, вы выстраиваете границы в отношениях, но они пока не всегда устойчивы.\n\nВаше состояние — это не слабость, а нормальный этап роста. Вы уже не на автопилоте, но и не полностью освоили инструменты саморегуляции. Ключевое преимущество этой стадии — вы видите проблему и готовы над ней работать.',
+      detailedDescriptionEn:
+          'You\'re in that phase of personal development where you see your self-destructive habits but haven\'t fully learned to handle them yet. Perhaps you sometimes postpone important matters, but not systematically. Or you acknowledge your achievements, but the inner critic still interrupts sometimes. Maybe you set boundaries in relationships, but they\'re not always stable yet.\n\nYour state is not weakness but a normal stage of growth. You\'re no longer on autopilot, but haven\'t fully mastered self-regulation tools either. The key advantage of this stage — you see the problem and are ready to work on it.',
+      whyThisProfileRu:
+          'Ваши баллы по 4 шкалам находятся в среднем диапазоне, что говорит о том, что самосаботаж проявляется эпизодически, но не тотально. Возможно, вы сильны в одной области (например, в планировании), но уязвимы в другой (например, в отношениях или самооценке). Это типичная картина для людей, которые активно работают над собой, но ещё не вышли на стабильный уровень.',
+      whyThisProfileEn:
+          'Your scores across the 4 scales are in the moderate range, indicating that self-sabotage manifests episodically but not totally. Perhaps you\'re strong in one area (e.g., planning) but vulnerable in another (e.g., relationships or self-esteem). This is a typical picture for people actively working on themselves but not yet at a stable level.',
+      strengthsRu: [
+        'Осознанность — вы видите проблему и хотите её решить',
+        'Гибкость — вы способны менять свои привычки и паттерны',
+        'Частичный успех в одной или двух областях (например, в планировании или отношениях)',
+        'Готовность к саморефлексии и обратной связи',
+        'Понимание, что самосаботаж — это не приговор, а навык, который можно изменить',
+      ],
+      strengthsEn: [
+        'Awareness — you see the problem and want to solve it',
+        'Flexibility — you\'re capable of changing your habits and patterns',
+        'Partial success in one or two areas (e.g., planning or relationships)',
+        'Readiness for self-reflection and feedback',
+        'Understanding that self-sabotage is not a sentence but a skill that can be changed',
+      ],
+      vulnerabilitiesRu: [
+        'Риск «застрять» на этапе осознания без перехода к действиям',
+        'Склонность оправдывать саботаж «я стараюсь, но не получается»',
+        'Возможная непоследовательность в применении новых навыков',
+        'Соблазн вернуться к старым привычкам в стрессовых ситуациях',
+        'Разочарование от медленного прогресса',
+      ],
+      vulnerabilitiesEn: [
+        'Risk of getting "stuck" at the awareness stage without moving to action',
+        'Tendency to justify sabotage with "I\'m trying but it\'s not working"',
+        'Possible inconsistency in applying new skills',
+        'Temptation to return to old habits in stressful situations',
+        'Frustration from slow progress',
+      ],
+      recommendationsRu: [
+        'Выберите ОДНУ область для фокусировки (прокрастинация, отношения, самооценка или страх) и работайте над ней 2-3 месяца',
+        'Ведите дневник саботажа: записывайте моменты, когда вы действуете против своих интересов, и анализируйте триггеры',
+        'Создайте «систему раннего предупреждения»: научитесь замечать первые признаки саботажа (например, «я устал» как оправдание)',
+        'Найдите наставника или терапевта, который поможет вам удерживать фокус',
+        'Отмечайте маленькие победы — каждый раз, когда вы НЕ саботировали себя, это успех',
+      ],
+      recommendationsEn: [
+        'Choose ONE area to focus on (procrastination, relationships, self-esteem, or fear) and work on it for 2-3 months',
+        'Keep a sabotage journal: write down moments when you act against your interests and analyze triggers',
+        'Create an "early warning system": learn to notice the first signs of sabotage (e.g., "I\'m tired" as an excuse)',
+        'Find a mentor or therapist who will help you maintain focus',
+        'Celebrate small victories — every time you DON\'T sabotage yourself is a success',
+      ],
+      tryTodayRu:
+          'Выберите одну задачу, которую вы откладываете больше недели. Разбейте её на 3 микрошага (каждый не дольше 15 минут) и выполните первый прямо сейчас. Не думайте о результате — просто начните.',
+      tryTodayEn:
+          'Choose one task you\'ve been postponing for more than a week. Break it into 3 micro-steps (each no longer than 15 minutes) and complete the first one right now. Don\'t think about the result — just start.',
+      inspiringConclusionRu:
+          'Вы на правильном пути. Осознание проблемы — это уже половина решения. Не спешите, но и не останавливайтесь. Каждый день, когда вы выбираете действие вместо саботажа, вы переписываете свою историю.',
+      inspiringConclusionEn:
+          'You\'re on the right path. Awareness of the problem is already half the solution. Don\'t rush, but don\'t stop either. Every day you choose action over sabotage, you\'re rewriting your story.',
+    ),
+
+    // Profile 3: Elevated Sabotage (50-74%)
+    TestProfile(
+      id: 'elevated_sabotage',
+      nameRu: 'Критическая зона',
+      nameEn: 'Critical Zone',
+      descriptionRu:
+          'Самосаботаж стал значимой частью вашей жизни и серьёзно мешает достижению целей. Паттерны устойчивы и требуют активной работы.',
+      descriptionEn:
+          'Self-sabotage has become a significant part of your life and seriously hinders goal achievement. Patterns are persistent and require active work.',
+      detailedDescriptionRu:
+          'Вы находитесь в ситуации, когда саморазрушительные привычки стали не исключением, а правилом. Возможно, вы систематически откладываете важные решения, застреваете в токсичных отношениях, обесцениваете свои достижения или саботируете успех из страха критики или провала.\n\nЭто не означает, что вы «безнадёжны» — это означает, что вы нуждаетесь в структурированной помощи и готовы признать, что самостоятельно справиться сложно. Ваш уровень самосаботажа уже влияет на качество жизни: вы можете чувствовать хроническую неудовлетворённость, несмотря на объективные возможности, или застревать в одних и тех же деструктивных циклах.\n\nВажно понимать: эти паттерны сформировались не за один день, и на их преодоление потребуется время. Но первый шаг — признать, что проблема есть, и что вы заслуживаете помощи.',
+      detailedDescriptionEn:
+          'You\'re in a situation where self-destructive habits have become the rule, not the exception. Perhaps you systematically postpone important decisions, get stuck in toxic relationships, devalue your achievements, or sabotage success out of fear of criticism or failure.\n\nThis doesn\'t mean you\'re "hopeless" — it means you need structured help and are ready to admit that coping alone is difficult. Your level of self-sabotage is already affecting quality of life: you may feel chronic dissatisfaction despite objective opportunities, or get stuck in the same destructive cycles.\n\nIt\'s important to understand: these patterns didn\'t form in a day, and overcoming them will take time. But the first step is acknowledging the problem exists and that you deserve help.',
+      whyThisProfileRu:
+          'Ваши высокие баллы по большинству или всем 4 шкалам указывают на системную проблему. Самосаботаж проявляется в нескольких областях одновременно: вы не только откладываете дела, но и обесцениваете себя, застреваете в деструктивных отношениях и боитесь как успеха, так и неудачи. Это типичная картина глубоких убеждений типа «я не заслуживаю» или «мир небезопасен», которые формируются в детстве или после травматичного опыта.',
+      whyThisProfileEn:
+          'Your high scores on most or all 4 scales indicate a systemic problem. Self-sabotage manifests in several areas simultaneously: you not only postpone tasks but also devalue yourself, get stuck in destructive relationships, and fear both success and failure. This is a typical picture of deep beliefs like "I don\'t deserve" or "the world is unsafe," which form in childhood or after traumatic experiences.',
+      strengthsRu: [
+        'Вы прошли этот тест — это уже акт смелости и желания изменить ситуацию',
+        'У вас есть потенциал для глубоких трансформаций (люди с высоким саботажем часто делают самые впечатляющие прорывы)',
+        'Возможно, вы развили компенсаторные навыки (например, эмпатию или креативность) в попытке справиться',
+        'Ваш опыт может стать ресурсом для помощи другим, когда вы выйдете из этой фазы',
+      ],
+      strengthsEn: [
+        'You took this test — that\'s already an act of courage and desire to change the situation',
+        'You have potential for deep transformations (people with high sabotage often make the most impressive breakthroughs)',
+        'You may have developed compensatory skills (e.g., empathy or creativity) in attempting to cope',
+        'Your experience can become a resource for helping others when you exit this phase',
+      ],
+      vulnerabilitiesRu: [
+        'Высокий риск хронической депрессии, тревоги или выгорания',
+        'Склонность к саморазрушительным отношениям и зависимостям',
+        'Низкая самооценка и чувство «застревания» в жизни',
+        'Возможная социальная изоляция или конфликты на работе',
+        'Риск упустить значимые возможности из-за страха или прокрастинации',
+      ],
+      vulnerabilitiesEn: [
+        'High risk of chronic depression, anxiety, or burnout',
+        'Tendency toward self-destructive relationships and dependencies',
+        'Low self-esteem and feeling "stuck" in life',
+        'Possible social isolation or workplace conflicts',
+        'Risk of missing significant opportunities due to fear or procrastination',
+      ],
+      recommendationsRu: [
+        'СРОЧНО: обратитесь к психотерапевту или психологу. Работа с профессионалом критически важна на этом уровне',
+        'Рассмотрите когнитивно-поведенческую терапию (КПТ) или схема-терапию — они доказали эффективность при саботаже',
+        'Начните с малого: не ставьте амбициозных целей, фокусируйтесь на ежедневных микрошагах',
+        'Создайте «сеть безопасности»: найдите 2-3 человека, которым можно рассказать о своих трудностях',
+        'Исключите или минимизируйте токсичные отношения — это приоритет №1',
+        'Ведите дневник благодарности: каждый день записывайте 3 вещи, за которые вы себя цените (даже самые маленькие)',
+      ],
+      recommendationsEn: [
+        'URGENT: consult a psychotherapist or psychologist. Working with a professional is critically important at this level',
+        'Consider cognitive-behavioral therapy (CBT) or schema therapy — they\'ve proven effective for sabotage',
+        'Start small: don\'t set ambitious goals, focus on daily micro-steps',
+        'Create a "safety net": find 2-3 people you can talk to about your struggles',
+        'Eliminate or minimize toxic relationships — this is priority #1',
+        'Keep a gratitude journal: write down 3 things you appreciate about yourself every day (even the smallest ones)',
+      ],
+      tryTodayRu:
+          'Запишите на бумаге одно убеждение, которое мешает вам жить (например, «я не заслуживаю успеха»). Теперь напишите рядом доказательство того, что это убеждение — не факт, а интерпретация. Даже один пример достаточно.',
+      tryTodayEn:
+          'Write down on paper one belief that holds you back (e.g., "I don\'t deserve success"). Now write next to it proof that this belief is not a fact but an interpretation. Even one example is enough.',
+      inspiringConclusionRu:
+          'То, что вы чувствуете сейчас, — не приговор. Это точка, из которой можно начать путь назад к себе. Вы не обязаны справляться в одиночку. Обратитесь за помощью — это не слабость, а мудрость.',
+      inspiringConclusionEn:
+          'What you feel now is not a sentence. It\'s a point from which you can start the journey back to yourself. You don\'t have to cope alone. Seeking help is not weakness but wisdom.',
+    ),
+
+    // Profile 4: High Sabotage (75-100%)
+    TestProfile(
+      id: 'high_sabotage',
+      nameRu: 'Срочная помощь',
+      nameEn: 'Urgent Help Needed',
+      descriptionRu:
+          'Уровень самосаботажа критически высокий и требует немедленного вмешательства специалиста. Паттерны глубоко укоренены и серьёзно нарушают качество жизни.',
+      descriptionEn:
+          'Self-sabotage level is critically high and requires immediate professional intervention. Patterns are deeply rooted and seriously impair quality of life.',
+      detailedDescriptionRu:
+          'Ваш результат указывает на то, что самосаботаж стал основным способом взаимодействия с миром. Вы систематически действуете против своих интересов во всех или почти всех сферах жизни: откладываете критически важные решения, застреваете в деструктивных отношениях, глубоко обесцениваете себя и парализованы страхом как успеха, так и неудачи.\n\nЭто состояние часто связано с глубокими психологическими травмами, хроническими тревожными или депрессивными расстройствами, или с длительным нахождением в токсичной среде. Важно понимать: вы НЕ виноваты в том, что оказались здесь. Эти паттерны — защитный механизм, который когда-то помог вам выжить, но теперь мешает жить.\n\nНа этом уровне самопомощь недостаточна. Вам нужна профессиональная поддержка — психотерапевт, который поможет распутать клубок убеждений и травм, лежащих в основе саботажа. Это не слабость — это необходимость.',
+      detailedDescriptionEn:
+          'Your result indicates that self-sabotage has become the primary way of interacting with the world. You systematically act against your interests in all or nearly all areas of life: postponing critically important decisions, getting stuck in destructive relationships, deeply devaluing yourself, and paralyzed by fear of both success and failure.\n\nThis state is often associated with deep psychological trauma, chronic anxiety or depressive disorders, or prolonged exposure to a toxic environment. It\'s important to understand: you are NOT to blame for being here. These patterns are a defense mechanism that once helped you survive but now prevents you from living.\n\nAt this level, self-help is insufficient. You need professional support — a psychotherapist who will help untangle the web of beliefs and traumas underlying the sabotage. This is not weakness — it\'s necessity.',
+      whyThisProfileRu:
+          'Ваши баллы по всем 4 шкалам находятся в критическом диапазоне (75-100%). Это означает, что самосаботаж — не изолированная проблема в одной области, а системная реакция на глубинные убеждения типа «я не заслуживаю счастья», «мир враждебен» или «я безнадёжен». Такие убеждения формируются в детстве (в результате пренебрежения, насилия или эмоциональной депривации) или после серьёзных травм во взрослом возрасте.',
+      whyThisProfileEn:
+          'Your scores on all 4 scales are in the critical range (75-100%). This means self-sabotage is not an isolated problem in one area but a systemic response to deep beliefs like "I don\'t deserve happiness," "the world is hostile," or "I\'m hopeless." Such beliefs form in childhood (as a result of neglect, abuse, or emotional deprivation) or after serious traumas in adulthood.',
+      strengthsRu: [
+        'То, что вы дошли до этого теста, — огромный акт мужества',
+        'Вы ещё ищете ответы, а значит, часть вас хочет измениться',
+        'Ваш опыт страдания может стать источником глубокой эмпатии и понимания других',
+        'У вас есть потенциал для радикальной трансформации — самые глубокие изменения происходят именно здесь',
+      ],
+      strengthsEn: [
+        'That you made it to this test is a huge act of courage',
+        'You\'re still seeking answers, which means part of you wants to change',
+        'Your experience of suffering can become a source of deep empathy and understanding of others',
+        'You have potential for radical transformation — the deepest changes happen right here',
+      ],
+      vulnerabilitiesRu: [
+        'Крайне высокий риск суицидальных мыслей, депрессии и тревожных расстройств',
+        'Вероятность зависимостей (алкоголь, наркотики, игры, токсичные отношения) как способа справиться',
+        'Полная социальная изоляция или крайне токсичное окружение',
+        'Невозможность удерживать работу, учёбу или стабильные отношения',
+        'Чувство безнадёжности и потери контроля над жизнью',
+      ],
+      vulnerabilitiesEn: [
+        'Extremely high risk of suicidal thoughts, depression, and anxiety disorders',
+        'Likelihood of addictions (alcohol, drugs, gambling, toxic relationships) as coping mechanisms',
+        'Complete social isolation or extremely toxic environment',
+        'Inability to maintain work, studies, or stable relationships',
+        'Feeling of hopelessness and loss of control over life',
+      ],
+      recommendationsRu: [
+        'КРИТИЧЕСКИ ВАЖНО: обратитесь к психотерапевту СЕГОДНЯ. Если нет финансовой возможности, найдите бесплатные психологические службы или кризисные центры',
+        'Если у вас есть суицидальные мысли — позвоните на горячую линию психологической помощи НЕМЕДЛЕННО',
+        'Не пытайтесь «взять себя в руки» силой воли — это не работает на этом уровне. Вам нужна терапия (КПТ, схема-терапия, EMDR)',
+        'Исключите или минимизируйте токсичные отношения — это вопрос выживания',
+        'Создайте минимальный распорядок дня: сон, еда, одна маленькая задача. Не больше',
+        'Если вы в депрессии — рассмотрите возможность медикаментозной поддержки (только с врачом)',
+        'Не сравнивайте себя с другими. Вы боретесь с тем, чего они не видят',
+      ],
+      recommendationsEn: [
+        'CRITICALLY IMPORTANT: consult a psychotherapist TODAY. If financially impossible, find free psychological services or crisis centers',
+        'If you have suicidal thoughts — call a mental health hotline IMMEDIATELY',
+        'Don\'t try to "pull yourself together" by willpower — it doesn\'t work at this level. You need therapy (CBT, schema therapy, EMDR)',
+        'Eliminate or minimize toxic relationships — this is a matter of survival',
+        'Create a minimal daily routine: sleep, food, one small task. No more',
+        'If you\'re depressed — consider medication support (only with a doctor)',
+        'Don\'t compare yourself to others. You\'re fighting what they don\'t see',
+      ],
+      tryTodayRu:
+          'Найдите номер телефона кризисной психологической службы в вашем городе или стране и сохраните его в телефоне. Не обязательно звонить прямо сейчас — просто знайте, что помощь доступна.',
+      tryTodayEn:
+          'Find the phone number of a crisis psychological service in your city or country and save it in your phone. You don\'t have to call right now — just know that help is available.',
+      inspiringConclusionRu:
+          'То, что вы чувствуете, — невыносимо. Но вы не одиноки, и это состояние — не навсегда. Тысячи людей прошли этот путь и нашли выход. Обратитесь за помощью. Вы заслуживаете жить, а не просто существовать.',
+      inspiringConclusionEn:
+          'What you feel is unbearable. But you\'re not alone, and this state is not forever. Thousands of people have walked this path and found a way out. Seek help. You deserve to live, not just exist.',
+    ),
+  ];
+
+  /// Determines profile based on composite self_sabotage_index
+  static String determineProfile(Map<String, dynamic> results) {
+    // Calculate normalized scores for each scale (0-100)
+    final procrastinationNorm = _normalizeScore(
+      results['procrastination_avoidance'] ?? 0.0,
+    );
+    final toxicRelationshipsNorm = _normalizeScore(
+      results['toxic_relationship_patterns'] ?? 0.0,
+    );
+    final selfDevaluationNorm = _normalizeScore(
+      results['self_devaluation'] ?? 0.0,
+    );
+    final fearSuccessFailureNorm = _normalizeScore(
+      results['fear_success_failure'] ?? 0.0,
+    );
+
+    // Calculate composite index (average of 4 normalized scales)
+    final selfSabotageIndex = (procrastinationNorm +
+            toxicRelationshipsNorm +
+            selfDevaluationNorm +
+            fearSuccessFailureNorm) /
+        4;
+
+    // Determine profile based on thresholds
+    if (selfSabotageIndex < 25) {
+      return 'very_low_sabotage'; // 0-24%
+    } else if (selfSabotageIndex < 50) {
+      return 'moderate_sabotage'; // 25-49%
+    } else if (selfSabotageIndex < 75) {
+      return 'elevated_sabotage'; // 50-74%
+    } else {
+      return 'high_sabotage'; // 75-100%
+    }
+  }
+
+  /// Normalizes raw scale score (0-24) to percentage (0-100)
+  static double _normalizeScore(double rawScore) {
+    // Max score per scale: 6 questions × 4 points = 24
+    const maxScore = 24.0;
+    return (rawScore / maxScore) * 100;
+  }
+
+  /// Get factor names for all 4 scales
+  static Map<String, Map<String, String>> getFactorNames() {
+    return {
+      'procrastination_avoidance': {
+        'ru': 'Прокрастинация и избегание',
+        'en': 'Procrastination & Avoidance',
+      },
+      'toxic_relationship_patterns': {
+        'ru': 'Токсичные паттерны в отношениях',
+        'en': 'Toxic Relationship Patterns',
+      },
+      'self_devaluation': {
+        'ru': 'Самообесценивание',
+        'en': 'Self-Devaluation',
+      },
+      'fear_success_failure': {
+        'ru': 'Страх успеха и неудачи',
+        'en': 'Fear of Success & Failure',
+      },
+    };
+  }
+
+  /// Get factor interpretation based on percentage score
+  static Map<String, String> getFactorInterpretation(
+    String factorId,
+    double percentage,
+  ) {
+    // Thresholds: Low (0-24), Moderate (25-49), Elevated (50-74), High (75-100)
+    final level = percentage < 25
+        ? 'low'
+        : percentage < 50
+            ? 'moderate'
+            : percentage < 75
+                ? 'elevated'
+                : 'high';
+
+    final interpretations = {
+      'procrastination_avoidance': {
+        'low': {
+          'ru':
+              'Вы редко откладываете важные дела и способны фокусироваться на приоритетах',
+          'en':
+              'You rarely postpone important tasks and can focus on priorities',
+        },
+        'moderate': {
+          'ru':
+              'Иногда откладываете дела, но это пока не критично для достижения целей',
+          'en':
+              'You sometimes postpone tasks, but it\'s not yet critical for goal achievement',
+        },
+        'elevated': {
+          'ru':
+              'Прокрастинация стала устойчивой привычкой и мешает вашему прогрессу',
+          'en':
+              'Procrastination has become a persistent habit hindering your progress',
+        },
+        'high': {
+          'ru':
+              'Критический уровень прокрастинации — вы систематически саботируете важные дела',
+          'en':
+              'Critical procrastination level — you systematically sabotage important matters',
+        },
+      },
+      'toxic_relationship_patterns': {
+        'low': {
+          'ru':
+              'Вы выстраиваете здоровые отношения с чёткими границами',
+          'en': 'You build healthy relationships with clear boundaries',
+        },
+        'moderate': {
+          'ru':
+              'Иногда застреваете в неконструктивных отношениях, но осознаёте это',
+          'en':
+              'You sometimes get stuck in unconstructive relationships but are aware of it',
+        },
+        'elevated': {
+          'ru':
+              'Склонны выбирать токсичные отношения или жертвовать своими потребностями',
+          'en':
+              'You tend to choose toxic relationships or sacrifice your needs',
+        },
+        'high': {
+          'ru':
+              'Критический уровень — вы систематически попадаете в деструктивные отношения',
+          'en':
+              'Critical level — you systematically enter destructive relationships',
+        },
+      },
+      'self_devaluation': {
+        'low': {
+          'ru': 'Вы признаёте свои достижения и ценность',
+          'en': 'You acknowledge your achievements and value',
+        },
+        'moderate': {
+          'ru':
+              'Иногда обесцениваете себя, но это не доминирующий паттерн',
+          'en':
+              'You sometimes devalue yourself, but it\'s not a dominant pattern',
+        },
+        'elevated': {
+          'ru':
+              'Склонны обесценивать достижения и сравнивать себя с другими не в свою пользу',
+          'en':
+              'You tend to devalue achievements and compare yourself unfavorably to others',
+        },
+        'high': {
+          'ru':
+              'Критический уровень самообесценивания — вы не признаёте свою ценность',
+          'en':
+              'Critical self-devaluation level — you don\'t acknowledge your worth',
+        },
+      },
+      'fear_success_failure': {
+        'low': {
+          'ru':
+              'Вы не боитесь ни успеха, ни неудачи и готовы ставить амбициозные цели',
+          'en':
+              'You fear neither success nor failure and are ready to set ambitious goals',
+        },
+        'moderate': {
+          'ru':
+              'Иногда страх сдерживает вас, но вы способны его преодолевать',
+          'en':
+              'Fear sometimes holds you back, but you\'re capable of overcoming it',
+        },
+        'elevated': {
+          'ru':
+              'Страх успеха или неудачи мешает вам ставить и достигать целей',
+          'en':
+              'Fear of success or failure prevents you from setting and achieving goals',
+        },
+        'high': {
+          'ru':
+              'Критический уровень страха — вы саботируете успех или избегаете целей',
+          'en':
+              'Critical fear level — you sabotage success or avoid goals',
+        },
+      },
+    };
+
+    return interpretations[factorId]?[level] ??
+        {'ru': 'Нет интерпретации', 'en': 'No interpretation'};
+  }
+
+  /// Get profile by ID
+  static TestProfile? getProfile(String profileId) {
+    return _profiles.firstWhere(
+      (profile) => profile.id == profileId,
+      orElse: () => _profiles[0], // Default to first profile if not found
+    );
+  }
+}

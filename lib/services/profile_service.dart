@@ -33,6 +33,13 @@ import '../data/imposter_syndrome_data.dart';
 import '../data/sleep_recovery_data.dart';
 import '../data/procrastination_productivity_data.dart';
 import '../data/boundaries_people_pleasing_data.dart';
+import '../data/dark_personality_traits_data.dart';
+import '../data/toxic_patterns_data.dart';
+import '../data/attention_style_data.dart';
+import '../data/mental_age_lifespan_styles_data.dart';
+import '../data/self_sabotage_data.dart';
+import '../data/money_mindset_habits_data.dart';
+import '../data/gaming_balance_check_data.dart';
 
 /// Сервис для работы с профилями результатов тестов
 ///
@@ -77,6 +84,13 @@ class ProfileService {
     'sleep_recovery_v1',
     'procrastination_productivity_style_v1',
     'boundaries_people_pleasing',
+    'dark_personality_traits',
+    'toxic_patterns',
+    'attention_style',
+    'mental_age_lifespan_styles_v1',
+    'self_sabotage_how_you_block_yourself_v1',
+    'money_mindset_habits_v1',
+    'gaming_balance_check_v1',
     // TODO: Добавить остальные тесты по мере реализации профилей
     // 'cognitive_ability_v1',
   };
@@ -168,6 +182,20 @@ class ProfileService {
         return ProcrastinationProductivityData.determineProfile(percentages);
       case 'boundaries_people_pleasing':
         return BoundariesPeoplePleasingData.determineProfile(percentages);
+      case 'dark_personality_traits':
+        return DarkPersonalityTraitsData.determineProfile(percentages);
+      case 'toxic_patterns':
+        return ToxicPatternsData.determineProfile(percentages);
+      case 'attention_style':
+        return AttentionStyleData.determineProfile(percentages);
+      case 'mental_age_lifespan_styles_v1':
+        return MentalAgeLifespanStylesData.determineProfile(percentages);
+      case 'self_sabotage_how_you_block_yourself_v1':
+        return SelfSabotageData.determineProfile(percentages);
+      case 'money_mindset_habits_v1':
+        return MoneyMindsetHabitsData.determineProfile(percentages);
+      case 'gaming_balance_check_v1':
+        return GamingBalanceCheckData.determineProfile(percentages);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
@@ -237,6 +265,20 @@ class ProfileService {
         return ProcrastinationProductivityData.getProfile(profileId);
       case 'boundaries_people_pleasing':
         return BoundariesPeoplePleasingData.getProfile(profileId);
+      case 'dark_personality_traits':
+        return DarkPersonalityTraitsData.getProfile(profileId);
+      case 'toxic_patterns':
+        return ToxicPatternsData.getProfile(profileId);
+      case 'attention_style':
+        return AttentionStyleData.getProfile(profileId);
+      case 'mental_age_lifespan_styles_v1':
+        return MentalAgeLifespanStylesData.getProfile(profileId);
+      case 'self_sabotage_how_you_block_yourself_v1':
+        return SelfSabotageData.getProfile(profileId);
+      case 'money_mindset_habits_v1':
+        return MoneyMindsetHabitsData.getProfile(profileId);
+      case 'gaming_balance_check_v1':
+        return GamingBalanceCheckData.getProfile(profileId);
       // TODO: Добавить остальные тесты по мере реализации
       default:
         return null;
