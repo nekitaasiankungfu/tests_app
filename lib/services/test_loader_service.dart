@@ -41,7 +41,6 @@ import '../data/boundaries_people_pleasing_data.dart';
 import '../data/fomo_social_comparison_data.dart';
 import '../data/creative_type_data.dart';
 import '../data/friendship_red_flags_data.dart';
-import '../data/tests/visual_micro_tests_test.dart';
 import '../data/tests/text_conflict_communication_test.dart';
 
 /// Service for loading tests from JSON files with caching.
@@ -238,9 +237,6 @@ class TestLoaderService {
         break;
       case 'boundaries_people_pleasing':
         test = BoundariesPeoplePleasingData.getBoundariesPeoplePleasingTest();
-        break;
-      case 'visual_micro_tests_v1':
-        test = VisualMicroTestsTest.getVisualMicroTestsTest();
         break;
       case 'text_conflict_communication':
         test = TextConflictCommunicationTest.getTextConflictCommunicationTest();
