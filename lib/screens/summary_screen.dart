@@ -43,6 +43,9 @@ import '../data/values_priorities_data.dart';
 import '../data/attachment_style_data.dart';
 import '../data/motivational_strategies_data.dart';
 import '../data/conflict_communication_style_data.dart';
+import '../data/fomo_social_comparison_data.dart';
+import '../data/creative_type_data.dart';
+import '../data/friendship_red_flags_data.dart';
 import '../data/test_data.dart';
 import '../services/summary_service.dart';
 import 'test_screen.dart';
@@ -147,6 +150,15 @@ String _getAnswerText(String testId, String questionId, int answerScore, String 
         break;
       case 'conflict_communication_style_v1':
         testModel = ConflictCommunicationStyleData.getConflictCommunicationStyleTest();
+        break;
+      case 'fomo_social_comparison_v1':
+        testModel = FomoSocialComparisonData.getFomoSocialComparisonTest();
+        break;
+      case 'creative_type_v1':
+        testModel = CreativeTypeData.getCreativeTypeTest();
+        break;
+      case 'friendship_red_flags_v1':
+        testModel = FriendshipRedFlagsData.getFriendshipRedFlagsTest();
         break;
       default:
         appLogger.w('Unknown testId: $testId');
@@ -2519,6 +2531,18 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
             // Conflict Communication Style uses 0-45 scale for factor counts
             maxAnswerScore = 45;
             break;
+          case 'fomo_social_comparison_v1':
+            // FOMO & Social Comparison uses 0-4 frequency scale
+            maxAnswerScore = 4;
+            break;
+          case 'creative_type_v1':
+            // Creative Type uses 0-4 frequency scale
+            maxAnswerScore = 4;
+            break;
+          case 'friendship_red_flags_v1':
+            // Friendship Red Flags uses 0-4 frequency scale
+            maxAnswerScore = 4;
+            break;
         }
 
         if (testModel != null) {
@@ -2737,6 +2761,15 @@ class _BipolarScaleExpandableState extends State<_BipolarScaleExpandable> {
             return names[widget.languageCode] ?? names['ru'] ?? factorName;
           }
           testModel = ConflictCommunicationStyleData.getConflictCommunicationStyleTest();
+          break;
+        case 'fomo_social_comparison_v1':
+          testModel = FomoSocialComparisonData.getFomoSocialComparisonTest();
+          break;
+        case 'creative_type_v1':
+          testModel = CreativeTypeData.getCreativeTypeTest();
+          break;
+        case 'friendship_red_flags_v1':
+          testModel = FriendshipRedFlagsData.getFriendshipRedFlagsTest();
           break;
         default:
           appLogger.w('Unknown testId: $testId');

@@ -38,4 +38,11 @@ abstract class TestStub {
 
   /// Additional metadata (optional)
   Map<String, dynamic> get metadata => {};
+
+  // Compatibility methods for HomeScreen (matches TestModel API)
+  String getTitle(String languageCode) => name[languageCode] ?? name['ru'] ?? '';
+  String getDescription(String languageCode) => description[languageCode] ?? description['ru'] ?? '';
+  int get estimatedTime => estimatedMinutes;
+  String get categoryId => category;
+  Map<String, String>? get disclaimer => null; // Override in subclasses if needed
 }

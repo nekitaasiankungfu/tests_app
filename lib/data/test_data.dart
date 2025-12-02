@@ -21,6 +21,12 @@ class TestData {
     final tests = <TestModel>[];
 
     for (final stub in TestRegistry.allTests) {
+      // Skip special tests that use custom screens (don't use TestModel)
+      if (stub.type == 'special') {
+        appLogger.d('Skipping special test ${stub.id} (uses custom screen)');
+        continue;
+      }
+
       try {
         final test = await _loader.loadTest(stub);
         tests.add(test);

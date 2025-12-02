@@ -32,19 +32,16 @@ import '../config/summary/question_weights/values_priorities_weights.dart';
 import '../config/summary/question_weights/attachment_style_weights.dart';
 import '../config/summary/question_weights/motivational_strategies_weights.dart';
 import '../config/summary/question_weights/conflict_communication_style_weights.dart';
-import '../config/summary/question_weights/text_conflict_communication_weights.dart';
 import '../config/summary/question_weights/emotional_intelligence_weights.dart';
 import '../config/summary/question_weights/imposter_syndrome_weights.dart';
 import '../config/summary/question_weights/sleep_recovery_weights.dart';
 import '../config/summary/question_weights/procrastination_productivity_weights.dart';
 import '../config/summary/question_weights/boundaries_people_pleasing_weights.dart';
-import '../config/summary/question_weights/dark_personality_traits_weights.dart';
-import '../config/summary/question_weights/toxic_patterns_weights.dart';
-import '../config/summary/question_weights/attention_style_weights.dart';
-import '../config/summary/question_weights/mental_age_lifespan_styles_weights.dart';
-import '../config/summary/question_weights/self_sabotage_weights.dart';
-import '../config/summary/question_weights/money_mindset_habits_weights.dart';
-import '../config/summary/question_weights/gaming_balance_check_weights.dart';
+import '../config/summary/question_weights/fomo_social_comparison_weights.dart';
+import '../config/summary/question_weights/creative_type_weights.dart';
+import '../config/summary/question_weights/friendship_red_flags_weights.dart';
+import '../config/summary/question_weights/visual_micro_tests_weights.dart';
+import '../config/summary/question_weights/text_conflict_communication_weights.dart';
 import '../utils/app_logger.dart';
 // NOTE: QuestionWeight is already exported by summary_config.dart
 
@@ -174,19 +171,16 @@ class SummaryService {
       ...AttachmentStyleWeights.weights,
       ...MotivationalStrategiesWeights.weights,
       ...ConflictCommunicationStyleWeights.weights,
-      ...TextConflictCommunicationWeights.weights,
       ...EmotionalIntelligenceWeights.weights,
       ...ImposterSyndromeWeights.weights,
       ...SleepRecoveryWeights.weights,
       ...procrastinationProductivityWeights,
       ...boundariesPeoplePleasingWeights,
-      ...DarkPersonalityTraitsWeights.weights,
-      ...ToxicPatternsWeights.weights,
-      ...AttentionStyleWeights.weights,
-      ...MentalAgeLifespanStylesWeights.weights,
-      ...SelfSabotageWeights.weights,
-      ...MoneyMindsetHabitsWeights.weights,
-      ...GamingBalanceCheckWeights.weights,
+      ...FomoSocialComparisonWeights.weights,
+      ...CreativeTypeWeights.weights,
+      ...FriendshipRedFlagsWeights.weights,
+      ...VisualMicroTestsWeights.weights,
+      ...TextConflictCommunicationWeights.weights,
     };
 
     // 8 personality type scales
@@ -598,19 +592,16 @@ class SummaryService {
       ...AttachmentStyleWeights.weights,
       ...MotivationalStrategiesWeights.weights,
       ...ConflictCommunicationStyleWeights.weights,
-      ...TextConflictCommunicationWeights.weights,
       ...EmotionalIntelligenceWeights.weights,
       ...ImposterSyndromeWeights.weights,
       ...SleepRecoveryWeights.weights,
       ...procrastinationProductivityWeights,
       ...boundariesPeoplePleasingWeights,
-      ...DarkPersonalityTraitsWeights.weights,
-      ...ToxicPatternsWeights.weights,
-      ...AttentionStyleWeights.weights,
-      ...MentalAgeLifespanStylesWeights.weights,
-      ...SelfSabotageWeights.weights,
-      ...MoneyMindsetHabitsWeights.weights,
-      ...GamingBalanceCheckWeights.weights,
+      ...FomoSocialComparisonWeights.weights,
+      ...CreativeTypeWeights.weights,
+      ...FriendshipRedFlagsWeights.weights,
+      ...VisualMicroTestsWeights.weights,
+      ...TextConflictCommunicationWeights.weights,
     };
 
     appLogger.d('Total weights loaded: ${allWeights.length}');

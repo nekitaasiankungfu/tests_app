@@ -109,9 +109,37 @@ class TestCategories {
     order: 6,
   );
 
+  static const creativity = TestCategory(
+    id: 'creativity',
+    name: {
+      'ru': 'Креативность',
+      'en': 'Creativity',
+    },
+    description: {
+      'ru': 'Тесты творческого мышления и креативного потенциала',
+      'en': 'Tests of creative thinking and creative potential',
+    },
+    icon: '🎨',
+    order: 7,
+  );
+
+  static const visual = TestCategory(
+    id: 'visual',
+    name: {
+      'ru': 'Визуальные инсайты',
+      'en': 'Visual Insights',
+    },
+    description: {
+      'ru': 'Проективные тесты на основе визуального восприятия',
+      'en': 'Projective tests based on visual perception',
+    },
+    icon: '👁️',
+    order: 8,
+  );
+
   /// Get all categories in order
   static List<TestCategory> getAll() {
-    final categories = [personality, temperament, relationships, emotional, career, intelligence];
+    final categories = [personality, temperament, relationships, emotional, career, intelligence, creativity, visual];
     categories.sort((a, b) => a.order.compareTo(b.order));
     return categories;
   }
@@ -131,6 +159,10 @@ class TestCategories {
         return career;
       case 'intelligence':
         return intelligence;
+      case 'creativity':
+        return creativity;
+      case 'visual':
+        return visual;
       default:
         return null;
     }

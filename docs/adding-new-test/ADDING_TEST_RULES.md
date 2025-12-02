@@ -86,6 +86,51 @@ AnswerModel(text: {'ru': 'Полностью согласен'}, score: 5),  // 
 ### ⚠️ Правило "(reversed)"
 Все шкалы с комментариями "(reversed)" ДОЛЖНЫ иметь отрицательные веса!
 
+### 🔴 ФОРМАТ биполярных весов: ВСТРАИВАТЬ в основной QuestionWeight!
+
+**❌ НЕПРАВИЛЬНО** (создавать отдельные QuestionWeight с суффиксом `:personality`):
+```dart
+// ❌ Это НЕ РАБОТАЕТ! Summary Screen не увидит эти веса!
+'friendship_red_flags_v1:q1': QuestionWeight(
+  testId: 'friendship_red_flags_v1',
+  questionId: 'q1',
+  axisWeights: {
+    'boundary_setting': -1.0,
+    'assertiveness': -0.9,
+  },
+),
+
+// ❌ Отдельный QuestionWeight - НЕПРАВИЛЬНО!
+'friendship_red_flags_v1:q1:personality': QuestionWeight(
+  testId: 'friendship_red_flags_v1',
+  questionId: 'q1',
+  axisWeights: {
+    'feeling': 0.5,
+    'perceiving': 0.3,
+  },
+),
+```
+
+**✅ ПРАВИЛЬНО** (биполярные веса в ТОМ ЖЕ axisWeights):
+```dart
+// ✅ Hierarchical И биполярные веса ВМЕСТЕ!
+'friendship_red_flags_v1:q1': QuestionWeight(
+  testId: 'friendship_red_flags_v1',
+  questionId: 'q1',
+  axisWeights: {
+    // 195 hierarchical scales
+    'boundary_setting': -1.0,
+    'assertiveness': -0.9,
+    'self_esteem': -0.7,
+    // 8 bipolar poles (в том же Map!)
+    'feeling': 0.5,  // Personality type
+    'perceiving': 0.3,  // Personality type
+  },
+),
+```
+
+**Примеры в документации:** `ADDING_TEST_EXAMPLES.md` строки 437-507
+
 ---
 
 ## 🔴 ПРАВИЛО #3: Автоопределение direction по знаку веса

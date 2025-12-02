@@ -61,8 +61,9 @@
       "Bash(do grep -q \"id: ''q$i''\" lib/data/motivational_strategies_data.dart)",
       "Bash(/mnt/r/flutter/bin/cache/dart-sdk/bin/dartanalyzer:*)",
       "Bash(/mnt/r/flutter/bin/dart:*)",
+      "Bash(dart compile kernel:*)",
       "Bash(/mnt/c/flutter/bin/flutter.bat analyze:*)",
-      "Bash(/mnt/r/flutter/bin/cache/dart-sdk/bin/dart:*)"
+      "Bash(adb shell am:*)"
     ],
     "deny": [],
     "ask": []

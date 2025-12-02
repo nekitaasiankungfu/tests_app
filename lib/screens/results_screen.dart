@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/test_provider.dart';
@@ -7,12 +8,16 @@ import '../providers/summary_provider.dart';
 import '../models/test_model.dart';
 import '../models/career_compass_model.dart';
 import '../models/color_psychology_model.dart';
+import '../models/visual_micro_tests_model.dart';
 import '../utils/theme_utils.dart';
+import '../utils/app_logger.dart';
 import '../constants/color_constants.dart';
+import '../data/test_registry.dart';
 import 'test_result_screen.dart';
 import 'sixteen_types_result_screen.dart';
 import 'career_compass_result_screen.dart';
 import 'color_psychology_result_screen.dart';
+import 'visual_micro_tests_result_screen.dart';
 import 'summary_screen.dart';
 
 class ResultsScreen extends StatefulWidget {
@@ -340,7 +345,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     });
 
     // Если есть достаточно тестов, показать карточку саммари в начале списка
-    final showSummaryCard = completedTests.length >= 2;
+    final showSummaryCard = completedTests.length >= 1;
 
     return ListView.builder(
       padding: const EdgeInsets.all(20),
@@ -354,9 +359,20 @@ class _ResultsScreenState extends State<ResultsScreen> {
         // Скорректировать индекс для реальных результатов
         final resultIndex = showSummaryCard ? index - 1 : index;
         final result = sortedTests[resultIndex];
+
+        // Try to get test from TestProvider first (for regular tests)
         final test = testProvider.getTestById(result.testId);
-        
-        if (test == null) return const SizedBox.shrink();
+        appLogger.d('TestProvider.getTestById(${result.testId}): ${test != null ? "found" : "null"}');
+
+        // If not found in TestProvider, check TestRegistry (for special tests)
+        final testStub = test == null ? TestRegistry.getTest(result.testId) : null;
+        appLogger.d('TestRegistry.getTest(${result.testId}): ${testStub != null ? "found (${testStub.name})" : "null"}');
+
+        // If test not found in either place, skip it
+        if (test == null && testStub == null) {
+          appLogger.w('Test not found in both TestProvider and TestRegistry: ${result.testId}');
+          return const SizedBox.shrink();
+        }
 
         final brightness = Theme.of(context).brightness;
         final isDark = brightness == Brightness.dark;
@@ -403,6 +419,31 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       ),
                     ),
                   );
+                } else if (result.testId == 'visual_micro_tests_v1') {
+                  // Restore Visual Micro Tests result from JSON and navigate
+                  try {
+                    final resultJson = jsonDecode(result.interpretation) as Map<String, dynamic>;
+                    final visualResult = VisualMicroTestsResult.fromJson(resultJson);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VisualMicroTestsResultScreen(result: visualResult),
+                      ),
+                    );
+                  } catch (e, stackTrace) {
+                    appLogger.e('Failed to restore Visual Micro Tests result', error: e, stackTrace: stackTrace);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          languageCode == 'ru'
+                              ? 'Ошибка загрузки результатов'
+                              : 'Failed to load results',
+                        ),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 } else {
                   Navigator.push(
                     context,
@@ -444,7 +485,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                test.getTitle(languageCode),
+                                test?.getTitle(languageCode) ?? testStub?.getTitle(languageCode) ?? result.testId,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -453,7 +494,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                test.getCategory(languageCode),
+                                test?.getCategory(languageCode) ?? _getCategoryName(testStub?.categoryId ?? '', languageCode),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: isDark ? Colors.grey[300] : Colors.grey,
@@ -472,6 +513,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                             context,
                             result,
                             test,
+                            testStub,
                             testProvider,
                             languageCode,
                           ),
@@ -724,13 +766,36 @@ class _ResultsScreenState extends State<ResultsScreen> {
     return '${date.day}.${date.month}.${date.year}';
   }
 
+  /// Get category name from category ID
+  String _getCategoryName(String categoryId, String languageCode) {
+    // Map category IDs to localized names
+    const categoryNames = {
+      'visual': {'ru': 'Визуальное', 'en': 'Visual'},
+      'personality': {'ru': 'Личность', 'en': 'Personality'},
+      'emotional': {'ru': 'Эмоциональное', 'en': 'Emotional'},
+      'professional': {'ru': 'Профессиональное', 'en': 'Professional'},
+      'cognitive': {'ru': 'Когнитивное', 'en': 'Cognitive'},
+      'relationships': {'ru': 'Отношения', 'en': 'Relationships'},
+      'creativity': {'ru': 'Креативность', 'en': 'Creativity'},
+    };
+
+    final names = categoryNames[categoryId];
+    if (names != null) {
+      return names[languageCode] ?? names['en'] ?? categoryId;
+    }
+    return categoryId;
+  }
+
   Future<void> _showDeleteConfirmation(
     BuildContext context,
     TestResult result,
-    TestModel test,
+    TestModel? test,
+    dynamic testStub,
     TestProvider testProvider,
     String languageCode,
   ) async {
+    final testTitle = test?.getTitle(languageCode) ?? testStub?.getTitle(languageCode) ?? result.testId;
+
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -740,8 +805,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
         ),
         content: Text(
           languageCode == 'ru'
-              ? 'Вы уверены, что хотите удалить результат теста "${test.getTitle(languageCode)}"?'
-              : 'Are you sure you want to delete the result of "${test.getTitle(languageCode)}"?',
+              ? 'Вы уверены, что хотите удалить результат теста "$testTitle"?'
+              : 'Are you sure you want to delete the result of "$testTitle"?',
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),

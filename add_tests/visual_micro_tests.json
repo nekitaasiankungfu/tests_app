@@ -1,0 +1,1145 @@
+{
+  "test_package": {
+    "name": {
+      "ru": "Визуальные Инсайты: Что расскажут образы",
+      "en": "Visual Insights: What Images Reveal"
+    },
+    "description": {
+      "ru": "Серия быстрых визуальных тестов, основанных на восприятии образов, форм и паттернов. Ваш первый импульс при выборе картинки раскрывает скрытые черты личности: от стиля мышления до эмоциональных предпочтений. Эти микротесты используют принципы проективной психологии и теории восприятия, чтобы обойти социально желательные ответы и получить честную картину вашей личности.",
+      "en": "A series of quick visual tests based on perception of images, shapes, and patterns. Your first impulse when choosing an image reveals hidden personality traits: from thinking style to emotional preferences. These micro-tests use principles of projective psychology and perception theory to bypass socially desirable responses and get an honest picture of your personality."
+    },
+    "section_tagline": {
+      "ru": "Выбери картинку — узнай о себе",
+      "en": "Choose an image — learn about yourself"
+    },
+    "total_time": {
+      "ru": "5-7 минут",
+      "en": "5-7 minutes"
+    },
+    "theoretical_basis": [
+      "Projective techniques (Rorschach, TAT principles)",
+      "Gestalt psychology of perception",
+      "Color psychology (Max Lüscher, Faber Birren)",
+      "Cognitive style theory (Field dependence/independence)",
+      "Visual preference research (Berlyne's aesthetic theory)"
+    ],
+    "target_audience": {
+      "ru": "16+, все, кто хочет узнать о себе через визуальное восприятие",
+      "en": "16+, anyone curious about self-discovery through visual perception"
+    },
+    "micro_tests": [
+      {
+        "id": "visual_test_01",
+        "name": {
+          "ru": "Первое впечатление",
+          "en": "First Impression"
+        },
+        "instruction": {
+          "ru": "Представьте абстрактную картину с множеством элементов. Что вы заметите первым?",
+          "en": "Imagine an abstract painting with many elements. What would you notice first?"
+        },
+        "visual_description": {
+          "ru": "Абстрактная композиция с переплетением линий, цветовых пятен и геометрических форм",
+          "en": "Abstract composition with intertwined lines, color spots, and geometric shapes"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "A",
+            "text": {
+              "ru": "Яркие цветовые пятна",
+              "en": "Bright color spots"
+            },
+            "traits": {
+              "emotional_openness": 3,
+              "spontaneity": 2,
+              "optimism": 2
+            }
+          },
+          {
+            "id": "B",
+            "text": {
+              "ru": "Геометрические формы и структуру",
+              "en": "Geometric shapes and structure"
+            },
+            "traits": {
+              "analytical_thinking": 3,
+              "orderliness": 2,
+              "rational_approach": 2
+            }
+          },
+          {
+            "id": "C",
+            "text": {
+              "ru": "Общую атмосферу и настроение",
+              "en": "Overall atmosphere and mood"
+            },
+            "traits": {
+              "intuition": 3,
+              "emotional_openness": 2,
+              "holistic_thinking": 2
+            }
+          },
+          {
+            "id": "D",
+            "text": {
+              "ru": "Движение и динамику линий",
+              "en": "Movement and dynamics of lines"
+            },
+            "traits": {
+              "creativity": 3,
+              "spontaneity": 2,
+              "energy_level": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "A": {
+            "short": {
+              "ru": "Вы эмоционально отзывчивы и живете настоящим моментом",
+              "en": "You are emotionally responsive and live in the present moment"
+            },
+            "full": {
+              "ru": "Ваше внимание к ярким цветам указывает на высокую эмоциональную восприимчивость и стремление к новым впечатлениям. Вы скорее доверяете своим чувствам, чем холодному анализу, и предпочитаете жить насыщенной, яркой жизнью. Такие люди часто оптимистичны, открыты новому опыту и легко вдохновляются. В общении вы искренни и спонтанны, что привлекает к вам окружающих.",
+              "en": "Your attention to bright colors indicates high emotional receptivity and desire for new experiences. You trust your feelings more than cold analysis and prefer to live a rich, vibrant life. Such people are often optimistic, open to new experiences, and easily inspired. In communication, you are sincere and spontaneous, which attracts others to you."
+            }
+          },
+          "B": {
+            "short": {
+              "ru": "У вас аналитический склад ума и потребность в порядке",
+              "en": "You have an analytical mind and need for order"
+            },
+            "full": {
+              "ru": "Фокус на геометрических формах выдает рациональный, структурированный подход к жизни. Вы склонны анализировать ситуации, искать закономерности и строить логические цепочки. Хаос вас напрягает — вам комфортнее, когда все имеет свое место и объяснение. В работе вы методичны и надежны, предпочитаете планировать заранее. Окружающие ценят вас за ясность мышления и способность находить решения там, где другие видят беспорядок.",
+              "en": "Focus on geometric shapes reveals a rational, structured approach to life. You tend to analyze situations, look for patterns, and build logical chains. Chaos stresses you — you're more comfortable when everything has its place and explanation. At work, you are methodical and reliable, preferring to plan ahead. Others value you for clarity of thinking and ability to find solutions where others see chaos."
+            }
+          },
+          "C": {
+            "short": {
+              "ru": "Вы интуитивны и улавливаете скрытые смыслы",
+              "en": "You are intuitive and catch hidden meanings"
+            },
+            "full": {
+              "ru": "Восприятие общей атмосферы говорит о развитой интуиции и способности видеть картину целиком, не зацикливаясь на деталях. Вы чувствуете людей и ситуации на глубоком уровне, часто 'считываете' невысказанное. Это делает вас эмпатичным собеседником и хорошим психологом. Вы мыслите холистически, соединяя разрозненные факты в единое понимание. Люди часто обращаются к вам за советом, потому что вы видите то, что скрыто от других.",
+              "en": "Perceiving the overall atmosphere indicates developed intuition and ability to see the whole picture without fixating on details. You feel people and situations on a deep level, often 'reading' the unspoken. This makes you an empathetic conversationalist and good psychologist. You think holistically, connecting disparate facts into unified understanding. People often turn to you for advice because you see what's hidden from others."
+            }
+          },
+          "D": {
+            "short": {
+              "ru": "Вы креативны и полны энергии",
+              "en": "You are creative and full of energy"
+            },
+            "full": {
+              "ru": "Внимание к движению и динамике выдает творческую, активную натуру. Вы не любите стоять на месте — ни физически, ни ментально. Ваш ум постоянно генерирует идеи, а тело требует действия. Статичность и рутина быстро вас утомляют. Вы предпочитаете эксперименты и импровизацию четким планам. В общении вы живые, экспрессивные, часто жестикулируете. Окружающие воспринимают вас как источник вдохновения и драйва.",
+              "en": "Attention to movement and dynamics reveals a creative, active nature. You don't like standing still — neither physically nor mentally. Your mind constantly generates ideas, and your body demands action. Stagnation and routine quickly tire you. You prefer experiments and improvisation to clear plans. In communication, you are lively, expressive, often gesticulating. Others perceive you as a source of inspiration and drive."
+            }
+          }
+        },
+        "traits_measured": [
+          "emotional_openness",
+          "analytical_thinking",
+          "intuition",
+          "creativity",
+          "spontaneity"
+        ]
+      },
+      {
+        "id": "visual_test_02",
+        "name": {
+          "ru": "Геометрия выбора",
+          "en": "Geometry of Choice"
+        },
+        "instruction": {
+          "ru": "Какая из этих форм больше всего резонирует с вами?",
+          "en": "Which of these shapes resonates with you most?"
+        },
+        "visual_description": {
+          "ru": "Четыре геометрические формы: круг, квадрат, треугольник, спираль",
+          "en": "Four geometric shapes: circle, square, triangle, spiral"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "circle",
+            "text": {
+              "ru": "Круг — плавные, завершенные линии",
+              "en": "Circle — smooth, complete lines"
+            },
+            "traits": {
+              "sociability": 3,
+              "harmony_seeking": 3,
+              "empathy": 2
+            }
+          },
+          {
+            "id": "square",
+            "text": {
+              "ru": "Квадрат — четкие, стабильные углы",
+              "en": "Square — clear, stable corners"
+            },
+            "traits": {
+              "reliability": 3,
+              "orderliness": 3,
+              "pragmatism": 2
+            }
+          },
+          {
+            "id": "triangle",
+            "text": {
+              "ru": "Треугольник — динамичная, направленная форма",
+              "en": "Triangle — dynamic, directional shape"
+            },
+            "traits": {
+              "ambition": 3,
+              "leadership": 2,
+              "decisiveness": 3
+            }
+          },
+          {
+            "id": "spiral",
+            "text": {
+              "ru": "Спираль — развивающаяся, бесконечная форма",
+              "en": "Spiral — evolving, infinite shape"
+            },
+            "traits": {
+              "creativity": 3,
+              "philosophical_thinking": 2,
+              "openness_to_growth": 3
+            }
+          }
+        ],
+        "interpretation": {
+          "circle": {
+            "short": {
+              "ru": "Вы — миротворец, который ценит гармонию в отношениях",
+              "en": "You are a peacemaker who values harmony in relationships"
+            },
+            "full": {
+              "ru": "Выбор круга указывает на социально ориентированную личность с развитой эмпатией. Вы естественно притягиваете людей своей мягкостью и способностью создавать комфортную атмосферу. Конфликты вас истощают, поэтому вы стремитесь к консенсусу и взаимопониманию. В команде вы часто становитесь 'клеем', который скрепляет коллектив. Круг символизирует целостность — вы стремитесь к завершенности в делах и отношениях, не любите недосказанность.",
+              "en": "Choosing a circle indicates a socially oriented personality with developed empathy. You naturally attract people with your softness and ability to create a comfortable atmosphere. Conflicts drain you, so you strive for consensus and mutual understanding. In a team, you often become the 'glue' that holds the collective together. The circle symbolizes wholeness — you strive for completeness in matters and relationships, disliking ambiguity."
+            }
+          },
+          "square": {
+            "short": {
+              "ru": "Вы — надежная опора, которой можно доверять",
+              "en": "You are a reliable support who can be trusted"
+            },
+            "full": {
+              "ru": "Предпочтение квадрата выдает практичного, организованного человека. Вы цените стабильность, структуру и предсказуемость. Когда все вокруг в хаосе, вы остаетесь спокойны и методично решаете проблемы. Окружающие знают: если поручить вам задачу, она будет выполнена качественно и в срок. Вы не гонитесь за сенсациями, предпочитая проверенные методы. Квадрат символизирует фундамент — вы тот, на кого можно опереться.",
+              "en": "Preference for a square reveals a practical, organized person. You value stability, structure, and predictability. When everything around is in chaos, you remain calm and methodically solve problems. Others know: if they entrust you with a task, it will be completed with quality and on time. You don't chase sensations, preferring proven methods. The square symbolizes foundation — you are the one to lean on."
+            }
+          },
+          "triangle": {
+            "short": {
+              "ru": "Вы — лидер, который идет к цели напрямую",
+              "en": "You are a leader who goes directly to the goal"
+            },
+            "full": {
+              "ru": "Выбор треугольника указывает на целеустремленную, амбициозную натуру. Вы не боитесь брать на себя ответственность и принимать сложные решения. Треугольник направлен вверх — так же и вы стремитесь к росту, достижениям, преодолению вызовов. Вы можете быть директивны, но это потому, что видите кратчайший путь к результату. В команде вы естественно занимаете позицию лидера или эксперта. Вас уважают за решительность и способность двигать дела вперед.",
+              "en": "Choosing a triangle indicates a goal-oriented, ambitious nature. You're not afraid to take responsibility and make difficult decisions. The triangle points upward — just as you strive for growth, achievements, overcoming challenges. You can be directive, but that's because you see the shortest path to results. In a team, you naturally occupy a leader or expert position. You are respected for decisiveness and ability to move things forward."
+            }
+          },
+          "spiral": {
+            "short": {
+              "ru": "Вы — искатель, который всегда растет и развивается",
+              "en": "You are a seeker who is always growing and developing"
+            },
+            "full": {
+              "ru": "Притяжение к спирали выдает творческую, философски настроенную личность. Вы не принимаете застой — жизнь для вас это постоянное движение, трансформация, поиск смысла. Спираль не замыкается, как круг, но и не статична, как квадрат — она символизирует эволюцию. Вы открыты новым идеям, экспериментам, нестандартным решениям. Рутина вас душит. Окружающие видят в вас источник свежих идей и непредсказуемых поворотов. Вы часто задаете вопросы 'а что если?' и исследуете неочевидные пути.",
+              "en": "Attraction to the spiral reveals a creative, philosophically minded personality. You don't accept stagnation — life for you is constant movement, transformation, search for meaning. The spiral doesn't close like a circle, but isn't static like a square — it symbolizes evolution. You are open to new ideas, experiments, unconventional solutions. Routine suffocates you. Others see in you a source of fresh ideas and unexpected turns. You often ask 'what if?' questions and explore non-obvious paths."
+            }
+          }
+        },
+        "traits_measured": [
+          "sociability",
+          "reliability",
+          "ambition",
+          "creativity",
+          "leadership"
+        ]
+      },
+      {
+        "id": "visual_test_03",
+        "name": {
+          "ru": "Цветовой импульс",
+          "en": "Color Impulse"
+        },
+        "instruction": {
+          "ru": "Не думая, выберите цвет, который притягивает ваш взгляд прямо сейчас",
+          "en": "Without thinking, choose the color that attracts your gaze right now"
+        },
+        "visual_description": {
+          "ru": "Пять насыщенных цветовых блоков",
+          "en": "Five saturated color blocks"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "red",
+            "text": {
+              "ru": "Красный — интенсивный и энергичный",
+              "en": "Red — intense and energetic"
+            },
+            "traits": {
+              "energy_level": 3,
+              "passion": 3,
+              "assertiveness": 2
+            }
+          },
+          {
+            "id": "blue",
+            "text": {
+              "ru": "Синий — спокойный и глубокий",
+              "en": "Blue — calm and deep"
+            },
+            "traits": {
+              "introspection": 3,
+              "emotional_stability": 2,
+              "trustworthiness": 3
+            }
+          },
+          {
+            "id": "yellow",
+            "text": {
+              "ru": "Желтый — яркий и оптимистичный",
+              "en": "Yellow — bright and optimistic"
+            },
+            "traits": {
+              "optimism": 3,
+              "sociability": 2,
+              "curiosity": 3
+            }
+          },
+          {
+            "id": "green",
+            "text": {
+              "ru": "Зеленый — сбалансированный и гармоничный",
+              "en": "Green — balanced and harmonious"
+            },
+            "traits": {
+              "balance": 3,
+              "growth_mindset": 2,
+              "calmness": 3
+            }
+          },
+          {
+            "id": "purple",
+            "text": {
+              "ru": "Фиолетовый — таинственный и креативный",
+              "en": "Purple — mysterious and creative"
+            },
+            "traits": {
+              "creativity": 3,
+              "intuition": 3,
+              "individuality": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "red": {
+            "short": {
+              "ru": "Вы полны энергии и живете на полную",
+              "en": "You are full of energy and live life to the fullest"
+            },
+            "full": {
+              "ru": "Красный — цвет действия, страсти и жизненной силы. Ваш выбор говорит о том, что сейчас вы в активной фазе: полны энергии, готовы к вызовам, не боитесь проявлять себя. Вы, скорее всего, экспрессивны в эмоциях, прямолинейны в общении и предпочитаете не откладывать дела на потом. Красный также связан с физической активностью — возможно, вы чувствуете потребность двигаться, действовать, влиять на ситуацию. Окружающие воспринимают вас как яркую, харизматичную личность.",
+              "en": "Red is the color of action, passion, and life force. Your choice says that you are currently in an active phase: full of energy, ready for challenges, not afraid to express yourself. You are likely expressive in emotions, straightforward in communication, and prefer not to postpone things. Red is also associated with physical activity — perhaps you feel the need to move, act, influence the situation. Others perceive you as a bright, charismatic personality."
+            }
+          },
+          "blue": {
+            "short": {
+              "ru": "Вы спокойны, надежны и ищете глубину",
+              "en": "You are calm, reliable, and seek depth"
+            },
+            "full": {
+              "ru": "Синий — цвет стабильности, доверия и внутренней глубины. Выбирая его, вы показываете потребность в спокойствии, размышлениях или надежности. Возможно, вы сейчас в режиме анализа, обдумывания важных решений, или просто цените моменты тишины и уединения. Синий также ассоциируется с честностью и верностью — вы человек слова. В общении вы не склонны к драматизму, предпочитая искреннюю, глубокую связь поверхностным разговорам. Люди доверяют вам свои секреты.",
+              "en": "Blue is the color of stability, trust, and inner depth. By choosing it, you show a need for calm, reflection, or reliability. Perhaps you are now in analysis mode, thinking through important decisions, or simply value moments of silence and solitude. Blue is also associated with honesty and loyalty — you are a person of your word. In communication, you are not prone to drama, preferring sincere, deep connection to superficial conversations. People trust you with their secrets."
+            }
+          },
+          "yellow": {
+            "short": {
+              "ru": "Вы оптимистичны и открыты новому",
+              "en": "You are optimistic and open to new things"
+            },
+            "full": {
+              "ru": "Желтый — цвет солнца, радости и любознательности. Ваш выбор отражает позитивный настрой и желание познавать мир. Вы, вероятно, легко находите общий язык с людьми, видите возможности там, где другие видят препятствия, и умеете подбодрить окружающих. Желтый также связан с интеллектуальной активностью — вы любите учиться, обмениваться идеями, исследовать новые темы. В общении вы легки, дружелюбны и часто становитесь 'лучиком света' в компании.",
+              "en": "Yellow is the color of sun, joy, and curiosity. Your choice reflects a positive attitude and desire to explore the world. You probably easily find common ground with people, see opportunities where others see obstacles, and know how to cheer others up. Yellow is also associated with intellectual activity — you love to learn, exchange ideas, explore new topics. In communication, you are light, friendly, and often become a 'ray of light' in company."
+            }
+          },
+          "green": {
+            "short": {
+              "ru": "Вы стремитесь к гармонии и балансу",
+              "en": "You strive for harmony and balance"
+            },
+            "full": {
+              "ru": "Зеленый — цвет природы, роста и равновесия. Притяжение к нему говорит о вашей потребности в гармонии между разными сферами жизни. Вы не любите крайности, предпочитая золотую середину. Зеленый также символизирует обновление и развитие — возможно, вы сейчас в процессе личностного роста или восстановления сил после стрессового периода. В общении вы миролюбивы, дипломатичны, умеете сглаживать конфликты. Вы создаете вокруг себя атмосферу спокойствия и безопасности.",
+              "en": "Green is the color of nature, growth, and balance. Attraction to it speaks of your need for harmony between different areas of life. You don't like extremes, preferring the golden mean. Green also symbolizes renewal and development — perhaps you are now in the process of personal growth or recovering after a stressful period. In communication, you are peaceable, diplomatic, able to smooth over conflicts. You create an atmosphere of calm and safety around you."
+            }
+          },
+          "purple": {
+            "short": {
+              "ru": "Вы креативны и идете своим путем",
+              "en": "You are creative and follow your own path"
+            },
+            "full": {
+              "ru": "Фиолетовый — цвет тайны, креативности и индивидуальности. Он образован смешением красного (страсть) и синего (спокойствие), что отражает вашу многогранность. Вы не боитесь выделяться, имеете развитое воображение и часто смотрите на вещи под необычным углом. Фиолетовый также связан с интуицией и духовностью — вы склонны доверять внутреннему голосу и искать глубинные смыслы. В общении вы оригинальны, иногда загадочны. Люди воспринимают вас как нестандартную, интересную личность.",
+              "en": "Purple is the color of mystery, creativity, and individuality. It is formed by mixing red (passion) and blue (calm), which reflects your multifacetedness. You are not afraid to stand out, have a developed imagination, and often look at things from an unusual angle. Purple is also associated with intuition and spirituality — you tend to trust your inner voice and seek deeper meanings. In communication, you are original, sometimes mysterious. People perceive you as an unconventional, interesting personality."
+            }
+          }
+        },
+        "traits_measured": [
+          "energy_level",
+          "optimism",
+          "emotional_stability",
+          "creativity",
+          "balance"
+        ]
+      },
+      {
+        "id": "visual_test_04",
+        "name": {
+          "ru": "Двойное восприятие",
+          "en": "Dual Perception"
+        },
+        "instruction": {
+          "ru": "Представьте классическую оптическую иллюзию 'Ваза или два лица'. Что вы увидите первым?",
+          "en": "Imagine the classic optical illusion 'Vase or two faces'. What would you see first?"
+        },
+        "visual_description": {
+          "ru": "Силуэт, который можно воспринять двояко: как вазу на темном фоне или как два профиля лицом друг к другу",
+          "en": "A silhouette that can be perceived in two ways: as a vase on a dark background or as two profiles facing each other"
+        },
+        "response_type": "binary",
+        "options": [
+          {
+            "id": "vase",
+            "text": {
+              "ru": "Ваза (объект в центре)",
+              "en": "Vase (object in center)"
+            },
+            "traits": {
+              "focus_on_detail": 3,
+              "individualism": 2,
+              "object_oriented_thinking": 3
+            }
+          },
+          {
+            "id": "faces",
+            "text": {
+              "ru": "Два лица (фон/контекст)",
+              "en": "Two faces (background/context)"
+            },
+            "traits": {
+              "social_awareness": 3,
+              "relational_thinking": 3,
+              "empathy": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "vase": {
+            "short": {
+              "ru": "Вы фокусируетесь на сути вопроса",
+              "en": "You focus on the essence of the matter"
+            },
+            "full": {
+              "ru": "Если вы первым увидели вазу (центральный объект), это указывает на аналитический, объектно-ориентированный стиль мышления. Вы склонны выделять главное, отсекать лишнее и концентрироваться на конкретных вещах. В работе вы эффективны в задачах, требующих фокуса и внимания к деталям. Вы, скорее всего, независимы в суждениях и не так сильно подвержены влиянию мнения окружающих. В решении проблем вы идете напрямую к корню вопроса, не отвлекаясь на периферийные факторы.",
+              "en": "If you saw the vase first (central object), this indicates an analytical, object-oriented thinking style. You tend to highlight the main thing, cut off the unnecessary, and concentrate on specific things. At work, you are effective in tasks requiring focus and attention to detail. You are likely independent in judgment and not as strongly influenced by others' opinions. In problem-solving, you go straight to the root of the question without being distracted by peripheral factors."
+            }
+          },
+          "faces": {
+            "short": {
+              "ru": "Вы чувствительны к людям и отношениям",
+              "en": "You are sensitive to people and relationships"
+            },
+            "full": {
+              "ru": "Если первым бросились в глаза два профиля (контекст/фон), это говорит о развитой социальной перцепции и реляционном мышлении. Вы автоматически настроены на людей, их взаимодействие и эмоциональный контекст. В жизни вы, вероятно, хорошо чувствуете атмосферу в комнате, замечаете невербальные сигналы и понимаете скрытую динамику отношений. Вы склонны видеть ситуации через призму того, как они влияют на людей и связи между ними. Эта черта делает вас чутким другом и дипломатичным коллегой.",
+              "en": "If two profiles (context/background) caught your eye first, this indicates developed social perception and relational thinking. You are automatically tuned into people, their interaction, and emotional context. In life, you probably sense the atmosphere in a room well, notice non-verbal signals, and understand hidden relationship dynamics. You tend to see situations through the lens of how they affect people and connections between them. This trait makes you a sensitive friend and diplomatic colleague."
+            }
+          }
+        },
+        "traits_measured": [
+          "focus_on_detail",
+          "social_awareness",
+          "empathy",
+          "individualism"
+        ]
+      },
+      {
+        "id": "visual_test_05",
+        "name": {
+          "ru": "Путь сквозь линии",
+          "en": "Path Through Lines"
+        },
+        "instruction": {
+          "ru": "Три абстрактных пути ведут к одной точке. Каким вы пойдете?",
+          "en": "Three abstract paths lead to one point. Which would you take?"
+        },
+        "visual_description": {
+          "ru": "Три визуальных пути: прямая линия, волнистая траектория и спираль",
+          "en": "Three visual paths: straight line, wavy trajectory, and spiral"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "straight",
+            "text": {
+              "ru": "Прямая линия — кратчайший путь",
+              "en": "Straight line — shortest path"
+            },
+            "traits": {
+              "efficiency": 3,
+              "directness": 3,
+              "goal_orientation": 2
+            }
+          },
+          {
+            "id": "wavy",
+            "text": {
+              "ru": "Волнистая линия — путь с ритмом и гибкостью",
+              "en": "Wavy line — path with rhythm and flexibility"
+            },
+            "traits": {
+              "adaptability": 3,
+              "patience": 2,
+              "appreciation_of_process": 3
+            }
+          },
+          {
+            "id": "spiral",
+            "text": {
+              "ru": "Спираль — путь с глубиной и исследованием",
+              "en": "Spiral — path with depth and exploration"
+            },
+            "traits": {
+              "curiosity": 3,
+              "depth_seeking": 3,
+              "non_linear_thinking": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "straight": {
+            "short": {
+              "ru": "Вы цените эффективность и прямоту",
+              "en": "You value efficiency and directness"
+            },
+            "full": {
+              "ru": "Выбор прямого пути отражает вашу ориентацию на результат и практичность. Вы не любите тратить время впустую, предпочитая двигаться к цели по кратчайшей траектории. В работе вы цените ясность задач, конкретные дедлайны и измеримые результаты. Вам может быть сложно с людьми, которые 'ходят вокруг да около' — вы предпочитаете прямую коммуникацию. Эта черта делает вас продуктивным и надежным исполнителем, хотя иногда вы можете упускать нюансы, которые видны только на 'обходных' путях.",
+              "en": "Choosing the straight path reflects your result orientation and practicality. You don't like wasting time, preferring to move toward your goal via the shortest trajectory. At work, you value task clarity, concrete deadlines, and measurable results. You may find it difficult with people who 'beat around the bush' — you prefer direct communication. This trait makes you a productive and reliable executor, though sometimes you may miss nuances that are visible only on 'roundabout' paths."
+            }
+          },
+          "wavy": {
+            "short": {
+              "ru": "Вы гибки и цените сам процесс",
+              "en": "You are flexible and value the process itself"
+            },
+            "full": {
+              "ru": "Волнистая траектория символизирует гибкость и способность адаптироваться к изменениям. Вы понимаете, что жизнь редко идет по прямой, и спокойно принимаете обходные пути, задержки и неожиданные повороты. Для вас важен не только результат, но и сам путь — опыт, который вы получаете, люди, которых встречаете, уроки, которые извлекаете. Вы терпеливы и не паникуете при препятствиях. Эта черта делает вас устойчивым к стрессу и приятным спутником в долгих проектах.",
+              "en": "The wavy trajectory symbolizes flexibility and ability to adapt to changes. You understand that life rarely goes in a straight line, and calmly accept detours, delays, and unexpected turns. For you, not only the result is important, but the path itself — the experience you gain, the people you meet, the lessons you learn. You are patient and don't panic at obstacles. This trait makes you stress-resistant and a pleasant companion in long projects."
+            }
+          },
+          "spiral": {
+            "short": {
+              "ru": "Вы ищете глубину и не боитесь сложности",
+              "en": "You seek depth and are not afraid of complexity"
+            },
+            "full": {
+              "ru": "Спиральный путь выдает исследовательский склад ума и тягу к глубокому пониманию. Вы не довольствуетесь поверхностными ответами — вам нужно докопаться до сути, рассмотреть вопрос с разных углов, понять все взаимосвязи. Для вас процесс познания сам по себе ценен. Вы можете казаться окружающим 'медленным', но на самом деле вы просто тщательны. Такой подход делает вас экспертом в своей области, потому что вы действительно понимаете предмет изнутри, а не просто знаете факты.",
+              "en": "The spiral path reveals an exploratory mindset and craving for deep understanding. You are not satisfied with superficial answers — you need to get to the bottom, consider the question from different angles, understand all interconnections. For you, the process of cognition is valuable in itself. You may seem 'slow' to others, but actually you are just thorough. This approach makes you an expert in your field because you truly understand the subject from within, not just know facts."
+            }
+          }
+        },
+        "traits_measured": [
+          "efficiency",
+          "adaptability",
+          "curiosity",
+          "goal_orientation",
+          "depth_seeking"
+        ]
+      },
+      {
+        "id": "visual_test_06",
+        "name": {
+          "ru": "Паттерн, который говорит",
+          "en": "Pattern That Speaks"
+        },
+        "instruction": {
+          "ru": "Какой узор вызывает у вас наибольший отклик?",
+          "en": "Which pattern resonates with you most?"
+        },
+        "visual_description": {
+          "ru": "Четыре типа узоров: регулярная сетка, хаотичные пятна, плавные волны, фрактальные структуры",
+          "en": "Four types of patterns: regular grid, chaotic spots, smooth waves, fractal structures"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "grid",
+            "text": {
+              "ru": "Регулярная сетка — порядок и предсказуемость",
+              "en": "Regular grid — order and predictability"
+            },
+            "traits": {
+              "need_for_structure": 3,
+              "systematicity": 3,
+              "control_preference": 2
+            }
+          },
+          {
+            "id": "chaos",
+            "text": {
+              "ru": "Хаотичные пятна — спонтанность и свобода",
+              "en": "Chaotic spots — spontaneity and freedom"
+            },
+            "traits": {
+              "spontaneity": 3,
+              "tolerance_for_ambiguity": 3,
+              "impulsiveness": 2
+            }
+          },
+          {
+            "id": "waves",
+            "text": {
+              "ru": "Плавные волны — ритм и гармония",
+              "en": "Smooth waves — rhythm and harmony"
+            },
+            "traits": {
+              "aesthetic_sensitivity": 3,
+              "emotional_fluency": 2,
+              "harmony_seeking": 3
+            }
+          },
+          {
+            "id": "fractal",
+            "text": {
+              "ru": "Фрактальные структуры — сложность и самоподобие",
+              "en": "Fractal structures — complexity and self-similarity"
+            },
+            "traits": {
+              "complex_thinking": 3,
+              "pattern_recognition": 3,
+              "intellectual_curiosity": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "grid": {
+            "short": {
+              "ru": "Вам нужна структура и предсказуемость",
+              "en": "You need structure and predictability"
+            },
+            "full": {
+              "ru": "Притяжение к регулярной сетке указывает на потребность в порядке, системности и контроле. Вы чувствуете себя комфортнее, когда можете предвидеть развитие событий и планировать заранее. Неопределенность вас напрягает — вы предпочитаете иметь четкий план Б (а лучше и план В тоже). В работе вы методичны, соблюдаете процедуры и цените стандарты качества. Ваше окружение знает: на вас можно положиться, потому что вы не импровизируете там, где нужна надежность.",
+              "en": "Attraction to a regular grid indicates a need for order, systematicity, and control. You feel more comfortable when you can foresee the development of events and plan ahead. Uncertainty stresses you — you prefer to have a clear plan B (and preferably plan C too). At work, you are methodical, follow procedures, and value quality standards. Your environment knows: you can be relied upon because you don't improvise where reliability is needed."
+            }
+          },
+          "chaos": {
+            "short": {
+              "ru": "Вы живете моментом и любите непредсказуемость",
+              "en": "You live in the moment and love unpredictability"
+            },
+            "full": {
+              "ru": "Выбор хаотичных пятен говорит о спонтанной, свободолюбивой натуре. Вы не любите жесткие рамки и расписания, предпочитая действовать по вдохновению. Для вас жизнь — это приключение, а не шахматная партия. Вы хорошо справляетесь с неопределенностью и быстро адаптируетесь к изменениям. Окружающие могут считать вас непредсказуемым, но именно эта черта делает вас креативным и способным находить нестандартные решения. Вы умеете видеть красоту в случайности и хаосе.",
+              "en": "Choosing chaotic spots speaks of a spontaneous, freedom-loving nature. You don't like rigid frameworks and schedules, preferring to act by inspiration. For you, life is an adventure, not a chess game. You handle uncertainty well and quickly adapt to changes. Others may consider you unpredictable, but it's this trait that makes you creative and capable of finding unconventional solutions. You can see beauty in randomness and chaos."
+            }
+          },
+          "waves": {
+            "short": {
+              "ru": "Вы чувствительны к красоте и ритму жизни",
+              "en": "You are sensitive to beauty and the rhythm of life"
+            },
+            "full": {
+              "ru": "Плавные волны притягивают людей с развитой эстетической чувствительностью и эмоциональной текучестью. Вы воспринимаете жизнь в её ритмах — подъемах и спадах, напряжении и расслаблении. Вам важна гармония: в отношениях, в работе, в окружающем пространстве. Дисбаланс вы чувствуете физически и стремитесь его устранить. Вы, скорее всего, цените музыку, природу, искусство — все, что имеет естественный ритм. В общении вы мягки, чутки к настроению собеседника.",
+              "en": "Smooth waves attract people with developed aesthetic sensitivity and emotional fluency. You perceive life in its rhythms — ups and downs, tension and relaxation. Harmony is important to you: in relationships, at work, in surrounding space. You feel imbalance physically and strive to eliminate it. You likely value music, nature, art — everything that has a natural rhythm. In communication, you are soft, sensitive to the interlocutor's mood."
+            }
+          },
+          "fractal": {
+            "short": {
+              "ru": "Вас привлекает сложность и скрытые паттерны",
+              "en": "You are attracted to complexity and hidden patterns"
+            },
+            "full": {
+              "ru": "Фракталы — это сложные структуры с самоподобием на разных масштабах. Если вас привлекают фрактальные узоры, у вас, вероятно, развито системное мышление и способность видеть паттерны там, где другие видят хаос. Вы умеете соединять макро- и микроуровни, понимая, как маленькие элементы складываются в большую картину. Эта черта делает вас хорошим стратегом, исследователем или аналитиком. Вы не боитесь сложности — наоборот, она вас интригует и вовлекает.",
+              "en": "Fractals are complex structures with self-similarity at different scales. If fractal patterns attract you, you likely have developed systems thinking and ability to see patterns where others see chaos. You can connect macro and micro levels, understanding how small elements add up to the big picture. This trait makes you a good strategist, researcher, or analyst. You're not afraid of complexity — on the contrary, it intrigues and engages you."
+            }
+          }
+        },
+        "traits_measured": [
+          "need_for_structure",
+          "spontaneity",
+          "aesthetic_sensitivity",
+          "complex_thinking",
+          "pattern_recognition"
+        ]
+      },
+      {
+        "id": "visual_test_07",
+        "name": {
+          "ru": "Эмоция в абстракции",
+          "en": "Emotion in Abstraction"
+        },
+        "instruction": {
+          "ru": "Какую эмоцию вызывает у вас эта абстрактная композиция?",
+          "en": "What emotion does this abstract composition evoke in you?"
+        },
+        "visual_description": {
+          "ru": "Абстрактная композиция с размытыми формами и цветовыми переходами",
+          "en": "Abstract composition with blurred forms and color transitions"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "calm",
+            "text": {
+              "ru": "Спокойствие и умиротворение",
+              "en": "Calm and peace"
+            },
+            "traits": {
+              "emotional_stability": 3,
+              "contentment": 2,
+              "inner_peace": 3
+            }
+          },
+          {
+            "id": "curiosity",
+            "text": {
+              "ru": "Любопытство и интерес",
+              "en": "Curiosity and interest"
+            },
+            "traits": {
+              "openness_to_experience": 3,
+              "intellectual_engagement": 3,
+              "exploratory_drive": 2
+            }
+          },
+          {
+            "id": "tension",
+            "text": {
+              "ru": "Напряжение или тревогу",
+              "en": "Tension or anxiety"
+            },
+            "traits": {
+              "sensitivity_to_ambiguity": 3,
+              "alertness": 2,
+              "vigilance": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "calm": {
+            "short": {
+              "ru": "Вы эмоционально стабильны и в ладу с собой",
+              "en": "You are emotionally stable and at peace with yourself"
+            },
+            "full": {
+              "ru": "Если абстракция вызывает у вас спокойствие, это указывает на хорошую эмоциональную регуляцию и внутреннюю гармонию. Вы не склонны к излишней тревожности и умеете находить баланс даже в неопределенных ситуациях. Возможно, вы практикуете mindfulness или просто научились не драматизировать события. Окружающие ценят вас за то, что рядом с вами чувствуют себя спокойно — вы не раскачиваете лодку и не добавляете драмы туда, где её нет. Эта черта особенно полезна в стрессовых ситуациях.",
+              "en": "If abstraction evokes calmness in you, this indicates good emotional regulation and inner harmony. You are not prone to excessive anxiety and can find balance even in uncertain situations. Perhaps you practice mindfulness or simply learned not to dramatize events. Others value you because they feel calm around you — you don't rock the boat and don't add drama where there is none. This trait is especially useful in stressful situations."
+            }
+          },
+          "curiosity": {
+            "short": {
+              "ru": "Вы открыты новому и интеллектуально активны",
+              "en": "You are open to new things and intellectually active"
+            },
+            "full": {
+              "ru": "Чувство любопытства при взгляде на абстракцию говорит о живом уме и открытости к опыту. Неясные, неоднозначные стимулы не пугают вас, а интригуют. Вы задаете вопросы 'а что это может означать?', 'какие ассоциации это вызывает?'. Эта черта делает вас хорошим собеседником, потому что вы искренне интересуетесь идеями, а не просто ждете своей очереди высказаться. Вы, вероятно, любите музеи, выставки, дискуссии на необычные темы.",
+              "en": "Feeling curious when looking at abstraction indicates a lively mind and openness to experience. Unclear, ambiguous stimuli don't scare you, they intrigue you. You ask questions like 'what could this mean?', 'what associations does this evoke?'. This trait makes you a good conversationalist because you are genuinely interested in ideas, not just waiting for your turn to speak. You probably love museums, exhibitions, discussions on unusual topics."
+            }
+          },
+          "tension": {
+            "short": {
+              "ru": "Вы чувствительны к неопределенности",
+              "en": "You are sensitive to uncertainty"
+            },
+            "full": {
+              "ru": "Если абстракция вызывает напряжение, это может указывать на повышенную чувствительность к неоднозначности и потребность в ясности. Вы, возможно, склонны к тревожности, особенно в ситуациях, где нет четких ответов или предсказуемых исходов. Это не слабость — это просто особенность вашей нервной системы, которая настроена на поиск угроз и рисков. С одной стороны, это делает вас осторожным и предусмотрительным. С другой — важно научиться не застревать в состоянии гипербдительности.",
+              "en": "If abstraction causes tension, this may indicate heightened sensitivity to ambiguity and need for clarity. You may be prone to anxiety, especially in situations where there are no clear answers or predictable outcomes. This is not weakness — it's just a feature of your nervous system that is tuned to search for threats and risks. On one hand, this makes you cautious and prudent. On the other — it's important to learn not to get stuck in a state of hypervigilance."
+            }
+          }
+        },
+        "traits_measured": [
+          "emotional_stability",
+          "openness_to_experience",
+          "sensitivity_to_ambiguity",
+          "curiosity"
+        ]
+      },
+      {
+        "id": "visual_test_08",
+        "name": {
+          "ru": "Баланс элементов",
+          "en": "Balance of Elements"
+        },
+        "instruction": {
+          "ru": "Три композиции из геометрических элементов. Какая кажется вам наиболее гармоничной?",
+          "en": "Three compositions of geometric elements. Which seems most harmonious to you?"
+        },
+        "visual_description": {
+          "ru": "Три варианта расположения элементов: симметричный, асимметричный, центрированный",
+          "en": "Three options for element arrangement: symmetrical, asymmetrical, centered"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "symmetry",
+            "text": {
+              "ru": "Симметричная композиция — зеркальное равновесие",
+              "en": "Symmetrical composition — mirror balance"
+            },
+            "traits": {
+              "need_for_order": 3,
+              "perfectionism": 2,
+              "classical_aesthetics": 3
+            }
+          },
+          {
+            "id": "asymmetry",
+            "text": {
+              "ru": "Асимметричная композиция — динамическое напряжение",
+              "en": "Asymmetrical composition — dynamic tension"
+            },
+            "traits": {
+              "tolerance_for_imbalance": 3,
+              "modern_aesthetics": 2,
+              "comfort_with_complexity": 3
+            }
+          },
+          {
+            "id": "centered",
+            "text": {
+              "ru": "Центрированная композиция — фокус и концентрация",
+              "en": "Centered composition — focus and concentration"
+            },
+            "traits": {
+              "focus": 3,
+              "essentialism": 3,
+              "minimalist_preference": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "symmetry": {
+            "short": {
+              "ru": "Вы цените порядок и классическую красоту",
+              "en": "You value order and classic beauty"
+            },
+            "full": {
+              "ru": "Предпочтение симметрии указывает на потребность в равновесии, порядке и предсказуемости. Вы, вероятно, цените классическую эстетику, традиционные формы красоты и гармонию пропорций. В жизни вы стремитесь к справедливости и балансу — вам некомфортно, когда что-то 'перекошено'. Вы можете быть склонны к перфекционизму, особенно в визуальных или организационных вопросах. Эта черта делает вас внимательным к деталям и способным создавать упорядоченные, красивые пространства или системы.",
+              "en": "Preference for symmetry indicates a need for balance, order, and predictability. You probably value classical aesthetics, traditional forms of beauty, and harmony of proportions. In life, you strive for fairness and balance — you are uncomfortable when something is 'skewed'. You may be prone to perfectionism, especially in visual or organizational matters. This trait makes you attentive to details and capable of creating orderly, beautiful spaces or systems."
+            }
+          },
+          "asymmetry": {
+            "short": {
+              "ru": "Вы комфортно чувствуете себя в сложности",
+              "en": "You feel comfortable in complexity"
+            },
+            "full": {
+              "ru": "Если вас привлекает асимметрия, вы, вероятно, открыты современным формам искусства, нестандартным решениям и динамичным композициям. Вы не боитесь дисбаланса и понимаете, что иногда именно 'неправильность' создает интерес и движение. В жизни вы, возможно, легче принимаете ситуации, где нет четкого равновесия, и умеете находить красоту в несовершенстве. Эта черта связана с гибкостью мышления и способностью видеть ценность в необычном.",
+              "en": "If asymmetry attracts you, you are probably open to modern forms of art, unconventional solutions, and dynamic compositions. You're not afraid of imbalance and understand that sometimes it's the 'wrongness' that creates interest and movement. In life, you may more easily accept situations where there's no clear balance, and can find beauty in imperfection. This trait is associated with flexibility of thinking and ability to see value in the unusual."
+            }
+          },
+          "centered": {
+            "short": {
+              "ru": "Вы фокусируетесь на главном и отсекаете лишнее",
+              "en": "You focus on the main thing and cut off the unnecessary"
+            },
+            "full": {
+              "ru": "Выбор центрированной композиции говорит о вашей способности выделять главное и убирать отвлекающие факторы. Вы, вероятно, цените минимализм, эссенциализм и философию 'меньше — значит больше'. В работе вы эффективны, потому что не распыляетесь на второстепенное. В общении вы предпочитаете говорить по существу. Эта черта делает вас продуктивным и помогает не перегружаться информацией в современном мире, где отвлечений миллион.",
+              "en": "Choosing a centered composition speaks of your ability to highlight the main thing and remove distracting factors. You probably value minimalism, essentialism, and the philosophy of 'less is more'. At work, you are efficient because you don't spread yourself thin on secondary matters. In communication, you prefer to speak to the point. This trait makes you productive and helps you not overload with information in the modern world where distractions are endless."
+            }
+          }
+        },
+        "traits_measured": [
+          "need_for_order",
+          "tolerance_for_imbalance",
+          "focus",
+          "perfectionism"
+        ]
+      },
+      {
+        "id": "visual_test_09",
+        "name": {
+          "ru": "Текстура души",
+          "en": "Texture of the Soul"
+        },
+        "instruction": {
+          "ru": "Если бы ваше внутреннее состояние имело текстуру, какая бы она была?",
+          "en": "If your inner state had a texture, what would it be?"
+        },
+        "visual_description": {
+          "ru": "Четыре типа текстур: гладкая, шероховатая, мягкая, структурированная",
+          "en": "Four types of textures: smooth, rough, soft, structured"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "smooth",
+            "text": {
+              "ru": "Гладкая поверхность — как полированное стекло или вода",
+              "en": "Smooth surface — like polished glass or water"
+            },
+            "traits": {
+              "emotional_clarity": 3,
+              "simplicity": 2,
+              "transparency": 3
+            }
+          },
+          {
+            "id": "rough",
+            "text": {
+              "ru": "Шероховатая текстура — как кора дерева или камень",
+              "en": "Rough texture — like tree bark or stone"
+            },
+            "traits": {
+              "resilience": 3,
+              "groundedness": 3,
+              "toughness": 2
+            }
+          },
+          {
+            "id": "soft",
+            "text": {
+              "ru": "Мягкая текстура — как мох, облако или пух",
+              "en": "Soft texture — like moss, cloud, or fluff"
+            },
+            "traits": {
+              "gentleness": 3,
+              "emotional_sensitivity": 3,
+              "comfort_seeking": 2
+            }
+          },
+          {
+            "id": "structured",
+            "text": {
+              "ru": "Структурированная текстура — как ткань или плетение",
+              "en": "Structured texture — like fabric or weaving"
+            },
+            "traits": {
+              "complexity": 3,
+              "interconnectedness": 2,
+              "layered_thinking": 3
+            }
+          }
+        ],
+        "interpretation": {
+          "smooth": {
+            "short": {
+              "ru": "Вы стремитесь к ясности и простоте",
+              "en": "You strive for clarity and simplicity"
+            },
+            "full": {
+              "ru": "Выбор гладкой текстуры указывает на потребность в эмоциональной ясности и прозрачности. Вы, вероятно, не любите запутанные отношения, двусмысленные ситуации или внутренние противоречия. Вы стремитесь к простоте не из примитивности, а из желания понимать себя и ситуацию без лишних наслоений. В общении вы, скорее всего, прямолинейны и цените честность. Эта черта помогает вам не застревать в эмоциональных узлах и быстро восстанавливаться после стресса.",
+              "en": "Choosing smooth texture indicates a need for emotional clarity and transparency. You probably don't like complicated relationships, ambiguous situations, or inner contradictions. You strive for simplicity not from primitiveness, but from a desire to understand yourself and the situation without unnecessary layers. In communication, you are likely straightforward and value honesty. This trait helps you not get stuck in emotional knots and quickly recover from stress."
+            }
+          },
+          "rough": {
+            "short": {
+              "ru": "Вы устойчивы и укоренены в реальности",
+              "en": "You are resilient and grounded in reality"
+            },
+            "full": {
+              "ru": "Шероховатая текстура символизирует жизненный опыт, стойкость и связь с реальностью. Вы, вероятно, прошли через трудности, которые сделали вас сильнее, но не ожесточили. Вы не идеализируете жизнь и не ждете, что все будет гладко. Эта реалистичность делает вас надежным в кризисах — окружающие знают, что вы не сломаетесь под давлением. Вы, возможно, цените аутентичность больше, чем показной лоск, и доверяете людям, у которых тоже есть 'шероховатости'.",
+              "en": "Rough texture symbolizes life experience, resilience, and connection with reality. You have probably been through difficulties that made you stronger, but not bitter. You don't idealize life and don't expect everything to be smooth. This realism makes you reliable in crises — others know you won't break under pressure. You may value authenticity more than showy gloss, and trust people who also have 'roughness'."
+            }
+          },
+          "soft": {
+            "short": {
+              "ru": "Вы эмоционально чувствительны и ищете комфорт",
+              "en": "You are emotionally sensitive and seek comfort"
+            },
+            "full": {
+              "ru": "Мягкая текстура отражает эмоциональную чувствительность и потребность в комфорте, тепле, безопасности. Вы, вероятно, глубоко чувствуете и можете легко ранить резкими словами или действиями. Это не слабость — это просто особенность вашей эмоциональной настройки. Вы цените мягкость и в отношениях: доброту, нежность, заботу. Окружающие часто обращаются к вам за утешением, потому что вы умеете создавать атмосферу принятия. Важно учиться защищать свои границы, не теряя этой мягкости.",
+              "en": "Soft texture reflects emotional sensitivity and need for comfort, warmth, safety. You probably feel deeply and can be easily hurt by harsh words or actions. This is not weakness — it's just a feature of your emotional tuning. You value softness in relationships too: kindness, tenderness, care. Others often turn to you for comfort because you know how to create an atmosphere of acceptance. It's important to learn to protect your boundaries without losing this softness."
+            }
+          },
+          "structured": {
+            "short": {
+              "ru": "Ваш внутренний мир многослоен и сложен",
+              "en": "Your inner world is multilayered and complex"
+            },
+            "full": {
+              "ru": "Структурированная текстура, как ткань или плетение, указывает на сложный, многослойный внутренний мир. У вас много граней, и разные ситуации активируют разные части вашей личности. Вы понимаете, что люди и ситуации редко бывают простыми — всегда есть контекст, история, взаимосвязи. Эта способность видеть сложность делает вас мудрым советчиком и глубоким мыслителем. Иногда вам может быть сложно объяснить свои чувства, потому что они переплетены, как нити в ткани.",
+              "en": "Structured texture, like fabric or weaving, indicates a complex, multilayered inner world. You have many facets, and different situations activate different parts of your personality. You understand that people and situations are rarely simple — there's always context, history, interconnections. This ability to see complexity makes you a wise advisor and deep thinker. Sometimes it may be difficult for you to explain your feelings because they are intertwined like threads in fabric."
+            }
+          }
+        },
+        "traits_measured": [
+          "emotional_clarity",
+          "resilience",
+          "gentleness",
+          "complexity",
+          "emotional_sensitivity"
+        ]
+      },
+      {
+        "id": "visual_test_10",
+        "name": {
+          "ru": "Горизонт или детали",
+          "en": "Horizon or Details"
+        },
+        "instruction": {
+          "ru": "Представьте пейзаж. На что вы обратите внимание в первую очередь?",
+          "en": "Imagine a landscape. What would you notice first?"
+        },
+        "visual_description": {
+          "ru": "Абстрактное изображение пейзажа с горизонтом, небом, передним планом с деталями",
+          "en": "Abstract landscape image with horizon, sky, foreground with details"
+        },
+        "response_type": "multiple_choice",
+        "options": [
+          {
+            "id": "horizon",
+            "text": {
+              "ru": "Линия горизонта — граница между небом и землей",
+              "en": "Horizon line — boundary between sky and earth"
+            },
+            "traits": {
+              "big_picture_thinking": 3,
+              "vision_orientation": 3,
+              "future_focus": 2
+            }
+          },
+          {
+            "id": "sky",
+            "text": {
+              "ru": "Небо — бесконечность и простор",
+              "en": "Sky — infinity and expanse"
+            },
+            "traits": {
+              "idealism": 3,
+              "dreaming_tendency": 2,
+              "spiritual_inclination": 3
+            }
+          },
+          {
+            "id": "foreground",
+            "text": {
+              "ru": "Детали переднего плана — цветы, камни, текстуры",
+              "en": "Foreground details — flowers, stones, textures"
+            },
+            "traits": {
+              "detail_orientation": 3,
+              "present_moment_awareness": 3,
+              "sensory_engagement": 2
+            }
+          },
+          {
+            "id": "overall",
+            "text": {
+              "ru": "Общее настроение сцены — атмосфера и целостность",
+              "en": "Overall mood of the scene — atmosphere and wholeness"
+            },
+            "traits": {
+              "holistic_perception": 3,
+              "emotional_attunement": 3,
+              "gestalt_thinking": 2
+            }
+          }
+        ],
+        "interpretation": {
+          "horizon": {
+            "short": {
+              "ru": "Вы мыслите стратегически и смотрите вперед",
+              "en": "You think strategically and look ahead"
+            },
+            "full": {
+              "ru": "Внимание к горизонту указывает на стратегическое мышление и ориентацию на будущее. Горизонт — это граница между известным и неизвестным, между настоящим и будущим. Вас интересует направление движения, долгосрочные перспективы, 'куда мы идем'. В работе вы, вероятно, хороши в планировании, постановке целей и видении общей картины. Вы не застреваете в сиюминутных проблемах, сохраняя фокус на главном. Окружающие ценят вашу способность видеть далеко вперед.",
+              "en": "Attention to the horizon indicates strategic thinking and future orientation. The horizon is the boundary between known and unknown, between present and future. You are interested in direction of movement, long-term prospects, 'where we are going'. At work, you are probably good at planning, goal-setting, and seeing the big picture. You don't get stuck in momentary problems, maintaining focus on the main thing. Others value your ability to see far ahead."
+            }
+          },
+          "sky": {
+            "short": {
+              "ru": "Вы идеалист и мечтатель",
+              "en": "You are an idealist and dreamer"
+            },
+            "full": {
+              "ru": "Если ваш взгляд первым устремляется в небо, вы, вероятно, идеалистичны и склонны к мечтательности. Небо символизирует бесконечность, возможности, духовность. Вас вдохновляют большие идеи, высокие цели, философские вопросы. Вы можете быть оторваны от приземленных забот — не потому что безответственны, а потому что ваш ум тянется к высокому. Эта черта делает вас вдохновляющим собеседником, но важно не забывать 'приземляться' и заниматься практическими вопросами.",
+              "en": "If your gaze first rushes to the sky, you are probably idealistic and prone to dreaming. Sky symbolizes infinity, possibilities, spirituality. You are inspired by big ideas, high goals, philosophical questions. You may be detached from mundane concerns — not because you're irresponsible, but because your mind is drawn to the elevated. This trait makes you an inspiring conversationalist, but it's important not to forget to 'ground yourself' and deal with practical matters."
+            }
+          },
+          "foreground": {
+            "short": {
+              "ru": "Вы внимательны к деталям и живете здесь и сейчас",
+              "en": "You are attentive to details and live here and now"
+            },
+            "full": {
+              "ru": "Фокус на деталях переднего плана говорит о внимательности к настоящему моменту и чувственном восприятии мира. Вы замечаете текстуры, цвета, мелкие детали, которые другие пропускают. Вы, вероятно, хорошо работаете с конкретными задачами, где важна точность и аккуратность. В жизни вы цените простые радости: вкус еды, запах цветов, тепло солнца. Эта осознанность делает вашу жизнь насыщенной, даже если вы не гонитесь за грандиозными целями.",
+              "en": "Focus on foreground details speaks of attentiveness to the present moment and sensory perception of the world. You notice textures, colors, small details that others miss. You probably work well with concrete tasks where precision and accuracy are important. In life, you appreciate simple joys: taste of food, smell of flowers, warmth of sun. This mindfulness makes your life rich, even if you're not chasing grandiose goals."
+            }
+          },
+          "overall": {
+            "short": {
+              "ru": "Вы воспринимаете мир холистически",
+              "en": "You perceive the world holistically"
+            },
+            "full": {
+              "ru": "Восприятие общей атмосферы сцены указывает на холистическое, гештальт-мышление. Вы видите не отдельные элементы, а целостную картину — как все части взаимодействуют, создавая единое впечатление. Это делает вас хорошим в профессиях, где важна интуиция и понимание общей динамики: психология, дизайн, менеджмент. Вы чувствуете 'дух места', атмосферу команды, скрытые напряжения. Эта способность помогает вам принимать мудрые решения, основанные не только на фактах, но и на тонком понимании контекста.",
+              "en": "Perceiving the overall atmosphere of a scene indicates holistic, gestalt thinking. You see not separate elements, but a holistic picture — how all parts interact, creating a unified impression. This makes you good in professions where intuition and understanding of overall dynamics are important: psychology, design, management. You feel the 'spirit of place', team atmosphere, hidden tensions. This ability helps you make wise decisions based not only on facts, but on subtle understanding of context."
+            }
+          }
+        },
+        "traits_measured": [
+          "big_picture_thinking",
+          "idealism",
+          "detail_orientation",
+          "holistic_perception",
+          "present_moment_awareness"
+        ]
+      }
+    ],
+    "scoring_methodology": {
+      "approach": "trait_accumulation",
+      "description": {
+        "ru": "Каждый микротест добавляет баллы к соответствующим чертам личности. В конце формируется профиль с топ-5 наиболее выраженных черт и их описание.",
+        "en": "Each micro-test adds points to corresponding personality traits. At the end, a profile is formed with top-5 most pronounced traits and their description."
+      }
+    },
+    "result_format": {
+      "type": "trait_profile",
+      "display": {
+        "ru": "Ваши ведущие черты (по результатам визуальных предпочтений)",
+        "en": "Your leading traits (based on visual preferences)"
+      },
+      "interpretation_style": {
+        "ru": "Краткое описание каждой черты + общий портрет личности на основе комбинации черт",
+        "en": "Brief description of each trait + overall personality portrait based on trait combination"
+      }
+    },
+    "usage_notes": {
+      "virality_factors": [
+        "Quick completion (1-2 minutes per test)",
+        "Visual and shareable",
+        "Surprising insights",
+        "No wrong answers",
+        "Fun and light format"
+      ],
+      "implementation_tips": {
+        "ru": [
+          "Добавить визуальные иллюстрации для каждого теста",
+          "Сделать возможность делиться результатами одного теста в соцсетях",
+          "Использовать плавную анимацию переходов",
+          "Добавить опцию 'пройти все 10' или 'выбрать 3-4 по желанию'",
+          "Результаты можно сохранять и возвращаться к ним"
+        ],
+        "en": [
+          "Add visual illustrations for each test",
+          "Make it possible to share results of one test on social media",
+          "Use smooth transition animations",
+          "Add option 'take all 10' or 'choose 3-4 as desired'",
+          "Results can be saved and returned to"
+        ]
+      }
+    },
+    "copyright_compliance": {
+      "status": "✓ COMPLIANT",
+      "notes": [
+        "All questions are original formulations",
+        "Based on public domain psychological theories (Gestalt, color psychology, projective techniques)",
+        "No direct copying from copyrighted tests (Rorschach, TAT are referenced as theoretical basis only)",
+        "Visual descriptions are generic and non-copyrighted",
+        "Interpretations are uniquely written"
+      ]
+    }
+  }
+}

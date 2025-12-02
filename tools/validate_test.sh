@@ -174,6 +174,26 @@ fi
 
 echo ""
 
+# CHECK D1: Неправильный формат биполярных весов (отдельные QuestionWeight с :personality)
+print_check "D1. Проверка формата биполярных весов (НЕ должно быть :personality суффикса)"
+if [ -f "$WEIGHTS_FILE" ]; then
+    PERSONALITY_SUFFIX=$(grep -P "'${TEST_ID}:q\d+:personality'" "$WEIGHTS_FILE" || true)
+
+    if [ -n "$PERSONALITY_SUFFIX" ]; then
+        print_fail "Найдены QuestionWeight с суффиксом :personality (неправильный формат!):"
+        echo "$PERSONALITY_SUFFIX" | head -5
+        print_info "❌ НЕПРАВИЛЬНО: '${TEST_ID}:q1:personality': QuestionWeight(...)"
+        print_info "✅ ПРАВИЛЬНО: Добавьте биполярные веса В ТОТ ЖЕ axisWeights основного вопроса"
+        print_info "Пример в ADDING_TEST_EXAMPLES.md строки 437-507"
+    else
+        print_pass "Формат биполярных весов правильный (встроены в основные QuestionWeight)"
+    fi
+else
+    print_warn "Пропущено (weights файл не найден)"
+fi
+
+echo ""
+
 # CHECK E: Регистрация в test_registry.dart
 print_check "E. Проверка регистрации в test_registry.dart"
 if [ -n "$TEST_STUB_FILE" ]; then
